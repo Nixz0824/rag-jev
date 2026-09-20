@@ -1,0 +1,25 @@
+# models and runtime are local only
+models/
+runtime/
+
+# raw snapshots of official patch notes (copyright: keep local, never publish)
+data/patch/raw/
+data/patch/index.npz
+data/patch/index-meta.json
+
+# generated corpus contains full patch-notes text -> not for a public repo
+data/patch/knowledge.json
+data/patch/knowledge.full.json
+docs/评测报告.md
+
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.venv/
+venv/
+*.log
+.env
+.env.*
+
+# local key files
+runtime/*.txt
