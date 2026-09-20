@@ -152,3 +152,31 @@ dd { margin: 0; }
 .evidence a { color: var(--accent); text-decoration: none; word-break: break-all; }
 .evidence .src { color: var(--muted); font-size: 12px; }
 .muted { color: var(--muted); list-style: none; margin-left: -18px; }
+
+.compare-controls { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+.compare-controls select, .compare-controls input {
+  flex: 1;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 8px;
+  color: inherit;
+  font: inherit;
+  min-width: 0;
+}
+.compare-controls button {
+  background: #1d2734;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.compare-controls button:hover { border-color: var(--accent); color: var(--accent); }
+.compare-result { font-size: 13px; max-height: 320px; overflow: auto; }
+.cmp-group h3 { margin: 10px 0 4px; font-size: 13.5px; color: var(--text); }
+.cmp-group ul { margin: 0; padding-left: 16px; }
+.cmp-group li { margin-bottom: 3px; color: #cfdae8; }
+.cmp-change { color: var(--accent); }
+.cmp-add { color: var(--ok); }
+.cmp-remove { color: var(--warn); }

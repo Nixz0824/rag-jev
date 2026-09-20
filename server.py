@@ -13,12 +13,13 @@ import re
 import sqlite3
 import threading
 import time
+import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from config import APP_PORT, DB_PATH, PATCH_DATA, SERVICE, WEB
 from engine import GREETING
 from jev import available as jev_available
-from patch_engine import PatchEngine, PatchRetriever
+from patch_engine import PatchEngine, PatchRetriever, compare_versions
 
 LOG = logging.getLogger("ragjev.server")
 MAX_BODY = 200_000
@@ -147,6 +148,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_json(health())
         if path == "/api/patch/meta":
             return self.send_json(patch_meta())
+        if path == "/api/patch/compare":
+            return self.send_json(patch_compare(self.path))
         if path == "/api/session":
             session_id = (self.path.split("session_id=") + [""])[1].split("&")[0]
             if not SESSION_RE.fullmatch(session_id or ""):
@@ -248,6 +251,37 @@ EXAMPLE_QUESTIONS = [
     "26.17 有哪些英雄被削弱",
     "26.17 岚切怎么调整的",
 ]
+
+
+def patch_compare(path: str) -> dict:
+    """GET /api/patch/compare?a=26.16&b=26.17&subject=亚索 — structured diff of two patches."""
+    if ENGINE is None:
+        return {"error": ENGINE_ERROR or "服务未就绪"}
+    query = urllib.parse.parse_qs(path.split("?", 1)[1] if "?" in path else "")
+    patch_a = (query.get("a") or [""])[0]
+    patch_b = (query.get("b") or [""])[0]
+    subject = (query.get("subject") or [""])[0].strip()
+    if not patch_a or not patch_b:
+        return {"error": "需要 a 与 b 两个版本", "supported": RETRIEVER.supported}
+    for value in (patch_a, patch_b):
+        if value not in RETRIEVER.supported:
+            return {"error": f"没有收录版本 {value}", "supported": RETRIEVER.supported}
+    if subject:
+        resolved, _ = RETRIEVER.resolve_subject(subject)
+        subject = resolved or subject
+
+    def rows_of(patch: str) -> list[dict]:
+        where = {"patches": [patch], "mode": "rift"}
+        if subject:
+            where["subject"] = subject
+        return [row for row in RETRIEVER.all(where) if row.get("field_key") != "narrative"]
+
+    return {
+        "a": patch_a,
+        "b": patch_b,
+        "subject": subject,
+        "subjects": compare_versions(rows_of(patch_a), rows_of(patch_b)),
+    }
 
 
 def main() -> int:

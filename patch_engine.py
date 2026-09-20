@@ -136,6 +136,57 @@ class PatchRetriever(Retriever):
         return None, None
 
 
+def compare_versions(rows_a: list[dict], rows_b: list[dict]) -> list[dict]:
+    """Subject-level diff of two patches' structured changes.
+
+    Rows are matched by (ability, field) inside a subject, so a changed value and a
+    new/removed field are distinguishable. Narrative rows are ignored. Subjects are
+    keyed without the patch, otherwise every row would look new.
+    """
+    def index(rows) -> dict[tuple[str, str], dict[tuple[str, str], dict]]:
+        grouped: dict[tuple[str, str], dict[tuple[str, str], dict]] = collections.defaultdict(dict)
+        for row in rows:
+            if row.get("field_key") == "narrative":
+                continue
+            grouped[(row.get("type", ""), row.get("subject", ""))][(row.get("ability", ""), row.get("field", ""))] = row
+        return grouped
+
+    left, right = index(rows_a), index(rows_b)
+    result = []
+    for group in sorted(set(left) | set(right), key=lambda item: (item[0], item[1])):
+        kind, subject = group
+        fields: list[dict] = []
+        for key in sorted(set(left.get(group, {})) | set(right.get(group, {}))):
+            row_a, row_b = left.get(group, {}).get(key), right.get(group, {}).get(key)
+            _, field = key
+            ability = key[0]
+            if row_a and row_b:
+                status = "same" if row_a.get("new_value") == row_b.get("new_value") else "changed"
+                entry = {"ability": ability, "field": field, "status": status,
+                         "a": row_a.get("new_value", ""), "b": row_b.get("new_value", "")}
+            elif row_b:
+                entry = {"ability": ability, "field": field, "status": "added",
+                         "a": "", "b": row_b.get("new_value", "")}
+            else:
+                entry = {"ability": ability, "field": field, "status": "removed",
+                         "a": row_a.get("new_value", ""), "b": ""}
+            entry["field_key"] = (row_a or row_b).get("field_key", "")
+            entry["direction"] = (row_b or row_a).get("direction", "")
+            fields.append(entry)
+        result.append(
+            {
+                "subject": subject,
+                "type": kind,
+                "patch_a": (list(left[group].values())[0]["patch"] if group in left else ""),
+                "patch_b": (list(right[group].values())[0]["patch"] if group in right else ""),
+                "rows": fields,
+                # number of rows that are not identical between the two patches
+                "changed": sum(1 for entry in fields if entry["status"] != "same"),
+            }
+        )
+    return result
+
+
 class PatchEngine:
     """Parse a version-aware question, filter, retrieve (optionally via Jev), render."""
 

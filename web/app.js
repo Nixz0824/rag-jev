@@ -51,6 +51,19 @@ async function loadMeta() {
       option.textContent = patch;
       select.appendChild(option);
     }
+    for (const id of ["compare-a", "compare-b"]) {
+      const box = el(id);
+      [...state.patches].reverse().forEach((patch) => {
+        const option = document.createElement("option");
+        option.value = patch;
+        option.textContent = patch;
+        box.appendChild(option);
+      });
+    }
+    if (state.patches.length >= 2) {
+      el("compare-a").value = state.patches[state.patches.length - 2];
+      el("compare-b").value = state.patches[state.patches.length - 1];
+    }
     el("patch-hint").textContent = `覆盖 ${state.patches[0] || "?"}—${meta.latest || "?"}`;
     el("source-note").textContent = meta.source_note || "";
     const stats = meta.stats || {};
@@ -161,6 +174,49 @@ async function sendFeedback(result) {
   }
 }
 
+async function loadCompare() {
+  const a = el("compare-a").value;
+  const b = el("compare-b").value;
+  const subject = el("compare-subject").value.trim();
+  const box = el("compare-result");
+  if (!a || !b) {
+    box.innerHTML = '<p class="muted">先选两个版本。</p>';
+    return;
+  }
+  box.innerHTML = '<p class="muted">查询中…</p>';
+  try {
+    const query = `a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}&subject=${encodeURIComponent(subject)}`;
+    const data = await api(`/api/patch/compare?${query}`);
+    if (data.error) {
+      box.innerHTML = `<p class="muted">${escapeHtml(data.error)}</p>`;
+      return;
+    }
+    const groups = data.subjects.filter((group) => group.rows.some((row) => row.status !== "same"));
+    if (!groups.length) {
+      box.innerHTML = `<p class="muted">${escapeHtml(a)} → ${escapeHtml(b)}：没有找到改动差异。</p>`;
+      return;
+    }
+    box.innerHTML = groups.slice(0, 25).map((group) => {
+      const rows = group.rows
+        .filter((row) => row.status !== "same")
+        .map((row) => {
+          const label = `${row.ability ? row.ability + " " : ""}${row.field}`;
+          if (row.status === "changed") {
+            return `<li><span class="cmp-change">${escapeHtml(label)}</span> ${escapeHtml(row.a)} → <b>${escapeHtml(row.b)}</b></li>`;
+          }
+          if (row.status === "added") {
+            return `<li><span class="cmp-add">${escapeHtml(b)} 改了</span> ${escapeHtml(label)}：<b>${escapeHtml(row.b)}</b></li>`;
+          }
+          return `<li><span class="cmp-remove">${escapeHtml(a)} 改了</span> ${escapeHtml(label)}：${escapeHtml(row.a)}</li>`;
+        })
+        .join("");
+      return `<div class="cmp-group"><h3>${escapeHtml(group.subject)}</h3><ul>${rows}</ul></div>`;
+    }).join("") + '<p class="muted">公告只列出发生改动的字段，所以“只在一版出现”表示那一版改过它，不代表另一版没有值。</p>';
+  } catch (error) {
+    box.innerHTML = `<p class="muted">对比失败：${escapeHtml(error.message)}</p>`;
+  }
+}
+
 function bind() {
   state.sessionId = newSessionId();
   el("composer").addEventListener("submit", (event) => {
@@ -173,6 +229,13 @@ function bind() {
   el("examples").addEventListener("click", (event) => {
     const button = event.target.closest("button[data-q]");
     if (button) ask(button.dataset.q);
+  });
+  el("compare-run").addEventListener("click", loadCompare);
+  el("compare-subject").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      loadCompare();
+    }
   });
 }
 

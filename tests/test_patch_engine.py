@@ -231,6 +231,47 @@ class SelfCheckTests(unittest.TestCase):
         self.assertEqual(calls, [])
 
 
+class CompareTests(unittest.TestCase):
+    """Version comparison is pure data, so it can be tested without the model."""
+
+    def setUp(self):
+        retriever = PatchRetriever(
+            corpus_path=CASES / "corpus.json",
+            embed_fn=fake_embed,
+            alias_path=CASES / "aliases.json",
+            patch_map_path=CASES / "patch_map.json",
+            thresholds_path=CASES / "missing-thresholds.json",
+        )
+        self.rows = retriever.chunks
+
+    def test_changed_added_and_removed_are_distinguished(self):
+        rows_a = [row for row in self.rows if row["patch"] == "26.16"]
+        rows_b = [row for row in self.rows if row["patch"] == "26.17"]
+        groups = patch_engine.compare_versions(rows_a, rows_b)
+        by_subject = {group["subject"]: group for group in groups}
+
+        yasuo_rows = {row["field"]: row for row in by_subject["亚索"]["rows"]}
+        self.assertEqual(yasuo_rows["伤害"]["status"], "changed")
+        self.assertEqual((yasuo_rows["伤害"]["a"], yasuo_rows["伤害"]["b"]), ("20", "25"))
+        self.assertEqual(yasuo_rows["冷却时间"]["status"], "added")
+        self.assertEqual(yasuo_rows["攻击力"]["status"], "added")
+        # 薇恩 is new in 26.17, so both rows are additions rather than changes.
+        self.assertEqual(by_subject["薇恩"]["changed"], 2)
+        self.assertTrue(all(row["status"] == "added" for row in by_subject["薇恩"]["rows"]))
+
+    def test_narratives_are_ignored(self):
+        rows_a = [row for row in self.rows if row["patch"] == "26.16"]
+        rows_b = [row for row in self.rows if row["patch"] == "26.17"]
+        for group in patch_engine.compare_versions(rows_a, rows_b):
+            for row in group["rows"]:
+                self.assertNotEqual(row["field"], "说明")
+
+    def test_identical_patches_have_no_changes(self):
+        rows_b = [row for row in self.rows if row["patch"] == "26.17"]
+        groups = patch_engine.compare_versions(rows_b, rows_b)
+        self.assertTrue(all(group["changed"] == 0 for group in groups))
+
+
 class FeedbackTests(unittest.TestCase):
     def setUp(self):
         self.engine = build()

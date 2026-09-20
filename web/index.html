@@ -46,6 +46,19 @@
       <dl id="coverage"><dt>加载中</dt><dd>…</dd></dl>
     </section>
     <section class="card">
+      <h2>版本对比</h2>
+      <div class="compare-controls">
+        <select id="compare-a"></select>
+        <span>→</span>
+        <select id="compare-b"></select>
+      </div>
+      <div class="compare-controls">
+        <input id="compare-subject" type="text" placeholder="只看某个对象（可留空）" />
+        <button type="button" id="compare-run">对比</button>
+      </div>
+      <div id="compare-result" class="compare-result"><p class="muted">选两个版本，看同一批改动怎么变（只比较召唤师峡谷）。</p></div>
+    </section>
+    <section class="card">
       <h2>本次证据</h2>
       <ol class="evidence" id="evidence"><li class="muted">提问后显示命中的公告条目</li></ol>
     </section>

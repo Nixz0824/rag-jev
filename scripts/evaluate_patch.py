@@ -59,9 +59,30 @@ def resolve_target(retriever: PatchRetriever, target: dict) -> dict | None:
     return hits[0] if hits else None
 
 
+def corpus_has_value(retriever: PatchRetriever, expect: dict) -> bool:
+    """Whether the expectation's number exists in our corpus at all.
+
+    Blind cases are authored from the official announcement, so a miss here means
+    the corpus does not contain that change — a data gap, not a system error.
+    """
+    needle = str(expect.get("value", "")).replace(" ", "")
+    if not needle:
+        return True
+    for row in retriever.chunks:
+        if row["patch"] != expect.get("patch") or row["subject"] != expect.get("subject"):
+            continue
+        if expect.get("ability") and row.get("ability") != expect["ability"]:
+            continue
+        if expect.get("field_key") and row.get("field_key") != expect.get("field_key"):
+            continue
+        if needle in str(row.get("new_value", "")).replace(" ", ""):
+            return True
+    return False
+
+
 def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -> dict:
     result = {
-        "single": {"total": 0, "hit@1": 0, "hit@5": 0, "value_ok": 0, "value_total": 0, "version_ok": 0},
+        "single": {"total": 0, "hit@1": 0, "hit@5": 0, "value_ok": 0, "value_total": 0, "version_ok": 0, "gt_missing": 0},
         "pinned": {"total": 0, "hit@1": 0, "hit@5": 0, "value_ok": 0, "jev_pick_ok": 0, "jev_picks": 0},
         "overview": {"total": 0, "ok": 0, "subject_miss": 0},
         "absent": {"total": 0, "refused": 0},
@@ -109,6 +130,11 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
                     detail["jev_pick"] = "target" if pick == target["id"] else "other"
                     result["pinned"]["jev_pick_ok"] += int(pick == target["id"])
         elif case["kind"] == "single":
+            if case.get("value") and not corpus_has_value(retriever, expect):
+                result["single"]["gt_missing"] += 1
+                detail["ground_truth"] = "missing_in_corpus"
+                result["details"].append(detail)
+                continue
             result["single"]["total"] += 1
             ranked = [i for i, row in enumerate(evidence, start=1) if matches(row, expect)]
             if ranked:
@@ -180,6 +206,11 @@ def summarise(name: str, arm: dict) -> list[str]:
             f"版本正确 **{single['version_ok']}/{single['total']}**、"
             f"数值正确 **{single['value_ok']}/{single['value_total']}**"
         )
+    if single.get("gt_missing"):
+        lines.append(
+            f"- 语料缺口：{single['gt_missing']} 条案例的预期值在语料里找不到（不计入上面的分母，"
+            "说明该改动没被收录或与国服公告数值不同）"
+        )
     if overview["total"]:
         lines.append(f"- 汇总问题 {overview['total']} 条：答案含预期对象 **{overview['ok']}/{overview['total']}**")
     for kind, label in (("absent", "本版无记录"), ("out_of_scope", "越界/超范围")):
@@ -248,14 +279,22 @@ def findings(results: dict) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="检索与回答的离线 A/B 评测")
     parser.add_argument("--arms", default="bm25,vector,hybrid,hybrid+jev")
+    parser.add_argument("--cases", default="", help="逗号分隔的案例文件；默认内置两组")
+    parser.add_argument("--out", default="", help="报告输出路径；默认 docs/评测报告.md")
     parser.add_argument("--limit", type=int, default=0)
     args = parser.parse_args()
 
-    cases = json.loads(CASES.read_text(encoding="utf-8"))["cases"]
-    traps = json.loads((TESTS / "cases" / "trap_cases.json").read_text(encoding="utf-8"))["cases"]
-    cases = cases + traps
+    if args.cases:
+        paths = [Path(part.strip()) for part in args.cases.split(",") if part.strip()]
+    else:
+        paths = [CASES, TESTS / "cases" / "trap_cases.json"]
+    cases = []
+    for path in paths:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        cases += payload.get("cases") or []
     if args.limit:
         cases = cases[: args.limit]
+    print(f"案例文件：{', '.join(path.name for path in paths)}")
 
     retriever = PatchRetriever()
     retriever.build()
@@ -308,10 +347,16 @@ def main() -> int:
             bits.append("已拒答" if detail["refused"] else "未拒答")
         if "trap_ok" in detail:
             bits.append("符合预期" if detail["trap_ok"] else "不符合预期")
+        if detail.get("ground_truth") == "missing_in_corpus":
+            bits.append("**语料缺口**")
+        if "self_check_min" in detail:
+            bits.append(f"自检 {detail['self_check_min']:.2f}")
         lines.append(f"| {detail['id']} | {detail['kind']} | {detail['status']} | {'；'.join(bits)} |")
 
     DOCS.mkdir(exist_ok=True)
-    (DOCS / "评测报告.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report_path = Path(args.out) if args.out else DOCS / "评测报告.md"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     (DOCS / "evaluation.json").write_text(
         json.dumps(
             {
@@ -325,7 +370,7 @@ def main() -> int:
         ),
         encoding="utf-8",
     )
-    print(f"\n报告：{DOCS / '评测报告.md'}")
+    print(f"\n报告：{report_path}")
     return 0
 
 

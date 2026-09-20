@@ -62,6 +62,9 @@ python scripts/evaluate_patch.py              # 四组检索口径 A/B（需模�
 python scripts/evaluate_parse.py              # 查询理解盲测（不需要模型）
 python scripts/calibrate.py --report          # 门槛测量（结论见 docs/门槛校准.md）
 python scripts/ingest_en.py --offline         # 与英文公告对照核验
+python scripts/review_feedback.py             # 复核页面反馈，产出 docs/反馈复核.md
+# 盲测（先按 docs/盲测集提示词.md 出题）：
+python scripts/evaluate_patch.py --cases tests\cases\blind_cases.json --out docs\盲测报告.md
 ```
 
 产出：`data/patch/knowledge.json`（语料）、`data/patch/patch_map.json`（版本映射）、
