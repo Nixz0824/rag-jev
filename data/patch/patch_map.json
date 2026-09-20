@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-09-20T05:06:43.533340+00:00",
+  "note": "patch 为公告版本号；ddragon 为对应 Data Dragon 版本；github 仓库不包含公告原文。",
+  "patches": {
+    "26.9": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.9.1",
+      "chunks": 266,
+      "chars": 64013,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.10": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.10.1",
+      "chunks": 191,
+      "chars": 47100,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.11": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.11.1",
+      "chunks": 64,
+      "chars": 49013,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.12": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.12.1",
+      "chunks": 73,
+      "chars": 47633,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.13": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.13.1",
+      "chunks": 80,
+      "chars": 47710,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.14": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.14.1",
+      "chunks": 62,
+      "chars": 37512,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.15": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.15.1",
+      "chunks": 136,
+      "chars": 48708,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.16": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.16.1",
+      "chunks": 112,
+      "chars": 60423,
+      "modes": [
+        "rift",
+        "classic",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.17": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.17.1",
+      "chunks": 107,
+      "chars": 52379,
+      "modes": [
+        "rift",
+        "classic",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.18": {
+      "date": "",
+      "url": "",
+      "ddragon": "16.18.1",
+      "chunks": 85,
+      "chars": 45299,
+      "modes": [
+        "rift",
+        "classic",
+        "aram"
+      ]
+    }
+  }
+}

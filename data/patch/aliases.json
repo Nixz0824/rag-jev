@@ -1,0 +1,5544 @@
+{
+ "亚托克斯": {
+  "en": "Aatrox",
+  "kind": "champion",
+  "primary": "亚托克斯",
+  "aliases": [
+   "Aatrox",
+   "剑魔",
+   "暗裔剑魔"
+  ]
+ },
+ "暗裔剑魔": {
+  "en": "Aatrox",
+  "kind": "champion",
+  "primary": "亚托克斯",
+  "aliases": [
+   "Aatrox",
+   "亚托克斯",
+   "剑魔"
+  ]
+ },
+ "阿狸": {
+  "en": "Ahri",
+  "kind": "champion",
+  "primary": "阿狸",
+  "aliases": [
+   "Ahri",
+   "九尾妖狐",
+   "狐狸"
+  ]
+ },
+ "九尾妖狐": {
+  "en": "Ahri",
+  "kind": "champion",
+  "primary": "阿狸",
+  "aliases": [
+   "Ahri",
+   "狐狸",
+   "阿狸"
+  ]
+ },
+ "阿卡丽": {
+  "en": "Akali",
+  "kind": "champion",
+  "primary": "阿卡丽",
+  "aliases": [
+   "Akali",
+   "akl",
+   "离群之刺",
+   "阿卡利"
+  ]
+ },
+ "离群之刺": {
+  "en": "Akali",
+  "kind": "champion",
+  "primary": "阿卡丽",
+  "aliases": [
+   "Akali",
+   "akl",
+   "阿卡丽",
+   "阿卡利"
+  ]
+ },
+ "阿克尚": {
+  "en": "Akshan",
+  "kind": "champion",
+  "primary": "阿克尚",
+  "aliases": [
+   "Akshan",
+   "影哨"
+  ]
+ },
+ "影哨": {
+  "en": "Akshan",
+  "kind": "champion",
+  "primary": "阿克尚",
+  "aliases": [
+   "Akshan",
+   "阿克尚"
+  ]
+ },
+ "阿利斯塔": {
+  "en": "Alistar",
+  "kind": "champion",
+  "primary": "阿利斯塔",
+  "aliases": [
+   "Alistar",
+   "牛头酋长"
+  ]
+ },
+ "牛头酋长": {
+  "en": "Alistar",
+  "kind": "champion",
+  "primary": "阿利斯塔",
+  "aliases": [
+   "Alistar",
+   "阿利斯塔"
+  ]
+ },
+ "安蓓萨": {
+  "en": "Ambessa",
+  "kind": "champion",
+  "primary": "安蓓萨",
+  "aliases": [
+   "Ambessa",
+   "铁血狼母"
+  ]
+ },
+ "铁血狼母": {
+  "en": "Ambessa",
+  "kind": "champion",
+  "primary": "安蓓萨",
+  "aliases": [
+   "Ambessa",
+   "安蓓萨"
+  ]
+ },
+ "殇之木乃伊": {
+  "en": "Amumu",
+  "kind": "champion",
+  "primary": "阿木木",
+  "aliases": [
+   "Amumu",
+   "木乃伊",
+   "阿木木"
+  ]
+ },
+ "阿木木": {
+  "en": "Amumu",
+  "kind": "champion",
+  "primary": "阿木木",
+  "aliases": [
+   "Amumu",
+   "木乃伊",
+   "殇之木乃伊"
+  ]
+ },
+ "冰晶凤凰": {
+  "en": "Anivia",
+  "kind": "champion",
+  "primary": "艾尼维亚",
+  "aliases": [
+   "Anivia",
+   "冰鸟",
+   "艾尼维亚"
+  ]
+ },
+ "艾尼维亚": {
+  "en": "Anivia",
+  "kind": "champion",
+  "primary": "艾尼维亚",
+  "aliases": [
+   "Anivia",
+   "冰晶凤凰",
+   "冰鸟"
+  ]
+ },
+ "黑暗之女": {
+  "en": "Annie",
+  "kind": "champion",
+  "primary": "安妮",
+  "aliases": [
+   "Annie",
+   "安妮",
+   "火女"
+  ]
+ },
+ "安妮": {
+  "en": "Annie",
+  "kind": "champion",
+  "primary": "安妮",
+  "aliases": [
+   "Annie",
+   "火女",
+   "黑暗之女"
+  ]
+ },
+ "残月之肃": {
+  "en": "Aphelios",
+  "kind": "champion",
+  "primary": "厄斐琉斯",
+  "aliases": [
+   "Aphelios",
+   "厄斐琉斯"
+  ]
+ },
+ "厄斐琉斯": {
+  "en": "Aphelios",
+  "kind": "champion",
+  "primary": "厄斐琉斯",
+  "aliases": [
+   "Aphelios",
+   "残月之肃"
+  ]
+ },
+ "艾希": {
+  "en": "Ashe",
+  "kind": "champion",
+  "primary": "艾希",
+  "aliases": [
+   "Ashe",
+   "寒冰射手"
+  ]
+ },
+ "寒冰射手": {
+  "en": "Ashe",
+  "kind": "champion",
+  "primary": "艾希",
+  "aliases": [
+   "Ashe",
+   "艾希"
+  ]
+ },
+ "铸星龙王": {
+  "en": "Aurelion Sol",
+  "kind": "champion",
+  "primary": "奥瑞利安·索尔",
+  "aliases": [
+   "Aurelion Sol",
+   "AurelionSol",
+   "奥瑞利安·索尔"
+  ]
+ },
+ "奥瑞利安·索尔": {
+  "en": "Aurelion Sol",
+  "kind": "champion",
+  "primary": "奥瑞利安·索尔",
+  "aliases": [
+   "Aurelion Sol",
+   "AurelionSol",
+   "铸星龙王"
+  ]
+ },
+ "双界灵兔": {
+  "en": "Aurora",
+  "kind": "champion",
+  "primary": "阿萝拉",
+  "aliases": [
+   "Aurora",
+   "阿萝拉"
+  ]
+ },
+ "阿萝拉": {
+  "en": "Aurora",
+  "kind": "champion",
+  "primary": "阿萝拉",
+  "aliases": [
+   "Aurora",
+   "双界灵兔"
+  ]
+ },
+ "阿兹尔": {
+  "en": "Azir",
+  "kind": "champion",
+  "primary": "阿兹尔",
+  "aliases": [
+   "Azir",
+   "沙漠皇帝",
+   "沙皇"
+  ]
+ },
+ "沙漠皇帝": {
+  "en": "Azir",
+  "kind": "champion",
+  "primary": "阿兹尔",
+  "aliases": [
+   "Azir",
+   "沙皇",
+   "阿兹尔"
+  ]
+ },
+ "巴德": {
+  "en": "Bard",
+  "kind": "champion",
+  "primary": "巴德",
+  "aliases": [
+   "Bard",
+   "星界游神"
+  ]
+ },
+ "星界游神": {
+  "en": "Bard",
+  "kind": "champion",
+  "primary": "巴德",
+  "aliases": [
+   "Bard",
+   "巴德"
+  ]
+ },
+ "卑尔维斯": {
+  "en": "Bel'Veth",
+  "kind": "champion",
+  "primary": "卑尔维斯",
+  "aliases": [
+   "Bel'Veth",
+   "Belveth",
+   "大卑",
+   "虚空女皇"
+  ]
+ },
+ "虚空女皇": {
+  "en": "Bel'Veth",
+  "kind": "champion",
+  "primary": "卑尔维斯",
+  "aliases": [
+   "Bel'Veth",
+   "Belveth",
+   "卑尔维斯",
+   "大卑"
+  ]
+ },
+ "蒸汽机器人": {
+  "en": "Blitzcrank",
+  "kind": "champion",
+  "primary": "布里茨",
+  "aliases": [
+   "Blitzcrank",
+   "布里茨"
+  ]
+ },
+ "布里茨": {
+  "en": "Blitzcrank",
+  "kind": "champion",
+  "primary": "布里茨",
+  "aliases": [
+   "Blitzcrank",
+   "蒸汽机器人"
+  ]
+ },
+ "复仇焰魂": {
+  "en": "Brand",
+  "kind": "champion",
+  "primary": "布兰德",
+  "aliases": [
+   "Brand",
+   "布兰德",
+   "火男"
+  ]
+ },
+ "布兰德": {
+  "en": "Brand",
+  "kind": "champion",
+  "primary": "布兰德",
+  "aliases": [
+   "Brand",
+   "复仇焰魂",
+   "火男"
+  ]
+ },
+ "布隆": {
+  "en": "Braum",
+  "kind": "champion",
+  "primary": "布隆",
+  "aliases": [
+   "Braum",
+   "弗雷尔卓德之心"
+  ]
+ },
+ "弗雷尔卓德之心": {
+  "en": "Braum",
+  "kind": "champion",
+  "primary": "布隆",
+  "aliases": [
+   "Braum",
+   "布隆"
+  ]
+ },
+ "贝蕾亚": {
+  "en": "Briar",
+  "kind": "champion",
+  "primary": "贝蕾亚",
+  "aliases": [
+   "Briar",
+   "狂厄蔷薇"
+  ]
+ },
+ "狂厄蔷薇": {
+  "en": "Briar",
+  "kind": "champion",
+  "primary": "贝蕾亚",
+  "aliases": [
+   "Briar",
+   "贝蕾亚"
+  ]
+ },
+ "皮城女警": {
+  "en": "Caitlyn",
+  "kind": "champion",
+  "primary": "凯特琳",
+  "aliases": [
+   "Caitlyn",
+   "凯特琳"
+  ]
+ },
+ "凯特琳": {
+  "en": "Caitlyn",
+  "kind": "champion",
+  "primary": "凯特琳",
+  "aliases": [
+   "Caitlyn",
+   "皮城女警"
+  ]
+ },
+ "青钢影": {
+  "en": "Camille",
+  "kind": "champion",
+  "primary": "卡蜜尔",
+  "aliases": [
+   "Camille",
+   "卡蜜尔"
+  ]
+ },
+ "卡蜜尔": {
+  "en": "Camille",
+  "kind": "champion",
+  "primary": "卡蜜尔",
+  "aliases": [
+   "Camille",
+   "青钢影"
+  ]
+ },
+ "卡西奥佩娅": {
+  "en": "Cassiopeia",
+  "kind": "champion",
+  "primary": "卡西奥佩娅",
+  "aliases": [
+   "Cassiopeia",
+   "魔蛇之拥"
+  ]
+ },
+ "魔蛇之拥": {
+  "en": "Cassiopeia",
+  "kind": "champion",
+  "primary": "卡西奥佩娅",
+  "aliases": [
+   "Cassiopeia",
+   "卡西奥佩娅"
+  ]
+ },
+ "虚空恐惧": {
+  "en": "Cho'Gath",
+  "kind": "champion",
+  "primary": "科加斯",
+  "aliases": [
+   "Cho'Gath",
+   "Chogath",
+   "大虫子",
+   "科加斯"
+  ]
+ },
+ "科加斯": {
+  "en": "Cho'Gath",
+  "kind": "champion",
+  "primary": "科加斯",
+  "aliases": [
+   "Cho'Gath",
+   "Chogath",
+   "大虫子",
+   "虚空恐惧"
+  ]
+ },
+ "库奇": {
+  "en": "Corki",
+  "kind": "champion",
+  "primary": "库奇",
+  "aliases": [
+   "Corki",
+   "英勇投弹手"
+  ]
+ },
+ "英勇投弹手": {
+  "en": "Corki",
+  "kind": "champion",
+  "primary": "库奇",
+  "aliases": [
+   "Corki",
+   "库奇"
+  ]
+ },
+ "德莱厄斯": {
+  "en": "Darius",
+  "kind": "champion",
+  "primary": "德莱厄斯",
+  "aliases": [
+   "Darius",
+   "诺克萨斯之手"
+  ]
+ },
+ "诺克萨斯之手": {
+  "en": "Darius",
+  "kind": "champion",
+  "primary": "德莱厄斯",
+  "aliases": [
+   "Darius",
+   "德莱厄斯"
+  ]
+ },
+ "黛安娜": {
+  "en": "Diana",
+  "kind": "champion",
+  "primary": "黛安娜",
+  "aliases": [
+   "Diana",
+   "皎月",
+   "皎月女神"
+  ]
+ },
+ "皎月女神": {
+  "en": "Diana",
+  "kind": "champion",
+  "primary": "黛安娜",
+  "aliases": [
+   "Diana",
+   "皎月",
+   "黛安娜"
+  ]
+ },
+ "荣耀行刑官": {
+  "en": "Draven",
+  "kind": "champion",
+  "primary": "德莱文",
+  "aliases": [
+   "Draven",
+   "德莱文"
+  ]
+ },
+ "德莱文": {
+  "en": "Draven",
+  "kind": "champion",
+  "primary": "德莱文",
+  "aliases": [
+   "Draven",
+   "荣耀行刑官"
+  ]
+ },
+ "祖安狂人": {
+  "en": "Dr. Mundo",
+  "kind": "champion",
+  "primary": "蒙多医生",
+  "aliases": [
+   "Dr. Mundo",
+   "DrMundo",
+   "蒙多医生"
+  ]
+ },
+ "蒙多医生": {
+  "en": "Dr. Mundo",
+  "kind": "champion",
+  "primary": "蒙多医生",
+  "aliases": [
+   "Dr. Mundo",
+   "DrMundo",
+   "祖安狂人"
+  ]
+ },
+ "艾克": {
+  "en": "Ekko",
+  "kind": "champion",
+  "primary": "艾克",
+  "aliases": [
+   "Ekko",
+   "时间刺客"
+  ]
+ },
+ "时间刺客": {
+  "en": "Ekko",
+  "kind": "champion",
+  "primary": "艾克",
+  "aliases": [
+   "Ekko",
+   "艾克"
+  ]
+ },
+ "伊莉丝": {
+  "en": "Elise",
+  "kind": "champion",
+  "primary": "伊莉丝",
+  "aliases": [
+   "Elise",
+   "蜘蛛女皇"
+  ]
+ },
+ "蜘蛛女皇": {
+  "en": "Elise",
+  "kind": "champion",
+  "primary": "伊莉丝",
+  "aliases": [
+   "Elise",
+   "伊莉丝"
+  ]
+ },
+ "伊芙琳": {
+  "en": "Evelynn",
+  "kind": "champion",
+  "primary": "伊芙琳",
+  "aliases": [
+   "Evelynn",
+   "寡妇",
+   "痛苦之拥"
+  ]
+ },
+ "痛苦之拥": {
+  "en": "Evelynn",
+  "kind": "champion",
+  "primary": "伊芙琳",
+  "aliases": [
+   "Evelynn",
+   "伊芙琳",
+   "寡妇"
+  ]
+ },
+ "伊泽瑞尔": {
+  "en": "Ezreal",
+  "kind": "champion",
+  "primary": "伊泽瑞尔",
+  "aliases": [
+   "EZ",
+   "Ezreal",
+   "ez",
+   "小黄毛",
+   "探险家"
+  ]
+ },
+ "探险家": {
+  "en": "Ezreal",
+  "kind": "champion",
+  "primary": "伊泽瑞尔",
+  "aliases": [
+   "EZ",
+   "Ezreal",
+   "ez",
+   "伊泽瑞尔",
+   "小黄毛"
+  ]
+ },
+ "远古恐惧": {
+  "en": "Fiddlesticks",
+  "kind": "champion",
+  "primary": "费德提克",
+  "aliases": [
+   "Fiddlesticks",
+   "费德提克"
+  ]
+ },
+ "费德提克": {
+  "en": "Fiddlesticks",
+  "kind": "champion",
+  "primary": "费德提克",
+  "aliases": [
+   "Fiddlesticks",
+   "远古恐惧"
+  ]
+ },
+ "菲奥娜": {
+  "en": "Fiora",
+  "kind": "champion",
+  "primary": "菲奥娜",
+  "aliases": [
+   "Fiora",
+   "剑姬",
+   "无双剑姬"
+  ]
+ },
+ "无双剑姬": {
+  "en": "Fiora",
+  "kind": "champion",
+  "primary": "菲奥娜",
+  "aliases": [
+   "Fiora",
+   "剑姬",
+   "菲奥娜"
+  ]
+ },
+ "菲兹": {
+  "en": "Fizz",
+  "kind": "champion",
+  "primary": "菲兹",
+  "aliases": [
+   "Fizz",
+   "潮汐海灵"
+  ]
+ },
+ "潮汐海灵": {
+  "en": "Fizz",
+  "kind": "champion",
+  "primary": "菲兹",
+  "aliases": [
+   "Fizz",
+   "菲兹"
+  ]
+ },
+ "加里奥": {
+  "en": "Galio",
+  "kind": "champion",
+  "primary": "加里奥",
+  "aliases": [
+   "Galio",
+   "正义巨像"
+  ]
+ },
+ "正义巨像": {
+  "en": "Galio",
+  "kind": "champion",
+  "primary": "加里奥",
+  "aliases": [
+   "Galio",
+   "加里奥"
+  ]
+ },
+ "普朗克": {
+  "en": "Gangplank",
+  "kind": "champion",
+  "primary": "普朗克",
+  "aliases": [
+   "Gangplank",
+   "海洋之灾"
+  ]
+ },
+ "海洋之灾": {
+  "en": "Gangplank",
+  "kind": "champion",
+  "primary": "普朗克",
+  "aliases": [
+   "Gangplank",
+   "普朗克"
+  ]
+ },
+ "德玛西亚之力": {
+  "en": "Garen",
+  "kind": "champion",
+  "primary": "盖伦",
+  "aliases": [
+   "Garen",
+   "盖伦",
+   "草丛伦"
+  ]
+ },
+ "盖伦": {
+  "en": "Garen",
+  "kind": "champion",
+  "primary": "盖伦",
+  "aliases": [
+   "Garen",
+   "德玛西亚之力",
+   "草丛伦"
+  ]
+ },
+ "迷失之牙": {
+  "en": "Gnar",
+  "kind": "champion",
+  "primary": "纳尔",
+  "aliases": [
+   "Gnar",
+   "纳尔"
+  ]
+ },
+ "纳尔": {
+  "en": "Gnar",
+  "kind": "champion",
+  "primary": "纳尔",
+  "aliases": [
+   "Gnar",
+   "迷失之牙"
+  ]
+ },
+ "酒桶": {
+  "en": "Gragas",
+  "kind": "champion",
+  "primary": "古拉加斯",
+  "aliases": [
+   "Gragas",
+   "古拉加斯"
+  ]
+ },
+ "古拉加斯": {
+  "en": "Gragas",
+  "kind": "champion",
+  "primary": "古拉加斯",
+  "aliases": [
+   "Gragas",
+   "酒桶"
+  ]
+ },
+ "格雷福斯": {
+  "en": "Graves",
+  "kind": "champion",
+  "primary": "格雷福斯",
+  "aliases": [
+   "Graves",
+   "法外狂徒"
+  ]
+ },
+ "法外狂徒": {
+  "en": "Graves",
+  "kind": "champion",
+  "primary": "格雷福斯",
+  "aliases": [
+   "Graves",
+   "格雷福斯"
+  ]
+ },
+ "灵罗娃娃": {
+  "en": "Gwen",
+  "kind": "champion",
+  "primary": "格温",
+  "aliases": [
+   "Gwen",
+   "剪刀妹",
+   "格温"
+  ]
+ },
+ "格温": {
+  "en": "Gwen",
+  "kind": "champion",
+  "primary": "格温",
+  "aliases": [
+   "Gwen",
+   "剪刀妹",
+   "灵罗娃娃"
+  ]
+ },
+ "战争之影": {
+  "en": "Hecarim",
+  "kind": "champion",
+  "primary": "赫卡里姆",
+  "aliases": [
+   "Hecarim",
+   "赫卡里姆"
+  ]
+ },
+ "赫卡里姆": {
+  "en": "Hecarim",
+  "kind": "champion",
+  "primary": "赫卡里姆",
+  "aliases": [
+   "Hecarim",
+   "战争之影"
+  ]
+ },
+ "大发明家": {
+  "en": "Heimerdinger",
+  "kind": "champion",
+  "primary": "黑默丁格",
+  "aliases": [
+   "Heimerdinger",
+   "黑默丁格"
+  ]
+ },
+ "黑默丁格": {
+  "en": "Heimerdinger",
+  "kind": "champion",
+  "primary": "黑默丁格",
+  "aliases": [
+   "Heimerdinger",
+   "大发明家"
+  ]
+ },
+ "异画师": {
+  "en": "Hwei",
+  "kind": "champion",
+  "primary": "彗",
+  "aliases": [
+   "Hwei",
+   "彗"
+  ]
+ },
+ "彗": {
+  "en": "Hwei",
+  "kind": "champion",
+  "primary": "彗",
+  "aliases": [
+   "Hwei",
+   "异画师"
+  ]
+ },
+ "海兽祭司": {
+  "en": "Illaoi",
+  "kind": "champion",
+  "primary": "俄洛伊",
+  "aliases": [
+   "Illaoi",
+   "俄洛伊"
+  ]
+ },
+ "俄洛伊": {
+  "en": "Illaoi",
+  "kind": "champion",
+  "primary": "俄洛伊",
+  "aliases": [
+   "Illaoi",
+   "海兽祭司"
+  ]
+ },
+ "刀锋舞者": {
+  "en": "Irelia",
+  "kind": "champion",
+  "primary": "艾瑞莉娅",
+  "aliases": [
+   "Irelia",
+   "刀妹",
+   "艾瑞莉娅"
+  ]
+ },
+ "艾瑞莉娅": {
+  "en": "Irelia",
+  "kind": "champion",
+  "primary": "艾瑞莉娅",
+  "aliases": [
+   "Irelia",
+   "刀妹",
+   "刀锋舞者"
+  ]
+ },
+ "艾翁": {
+  "en": "Ivern",
+  "kind": "champion",
+  "primary": "艾翁",
+  "aliases": [
+   "Ivern",
+   "翠神"
+  ]
+ },
+ "翠神": {
+  "en": "Ivern",
+  "kind": "champion",
+  "primary": "艾翁",
+  "aliases": [
+   "Ivern",
+   "艾翁"
+  ]
+ },
+ "风暴之怒": {
+  "en": "Janna",
+  "kind": "champion",
+  "primary": "迦娜",
+  "aliases": [
+   "Janna",
+   "迦娜"
+  ]
+ },
+ "迦娜": {
+  "en": "Janna",
+  "kind": "champion",
+  "primary": "迦娜",
+  "aliases": [
+   "Janna",
+   "风暴之怒"
+  ]
+ },
+ "德玛西亚皇子": {
+  "en": "Jarvan IV",
+  "kind": "champion",
+  "primary": "嘉文四世",
+  "aliases": [
+   "Jarvan IV",
+   "JarvanIV",
+   "嘉文四世",
+   "皇子"
+  ]
+ },
+ "嘉文四世": {
+  "en": "Jarvan IV",
+  "kind": "champion",
+  "primary": "嘉文四世",
+  "aliases": [
+   "Jarvan IV",
+   "JarvanIV",
+   "德玛西亚皇子",
+   "皇子"
+  ]
+ },
+ "武器大师": {
+  "en": "Jax",
+  "kind": "champion",
+  "primary": "贾克斯",
+  "aliases": [
+   "Jax",
+   "贾克斯"
+  ]
+ },
+ "贾克斯": {
+  "en": "Jax",
+  "kind": "champion",
+  "primary": "贾克斯",
+  "aliases": [
+   "Jax",
+   "武器大师"
+  ]
+ },
+ "未来守护者": {
+  "en": "Jayce",
+  "kind": "champion",
+  "primary": "杰斯",
+  "aliases": [
+   "Jayce",
+   "杰斯"
+  ]
+ },
+ "杰斯": {
+  "en": "Jayce",
+  "kind": "champion",
+  "primary": "杰斯",
+  "aliases": [
+   "Jayce",
+   "未来守护者"
+  ]
+ },
+ "戏命师": {
+  "en": "Jhin",
+  "kind": "champion",
+  "primary": "烬",
+  "aliases": [
+   "Jhin",
+   "烬"
+  ]
+ },
+ "烬": {
+  "en": "Jhin",
+  "kind": "champion",
+  "primary": "烬",
+  "aliases": [
+   "Jhin",
+   "戏命师"
+  ]
+ },
+ "暴走萝莉": {
+  "en": "Jinx",
+  "kind": "champion",
+  "primary": "金克丝",
+  "aliases": [
+   "Jinx",
+   "爆爆",
+   "金克丝"
+  ]
+ },
+ "金克丝": {
+  "en": "Jinx",
+  "kind": "champion",
+  "primary": "金克丝",
+  "aliases": [
+   "Jinx",
+   "暴走萝莉",
+   "爆爆"
+  ]
+ },
+ "虚空之女": {
+  "en": "Kai'Sa",
+  "kind": "champion",
+  "primary": "卡莎",
+  "aliases": [
+   "Kai'Sa",
+   "Kaisa",
+   "凯莎",
+   "卡莎"
+  ]
+ },
+ "卡莎": {
+  "en": "Kai'Sa",
+  "kind": "champion",
+  "primary": "卡莎",
+  "aliases": [
+   "Kai'Sa",
+   "Kaisa",
+   "凯莎",
+   "虚空之女"
+  ]
+ },
+ "复仇之矛": {
+  "en": "Kalista",
+  "kind": "champion",
+  "primary": "卡莉丝塔",
+  "aliases": [
+   "Kalista",
+   "卡莉丝塔",
+   "滑板鞋"
+  ]
+ },
+ "卡莉丝塔": {
+  "en": "Kalista",
+  "kind": "champion",
+  "primary": "卡莉丝塔",
+  "aliases": [
+   "Kalista",
+   "复仇之矛",
+   "滑板鞋"
+  ]
+ },
+ "天启者": {
+  "en": "Karma",
+  "kind": "champion",
+  "primary": "卡尔玛",
+  "aliases": [
+   "Karma",
+   "卡尔玛"
+  ]
+ },
+ "卡尔玛": {
+  "en": "Karma",
+  "kind": "champion",
+  "primary": "卡尔玛",
+  "aliases": [
+   "Karma",
+   "天启者"
+  ]
+ },
+ "死亡颂唱者": {
+  "en": "Karthus",
+  "kind": "champion",
+  "primary": "卡尔萨斯",
+  "aliases": [
+   "Karthus",
+   "卡尔萨斯",
+   "死歌"
+  ]
+ },
+ "卡尔萨斯": {
+  "en": "Karthus",
+  "kind": "champion",
+  "primary": "卡尔萨斯",
+  "aliases": [
+   "Karthus",
+   "死亡颂唱者",
+   "死歌"
+  ]
+ },
+ "虚空行者": {
+  "en": "Kassadin",
+  "kind": "champion",
+  "primary": "卡萨丁",
+  "aliases": [
+   "Kassadin",
+   "卡萨丁"
+  ]
+ },
+ "卡萨丁": {
+  "en": "Kassadin",
+  "kind": "champion",
+  "primary": "卡萨丁",
+  "aliases": [
+   "Kassadin",
+   "虚空行者"
+  ]
+ },
+ "不祥之刃": {
+  "en": "Katarina",
+  "kind": "champion",
+  "primary": "卡特琳娜",
+  "aliases": [
+   "Katarina",
+   "卡特琳娜"
+  ]
+ },
+ "卡特琳娜": {
+  "en": "Katarina",
+  "kind": "champion",
+  "primary": "卡特琳娜",
+  "aliases": [
+   "Katarina",
+   "不祥之刃"
+  ]
+ },
+ "凯尔": {
+  "en": "Kayle",
+  "kind": "champion",
+  "primary": "凯尔",
+  "aliases": [
+   "Kayle",
+   "天使",
+   "正义天使"
+  ]
+ },
+ "正义天使": {
+  "en": "Kayle",
+  "kind": "champion",
+  "primary": "凯尔",
+  "aliases": [
+   "Kayle",
+   "凯尔",
+   "天使"
+  ]
+ },
+ "影流之镰": {
+  "en": "Kayn",
+  "kind": "champion",
+  "primary": "凯隐",
+  "aliases": [
+   "Kayn",
+   "凯隐"
+  ]
+ },
+ "凯隐": {
+  "en": "Kayn",
+  "kind": "champion",
+  "primary": "凯隐",
+  "aliases": [
+   "Kayn",
+   "影流之镰"
+  ]
+ },
+ "狂暴之心": {
+  "en": "Kennen",
+  "kind": "champion",
+  "primary": "凯南",
+  "aliases": [
+   "Kennen",
+   "凯南"
+  ]
+ },
+ "凯南": {
+  "en": "Kennen",
+  "kind": "champion",
+  "primary": "凯南",
+  "aliases": [
+   "Kennen",
+   "狂暴之心"
+  ]
+ },
+ "卡兹克": {
+  "en": "Kha'Zix",
+  "kind": "champion",
+  "primary": "卡兹克",
+  "aliases": [
+   "Kha'Zix",
+   "Khazix",
+   "虚空掠夺者",
+   "螳螂"
+  ]
+ },
+ "虚空掠夺者": {
+  "en": "Kha'Zix",
+  "kind": "champion",
+  "primary": "卡兹克",
+  "aliases": [
+   "Kha'Zix",
+   "Khazix",
+   "卡兹克",
+   "螳螂"
+  ]
+ },
+ "千珏": {
+  "en": "Kindred",
+  "kind": "champion",
+  "primary": "千珏",
+  "aliases": [
+   "Kindred",
+   "永猎双子"
+  ]
+ },
+ "永猎双子": {
+  "en": "Kindred",
+  "kind": "champion",
+  "primary": "千珏",
+  "aliases": [
+   "Kindred",
+   "千珏"
+  ]
+ },
+ "暴怒骑士": {
+  "en": "Kled",
+  "kind": "champion",
+  "primary": "克烈",
+  "aliases": [
+   "Kled",
+   "克烈"
+  ]
+ },
+ "克烈": {
+  "en": "Kled",
+  "kind": "champion",
+  "primary": "克烈",
+  "aliases": [
+   "Kled",
+   "暴怒骑士"
+  ]
+ },
+ "克格莫": {
+  "en": "Kog'Maw",
+  "kind": "champion",
+  "primary": "克格莫",
+  "aliases": [
+   "Kog'Maw",
+   "KogMaw",
+   "大嘴",
+   "深渊巨口"
+  ]
+ },
+ "深渊巨口": {
+  "en": "Kog'Maw",
+  "kind": "champion",
+  "primary": "克格莫",
+  "aliases": [
+   "Kog'Maw",
+   "KogMaw",
+   "克格莫",
+   "大嘴"
+  ]
+ },
+ "纳祖芒荣耀": {
+  "en": "K'Sante",
+  "kind": "champion",
+  "primary": "奎桑提",
+  "aliases": [
+   "K'Sante",
+   "KSante",
+   "奎桑提"
+  ]
+ },
+ "奎桑提": {
+  "en": "K'Sante",
+  "kind": "champion",
+  "primary": "奎桑提",
+  "aliases": [
+   "K'Sante",
+   "KSante",
+   "纳祖芒荣耀"
+  ]
+ },
+ "乐芙兰": {
+  "en": "LeBlanc",
+  "kind": "champion",
+  "primary": "乐芙兰",
+  "aliases": [
+   "LeBlanc",
+   "Leblanc",
+   "妖姬",
+   "诡术妖姬"
+  ]
+ },
+ "诡术妖姬": {
+  "en": "LeBlanc",
+  "kind": "champion",
+  "primary": "乐芙兰",
+  "aliases": [
+   "LeBlanc",
+   "Leblanc",
+   "乐芙兰",
+   "妖姬"
+  ]
+ },
+ "李青": {
+  "en": "Lee Sin",
+  "kind": "champion",
+  "primary": "李青",
+  "aliases": [
+   "Lee Sin",
+   "LeeSin",
+   "盲僧"
+  ]
+ },
+ "盲僧": {
+  "en": "Lee Sin",
+  "kind": "champion",
+  "primary": "李青",
+  "aliases": [
+   "Lee Sin",
+   "LeeSin",
+   "李青"
+  ]
+ },
+ "曙光女神": {
+  "en": "Leona",
+  "kind": "champion",
+  "primary": "蕾欧娜",
+  "aliases": [
+   "Leona",
+   "日女",
+   "蕾欧娜"
+  ]
+ },
+ "蕾欧娜": {
+  "en": "Leona",
+  "kind": "champion",
+  "primary": "蕾欧娜",
+  "aliases": [
+   "Leona",
+   "日女",
+   "曙光女神"
+  ]
+ },
+ "含羞蓓蕾": {
+  "en": "Lillia",
+  "kind": "champion",
+  "primary": "莉莉娅",
+  "aliases": [
+   "Lillia",
+   "莉莉娅"
+  ]
+ },
+ "莉莉娅": {
+  "en": "Lillia",
+  "kind": "champion",
+  "primary": "莉莉娅",
+  "aliases": [
+   "Lillia",
+   "含羞蓓蕾"
+  ]
+ },
+ "丽桑卓": {
+  "en": "Lissandra",
+  "kind": "champion",
+  "primary": "丽桑卓",
+  "aliases": [
+   "Lissandra",
+   "冰霜女巫"
+  ]
+ },
+ "冰霜女巫": {
+  "en": "Lissandra",
+  "kind": "champion",
+  "primary": "丽桑卓",
+  "aliases": [
+   "Lissandra",
+   "丽桑卓"
+  ]
+ },
+ "灰烬驱魔人": {
+  "en": "Locke",
+  "kind": "champion",
+  "primary": "洛克",
+  "aliases": [
+   "Locke",
+   "洛克"
+  ]
+ },
+ "洛克": {
+  "en": "Locke",
+  "kind": "champion",
+  "primary": "洛克",
+  "aliases": [
+   "Locke",
+   "灰烬驱魔人"
+  ]
+ },
+ "圣枪游侠": {
+  "en": "Lucian",
+  "kind": "champion",
+  "primary": "卢锡安",
+  "aliases": [
+   "Lucian",
+   "卢锡安",
+   "圣枪",
+   "奥巴马"
+  ]
+ },
+ "卢锡安": {
+  "en": "Lucian",
+  "kind": "champion",
+  "primary": "卢锡安",
+  "aliases": [
+   "Lucian",
+   "圣枪",
+   "圣枪游侠",
+   "奥巴马"
+  ]
+ },
+ "仙灵女巫": {
+  "en": "Lulu",
+  "kind": "champion",
+  "primary": "璐璐",
+  "aliases": [
+   "Lulu",
+   "璐璐"
+  ]
+ },
+ "璐璐": {
+  "en": "Lulu",
+  "kind": "champion",
+  "primary": "璐璐",
+  "aliases": [
+   "Lulu",
+   "仙灵女巫"
+  ]
+ },
+ "光辉女郎": {
+  "en": "Lux",
+  "kind": "champion",
+  "primary": "拉克丝",
+  "aliases": [
+   "Lux",
+   "拉克丝"
+  ]
+ },
+ "拉克丝": {
+  "en": "Lux",
+  "kind": "champion",
+  "primary": "拉克丝",
+  "aliases": [
+   "Lux",
+   "光辉女郎"
+  ]
+ },
+ "熔岩巨兽": {
+  "en": "Malphite",
+  "kind": "champion",
+  "primary": "墨菲特",
+  "aliases": [
+   "Malphite",
+   "墨菲特",
+   "石头人"
+  ]
+ },
+ "墨菲特": {
+  "en": "Malphite",
+  "kind": "champion",
+  "primary": "墨菲特",
+  "aliases": [
+   "Malphite",
+   "熔岩巨兽",
+   "石头人"
+  ]
+ },
+ "虚空先知": {
+  "en": "Malzahar",
+  "kind": "champion",
+  "primary": "玛尔扎哈",
+  "aliases": [
+   "Malzahar",
+   "玛尔扎哈"
+  ]
+ },
+ "玛尔扎哈": {
+  "en": "Malzahar",
+  "kind": "champion",
+  "primary": "玛尔扎哈",
+  "aliases": [
+   "Malzahar",
+   "虚空先知"
+  ]
+ },
+ "茂凯": {
+  "en": "Maokai",
+  "kind": "champion",
+  "primary": "茂凯",
+  "aliases": [
+   "Maokai",
+   "扭曲树精"
+  ]
+ },
+ "扭曲树精": {
+  "en": "Maokai",
+  "kind": "champion",
+  "primary": "茂凯",
+  "aliases": [
+   "Maokai",
+   "茂凯"
+  ]
+ },
+ "易": {
+  "en": "Master Yi",
+  "kind": "champion",
+  "primary": "易",
+  "aliases": [
+   "Master Yi",
+   "MasterYi",
+   "剑圣",
+   "无极剑圣",
+   "易大师"
+  ]
+ },
+ "无极剑圣": {
+  "en": "Master Yi",
+  "kind": "champion",
+  "primary": "易",
+  "aliases": [
+   "Master Yi",
+   "MasterYi",
+   "剑圣",
+   "易",
+   "易大师"
+  ]
+ },
+ "梅尔": {
+  "en": "Mel",
+  "kind": "champion",
+  "primary": "梅尔",
+  "aliases": [
+   "Mel",
+   "流光镜影"
+  ]
+ },
+ "流光镜影": {
+  "en": "Mel",
+  "kind": "champion",
+  "primary": "梅尔",
+  "aliases": [
+   "Mel",
+   "梅尔"
+  ]
+ },
+ "米利欧": {
+  "en": "Milio",
+  "kind": "champion",
+  "primary": "米利欧",
+  "aliases": [
+   "Milio",
+   "明烛"
+  ]
+ },
+ "明烛": {
+  "en": "Milio",
+  "kind": "champion",
+  "primary": "米利欧",
+  "aliases": [
+   "Milio",
+   "米利欧"
+  ]
+ },
+ "赏金猎人": {
+  "en": "Miss Fortune",
+  "kind": "champion",
+  "primary": "厄运小姐",
+  "aliases": [
+   "Miss Fortune",
+   "MissFortune",
+   "厄运小姐"
+  ]
+ },
+ "厄运小姐": {
+  "en": "Miss Fortune",
+  "kind": "champion",
+  "primary": "厄运小姐",
+  "aliases": [
+   "Miss Fortune",
+   "MissFortune",
+   "赏金猎人"
+  ]
+ },
+ "孙悟空": {
+  "en": "Wukong",
+  "kind": "champion",
+  "primary": "孙悟空",
+  "aliases": [
+   "MonkeyKing",
+   "Wukong",
+   "齐天大圣"
+  ]
+ },
+ "齐天大圣": {
+  "en": "Wukong",
+  "kind": "champion",
+  "primary": "孙悟空",
+  "aliases": [
+   "MonkeyKing",
+   "Wukong",
+   "孙悟空"
+  ]
+ },
+ "铁铠冥魂": {
+  "en": "Mordekaiser",
+  "kind": "champion",
+  "primary": "莫德凯撒",
+  "aliases": [
+   "Mordekaiser",
+   "莫德凯撒"
+  ]
+ },
+ "莫德凯撒": {
+  "en": "Mordekaiser",
+  "kind": "champion",
+  "primary": "莫德凯撒",
+  "aliases": [
+   "Mordekaiser",
+   "铁铠冥魂"
+  ]
+ },
+ "堕落天使": {
+  "en": "Morgana",
+  "kind": "champion",
+  "primary": "莫甘娜",
+  "aliases": [
+   "Morgana",
+   "莫甘娜"
+  ]
+ },
+ "莫甘娜": {
+  "en": "Morgana",
+  "kind": "champion",
+  "primary": "莫甘娜",
+  "aliases": [
+   "Morgana",
+   "堕落天使"
+  ]
+ },
+ "百裂冥犬": {
+  "en": "Naafiri",
+  "kind": "champion",
+  "primary": "纳亚菲利",
+  "aliases": [
+   "Naafiri",
+   "纳亚菲利"
+  ]
+ },
+ "纳亚菲利": {
+  "en": "Naafiri",
+  "kind": "champion",
+  "primary": "纳亚菲利",
+  "aliases": [
+   "Naafiri",
+   "百裂冥犬"
+  ]
+ },
+ "唤潮鲛姬": {
+  "en": "Nami",
+  "kind": "champion",
+  "primary": "娜美",
+  "aliases": [
+   "Nami",
+   "娜美",
+   "美人鱼"
+  ]
+ },
+ "娜美": {
+  "en": "Nami",
+  "kind": "champion",
+  "primary": "娜美",
+  "aliases": [
+   "Nami",
+   "唤潮鲛姬",
+   "美人鱼"
+  ]
+ },
+ "内瑟斯": {
+  "en": "Nasus",
+  "kind": "champion",
+  "primary": "内瑟斯",
+  "aliases": [
+   "Nasus",
+   "沙漠死神",
+   "狗头"
+  ]
+ },
+ "沙漠死神": {
+  "en": "Nasus",
+  "kind": "champion",
+  "primary": "内瑟斯",
+  "aliases": [
+   "Nasus",
+   "内瑟斯",
+   "狗头"
+  ]
+ },
+ "诺提勒斯": {
+  "en": "Nautilus",
+  "kind": "champion",
+  "primary": "诺提勒斯",
+  "aliases": [
+   "Nautilus",
+   "深海泰坦"
+  ]
+ },
+ "深海泰坦": {
+  "en": "Nautilus",
+  "kind": "champion",
+  "primary": "诺提勒斯",
+  "aliases": [
+   "Nautilus",
+   "诺提勒斯"
+  ]
+ },
+ "万花通灵": {
+  "en": "Neeko",
+  "kind": "champion",
+  "primary": "妮蔻",
+  "aliases": [
+   "Neeko",
+   "妮蔻"
+  ]
+ },
+ "妮蔻": {
+  "en": "Neeko",
+  "kind": "champion",
+  "primary": "妮蔻",
+  "aliases": [
+   "Neeko",
+   "万花通灵"
+  ]
+ },
+ "奈德丽": {
+  "en": "Nidalee",
+  "kind": "champion",
+  "primary": "奈德丽",
+  "aliases": [
+   "Nidalee",
+   "狂野女猎手",
+   "豹女"
+  ]
+ },
+ "狂野女猎手": {
+  "en": "Nidalee",
+  "kind": "champion",
+  "primary": "奈德丽",
+  "aliases": [
+   "Nidalee",
+   "奈德丽",
+   "豹女"
+  ]
+ },
+ "尼菈": {
+  "en": "Nilah",
+  "kind": "champion",
+  "primary": "尼菈",
+  "aliases": [
+   "Nilah",
+   "不羁之悦"
+  ]
+ },
+ "不羁之悦": {
+  "en": "Nilah",
+  "kind": "champion",
+  "primary": "尼菈",
+  "aliases": [
+   "Nilah",
+   "尼菈"
+  ]
+ },
+ "永恒梦魇": {
+  "en": "Nocturne",
+  "kind": "champion",
+  "primary": "魔腾",
+  "aliases": [
+   "Nocturne",
+   "魔腾"
+  ]
+ },
+ "魔腾": {
+  "en": "Nocturne",
+  "kind": "champion",
+  "primary": "魔腾",
+  "aliases": [
+   "Nocturne",
+   "永恒梦魇"
+  ]
+ },
+ "努努和威朗普": {
+  "en": "Nunu & Willump",
+  "kind": "champion",
+  "primary": "努努和威朗普",
+  "aliases": [
+   "Nunu",
+   "Nunu & Willump",
+   "雪人",
+   "雪原双子"
+  ]
+ },
+ "雪原双子": {
+  "en": "Nunu & Willump",
+  "kind": "champion",
+  "primary": "努努和威朗普",
+  "aliases": [
+   "Nunu",
+   "Nunu & Willump",
+   "努努和威朗普",
+   "雪人"
+  ]
+ },
+ "奥拉夫": {
+  "en": "Olaf",
+  "kind": "champion",
+  "primary": "奥拉夫",
+  "aliases": [
+   "Olaf",
+   "狂战士"
+  ]
+ },
+ "狂战士": {
+  "en": "Olaf",
+  "kind": "champion",
+  "primary": "奥拉夫",
+  "aliases": [
+   "Olaf",
+   "奥拉夫"
+  ]
+ },
+ "发条魔灵": {
+  "en": "Orianna",
+  "kind": "champion",
+  "primary": "奥莉安娜",
+  "aliases": [
+   "Orianna",
+   "发条",
+   "奥莉安娜"
+  ]
+ },
+ "奥莉安娜": {
+  "en": "Orianna",
+  "kind": "champion",
+  "primary": "奥莉安娜",
+  "aliases": [
+   "Orianna",
+   "发条",
+   "发条魔灵"
+  ]
+ },
+ "山隐之焰": {
+  "en": "Ornn",
+  "kind": "champion",
+  "primary": "奥恩",
+  "aliases": [
+   "Ornn",
+   "奥恩",
+   "山羊"
+  ]
+ },
+ "奥恩": {
+  "en": "Ornn",
+  "kind": "champion",
+  "primary": "奥恩",
+  "aliases": [
+   "Ornn",
+   "山羊",
+   "山隐之焰"
+  ]
+ },
+ "不屈之枪": {
+  "en": "Pantheon",
+  "kind": "champion",
+  "primary": "潘森",
+  "aliases": [
+   "Pantheon",
+   "潘森"
+  ]
+ },
+ "潘森": {
+  "en": "Pantheon",
+  "kind": "champion",
+  "primary": "潘森",
+  "aliases": [
+   "Pantheon",
+   "不屈之枪"
+  ]
+ },
+ "圣锤之毅": {
+  "en": "Poppy",
+  "kind": "champion",
+  "primary": "波比",
+  "aliases": [
+   "Poppy",
+   "波比"
+  ]
+ },
+ "波比": {
+  "en": "Poppy",
+  "kind": "champion",
+  "primary": "波比",
+  "aliases": [
+   "Poppy",
+   "圣锤之毅"
+  ]
+ },
+ "血港鬼影": {
+  "en": "Pyke",
+  "kind": "champion",
+  "primary": "派克",
+  "aliases": [
+   "Pyke",
+   "水鬼",
+   "派克"
+  ]
+ },
+ "派克": {
+  "en": "Pyke",
+  "kind": "champion",
+  "primary": "派克",
+  "aliases": [
+   "Pyke",
+   "水鬼",
+   "血港鬼影"
+  ]
+ },
+ "元素女皇": {
+  "en": "Qiyana",
+  "kind": "champion",
+  "primary": "奇亚娜",
+  "aliases": [
+   "Qiyana",
+   "奇亚娜"
+  ]
+ },
+ "奇亚娜": {
+  "en": "Qiyana",
+  "kind": "champion",
+  "primary": "奇亚娜",
+  "aliases": [
+   "Qiyana",
+   "元素女皇"
+  ]
+ },
+ "奎因": {
+  "en": "Quinn",
+  "kind": "champion",
+  "primary": "奎因",
+  "aliases": [
+   "Quinn",
+   "德玛西亚之翼"
+  ]
+ },
+ "德玛西亚之翼": {
+  "en": "Quinn",
+  "kind": "champion",
+  "primary": "奎因",
+  "aliases": [
+   "Quinn",
+   "奎因"
+  ]
+ },
+ "洛": {
+  "en": "Rakan",
+  "kind": "champion",
+  "primary": "洛",
+  "aliases": [
+   "Rakan",
+   "幻翎"
+  ]
+ },
+ "幻翎": {
+  "en": "Rakan",
+  "kind": "champion",
+  "primary": "洛",
+  "aliases": [
+   "Rakan",
+   "洛"
+  ]
+ },
+ "披甲龙龟": {
+  "en": "Rammus",
+  "kind": "champion",
+  "primary": "拉莫斯",
+  "aliases": [
+   "Rammus",
+   "拉莫斯",
+   "龟龟"
+  ]
+ },
+ "拉莫斯": {
+  "en": "Rammus",
+  "kind": "champion",
+  "primary": "拉莫斯",
+  "aliases": [
+   "Rammus",
+   "披甲龙龟",
+   "龟龟"
+  ]
+ },
+ "雷克塞": {
+  "en": "Rek'Sai",
+  "kind": "champion",
+  "primary": "雷克塞",
+  "aliases": [
+   "Rek'Sai",
+   "RekSai",
+   "挖掘机",
+   "虚空遁地兽"
+  ]
+ },
+ "虚空遁地兽": {
+  "en": "Rek'Sai",
+  "kind": "champion",
+  "primary": "雷克塞",
+  "aliases": [
+   "Rek'Sai",
+   "RekSai",
+   "挖掘机",
+   "雷克塞"
+  ]
+ },
+ "镕铁少女": {
+  "en": "Rell",
+  "kind": "champion",
+  "primary": "芮尔",
+  "aliases": [
+   "Rell",
+   "芮尔"
+  ]
+ },
+ "芮尔": {
+  "en": "Rell",
+  "kind": "champion",
+  "primary": "芮尔",
+  "aliases": [
+   "Rell",
+   "镕铁少女"
+  ]
+ },
+ "烈娜塔 · 戈拉斯克": {
+  "en": "Renata Glasc",
+  "kind": "champion",
+  "primary": "烈娜塔 · 戈拉斯克",
+  "aliases": [
+   "Renata",
+   "Renata Glasc",
+   "炼金男爵"
+  ]
+ },
+ "炼金男爵": {
+  "en": "Renata Glasc",
+  "kind": "champion",
+  "primary": "烈娜塔 · 戈拉斯克",
+  "aliases": [
+   "Renata",
+   "Renata Glasc",
+   "烈娜塔 · 戈拉斯克"
+  ]
+ },
+ "雷克顿": {
+  "en": "Renekton",
+  "kind": "champion",
+  "primary": "雷克顿",
+  "aliases": [
+   "Renekton",
+   "荒漠屠夫",
+   "鳄鱼"
+  ]
+ },
+ "荒漠屠夫": {
+  "en": "Renekton",
+  "kind": "champion",
+  "primary": "雷克顿",
+  "aliases": [
+   "Renekton",
+   "雷克顿",
+   "鳄鱼"
+  ]
+ },
+ "雷恩加尔": {
+  "en": "Rengar",
+  "kind": "champion",
+  "primary": "雷恩加尔",
+  "aliases": [
+   "Rengar",
+   "傲之追猎者",
+   "狮子狗"
+  ]
+ },
+ "傲之追猎者": {
+  "en": "Rengar",
+  "kind": "champion",
+  "primary": "雷恩加尔",
+  "aliases": [
+   "Rengar",
+   "狮子狗",
+   "雷恩加尔"
+  ]
+ },
+ "锐雯": {
+  "en": "Riven",
+  "kind": "champion",
+  "primary": "锐雯",
+  "aliases": [
+   "Riven",
+   "放逐之刃"
+  ]
+ },
+ "放逐之刃": {
+  "en": "Riven",
+  "kind": "champion",
+  "primary": "锐雯",
+  "aliases": [
+   "Riven",
+   "锐雯"
+  ]
+ },
+ "兰博": {
+  "en": "Rumble",
+  "kind": "champion",
+  "primary": "兰博",
+  "aliases": [
+   "Rumble",
+   "机械公敌"
+  ]
+ },
+ "机械公敌": {
+  "en": "Rumble",
+  "kind": "champion",
+  "primary": "兰博",
+  "aliases": [
+   "Rumble",
+   "兰博"
+  ]
+ },
+ "符文法师": {
+  "en": "Ryze",
+  "kind": "champion",
+  "primary": "瑞兹",
+  "aliases": [
+   "Ryze",
+   "瑞兹"
+  ]
+ },
+ "瑞兹": {
+  "en": "Ryze",
+  "kind": "champion",
+  "primary": "瑞兹",
+  "aliases": [
+   "Ryze",
+   "符文法师"
+  ]
+ },
+ "莎弥拉": {
+  "en": "Samira",
+  "kind": "champion",
+  "primary": "莎弥拉",
+  "aliases": [
+   "Samira",
+   "沙漠玫瑰"
+  ]
+ },
+ "沙漠玫瑰": {
+  "en": "Samira",
+  "kind": "champion",
+  "primary": "莎弥拉",
+  "aliases": [
+   "Samira",
+   "莎弥拉"
+  ]
+ },
+ "瑟庄妮": {
+  "en": "Sejuani",
+  "kind": "champion",
+  "primary": "瑟庄妮",
+  "aliases": [
+   "Sejuani",
+   "北地之怒"
+  ]
+ },
+ "北地之怒": {
+  "en": "Sejuani",
+  "kind": "champion",
+  "primary": "瑟庄妮",
+  "aliases": [
+   "Sejuani",
+   "瑟庄妮"
+  ]
+ },
+ "涤魂圣枪": {
+  "en": "Senna",
+  "kind": "champion",
+  "primary": "赛娜",
+  "aliases": [
+   "Senna",
+   "塞纳",
+   "赛娜"
+  ]
+ },
+ "赛娜": {
+  "en": "Senna",
+  "kind": "champion",
+  "primary": "赛娜",
+  "aliases": [
+   "Senna",
+   "塞纳",
+   "涤魂圣枪"
+  ]
+ },
+ "星籁歌姬": {
+  "en": "Seraphine",
+  "kind": "champion",
+  "primary": "萨勒芬妮",
+  "aliases": [
+   "Seraphine",
+   "萨勒芬妮",
+   "酸辣粉"
+  ]
+ },
+ "萨勒芬妮": {
+  "en": "Seraphine",
+  "kind": "champion",
+  "primary": "萨勒芬妮",
+  "aliases": [
+   "Seraphine",
+   "星籁歌姬",
+   "酸辣粉"
+  ]
+ },
+ "腕豪": {
+  "en": "Sett",
+  "kind": "champion",
+  "primary": "瑟提",
+  "aliases": [
+   "Sett",
+   "瑟提"
+  ]
+ },
+ "瑟提": {
+  "en": "Sett",
+  "kind": "champion",
+  "primary": "瑟提",
+  "aliases": [
+   "Sett",
+   "腕豪"
+  ]
+ },
+ "萨科": {
+  "en": "Shaco",
+  "kind": "champion",
+  "primary": "萨科",
+  "aliases": [
+   "Shaco",
+   "恶魔小丑"
+  ]
+ },
+ "恶魔小丑": {
+  "en": "Shaco",
+  "kind": "champion",
+  "primary": "萨科",
+  "aliases": [
+   "Shaco",
+   "萨科"
+  ]
+ },
+ "慎": {
+  "en": "Shen",
+  "kind": "champion",
+  "primary": "慎",
+  "aliases": [
+   "Shen",
+   "暮光之眼"
+  ]
+ },
+ "暮光之眼": {
+  "en": "Shen",
+  "kind": "champion",
+  "primary": "慎",
+  "aliases": [
+   "Shen",
+   "慎"
+  ]
+ },
+ "龙血武姬": {
+  "en": "Shyvana",
+  "kind": "champion",
+  "primary": "希瓦娜",
+  "aliases": [
+   "Shyvana",
+   "希瓦娜",
+   "龙女"
+  ]
+ },
+ "希瓦娜": {
+  "en": "Shyvana",
+  "kind": "champion",
+  "primary": "希瓦娜",
+  "aliases": [
+   "Shyvana",
+   "龙女",
+   "龙血武姬"
+  ]
+ },
+ "辛吉德": {
+  "en": "Singed",
+  "kind": "champion",
+  "primary": "辛吉德",
+  "aliases": [
+   "Singed",
+   "炼金术士"
+  ]
+ },
+ "炼金术士": {
+  "en": "Singed",
+  "kind": "champion",
+  "primary": "辛吉德",
+  "aliases": [
+   "Singed",
+   "辛吉德"
+  ]
+ },
+ "亡灵战神": {
+  "en": "Sion",
+  "kind": "champion",
+  "primary": "赛恩",
+  "aliases": [
+   "Sion",
+   "赛恩"
+  ]
+ },
+ "赛恩": {
+  "en": "Sion",
+  "kind": "champion",
+  "primary": "赛恩",
+  "aliases": [
+   "Sion",
+   "亡灵战神"
+  ]
+ },
+ "战争女神": {
+  "en": "Sivir",
+  "kind": "champion",
+  "primary": "希维尔",
+  "aliases": [
+   "Sivir",
+   "希维尔",
+   "轮子妈"
+  ]
+ },
+ "希维尔": {
+  "en": "Sivir",
+  "kind": "champion",
+  "primary": "希维尔",
+  "aliases": [
+   "Sivir",
+   "战争女神",
+   "轮子妈"
+  ]
+ },
+ "斯卡纳": {
+  "en": "Skarner",
+  "kind": "champion",
+  "primary": "斯卡纳",
+  "aliases": [
+   "Skarner",
+   "上古领主"
+  ]
+ },
+ "上古领主": {
+  "en": "Skarner",
+  "kind": "champion",
+  "primary": "斯卡纳",
+  "aliases": [
+   "Skarner",
+   "斯卡纳"
+  ]
+ },
+ "斯莫德": {
+  "en": "Smolder",
+  "kind": "champion",
+  "primary": "斯莫德",
+  "aliases": [
+   "Smolder",
+   "小火龙",
+   "炽炎雏龙"
+  ]
+ },
+ "炽炎雏龙": {
+  "en": "Smolder",
+  "kind": "champion",
+  "primary": "斯莫德",
+  "aliases": [
+   "Smolder",
+   "小火龙",
+   "斯莫德"
+  ]
+ },
+ "琴瑟仙女": {
+  "en": "Sona",
+  "kind": "champion",
+  "primary": "娑娜",
+  "aliases": [
+   "Sona",
+   "娑娜",
+   "琴女"
+  ]
+ },
+ "娑娜": {
+  "en": "Sona",
+  "kind": "champion",
+  "primary": "娑娜",
+  "aliases": [
+   "Sona",
+   "琴女",
+   "琴瑟仙女"
+  ]
+ },
+ "索拉卡": {
+  "en": "Soraka",
+  "kind": "champion",
+  "primary": "索拉卡",
+  "aliases": [
+   "Soraka",
+   "众星之子",
+   "奶妈"
+  ]
+ },
+ "众星之子": {
+  "en": "Soraka",
+  "kind": "champion",
+  "primary": "索拉卡",
+  "aliases": [
+   "Soraka",
+   "奶妈",
+   "索拉卡"
+  ]
+ },
+ "诺克萨斯统领": {
+  "en": "Swain",
+  "kind": "champion",
+  "primary": "斯维因",
+  "aliases": [
+   "Swain",
+   "乌鸦",
+   "斯维因"
+  ]
+ },
+ "斯维因": {
+  "en": "Swain",
+  "kind": "champion",
+  "primary": "斯维因",
+  "aliases": [
+   "Swain",
+   "乌鸦",
+   "诺克萨斯统领"
+  ]
+ },
+ "塞拉斯": {
+  "en": "Sylas",
+  "kind": "champion",
+  "primary": "塞拉斯",
+  "aliases": [
+   "Sylas",
+   "解脱者"
+  ]
+ },
+ "解脱者": {
+  "en": "Sylas",
+  "kind": "champion",
+  "primary": "塞拉斯",
+  "aliases": [
+   "Sylas",
+   "塞拉斯"
+  ]
+ },
+ "暗黑元首": {
+  "en": "Syndra",
+  "kind": "champion",
+  "primary": "辛德拉",
+  "aliases": [
+   "Syndra",
+   "球女",
+   "辛德拉"
+  ]
+ },
+ "辛德拉": {
+  "en": "Syndra",
+  "kind": "champion",
+  "primary": "辛德拉",
+  "aliases": [
+   "Syndra",
+   "暗黑元首",
+   "球女"
+  ]
+ },
+ "塔姆": {
+  "en": "Tahm Kench",
+  "kind": "champion",
+  "primary": "塔姆",
+  "aliases": [
+   "Tahm Kench",
+   "TahmKench",
+   "河流之王",
+   "蛤蟆"
+  ]
+ },
+ "河流之王": {
+  "en": "Tahm Kench",
+  "kind": "champion",
+  "primary": "塔姆",
+  "aliases": [
+   "Tahm Kench",
+   "TahmKench",
+   "塔姆",
+   "蛤蟆"
+  ]
+ },
+ "岩雀": {
+  "en": "Taliyah",
+  "kind": "champion",
+  "primary": "塔莉垭",
+  "aliases": [
+   "Taliyah",
+   "塔莉垭"
+  ]
+ },
+ "塔莉垭": {
+  "en": "Taliyah",
+  "kind": "champion",
+  "primary": "塔莉垭",
+  "aliases": [
+   "Taliyah",
+   "岩雀"
+  ]
+ },
+ "刀锋之影": {
+  "en": "Talon",
+  "kind": "champion",
+  "primary": "泰隆",
+  "aliases": [
+   "Talon",
+   "泰隆",
+   "男刀"
+  ]
+ },
+ "泰隆": {
+  "en": "Talon",
+  "kind": "champion",
+  "primary": "泰隆",
+  "aliases": [
+   "Talon",
+   "刀锋之影",
+   "男刀"
+  ]
+ },
+ "瓦洛兰之盾": {
+  "en": "Taric",
+  "kind": "champion",
+  "primary": "塔里克",
+  "aliases": [
+   "Taric",
+   "塔里克"
+  ]
+ },
+ "塔里克": {
+  "en": "Taric",
+  "kind": "champion",
+  "primary": "塔里克",
+  "aliases": [
+   "Taric",
+   "瓦洛兰之盾"
+  ]
+ },
+ "提莫": {
+  "en": "Teemo",
+  "kind": "champion",
+  "primary": "提莫",
+  "aliases": [
+   "Teemo",
+   "迅捷斥候"
+  ]
+ },
+ "迅捷斥候": {
+  "en": "Teemo",
+  "kind": "champion",
+  "primary": "提莫",
+  "aliases": [
+   "Teemo",
+   "提莫"
+  ]
+ },
+ "魂锁典狱长": {
+  "en": "Thresh",
+  "kind": "champion",
+  "primary": "锤石",
+  "aliases": [
+   "Thresh",
+   "锤石"
+  ]
+ },
+ "锤石": {
+  "en": "Thresh",
+  "kind": "champion",
+  "primary": "锤石",
+  "aliases": [
+   "Thresh",
+   "魂锁典狱长"
+  ]
+ },
+ "麦林炮手": {
+  "en": "Tristana",
+  "kind": "champion",
+  "primary": "崔丝塔娜",
+  "aliases": [
+   "Tristana",
+   "小炮",
+   "崔丝塔娜"
+  ]
+ },
+ "崔丝塔娜": {
+  "en": "Tristana",
+  "kind": "champion",
+  "primary": "崔丝塔娜",
+  "aliases": [
+   "Tristana",
+   "小炮",
+   "麦林炮手"
+  ]
+ },
+ "巨魔之王": {
+  "en": "Trundle",
+  "kind": "champion",
+  "primary": "特朗德尔",
+  "aliases": [
+   "Trundle",
+   "巨魔",
+   "特朗德尔"
+  ]
+ },
+ "特朗德尔": {
+  "en": "Trundle",
+  "kind": "champion",
+  "primary": "特朗德尔",
+  "aliases": [
+   "Trundle",
+   "巨魔",
+   "巨魔之王"
+  ]
+ },
+ "蛮族之王": {
+  "en": "Tryndamere",
+  "kind": "champion",
+  "primary": "泰达米尔",
+  "aliases": [
+   "Tryndamere",
+   "泰达米尔",
+   "蛮王"
+  ]
+ },
+ "泰达米尔": {
+  "en": "Tryndamere",
+  "kind": "champion",
+  "primary": "泰达米尔",
+  "aliases": [
+   "Tryndamere",
+   "蛮族之王",
+   "蛮王"
+  ]
+ },
+ "卡牌大师": {
+  "en": "Twisted Fate",
+  "kind": "champion",
+  "primary": "崔斯特",
+  "aliases": [
+   "Twisted Fate",
+   "TwistedFate",
+   "崔斯特"
+  ]
+ },
+ "崔斯特": {
+  "en": "Twisted Fate",
+  "kind": "champion",
+  "primary": "崔斯特",
+  "aliases": [
+   "Twisted Fate",
+   "TwistedFate",
+   "卡牌大师"
+  ]
+ },
+ "图奇": {
+  "en": "Twitch",
+  "kind": "champion",
+  "primary": "图奇",
+  "aliases": [
+   "Twitch",
+   "瘟疫之源",
+   "老鼠"
+  ]
+ },
+ "瘟疫之源": {
+  "en": "Twitch",
+  "kind": "champion",
+  "primary": "图奇",
+  "aliases": [
+   "Twitch",
+   "图奇",
+   "老鼠"
+  ]
+ },
+ "兽灵行者": {
+  "en": "Udyr",
+  "kind": "champion",
+  "primary": "乌迪尔",
+  "aliases": [
+   "Udyr",
+   "乌迪尔"
+  ]
+ },
+ "乌迪尔": {
+  "en": "Udyr",
+  "kind": "champion",
+  "primary": "乌迪尔",
+  "aliases": [
+   "Udyr",
+   "兽灵行者"
+  ]
+ },
+ "厄加特": {
+  "en": "Urgot",
+  "kind": "champion",
+  "primary": "厄加特",
+  "aliases": [
+   "Urgot",
+   "无畏战车",
+   "螃蟹"
+  ]
+ },
+ "无畏战车": {
+  "en": "Urgot",
+  "kind": "champion",
+  "primary": "厄加特",
+  "aliases": [
+   "Urgot",
+   "厄加特",
+   "螃蟹"
+  ]
+ },
+ "惩戒之箭": {
+  "en": "Varus",
+  "kind": "champion",
+  "primary": "韦鲁斯",
+  "aliases": [
+   "Varus",
+   "维鲁斯",
+   "韦鲁斯"
+  ]
+ },
+ "韦鲁斯": {
+  "en": "Varus",
+  "kind": "champion",
+  "primary": "韦鲁斯",
+  "aliases": [
+   "Varus",
+   "惩戒之箭",
+   "维鲁斯"
+  ]
+ },
+ "薇恩": {
+  "en": "Vayne",
+  "kind": "champion",
+  "primary": "薇恩",
+  "aliases": [
+   "VN",
+   "Vayne",
+   "vn",
+   "暗夜猎手"
+  ]
+ },
+ "暗夜猎手": {
+  "en": "Vayne",
+  "kind": "champion",
+  "primary": "薇恩",
+  "aliases": [
+   "VN",
+   "Vayne",
+   "vn",
+   "薇恩"
+  ]
+ },
+ "邪恶小法师": {
+  "en": "Veigar",
+  "kind": "champion",
+  "primary": "维迦",
+  "aliases": [
+   "Veigar",
+   "小法师",
+   "维迦"
+  ]
+ },
+ "维迦": {
+  "en": "Veigar",
+  "kind": "champion",
+  "primary": "维迦",
+  "aliases": [
+   "Veigar",
+   "小法师",
+   "邪恶小法师"
+  ]
+ },
+ "虚空之眼": {
+  "en": "Vel'Koz",
+  "kind": "champion",
+  "primary": "维克兹",
+  "aliases": [
+   "Vel'Koz",
+   "Velkoz",
+   "大眼",
+   "维克兹"
+  ]
+ },
+ "维克兹": {
+  "en": "Vel'Koz",
+  "kind": "champion",
+  "primary": "维克兹",
+  "aliases": [
+   "Vel'Koz",
+   "Velkoz",
+   "大眼",
+   "虚空之眼"
+  ]
+ },
+ "薇古丝": {
+  "en": "Vex",
+  "kind": "champion",
+  "primary": "薇古丝",
+  "aliases": [
+   "Vex",
+   "愁云使者",
+   "熬夜波比"
+  ]
+ },
+ "愁云使者": {
+  "en": "Vex",
+  "kind": "champion",
+  "primary": "薇古丝",
+  "aliases": [
+   "Vex",
+   "熬夜波比",
+   "薇古丝"
+  ]
+ },
+ "皮城执法官": {
+  "en": "Vi",
+  "kind": "champion",
+  "primary": "蔚",
+  "aliases": [
+   "Vi",
+   "蔚"
+  ]
+ },
+ "蔚": {
+  "en": "Vi",
+  "kind": "champion",
+  "primary": "蔚",
+  "aliases": [
+   "Vi",
+   "皮城执法官"
+  ]
+ },
+ "破败之王": {
+  "en": "Viego",
+  "kind": "champion",
+  "primary": "佛耶戈",
+  "aliases": [
+   "Viego",
+   "佛耶戈",
+   "破败王"
+  ]
+ },
+ "佛耶戈": {
+  "en": "Viego",
+  "kind": "champion",
+  "primary": "佛耶戈",
+  "aliases": [
+   "Viego",
+   "破败之王",
+   "破败王"
+  ]
+ },
+ "奥术先驱": {
+  "en": "Viktor",
+  "kind": "champion",
+  "primary": "维克托",
+  "aliases": [
+   "Viktor",
+   "维克托"
+  ]
+ },
+ "维克托": {
+  "en": "Viktor",
+  "kind": "champion",
+  "primary": "维克托",
+  "aliases": [
+   "Viktor",
+   "奥术先驱"
+  ]
+ },
+ "弗拉基米尔": {
+  "en": "Vladimir",
+  "kind": "champion",
+  "primary": "弗拉基米尔",
+  "aliases": [
+   "Vladimir",
+   "吸血鬼",
+   "猩红收割者"
+  ]
+ },
+ "猩红收割者": {
+  "en": "Vladimir",
+  "kind": "champion",
+  "primary": "弗拉基米尔",
+  "aliases": [
+   "Vladimir",
+   "吸血鬼",
+   "弗拉基米尔"
+  ]
+ },
+ "不灭狂雷": {
+  "en": "Volibear",
+  "kind": "champion",
+  "primary": "沃利贝尔",
+  "aliases": [
+   "Volibear",
+   "沃利贝尔",
+   "狗熊"
+  ]
+ },
+ "沃利贝尔": {
+  "en": "Volibear",
+  "kind": "champion",
+  "primary": "沃利贝尔",
+  "aliases": [
+   "Volibear",
+   "不灭狂雷",
+   "狗熊"
+  ]
+ },
+ "祖安怒兽": {
+  "en": "Warwick",
+  "kind": "champion",
+  "primary": "沃里克",
+  "aliases": [
+   "Warwick",
+   "沃里克",
+   "狼人"
+  ]
+ },
+ "沃里克": {
+  "en": "Warwick",
+  "kind": "champion",
+  "primary": "沃里克",
+  "aliases": [
+   "Warwick",
+   "狼人",
+   "祖安怒兽"
+  ]
+ },
+ "霞": {
+  "en": "Xayah",
+  "kind": "champion",
+  "primary": "霞",
+  "aliases": [
+   "Xayah",
+   "逆羽"
+  ]
+ },
+ "逆羽": {
+  "en": "Xayah",
+  "kind": "champion",
+  "primary": "霞",
+  "aliases": [
+   "Xayah",
+   "霞"
+  ]
+ },
+ "远古巫灵": {
+  "en": "Xerath",
+  "kind": "champion",
+  "primary": "泽拉斯",
+  "aliases": [
+   "Xerath",
+   "泽拉斯"
+  ]
+ },
+ "泽拉斯": {
+  "en": "Xerath",
+  "kind": "champion",
+  "primary": "泽拉斯",
+  "aliases": [
+   "Xerath",
+   "远古巫灵"
+  ]
+ },
+ "赵信": {
+  "en": "Xin Zhao",
+  "kind": "champion",
+  "primary": "赵信",
+  "aliases": [
+   "Xin Zhao",
+   "XinZhao",
+   "德邦总管",
+   "菊花信"
+  ]
+ },
+ "德邦总管": {
+  "en": "Xin Zhao",
+  "kind": "champion",
+  "primary": "赵信",
+  "aliases": [
+   "Xin Zhao",
+   "XinZhao",
+   "菊花信",
+   "赵信"
+  ]
+ },
+ "疾风剑豪": {
+  "en": "Yasuo",
+  "kind": "champion",
+  "primary": "亚索",
+  "aliases": [
+   "Yasuo",
+   "亚索",
+   "压缩"
+  ]
+ },
+ "亚索": {
+  "en": "Yasuo",
+  "kind": "champion",
+  "primary": "亚索",
+  "aliases": [
+   "Yasuo",
+   "压缩",
+   "疾风剑豪"
+  ]
+ },
+ "永恩": {
+  "en": "Yone",
+  "kind": "champion",
+  "primary": "永恩",
+  "aliases": [
+   "Yone",
+   "封魔剑魂"
+  ]
+ },
+ "封魔剑魂": {
+  "en": "Yone",
+  "kind": "champion",
+  "primary": "永恩",
+  "aliases": [
+   "Yone",
+   "永恩"
+  ]
+ },
+ "牧魂人": {
+  "en": "Yorick",
+  "kind": "champion",
+  "primary": "约里克",
+  "aliases": [
+   "Yorick",
+   "掘墓",
+   "约里克"
+  ]
+ },
+ "约里克": {
+  "en": "Yorick",
+  "kind": "champion",
+  "primary": "约里克",
+  "aliases": [
+   "Yorick",
+   "掘墓",
+   "牧魂人"
+  ]
+ },
+ "不破之誓": {
+  "en": "Yunara",
+  "kind": "champion",
+  "primary": "芸阿娜",
+  "aliases": [
+   "Yunara",
+   "芸阿娜"
+  ]
+ },
+ "芸阿娜": {
+  "en": "Yunara",
+  "kind": "champion",
+  "primary": "芸阿娜",
+  "aliases": [
+   "Yunara",
+   "不破之誓"
+  ]
+ },
+ "悠米": {
+  "en": "Yuumi",
+  "kind": "champion",
+  "primary": "悠米",
+  "aliases": [
+   "Yuumi",
+   "魔法猫咪"
+  ]
+ },
+ "魔法猫咪": {
+  "en": "Yuumi",
+  "kind": "champion",
+  "primary": "悠米",
+  "aliases": [
+   "Yuumi",
+   "悠米"
+  ]
+ },
+ "亚恒": {
+  "en": "Zaahen",
+  "kind": "champion",
+  "primary": "亚恒",
+  "aliases": [
+   "Zaahen",
+   "不落魔锋"
+  ]
+ },
+ "不落魔锋": {
+  "en": "Zaahen",
+  "kind": "champion",
+  "primary": "亚恒",
+  "aliases": [
+   "Zaahen",
+   "亚恒"
+  ]
+ },
+ "扎克": {
+  "en": "Zac",
+  "kind": "champion",
+  "primary": "扎克",
+  "aliases": [
+   "Zac",
+   "史莱姆",
+   "生化魔人"
+  ]
+ },
+ "生化魔人": {
+  "en": "Zac",
+  "kind": "champion",
+  "primary": "扎克",
+  "aliases": [
+   "Zac",
+   "史莱姆",
+   "扎克"
+  ]
+ },
+ "劫": {
+  "en": "Zed",
+  "kind": "champion",
+  "primary": "劫",
+  "aliases": [
+   "Zed",
+   "影流之主"
+  ]
+ },
+ "影流之主": {
+  "en": "Zed",
+  "kind": "champion",
+  "primary": "劫",
+  "aliases": [
+   "Zed",
+   "劫"
+  ]
+ },
+ "泽丽": {
+  "en": "Zeri",
+  "kind": "champion",
+  "primary": "泽丽",
+  "aliases": [
+   "Zeri",
+   "祖安花火"
+  ]
+ },
+ "祖安花火": {
+  "en": "Zeri",
+  "kind": "champion",
+  "primary": "泽丽",
+  "aliases": [
+   "Zeri",
+   "泽丽"
+  ]
+ },
+ "爆破鬼才": {
+  "en": "Ziggs",
+  "kind": "champion",
+  "primary": "吉格斯",
+  "aliases": [
+   "Ziggs",
+   "吉格斯"
+  ]
+ },
+ "吉格斯": {
+  "en": "Ziggs",
+  "kind": "champion",
+  "primary": "吉格斯",
+  "aliases": [
+   "Ziggs",
+   "爆破鬼才"
+  ]
+ },
+ "时光守护者": {
+  "en": "Zilean",
+  "kind": "champion",
+  "primary": "基兰",
+  "aliases": [
+   "Zilean",
+   "基兰",
+   "时光老头"
+  ]
+ },
+ "基兰": {
+  "en": "Zilean",
+  "kind": "champion",
+  "primary": "基兰",
+  "aliases": [
+   "Zilean",
+   "时光守护者",
+   "时光老头"
+  ]
+ },
+ "佐伊": {
+  "en": "Zoe",
+  "kind": "champion",
+  "primary": "佐伊",
+  "aliases": [
+   "Zoe",
+   "暮光星灵"
+  ]
+ },
+ "暮光星灵": {
+  "en": "Zoe",
+  "kind": "champion",
+  "primary": "佐伊",
+  "aliases": [
+   "Zoe",
+   "佐伊"
+  ]
+ },
+ "婕拉": {
+  "en": "Zyra",
+  "kind": "champion",
+  "primary": "婕拉",
+  "aliases": [
+   "Zyra",
+   "荆棘之兴"
+  ]
+ },
+ "荆棘之兴": {
+  "en": "Zyra",
+  "kind": "champion",
+  "primary": "婕拉",
+  "aliases": [
+   "Zyra",
+   "婕拉"
+  ]
+ },
+ "鞋子": {
+  "en": "Boots",
+  "kind": "item",
+  "aliases": [
+   "1001",
+   "Boots"
+  ]
+ },
+ "仙女护符": {
+  "en": "Faerie Charm",
+  "kind": "item",
+  "aliases": [
+   "1004",
+   "Faerie Charm"
+  ]
+ },
+ "治疗宝珠": {
+  "en": "Rejuvenation Bead",
+  "kind": "item",
+  "aliases": [
+   "1006",
+   "Rejuvenation Bead"
+  ]
+ },
+ "巨人腰带": {
+  "en": "Giant's Belt",
+  "kind": "item",
+  "aliases": [
+   "1011",
+   "Giant's Belt"
+  ]
+ },
+ "灵巧披风": {
+  "en": "Cloak of Agility",
+  "kind": "item",
+  "aliases": [
+   "1018",
+   "Cloak of Agility"
+  ]
+ },
+ "爆裂魔杖": {
+  "en": "Blasting Wand",
+  "kind": "item",
+  "aliases": [
+   "1026",
+   "Blasting Wand"
+  ]
+ },
+ "蓝水晶": {
+  "en": "Sapphire Crystal",
+  "kind": "item",
+  "aliases": [
+   "1027",
+   "Sapphire Crystal"
+  ]
+ },
+ "红水晶": {
+  "en": "Ruby Crystal",
+  "kind": "item",
+  "aliases": [
+   "1028",
+   "Ruby Crystal"
+  ]
+ },
+ "布甲": {
+  "en": "Cloth Armor",
+  "kind": "item",
+  "aliases": [
+   "1029",
+   "Cloth Armor"
+  ]
+ },
+ "锁子甲": {
+  "en": "Chain Vest",
+  "kind": "item",
+  "aliases": [
+   "1031",
+   "Chain Vest"
+  ]
+ },
+ "抗魔斗篷": {
+  "en": "Null-Magic Mantle",
+  "kind": "item",
+  "aliases": [
+   "1033",
+   "Null-Magic Mantle"
+  ]
+ },
+ "长剑": {
+  "en": "Long Sword",
+  "kind": "item",
+  "aliases": [
+   "1036",
+   "Long Sword"
+  ]
+ },
+ "十字镐": {
+  "en": "Pickaxe",
+  "kind": "item",
+  "aliases": [
+   "1037",
+   "Pickaxe"
+  ]
+ },
+ "暴风之剑": {
+  "en": "B. F. Sword",
+  "kind": "item",
+  "aliases": [
+   "1038",
+   "B. F. Sword"
+  ]
+ },
+ "短剑": {
+  "en": "Dagger",
+  "kind": "item",
+  "aliases": [
+   "1042",
+   "Dagger"
+  ]
+ },
+ "反曲之弓": {
+  "en": "Recurve Bow",
+  "kind": "item",
+  "aliases": [
+   "1043",
+   "Recurve Bow"
+  ]
+ },
+ "增幅典籍": {
+  "en": "Amplifying Tome",
+  "kind": "item",
+  "aliases": [
+   "1052",
+   "Amplifying Tome"
+  ]
+ },
+ "吸血鬼节杖": {
+  "en": "Vampiric Scepter",
+  "kind": "item",
+  "aliases": [
+   "1053",
+   "Vampiric Scepter"
+  ]
+ },
+ "多兰之盾": {
+  "en": "Doran's Shield",
+  "kind": "item",
+  "aliases": [
+   "1054",
+   "Doran's Shield"
+  ]
+ },
+ "多兰之刃": {
+  "en": "Doran's Blade",
+  "kind": "item",
+  "aliases": [
+   "1055",
+   "Doran's Blade"
+  ]
+ },
+ "多兰之戒": {
+  "en": "Doran's Ring",
+  "kind": "item",
+  "aliases": [
+   "1056",
+   "Doran's Ring"
+  ]
+ },
+ "负极斗篷": {
+  "en": "Negatron Cloak",
+  "kind": "item",
+  "aliases": [
+   "1057",
+   "Negatron Cloak"
+  ]
+ },
+ "无用大棒": {
+  "en": "Needlessly Large Rod",
+  "kind": "item",
+  "aliases": [
+   "1058",
+   "Needlessly Large Rod"
+  ]
+ },
+ "黑暗封印": {
+  "en": "Dark Seal",
+  "kind": "item",
+  "aliases": [
+   "1082",
+   "Dark Seal"
+  ]
+ },
+ "萃取": {
+  "en": "Cull",
+  "kind": "item",
+  "aliases": [
+   "1083",
+   "Cull"
+  ]
+ },
+ "多兰之弓": {
+  "en": "Doran's Bow",
+  "kind": "item",
+  "aliases": [
+   "1086",
+   "Doran's Bow"
+  ]
+ },
+ "焰爪猫幼崽": {
+  "en": "Scorchclaw Pup",
+  "kind": "item",
+  "aliases": [
+   "1107",
+   "Scorchclaw Pup"
+  ]
+ },
+ "风行狐幼体": {
+  "en": "Gustwalker Hatchling",
+  "kind": "item",
+  "aliases": [
+   "1106",
+   "Gustwalker Hatchling"
+  ]
+ },
+ "踏苔蜥幼苗": {
+  "en": "Mosstomper Seedling",
+  "kind": "item",
+  "aliases": [
+   "1105",
+   "Mosstomper Seedling"
+  ]
+ },
+ "多兰之盔": {
+  "en": "Doran's Helm",
+  "kind": "item",
+  "aliases": [
+   "1120",
+   "Doran's Helm"
+  ]
+ },
+ "防御工事": {
+  "en": "Fortification",
+  "kind": "item",
+  "aliases": [
+   "1501",
+   "Fortification"
+  ]
+ },
+ "加固城防": {
+  "en": "Reinforced Armor",
+  "kind": "item",
+  "aliases": [
+   "1506",
+   "Reinforced Armor"
+  ]
+ },
+ "典狱官之眼": {
+  "en": "Warden's Eye",
+  "kind": "item",
+  "aliases": [
+   "1503",
+   "Warden's Eye"
+  ]
+ },
+ "过载": {
+  "en": "Overcharged",
+  "kind": "item",
+  "aliases": [
+   "1507",
+   "Overcharged"
+  ]
+ },
+ "反防御塔袜子": {
+  "en": "Anti-tower Socks",
+  "kind": "item",
+  "aliases": [
+   "1508",
+   "Anti-tower Socks"
+  ]
+ },
+ "嗜好": {
+  "en": "Gusto",
+  "kind": "item",
+  "aliases": [
+   "1509",
+   "Gusto"
+  ]
+ },
+ "弗瑞克风格的嗜好": {
+  "en": "Phreakish Gusto",
+  "kind": "item",
+  "aliases": [
+   "1510",
+   "Phreakish Gusto"
+  ]
+ },
+ "超级士兵 装甲": {
+  "en": "Super Mech Armor",
+  "kind": "item",
+  "aliases": [
+   "1511",
+   "Super Mech Armor"
+  ]
+ },
+ "超级士兵 能量场": {
+  "en": "Super Mech Power Field",
+  "kind": "item",
+  "aliases": [
+   "1512",
+   "Super Mech Power Field"
+  ]
+ },
+ "防御塔镀层": {
+  "en": "Turret Plating",
+  "kind": "item",
+  "aliases": [
+   "1515",
+   "Turret Plating"
+  ]
+ },
+ "建筑物赏金": {
+  "en": "Structure Bounty",
+  "kind": "item",
+  "aliases": [
+   "1519",
+   "Structure Bounty"
+  ]
+ },
+ "过载 - 嚎哭深渊 ": {
+  "en": "OvererchargedHA",
+  "kind": "item",
+  "aliases": [
+   "1520",
+   "OvererchargedHA"
+  ]
+ },
+ "钢铁防线": {
+  "en": "Fortification",
+  "kind": "item",
+  "aliases": [
+   "1521",
+   "Fortification"
+  ]
+ },
+ "防御塔威力升温": {
+  "en": "Tower Power-Up",
+  "kind": "item",
+  "aliases": [
+   "1522",
+   "Tower Power-Up"
+  ]
+ },
+ "过载充能": {
+  "en": "Overcharged",
+  "kind": "item",
+  "aliases": [
+   "1523",
+   "Overcharged"
+  ]
+ },
+ "增生": {
+  "en": "Overgrowth",
+  "kind": "item",
+  "aliases": [
+   "1524",
+   "Overgrowth"
+  ]
+ },
+ "回城": {
+  "en": "Recall",
+  "kind": "item",
+  "aliases": [
+   "2001",
+   "Recall"
+  ]
+ },
+ "生命药水": {
+  "en": "Health Potion",
+  "kind": "item",
+  "aliases": [
+   "2003",
+   "Health Potion"
+  ]
+ },
+ "禁用回城": {
+  "en": "Disabled Recall",
+  "kind": "item",
+  "aliases": [
+   "2007",
+   "Disabled Recall"
+  ]
+ },
+ "永续意志夹心饼干": {
+  "en": "Total Biscuit of Everlasting Will",
+  "kind": "item",
+  "aliases": [
+   "2010",
+   "Total Biscuit of Everlasting Will"
+  ]
+ },
+ "钢铁印章": {
+  "en": "Steel Sigil",
+  "kind": "item",
+  "aliases": [
+   "2019",
+   "Steel Sigil"
+  ]
+ },
+ "残暴之力": {
+  "en": "The Brutalizer",
+  "kind": "item",
+  "aliases": [
+   "2020",
+   "The Brutalizer"
+  ]
+ },
+ "掘道钻头": {
+  "en": "Tunneler",
+  "kind": "item",
+  "aliases": [
+   "2021",
+   "Tunneler"
+  ]
+ },
+ "荧尘": {
+  "en": "Glowing Mote",
+  "kind": "item",
+  "aliases": [
+   "2022",
+   "Glowing Mote"
+  ]
+ },
+ "复用型药水": {
+  "en": "Refillable Potion",
+  "kind": "item",
+  "aliases": [
+   "2031",
+   "Refillable Potion"
+  ]
+ },
+ "腐败药水": {
+  "en": "Corrupting Potion",
+  "kind": "item",
+  "aliases": [
+   "2033",
+   "Corrupting Potion"
+  ]
+ },
+ "守护者号角": {
+  "en": "Guardian's Horn",
+  "kind": "item",
+  "aliases": [
+   "2051",
+   "Guardian's Horn"
+  ]
+ },
+ "魄罗佳肴": {
+  "en": "Poro-Snax",
+  "kind": "item",
+  "aliases": [
+   "2052",
+   "Poro-Snax"
+  ]
+ },
+ "控制守卫": {
+  "en": "Control Ward",
+  "kind": "item",
+  "aliases": [
+   "2055",
+   "Control Ward"
+  ]
+ },
+ "舒瑞娅的战歌": {
+  "en": "Shurelya's Battlesong",
+  "kind": "item",
+  "aliases": [
+   "322065",
+   "Shurelya's Battlesong"
+  ]
+ },
+ "钢铁合剂": {
+  "en": "Elixir of Iron",
+  "kind": "item",
+  "aliases": [
+   "2138",
+   "Elixir of Iron"
+  ]
+ },
+ "巫术合剂": {
+  "en": "Elixir of Sorcery",
+  "kind": "item",
+  "aliases": [
+   "2139",
+   "Elixir of Sorcery"
+  ]
+ },
+ "愤怒合剂": {
+  "en": "Elixir of Wrath",
+  "kind": "item",
+  "aliases": [
+   "2140",
+   "Elixir of Wrath"
+  ]
+ },
+ "帽子饮品": {
+  "en": "Cappa Juice",
+  "kind": "item",
+  "aliases": [
+   "2141",
+   "Cappa Juice"
+  ]
+ },
+ "技能合剂": {
+  "en": "Elixir of Skill",
+  "kind": "item",
+  "aliases": [
+   "2150",
+   "Elixir of Skill"
+  ]
+ },
+ "贪财合剂": {
+  "en": "Elixir of Avarice",
+  "kind": "item",
+  "aliases": [
+   "2151",
+   "Elixir of Avarice"
+  ]
+ },
+ "原力合剂": {
+  "en": "Elixir of Force",
+  "kind": "item",
+  "aliases": [
+   "2152",
+   "Elixir of Force"
+  ]
+ },
+ "小兵去质器": {
+  "en": "Minion Dematerializer",
+  "kind": "item",
+  "aliases": [
+   "2403",
+   "Minion Dematerializer"
+  ]
+ },
+ "探索者的护臂": {
+  "en": "Seeker's Armguard",
+  "kind": "item",
+  "aliases": [
+   "2420",
+   "Seeker's Armguard"
+  ]
+ },
+ "碎裂的护臂": {
+  "en": "Shattered Armguard",
+  "kind": "item",
+  "aliases": [
+   "2421",
+   "Shattered Armguard"
+  ]
+ },
+ "有点神奇之鞋": {
+  "en": "Slightly Magical Footwear",
+  "kind": "item",
+  "aliases": [
+   "2422",
+   "Slightly Magical Footwear"
+  ]
+ },
+ "霸王血铠": {
+  "en": "Overlord's Bloodmail",
+  "kind": "item",
+  "aliases": [
+   "2501",
+   "Overlord's Bloodmail"
+  ]
+ },
+ "无终恨意": {
+  "en": "Unending Despair",
+  "kind": "item",
+  "aliases": [
+   "2502",
+   "Unending Despair"
+  ]
+ },
+ "黯炎火炬": {
+  "en": "Blackfire Torch",
+  "kind": "item",
+  "aliases": [
+   "2503",
+   "Blackfire Torch"
+  ]
+ },
+ "败魔": {
+  "en": "Kaenic Rookern",
+  "kind": "item",
+  "aliases": [
+   "2504",
+   "Kaenic Rookern"
+  ]
+ },
+ "命定灰烬": {
+  "en": "Fated Ashes",
+  "kind": "item",
+  "aliases": [
+   "2508",
+   "Fated Ashes"
+  ]
+ },
+ "黄昏与黎明": {
+  "en": "Dusk and Dawn",
+  "kind": "item",
+  "aliases": [
+   "2510",
+   "Dusk and Dawn"
+  ]
+ },
+ "猎魔人弩箭": {
+  "en": "Fiendhunter Bolts",
+  "kind": "item",
+  "aliases": [
+   "2512",
+   "Fiendhunter Bolts"
+  ]
+ },
+ "无穷饥渴": {
+  "en": "Endless Hunger",
+  "kind": "item",
+  "aliases": [
+   "2517",
+   "Endless Hunger"
+  ]
+ },
+ "破垒者": {
+  "en": "Bastionbreaker",
+  "kind": "item",
+  "aliases": [
+   "2520",
+   "Bastionbreaker"
+  ]
+ },
+ "实现器": {
+  "en": "Actualizer",
+  "kind": "item",
+  "aliases": [
+   "2522",
+   "Actualizer"
+  ]
+ },
+ "海克斯镜片 C44": {
+  "en": "Hexoptics C44",
+  "kind": "item",
+  "aliases": [
+   "2523",
+   "Hexoptics C44"
+  ]
+ },
+ "班德尔音管": {
+  "en": "Bandlepipes",
+  "kind": "item",
+  "aliases": [
+   "2524",
+   "Bandlepipes"
+  ]
+ },
+ "原生质护带": {
+  "en": "Protoplasm Harness",
+  "kind": "item",
+  "aliases": [
+   "2525",
+   "Protoplasm Harness"
+  ]
+ },
+ "耳语头环": {
+  "en": "Whispering Circlet",
+  "kind": "item",
+  "aliases": [
+   "322526",
+   "Whispering Circlet"
+  ]
+ },
+ "歌之权冠": {
+  "en": "Diadem of Songs",
+  "kind": "item",
+  "aliases": [
+   "322530",
+   "Diadem of Songs"
+  ]
+ },
+ "引路者": {
+  "en": "Trailblazer",
+  "kind": "item",
+  "aliases": [
+   "323002",
+   "Trailblazer"
+  ]
+ },
+ "大天使之杖": {
+  "en": "Archangel's Staff",
+  "kind": "item",
+  "aliases": [
+   "323003",
+   "Archangel's Staff"
+  ]
+ },
+ "魔宗": {
+  "en": "Manamune",
+  "kind": "item",
+  "aliases": [
+   "323004",
+   "Manamune"
+  ]
+ },
+ "狂战士胫甲": {
+  "en": "Berserker's Greaves",
+  "kind": "item",
+  "aliases": [
+   "3006",
+   "Berserker's Greaves"
+  ]
+ },
+ "暴食胫甲": {
+  "en": "Gluttonous Greaves",
+  "kind": "item",
+  "aliases": [
+   "3008",
+   "Gluttonous Greaves"
+  ]
+ },
+ "轻灵之靴": {
+  "en": "Boots of Swiftness",
+  "kind": "item",
+  "aliases": [
+   "3009",
+   "Boots of Swiftness"
+  ]
+ },
+ "共生鞋鱼": {
+  "en": "Symbiotic Soles",
+  "kind": "item",
+  "aliases": [
+   "3010",
+   "Symbiotic Soles"
+  ]
+ },
+ "炼金科技纯化器": {
+  "en": "Chemtech Putrifier",
+  "kind": "item",
+  "aliases": [
+   "3011",
+   "Chemtech Putrifier"
+  ]
+ },
+ "灵犀众魂": {
+  "en": "Synchronized Souls",
+  "kind": "item",
+  "aliases": [
+   "3013",
+   "Synchronized Souls"
+  ]
+ },
+ "法师之靴": {
+  "en": "Sorcerer's Shoes",
+  "kind": "item",
+  "aliases": [
+   "3020",
+   "Sorcerer's Shoes"
+  ]
+ },
+ "冰川圆盾": {
+  "en": "Glacial Buckler",
+  "kind": "item",
+  "aliases": [
+   "3024",
+   "Glacial Buckler"
+  ]
+ },
+ "守护天使": {
+  "en": "Guardian Angel",
+  "kind": "item",
+  "aliases": [
+   "3026",
+   "Guardian Angel"
+  ]
+ },
+ "无尽之刃": {
+  "en": "Infinity Edge",
+  "kind": "item",
+  "aliases": [
+   "3031",
+   "Infinity Edge"
+  ]
+ },
+ "育恩塔尔荒野箭": {
+  "en": "Yun Tal Wildarrows",
+  "kind": "item",
+  "aliases": [
+   "3032",
+   "Yun Tal Wildarrows"
+  ]
+ },
+ "凡性的提醒": {
+  "en": "Mortal Reminder",
+  "kind": "item",
+  "aliases": [
+   "3033",
+   "Mortal Reminder"
+  ]
+ },
+ "最后的轻语": {
+  "en": "Last Whisper",
+  "kind": "item",
+  "aliases": [
+   "3035",
+   "Last Whisper"
+  ]
+ },
+ "多米尼克领主的致意": {
+  "en": "Lord Dominik's Regards",
+  "kind": "item",
+  "aliases": [
+   "3036",
+   "Lord Dominik's Regards"
+  ]
+ },
+ "炽天使之拥": {
+  "en": "Seraph's Embrace",
+  "kind": "item",
+  "aliases": [
+   "323040",
+   "Seraph's Embrace"
+  ]
+ },
+ "梅贾的窃魂卷": {
+  "en": "Mejai's Soulstealer",
+  "kind": "item",
+  "aliases": [
+   "3041",
+   "Mejai's Soulstealer"
+  ]
+ },
+ "魔切": {
+  "en": "Muramana",
+  "kind": "item",
+  "aliases": [
+   "323042",
+   "Muramana"
+  ]
+ },
+ "净蚀": {
+  "en": "Phage",
+  "kind": "item",
+  "aliases": [
+   "3044",
+   "Phage"
+  ]
+ },
+ "幻影之舞": {
+  "en": "Phantom Dancer",
+  "kind": "item",
+  "aliases": [
+   "3046",
+   "Phantom Dancer"
+  ]
+ },
+ "铁板靴": {
+  "en": "Plated Steelcaps",
+  "kind": "item",
+  "aliases": [
+   "3047",
+   "Plated Steelcaps"
+  ]
+ },
+ "基克的聚合": {
+  "en": "Zeke's Convergence",
+  "kind": "item",
+  "aliases": [
+   "323050",
+   "Zeke's Convergence"
+  ]
+ },
+ "缚炉之斧": {
+  "en": "Hearthbound Axe",
+  "kind": "item",
+  "aliases": [
+   "3051",
+   "Hearthbound Axe"
+  ]
+ },
+ "斯特拉克的挑战护手": {
+  "en": "Sterak's Gage",
+  "kind": "item",
+  "aliases": [
+   "3053",
+   "Sterak's Gage"
+  ]
+ },
+ "耀光": {
+  "en": "Sheen",
+  "kind": "item",
+  "aliases": [
+   "3057",
+   "Sheen"
+  ]
+ },
+ "振奋盔甲": {
+  "en": "Spirit Visage",
+  "kind": "item",
+  "aliases": [
+   "3065",
+   "Spirit Visage"
+  ]
+ },
+ "带翼的月板甲": {
+  "en": "Winged Moonplate",
+  "kind": "item",
+  "aliases": [
+   "3066",
+   "Winged Moonplate"
+  ]
+ },
+ "燃烧宝石": {
+  "en": "Kindlegem",
+  "kind": "item",
+  "aliases": [
+   "3067",
+   "Kindlegem"
+  ]
+ },
+ "日炎圣盾": {
+  "en": "Sunfire Aegis",
+  "kind": "item",
+  "aliases": [
+   "3068",
+   "Sunfire Aegis"
+  ]
+ },
+ "女神之泪": {
+  "en": "Tear of the Goddess",
+  "kind": "item",
+  "aliases": [
+   "323070",
+   "Tear of the Goddess"
+  ]
+ },
+ "黑色切割者": {
+  "en": "Black Cleaver",
+  "kind": "item",
+  "aliases": [
+   "3071",
+   "Black Cleaver"
+  ]
+ },
+ "饮血剑": {
+  "en": "Bloodthirster",
+  "kind": "item",
+  "aliases": [
+   "3072",
+   "Bloodthirster"
+  ]
+ },
+ "海克斯注力刚壁": {
+  "en": "Experimental Hexplate",
+  "kind": "item",
+  "aliases": [
+   "3073",
+   "Experimental Hexplate"
+  ]
+ },
+ "贪欲九头蛇": {
+  "en": "Ravenous Hydra",
+  "kind": "item",
+  "aliases": [
+   "3074",
+   "Ravenous Hydra"
+  ]
+ },
+ "荆棘之甲": {
+  "en": "Thornmail",
+  "kind": "item",
+  "aliases": [
+   "323075",
+   "Thornmail"
+  ]
+ },
+ "棘刺背心": {
+  "en": "Bramble Vest",
+  "kind": "item",
+  "aliases": [
+   "3076",
+   "Bramble Vest"
+  ]
+ },
+ "提亚马特": {
+  "en": "Tiamat",
+  "kind": "item",
+  "aliases": [
+   "3077",
+   "Tiamat"
+  ]
+ },
+ "三相之力": {
+  "en": "Trinity Force",
+  "kind": "item",
+  "aliases": [
+   "3078",
+   "Trinity Force"
+  ]
+ },
+ "守望者铠甲": {
+  "en": "Warden's Mail",
+  "kind": "item",
+  "aliases": [
+   "3082",
+   "Warden's Mail"
+  ]
+ },
+ "狂徒铠甲": {
+  "en": "Warmog's Armor",
+  "kind": "item",
+  "aliases": [
+   "3083",
+   "Warmog's Armor"
+  ]
+ },
+ "心之钢": {
+  "en": "Heartsteel",
+  "kind": "item",
+  "aliases": [
+   "3084",
+   "Heartsteel"
+  ]
+ },
+ "卢安娜的飓风": {
+  "en": "Runaan's Hurricane",
+  "kind": "item",
+  "aliases": [
+   "3085",
+   "Runaan's Hurricane"
+  ]
+ },
+ "狂热": {
+  "en": "Zeal",
+  "kind": "item",
+  "aliases": [
+   "3086",
+   "Zeal"
+  ]
+ },
+ "斯塔缇克电刃": {
+  "en": "Statikk Shiv",
+  "kind": "item",
+  "aliases": [
+   "3087",
+   "Statikk Shiv"
+  ]
+ },
+ "灭世者的死亡之帽": {
+  "en": "Rabadon's Deathcap",
+  "kind": "item",
+  "aliases": [
+   "3089",
+   "Rabadon's Deathcap"
+  ]
+ },
+ "智慧末刃": {
+  "en": "Wit's End",
+  "kind": "item",
+  "aliases": [
+   "3091",
+   "Wit's End"
+  ]
+ },
+ "疾射火炮": {
+  "en": "Rapid Firecannon",
+  "kind": "item",
+  "aliases": [
+   "3094",
+   "Rapid Firecannon"
+  ]
+ },
+ "岚切": {
+  "en": "Stormrazor",
+  "kind": "item",
+  "aliases": [
+   "3095",
+   "Stormrazor"
+  ]
+ },
+ "巫妖之祸": {
+  "en": "Lich Bane",
+  "kind": "item",
+  "aliases": [
+   "3100",
+   "Lich Bane"
+  ]
+ },
+ "女妖面纱": {
+  "en": "Banshee's Veil",
+  "kind": "item",
+  "aliases": [
+   "3102",
+   "Banshee's Veil"
+  ]
+ },
+ "救赎": {
+  "en": "Redemption",
+  "kind": "item",
+  "aliases": [
+   "323107",
+   "Redemption"
+  ]
+ },
+ "恶魔法典": {
+  "en": "Fiendish Codex",
+  "kind": "item",
+  "aliases": [
+   "3108",
+   "Fiendish Codex"
+  ]
+ },
+ "骑士之誓": {
+  "en": "Knight's Vow",
+  "kind": "item",
+  "aliases": [
+   "323109",
+   "Knight's Vow"
+  ]
+ },
+ "冰霜之心": {
+  "en": "Frozen Heart",
+  "kind": "item",
+  "aliases": [
+   "323110",
+   "Frozen Heart"
+  ]
+ },
+ "水银之靴": {
+  "en": "Mercury's Treads",
+  "kind": "item",
+  "aliases": [
+   "3111",
+   "Mercury's Treads"
+  ]
+ },
+ "守护者法球": {
+  "en": "Guardian's Orb",
+  "kind": "item",
+  "aliases": [
+   "3112",
+   "Guardian's Orb"
+  ]
+ },
+ "以太精魂": {
+  "en": "Aether Wisp",
+  "kind": "item",
+  "aliases": [
+   "3113",
+   "Aether Wisp"
+  ]
+ },
+ "禁忌雕像": {
+  "en": "Forbidden Idol",
+  "kind": "item",
+  "aliases": [
+   "3114",
+   "Forbidden Idol"
+  ]
+ },
+ "纳什之牙": {
+  "en": "Nashor's Tooth",
+  "kind": "item",
+  "aliases": [
+   "3115",
+   "Nashor's Tooth"
+  ]
+ },
+ "瑞莱的冰晶节杖": {
+  "en": "Rylai's Crystal Scepter",
+  "kind": "item",
+  "aliases": [
+   "3116",
+   "Rylai's Crystal Scepter"
+  ]
+ },
+ "疾行之靴": {
+  "en": "Mobility Boots",
+  "kind": "item",
+  "aliases": [
+   "3117",
+   "Mobility Boots"
+  ]
+ },
+ "残疫": {
+  "en": "Malignance",
+  "kind": "item",
+  "aliases": [
+   "3118",
+   "Malignance"
+  ]
+ },
+ "凛冬之临": {
+  "en": "Winter's Approach",
+  "kind": "item",
+  "aliases": [
+   "323119",
+   "Winter's Approach"
+  ]
+ },
+ "末日寒冬": {
+  "en": "Fimbulwinter",
+  "kind": "item",
+  "aliases": [
+   "323121",
+   "Fimbulwinter"
+  ]
+ },
+ "死刑宣告": {
+  "en": "Executioner's Calling",
+  "kind": "item",
+  "aliases": [
+   "3123",
+   "Executioner's Calling"
+  ]
+ },
+ "鬼索的狂暴之刃": {
+  "en": "Guinsoo's Rageblade",
+  "kind": "item",
+  "aliases": [
+   "3124",
+   "Guinsoo's Rageblade"
+  ]
+ },
+ "考尔菲德的战锤": {
+  "en": "Caulfield's Warhammer",
+  "kind": "item",
+  "aliases": [
+   "3133",
+   "Caulfield's Warhammer"
+  ]
+ },
+ "锯齿短匕": {
+  "en": "Serrated Dirk",
+  "kind": "item",
+  "aliases": [
+   "3134",
+   "Serrated Dirk"
+  ]
+ },
+ "虚空之杖": {
+  "en": "Void Staff",
+  "kind": "item",
+  "aliases": [
+   "3135",
+   "Void Staff"
+  ]
+ },
+ "蜕生": {
+  "en": "Cryptbloom",
+  "kind": "item",
+  "aliases": [
+   "3137",
+   "Cryptbloom"
+  ]
+ },
+ "水银弯刀": {
+  "en": "Mercurial Scimitar",
+  "kind": "item",
+  "aliases": [
+   "3139",
+   "Mercurial Scimitar"
+  ]
+ },
+ "水银饰带": {
+  "en": "Quicksilver Sash",
+  "kind": "item",
+  "aliases": [
+   "3140",
+   "Quicksilver Sash"
+  ]
+ },
+ "幽梦之灵": {
+  "en": "Youmuu's Ghostblade",
+  "kind": "item",
+  "aliases": [
+   "3142",
+   "Youmuu's Ghostblade"
+  ]
+ },
+ "兰顿之兆": {
+  "en": "Randuin's Omen",
+  "kind": "item",
+  "aliases": [
+   "3143",
+   "Randuin's Omen"
+  ]
+ },
+ "斥候弹弓": {
+  "en": "Scout's Slingshot",
+  "kind": "item",
+  "aliases": [
+   "3144",
+   "Scout's Slingshot"
+  ]
+ },
+ "海克斯科技发电机": {
+  "en": "Hextech Alternator",
+  "kind": "item",
+  "aliases": [
+   "3145",
+   "Hextech Alternator"
+  ]
+ },
+ "海克斯科技枪刃": {
+  "en": "Hextech Gunblade",
+  "kind": "item",
+  "aliases": [
+   "663146",
+   "Hextech Gunblade"
+  ]
+ },
+ "幽魂面具": {
+  "en": "Haunting Guise",
+  "kind": "item",
+  "aliases": [
+   "3147",
+   "Haunting Guise"
+  ]
+ },
+ "海克斯科技火箭腰带": {
+  "en": "Hextech Rocketbelt",
+  "kind": "item",
+  "aliases": [
+   "3152",
+   "Hextech Rocketbelt"
+  ]
+ },
+ "破败王者之刃": {
+  "en": "Blade of The Ruined King",
+  "kind": "item",
+  "aliases": [
+   "3153",
+   "Blade of The Ruined King"
+  ]
+ },
+ "海克斯饮魔刀": {
+  "en": "Hexdrinker",
+  "kind": "item",
+  "aliases": [
+   "3155",
+   "Hexdrinker"
+  ]
+ },
+ "玛莫提乌斯之噬": {
+  "en": "Maw of Malmortius",
+  "kind": "item",
+  "aliases": [
+   "3156",
+   "Maw of Malmortius"
+  ]
+ },
+ "中娅沙漏": {
+  "en": "Zhonya's Hourglass",
+  "kind": "item",
+  "aliases": [
+   "3157",
+   "Zhonya's Hourglass"
+  ]
+ },
+ "明朗之靴": {
+  "en": "Ionian Boots of Lucidity",
+  "kind": "item",
+  "aliases": [
+   "3158",
+   "Ionian Boots of Lucidity"
+  ]
+ },
+ "朔极之矛": {
+  "en": "Spear of Shojin",
+  "kind": "item",
+  "aliases": [
+   "3161",
+   "Spear of Shojin"
+  ]
+ },
+ "莫雷洛秘典": {
+  "en": "Morellonomicon",
+  "kind": "item",
+  "aliases": [
+   "3165",
+   "Morellonomicon"
+  ]
+ },
+ "不朽之路": {
+  "en": "Immortal Path",
+  "kind": "item",
+  "aliases": [
+   "3168",
+   "Immortal Path"
+  ]
+ },
+ "迅速进军": {
+  "en": "Swiftmarch",
+  "kind": "item",
+  "aliases": [
+   "3170",
+   "Swiftmarch"
+  ]
+ },
+ "猩红明朗": {
+  "en": "Crimson Lucidity",
+  "kind": "item",
+  "aliases": [
+   "3171",
+   "Crimson Lucidity"
+  ]
+ },
+ "炮铜胫甲": {
+  "en": "Gunmetal Greaves",
+  "kind": "item",
+  "aliases": [
+   "3172",
+   "Gunmetal Greaves"
+  ]
+ },
+ "带链碾碎者": {
+  "en": "Chainlaced Crushers",
+  "kind": "item",
+  "aliases": [
+   "3173",
+   "Chainlaced Crushers"
+  ]
+ },
+ "装甲战靴": {
+  "en": "Armored Advance",
+  "kind": "item",
+  "aliases": [
+   "3174",
+   "Armored Advance"
+  ]
+ },
+ "灵能使之靴": {
+  "en": "Spellslinger's Shoes",
+  "kind": "item",
+  "aliases": [
+   "3175",
+   "Spellslinger's Shoes"
+  ]
+ },
+ "永远前进": {
+  "en": "Forever Forward",
+  "kind": "item",
+  "aliases": [
+   "3176",
+   "Forever Forward"
+  ]
+ },
+ "守护者之刃": {
+  "en": "Guardian's Blade",
+  "kind": "item",
+  "aliases": [
+   "3177",
+   "Guardian's Blade"
+  ]
+ },
+ "黯影阔剑": {
+  "en": "Umbral Glaive",
+  "kind": "item",
+  "aliases": [
+   "3179",
+   "Umbral Glaive"
+  ]
+ },
+ "破舰者": {
+  "en": "Hullbreaker",
+  "kind": "item",
+  "aliases": [
+   "3181",
+   "Hullbreaker"
+  ]
+ },
+ "守护者战锤": {
+  "en": "Guardian's Hammer",
+  "kind": "item",
+  "aliases": [
+   "3184",
+   "Guardian's Hammer"
+  ]
+ },
+ "钢铁烈阳之匣": {
+  "en": "Locket of the Iron Solari",
+  "kind": "item",
+  "aliases": [
+   "323190",
+   "Locket of the Iron Solari"
+  ]
+ },
+ "幽魂斗篷": {
+  "en": "Spectre's Cowl",
+  "kind": "item",
+  "aliases": [
+   "3211",
+   "Spectre's Cowl"
+  ]
+ },
+ "米凯尔的祝福": {
+  "en": "Mikael's Blessing",
+  "kind": "item",
+  "aliases": [
+   "323222",
+   "Mikael's Blessing"
+  ]
+ },
+ "炽热香炉": {
+  "en": "Ardent Censer",
+  "kind": "item",
+  "aliases": [
+   "3504",
+   "Ardent Censer"
+  ]
+ },
+ "帝国指令": {
+  "en": "Imperial Mandate",
+  "kind": "item",
+  "aliases": [
+   "4005",
+   "Imperial Mandate"
+  ]
+ },
+ "流水法杖": {
+  "en": "Staff of Flowing Water",
+  "kind": "item",
+  "aliases": [
+   "6616",
+   "Staff of Flowing Water"
+  ]
+ },
+ "月石再生器": {
+  "en": "Moonstone Renewer",
+  "kind": "item",
+  "aliases": [
+   "6617",
+   "Moonstone Renewer"
+  ]
+ },
+ "海力亚的回响": {
+  "en": "Echoes of Helia",
+  "kind": "item",
+  "aliases": [
+   "6620",
+   "Echoes of Helia"
+  ]
+ },
+ "黎明核心": {
+  "en": "Dawncore",
+  "kind": "item",
+  "aliases": [
+   "6621",
+   "Dawncore"
+  ]
+ },
+ "时光之杖": {
+  "en": "Rod of Ages",
+  "kind": "item",
+  "aliases": [
+   "6657",
+   "Rod of Ages"
+  ]
+ },
+ "深渊面具": {
+  "en": "Abyssal Mask",
+  "kind": "item",
+  "aliases": [
+   "8020",
+   "Abyssal Mask"
+  ]
+ },
+ "界弓": {
+  "en": "Terminus",
+  "kind": "item",
+  "aliases": [
+   "3302",
+   "Terminus"
+  ]
+ },
+ "草间人": {
+  "en": "Scarecrow Effigy",
+  "kind": "item",
+  "aliases": [
+   "3330",
+   "Scarecrow Effigy"
+  ]
+ },
+ "侦察守卫": {
+  "en": "Stealth Ward",
+  "kind": "item",
+  "aliases": [
+   "3340",
+   "Stealth Ward"
+  ]
+ },
+ "远见改造": {
+  "en": "Farsight Alteration",
+  "kind": "item",
+  "aliases": [
+   "3363",
+   "Farsight Alteration"
+  ]
+ },
+ "神谕透镜": {
+  "en": "Oracle Lens",
+  "kind": "item",
+  "aliases": [
+   "3364",
+   "Oracle Lens"
+  ]
+ },
+ "你也有份": {
+  "en": "Your Cut",
+  "kind": "item",
+  "aliases": [
+   "3400",
+   "Your Cut"
+  ]
+ },
+ "夺萃之镰": {
+  "en": "Essence Reaver",
+  "kind": "item",
+  "aliases": [
+   "3508",
+   "Essence Reaver"
+  ]
+ },
+ "卡莉丝塔的黑色长矛": {
+  "en": "Kalista's Black Spear",
+  "kind": "item",
+  "aliases": [
+   "3600",
+   "Kalista's Black Spear"
+  ]
+ },
+ "亡者的板甲": {
+  "en": "Dead Man's Plate",
+  "kind": "item",
+  "aliases": [
+   "3742",
+   "Dead Man's Plate"
+  ]
+ },
+ "巨型九头蛇": {
+  "en": "Titanic Hydra",
+  "kind": "item",
+  "aliases": [
+   "3748",
+   "Titanic Hydra"
+  ]
+ },
+ "晶体护腕": {
+  "en": "Crystalline Bracer",
+  "kind": "item",
+  "aliases": [
+   "3801",
+   "Crystalline Bracer"
+  ]
+ },
+ "遗失的章节": {
+  "en": "Lost Chapter",
+  "kind": "item",
+  "aliases": [
+   "3802",
+   "Lost Chapter"
+  ]
+ },
+ "万世催化石": {
+  "en": "Catalyst of Aeons",
+  "kind": "item",
+  "aliases": [
+   "3803",
+   "Catalyst of Aeons"
+  ]
+ },
+ "夜之锋刃": {
+  "en": "Edge of Night",
+  "kind": "item",
+  "aliases": [
+   "3814",
+   "Edge of Night"
+  ]
+ },
+ "云游图鉴": {
+  "en": "World Atlas",
+  "kind": "item",
+  "aliases": [
+   "3865",
+   "World Atlas"
+  ]
+ },
+ "符文罗盘": {
+  "en": "Runic Compass",
+  "kind": "item",
+  "aliases": [
+   "3866",
+   "Runic Compass"
+  ]
+ },
+ "异世珍藏": {
+  "en": "Bounty of Worlds",
+  "kind": "item",
+  "aliases": [
+   "3867",
+   "Bounty of Worlds"
+  ]
+ },
+ "星界据守": {
+  "en": "Celestial Opposition",
+  "kind": "item",
+  "aliases": [
+   "3869",
+   "Celestial Opposition"
+  ]
+ },
+ "圆梦使者": {
+  "en": "Dream Maker",
+  "kind": "item",
+  "aliases": [
+   "3870",
+   "Dream Maker"
+  ]
+ },
+ "扎兹沙克的溃口": {
+  "en": "Zaz'Zak's Realmspike",
+  "kind": "item",
+  "aliases": [
+   "3871",
+   "Zaz'Zak's Realmspike"
+  ]
+ },
+ "摩天雪橇": {
+  "en": "Solstice Sleigh",
+  "kind": "item",
+  "aliases": [
+   "3876",
+   "Solstice Sleigh"
+  ]
+ },
+ "血鸣": {
+  "en": "Bloodsong",
+  "kind": "item",
+  "aliases": [
+   "3877",
+   "Bloodsong"
+  ]
+ },
+ "<rarityLegendary>随意开火</rarityLegendary><br><subtitleLeft><silver>500银蛇币</silver></subtitleLeft>": {
+  "en": "<rarityLegendary>Fire at Will</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+  "kind": "item",
+  "aliases": [
+   "3901",
+   "<rarityLegendary>Fire at Will</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>"
+  ]
+ },
+ "<rarityLegendary>死亡之女</rarityLegendary><br><subtitleLeft><silver>500银蛇币</silver></subtitleLeft>": {
+  "en": "<rarityLegendary>Death's Daughter</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+  "kind": "item",
+  "aliases": [
+   "3902",
+   "<rarityLegendary>Death's Daughter</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>"
+  ]
+ },
+ "<rarityLegendary>鼓舞士气</rarityLegendary><br><subtitleLeft><silver>500银蛇币</silver></subtitleLeft>": {
+  "en": "<rarityLegendary>Raise Morale</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+  "kind": "item",
+  "aliases": [
+   "3903",
+   "<rarityLegendary>Raise Morale</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>"
+  ]
+ },
+ "湮灭宝珠": {
+  "en": "Oblivion Orb",
+  "kind": "item",
+  "aliases": [
+   "3916",
+   "Oblivion Orb"
+  ]
+ },
+ "自然之力": {
+  "en": "Force of Nature",
+  "kind": "item",
+  "aliases": [
+   "4401",
+   "Force of Nature"
+  ]
+ },
+ "视界专注": {
+  "en": "Horizon Focus",
+  "kind": "item",
+  "aliases": [
+   "4628",
+   "Horizon Focus"
+  ]
+ },
+ "星界驱驰": {
+  "en": "Cosmic Drive",
+  "kind": "item",
+  "aliases": [
+   "4629",
+   "Cosmic Drive"
+  ]
+ },
+ "枯萎珠宝": {
+  "en": "Blighting Jewel",
+  "kind": "item",
+  "aliases": [
+   "4630",
+   "Blighting Jewel"
+  ]
+ },
+ "翠绿屏障": {
+  "en": "Verdant Barrier",
+  "kind": "item",
+  "aliases": [
+   "4632",
+   "Verdant Barrier"
+  ]
+ },
+ "裂隙制造者": {
+  "en": "Riftmaker",
+  "kind": "item",
+  "aliases": [
+   "4633",
+   "Riftmaker"
+  ]
+ },
+ "榨血睥睨": {
+  "en": "Leeching Leer",
+  "kind": "item",
+  "aliases": [
+   "4635",
+   "Leeching Leer"
+  ]
+ },
+ "暗夜收割者": {
+  "en": "Night Harvester",
+  "kind": "item",
+  "aliases": [
+   "4636",
+   "Night Harvester"
+  ]
+ },
+ "恶魔之拥": {
+  "en": "Demonic Embrace",
+  "kind": "item",
+  "aliases": [
+   "4637",
+   "Demonic Embrace"
+  ]
+ },
+ "萌动眼石": {
+  "en": "Stirring Wardstone",
+  "kind": "item",
+  "aliases": [
+   "4641",
+   "Stirring Wardstone"
+  ]
+ },
+ "班德尔玻璃镜": {
+  "en": "Bandleglass Mirror",
+  "kind": "item",
+  "aliases": [
+   "4642",
+   "Bandleglass Mirror"
+  ]
+ },
+ "影焰": {
+  "en": "Shadowflame",
+  "kind": "item",
+  "aliases": [
+   "4645",
+   "Shadowflame"
+  ]
+ },
+ "风暴狂涌": {
+  "en": "Stormsurge",
+  "kind": "item",
+  "aliases": [
+   "4646",
+   "Stormsurge"
+  ]
+ },
+ "死亡之舞": {
+  "en": "Death's Dance",
+  "kind": "item",
+  "aliases": [
+   "6333",
+   "Death's Dance"
+  ]
+ },
+ "炼金朋克链锯剑": {
+  "en": "Chempunk Chainsword",
+  "kind": "item",
+  "aliases": [
+   "6609",
+   "Chempunk Chainsword"
+  ]
+ },
+ "焚天": {
+  "en": "Sundered Sky",
+  "kind": "item",
+  "aliases": [
+   "6610",
+   "Sundered Sky"
+  ]
+ },
+ "阿塔玛的清算": {
+  "en": "Atma's Reckoning",
+  "kind": "item",
+  "aliases": [
+   "663039",
+   "Atma's Reckoning"
+  ]
+ },
+ "魔王之冕": {
+  "en": "Demon King's Crown",
+  "kind": "item",
+  "aliases": [
+   "663056",
+   "Demon King's Crown"
+  ]
+ },
+ "熔石之盾": {
+  "en": "Shield of Molten Stone",
+  "kind": "item",
+  "aliases": [
+   "663058",
+   "Shield of Molten Stone"
+  ]
+ },
+ "星夜斗篷": {
+  "en": "Cloak of Starry Night",
+  "kind": "item",
+  "aliases": [
+   "663059",
+   "Cloak of Starry Night"
+  ]
+ },
+ "神圣之剑": {
+  "en": "Sword of the Divine",
+  "kind": "item",
+  "aliases": [
+   "663060",
+   "Sword of the Divine"
+  ]
+ },
+ "维迦的飞升护符": {
+  "en": "Veigar's Talisman of Ascension",
+  "kind": "item",
+  "aliases": [
+   "663064",
+   "Veigar's Talisman of Ascension"
+  ]
+ },
+ "挺进破坏者": {
+  "en": "Stridebreaker",
+  "kind": "item",
+  "aliases": [
+   "6631",
+   "Stridebreaker"
+  ]
+ },
+ "灵风": {
+  "en": "Zephyr",
+  "kind": "item",
+  "aliases": [
+   "663172",
+   "Zephyr"
+  ]
+ },
+ "石像鬼石板甲": {
+  "en": "Gargoyle Stoneplate",
+  "kind": "item",
+  "aliases": [
+   "663193",
+   "Gargoyle Stoneplate"
+  ]
+ },
+ "花晓之剑": {
+  "en": "Sword of Blossoming Dawn",
+  "kind": "item",
+  "aliases": [
+   "664011",
+   "Sword of Blossoming Dawn"
+  ]
+ },
+ "金铲铲": {
+  "en": "The Golden Spatula",
+  "kind": "item",
+  "aliases": [
+   "664403",
+   "The Golden Spatula"
+  ]
+ },
+ "破碎王后之冕": {
+  "en": "Crown of the Shattered Queen",
+  "kind": "item",
+  "aliases": [
+   "664644",
+   "Crown of the Shattered Queen"
+  ]
+ },
+ "兰德里的折磨": {
+  "en": "Liandry's Torment",
+  "kind": "item",
+  "aliases": [
+   "6653",
+   "Liandry's Torment"
+  ]
+ },
+ "卢登的回声": {
+  "en": "Luden's Echo",
+  "kind": "item",
+  "aliases": [
+   "6655",
+   "Luden's Echo"
+  ]
+ },
+ "斑比的熔渣": {
+  "en": "Bami's Cinder",
+  "kind": "item",
+  "aliases": [
+   "6660",
+   "Bami's Cinder"
+  ]
+ },
+ "冰脉护手": {
+  "en": "Iceborn Gauntlet",
+  "kind": "item",
+  "aliases": [
+   "6662",
+   "Iceborn Gauntlet"
+  ]
+ },
+ "璀璨回响": {
+  "en": "Hollow Radiance",
+  "kind": "item",
+  "aliases": [
+   "6664",
+   "Hollow Radiance"
+  ]
+ },
+ "千变者贾修": {
+  "en": "Jak'Sho, The Protean",
+  "kind": "item",
+  "aliases": [
+   "6665",
+   "Jak'Sho, The Protean"
+  ]
+ },
+ "正午箭袋": {
+  "en": "Noonquiver",
+  "kind": "item",
+  "aliases": [
+   "6670",
+   "Noonquiver"
+  ]
+ },
+ "投机者之刃": {
+  "en": "Gambler's Blade",
+  "kind": "item",
+  "aliases": [
+   "667101",
+   "Gambler's Blade"
+  ]
+ },
+ "残忍": {
+  "en": "Cruelty",
+  "kind": "item",
+  "aliases": [
+   "667109",
+   "Cruelty"
+  ]
+ },
+ "食肉斧剑": {
+  "en": "Flesheater",
+  "kind": "item",
+  "aliases": [
+   "667112",
+   "Flesheater"
+  ]
+ },
+ "海妖杀手": {
+  "en": "Kraken Slayer",
+  "kind": "item",
+  "aliases": [
+   "6672",
+   "Kraken Slayer"
+  ]
+ },
+ "不朽盾弓": {
+  "en": "Immortal Shieldbow",
+  "kind": "item",
+  "aliases": [
+   "6673",
+   "Immortal Shieldbow"
+  ]
+ },
+ "纳沃利烁刃": {
+  "en": "Navori Flickerblade",
+  "kind": "item",
+  "aliases": [
+   "6675",
+   "Navori Flickerblade"
+  ]
+ },
+ "收集者": {
+  "en": "The Collector",
+  "kind": "item",
+  "aliases": [
+   "667666",
+   "The Collector"
+  ]
+ },
+ "剑翎": {
+  "en": "Rectrix",
+  "kind": "item",
+  "aliases": [
+   "6690",
+   "Rectrix"
+  ]
+ },
+ "星蚀": {
+  "en": "Eclipse",
+  "kind": "item",
+  "aliases": [
+   "6692",
+   "Eclipse"
+  ]
+ },
+ "暗行者之爪": {
+  "en": "Prowler's Claw",
+  "kind": "item",
+  "aliases": [
+   "6693",
+   "Prowler's Claw"
+  ]
+ },
+ "赛瑞尔达的怨恨": {
+  "en": "Serylda's Grudge",
+  "kind": "item",
+  "aliases": [
+   "6694",
+   "Serylda's Grudge"
+  ]
+ },
+ "巨蛇之牙": {
+  "en": "Serpent's Fang",
+  "kind": "item",
+  "aliases": [
+   "6695",
+   "Serpent's Fang"
+  ]
+ },
+ "公理圆弧": {
+  "en": "Axiom Arc",
+  "kind": "item",
+  "aliases": [
+   "6696",
+   "Axiom Arc"
+  ]
+ },
+ "狂妄": {
+  "en": "Hubris",
+  "kind": "item",
+  "aliases": [
+   "6697",
+   "Hubris"
+  ]
+ },
+ "亵渎九头蛇": {
+  "en": "Profane Hydra",
+  "kind": "item",
+  "aliases": [
+   "6698",
+   "Profane Hydra"
+  ]
+ },
+ "电震涡流剑": {
+  "en": "Voltaic Cyclosword",
+  "kind": "item",
+  "aliases": [
+   "6699",
+   "Voltaic Cyclosword"
+  ]
+ },
+ "禁忌时机": {
+  "en": "Opportunity",
+  "kind": "item",
+  "aliases": [
+   "6701",
+   "Opportunity"
+  ]
+ },
+ "普朗克 占位": {
+  "en": "Gangplank Placeholder",
+  "kind": "item",
+  "aliases": [
+   "7050",
+   "Gangplank Placeholder"
+  ]
+ },
+ "穿透型子弹": {
+  "en": "Penetrating Bullets",
+  "kind": "item",
+  "aliases": [
+   "771500",
+   "Penetrating Bullets"
+  ]
+ },
+ "厌恨锁链": {
+  "en": "Anathema's Chains",
+  "kind": "item",
+  "aliases": [
+   "8001",
+   "Anathema's Chains"
+  ]
+ },
+ "放血者的诅咒": {
+  "en": "Bloodletter's Curse",
+  "kind": "item",
+  "aliases": [
+   "8010",
+   "Bloodletter's Curse"
+  ]
+ }
+}
