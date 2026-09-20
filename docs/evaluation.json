@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T14:25:44",
+ "generated_at": "2026-09-20T14:53:00",
  "corpus": {
   "chunks": 1176,
   "patches": [
@@ -15,1635 +15,245 @@
    "26.18"
   ]
  },
- "cases": 54,
+ "cases": 38,
  "arms": {
-  "bm25": {
-   "single": {
-    "total": 28,
-    "hit@1": 28,
-    "hit@5": 28,
-    "value_ok": 28,
-    "value_total": 28,
-    "version_ok": 28,
-    "gt_missing": 0
-   },
-   "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
-    "jev_pick_ok": 0,
-    "jev_picks": 0
-   },
-   "overview": {
-    "total": 4,
-    "ok": 4,
-    "subject_miss": 0
-   },
-   "absent": {
-    "total": 3,
-    "refused": 3
-   },
-   "out_of_scope": {
-    "total": 4,
-    "refused": 4
-   },
-   "trap": {
-    "total": 0,
-    "ok": 0
-   },
-   "selfcheck": {
-    "total": 0,
-    "pass": 0
-   },
-   "jev": {
-    "calls": 0,
-    "choice_picked": 0,
-    "choice_hit": 0,
-    "choice_none": 0,
-    "cost_usd": 0.0
-   },
-   "details": [
-    {
-     "id": "s01",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s02",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s03",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s04",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s05",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s06",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s07",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s08",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s09",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s10",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s11",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s12",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s13",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s14",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s15",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s16",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s17",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s18",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s19",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s20",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s21",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s22",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s23",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s24",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s25",
-     "kind": "single",
-     "status": "abstained",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s26",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s27",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s28",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "o01",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o02",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o03",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o04",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "a01",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a02",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a03",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x01",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x02",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x03",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x04",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "h01",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h02",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h03",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h04",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h05",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 2,
-     "value_ok": true
-    },
-    {
-     "id": "h06",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h07",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h08",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h09",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h10",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h11",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h12",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h13",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h14",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h15",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    }
-   ]
-  },
-  "vector": {
-   "single": {
-    "total": 28,
-    "hit@1": 28,
-    "hit@5": 28,
-    "value_ok": 28,
-    "value_total": 28,
-    "version_ok": 28,
-    "gt_missing": 0
-   },
-   "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
-    "jev_pick_ok": 0,
-    "jev_picks": 0
-   },
-   "overview": {
-    "total": 4,
-    "ok": 4,
-    "subject_miss": 0
-   },
-   "absent": {
-    "total": 3,
-    "refused": 3
-   },
-   "out_of_scope": {
-    "total": 4,
-    "refused": 4
-   },
-   "trap": {
-    "total": 0,
-    "ok": 0
-   },
-   "selfcheck": {
-    "total": 0,
-    "pass": 0
-   },
-   "jev": {
-    "calls": 0,
-    "choice_picked": 0,
-    "choice_hit": 0,
-    "choice_none": 0,
-    "cost_usd": 0.0
-   },
-   "details": [
-    {
-     "id": "s01",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s02",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s03",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s04",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s05",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s06",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s07",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s08",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s09",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s10",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s11",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s12",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s13",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s14",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s15",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s16",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s17",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s18",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s19",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s20",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s21",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s22",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s23",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s24",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s25",
-     "kind": "single",
-     "status": "abstained",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s26",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s27",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s28",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "o01",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o02",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o03",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o04",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "a01",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a02",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a03",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x01",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x02",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x03",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x04",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "h01",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h02",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h03",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h04",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h05",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 2,
-     "value_ok": true
-    },
-    {
-     "id": "h06",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h07",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h08",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h09",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h10",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h11",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h12",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h13",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h14",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h15",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    }
-   ]
-  },
-  "hybrid": {
-   "single": {
-    "total": 28,
-    "hit@1": 28,
-    "hit@5": 28,
-    "value_ok": 28,
-    "value_total": 28,
-    "version_ok": 28,
-    "gt_missing": 0
-   },
-   "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
-    "jev_pick_ok": 0,
-    "jev_picks": 0
-   },
-   "overview": {
-    "total": 4,
-    "ok": 4,
-    "subject_miss": 0
-   },
-   "absent": {
-    "total": 3,
-    "refused": 3
-   },
-   "out_of_scope": {
-    "total": 4,
-    "refused": 4
-   },
-   "trap": {
-    "total": 0,
-    "ok": 0
-   },
-   "selfcheck": {
-    "total": 0,
-    "pass": 0
-   },
-   "jev": {
-    "calls": 0,
-    "choice_picked": 0,
-    "choice_hit": 0,
-    "choice_none": 0,
-    "cost_usd": 0.0
-   },
-   "details": [
-    {
-     "id": "s01",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s02",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s03",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s04",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s05",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s06",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s07",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s08",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s09",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s10",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s11",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s12",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s13",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s14",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s15",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s16",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s17",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s18",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s19",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s20",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s21",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s22",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s23",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s24",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s25",
-     "kind": "single",
-     "status": "abstained",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s26",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s27",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s28",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "o01",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o02",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o03",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "o04",
-     "kind": "overview",
-     "status": "verify",
-     "overview_ok": true
-    },
-    {
-     "id": "a01",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a02",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "a03",
-     "kind": "absent",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x01",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x02",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x03",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "x04",
-     "kind": "out_of_scope",
-     "status": "abstained",
-     "refused": true
-    },
-    {
-     "id": "h01",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h02",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h03",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h04",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h05",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 2,
-     "value_ok": true
-    },
-    {
-     "id": "h06",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h07",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h08",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h09",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h10",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h11",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h12",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h13",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h14",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h15",
-     "kind": "pinned",
-     "status": "verify",
-     "rank": 1,
-     "value_ok": true
-    }
-   ]
-  },
   "hybrid+jev": {
    "single": {
-    "total": 28,
-    "hit@1": 28,
-    "hit@5": 28,
-    "value_ok": 28,
-    "value_total": 28,
-    "version_ok": 28,
+    "total": 20,
+    "hit@1": 19,
+    "hit@5": 20,
+    "value_ok": 20,
+    "value_total": 20,
+    "version_ok": 12,
     "gt_missing": 0
    },
    "pinned": {
-    "total": 15,
-    "hit@1": 15,
-    "hit@5": 15,
-    "value_ok": 15,
-    "jev_pick_ok": 11,
-    "jev_picks": 11
+    "total": 0,
+    "hit@1": 0,
+    "hit@5": 0,
+    "value_ok": 0,
+    "jev_pick_ok": 0,
+    "jev_picks": 0
    },
    "overview": {
-    "total": 4,
-    "ok": 4,
+    "total": 8,
+    "ok": 8,
     "subject_miss": 0
    },
    "absent": {
-    "total": 3,
-    "refused": 3
+    "total": 5,
+    "refused": 5
    },
    "out_of_scope": {
-    "total": 4,
-    "refused": 4
+    "total": 5,
+    "refused": 5
    },
    "trap": {
     "total": 0,
     "ok": 0
    },
    "selfcheck": {
-    "total": 42,
-    "pass": 42
+    "total": 20,
+    "pass": 20
    },
    "jev": {
-    "calls": 29,
+    "calls": 8,
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.002361
+    "cost_usd": 0.000838
    },
    "details": [
     {
-     "id": "s01",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.79,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s02",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.93,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s03",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.65,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s04",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.89,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s05",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.8,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s06",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.95,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s07",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.88,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s08",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.91,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s09",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.93,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s10",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s11",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.79,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s12",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.96,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s13",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.95,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s14",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.85,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s15",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.85,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s16",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.77,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s17",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.96,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s18",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.86,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s19",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.89,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s20",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.91,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s21",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.96,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s22",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.95,
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s23",
+     "id": "b01",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.92,
      "rank": 1,
-     "version_ok": true,
+     "version_asked": false,
      "value_ok": true
     },
     {
-     "id": "s24",
+     "id": "b02",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.87,
      "rank": 1,
+     "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "s25",
-     "kind": "single",
-     "status": "abstained",
-     "rank": 1,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "s26",
+     "id": "b03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.95,
      "rank": 1,
+     "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "s27",
+     "id": "b04",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.9,
      "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b05",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.87,
+     "rank": 1,
+     "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "s28",
+     "id": "b06",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b07",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b08",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.96,
      "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b09",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.82,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b10",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b11",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.85,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b12",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b13",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.78,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b14",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.83,
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b15",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b16",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "field_key_note": "语料字段键为 cost",
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b17",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.64,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b18",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b19",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b20",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.91,
+     "rank": 1,
+     "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
@@ -1672,6 +282,30 @@
      "overview_ok": true
     },
     {
+     "id": "o05",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o06",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o07",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o08",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
      "id": "a01",
      "kind": "absent",
      "status": "abstained",
@@ -1685,6 +319,18 @@
     },
     {
      "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a04",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a05",
      "kind": "absent",
      "status": "abstained",
      "refused": true
@@ -1714,135 +360,10 @@
      "refused": true
     },
     {
-     "id": "h01",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.88,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h02",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h03",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.86,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h04",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.91,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h05",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h06",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h07",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.89,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h08",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.95,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h09",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h10",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.91,
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h11",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.86,
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h12",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.79,
-     "rank": 1,
-     "value_ok": true
-    },
-    {
-     "id": "h13",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.87,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h14",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.94,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
-    },
-    {
-     "id": "h15",
-     "kind": "pinned",
-     "status": "verify",
-     "self_check_min": 0.9,
-     "rank": 1,
-     "value_ok": true,
-     "jev_pick": "target"
+     "id": "x05",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
     }
    ]
   }

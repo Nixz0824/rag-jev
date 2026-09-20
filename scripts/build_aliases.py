@@ -104,6 +104,23 @@ SLANG: dict[str, list[str]] = {
     "RekSai": ["挖掘机"],
     "Kalista": ["滑板鞋"],
     "Jinx": ["爆爆"],
+    "Alistar": ["牛头", "牛头人"],
+    "Rammus": ["龙龟"],
+    "Caitlyn": ["女警"],
+    "Viktor": ["三只手", "机械先驱"],
+    "Corki": ["飞机"],
+    "Nautilus": ["泰坦"],
+    "Sejuani": ["猪妹"],
+    "TwistedFate": ["卡牌", "卡牌大师"],
+    "Fizz": ["小鱼人"],
+    "Graves": ["男枪"],
+    "MissFortune": ["女枪"],
+    "Maokai": ["大树"],
+    "Elise": ["蜘蛛"],
+    "Skarner": ["蝎子"],
+    "Taric": ["宝石"],
+    "Neeko": ["万花通灵"],
+    "Malzahar": ["虚空先知"],
 }
 
 

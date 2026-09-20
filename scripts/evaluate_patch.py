@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -59,28 +60,45 @@ def resolve_target(retriever: PatchRetriever, target: dict) -> dict | None:
     return hits[0] if hits else None
 
 
+ASKED_VERSION_RE = re.compile(r"\d{1,2}[.．]\d{1,2}|上个版本|上一版本|当前版本|最新版本|最新版|这个版本|这版本")
+
+
+def expected_value(case: dict) -> str:
+    """The expected new value, accepted either at case level or inside expect."""
+    value = case.get("value")
+    if not value:
+        candidate = (case.get("expect") or {}).get("value")
+        value = candidate if isinstance(candidate, str) else ""
+    return value
+
+
+def expected_rows(retriever: PatchRetriever, expect: dict, value: str, strict_field: bool = True) -> list[dict]:
+    """Corpus rows that are the answer to a single-target case."""
+    needle = value.replace(" ", "")
+    out = []
+    for row in retriever.chunks:
+        if row["patch"] != expect.get("patch") or row["subject"] != expect.get("subject"):
+            continue
+        if expect.get("ability") and row.get("ability") != expect["ability"]:
+            continue
+        if strict_field and expect.get("field_key") and row.get("field_key") != expect["field_key"]:
+            continue
+        if needle and needle not in str(row.get("new_value", "")).replace(" ", ""):
+            continue
+        out.append(row)
+    return out
+
+
 def corpus_has_value(retriever: PatchRetriever, expect: dict) -> bool:
     """Whether the expectation's number exists in our corpus at all.
 
     Blind cases are authored from the official announcement, so a miss here means
     the corpus does not contain that change — a data gap, not a system error.
     """
-    needle = str(expect.get("value", "")).replace(" ", "")
-    if not needle:
-        return True
-    for row in retriever.chunks:
-        if row["patch"] != expect.get("patch") or row["subject"] != expect.get("subject"):
-            continue
-        if expect.get("ability") and row.get("ability") != expect["ability"]:
-            continue
-        if expect.get("field_key") and row.get("field_key") != expect.get("field_key"):
-            continue
-        if needle in str(row.get("new_value", "")).replace(" ", ""):
-            return True
-    return False
+    return bool(expected_rows(retriever, expect, expected_value({"expect": expect}), strict_field=False))
 
 
-def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -> dict:
+def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever, use_case_version: bool = False) -> dict:
     result = {
         "single": {"total": 0, "hit@1": 0, "hit@5": 0, "value_ok": 0, "value_total": 0, "version_ok": 0, "gt_missing": 0},
         "pinned": {"total": 0, "hit@1": 0, "hit@5": 0, "value_ok": 0, "jev_pick_ok": 0, "jev_picks": 0},
@@ -93,7 +111,12 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
         "details": [],
     }
     for index, case in enumerate(cases):
-        session = engine.chat(engine.new(f"eval-{index}"), case["question"])
+        # Questions that do not name a version are answered against the UI selection in
+        # the real product; --use-case-version simulates the user having picked it.
+        selected = None
+        if use_case_version and not ASKED_VERSION_RE.search(case["question"]):
+            selected = (case.get("expect") or {}).get("patch") or None
+        session = engine.chat(engine.new(f"eval-{index}"), case["question"], selected_patch=selected)
         evidence = session.get("evidence") or []
         answer = "\n".join(m["text"] for m in session["messages"] if m["role"] == "assistant")
         expect = case.get("expect") or {}
@@ -130,25 +153,49 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
                     detail["jev_pick"] = "target" if pick == target["id"] else "other"
                     result["pinned"]["jev_pick_ok"] += int(pick == target["id"])
         elif case["kind"] == "single":
-            if case.get("value") and not corpus_has_value(retriever, expect):
+            value = expected_value(case)
+            if value and not corpus_has_value(retriever, expect):
                 result["single"]["gt_missing"] += 1
                 detail["ground_truth"] = "missing_in_corpus"
                 result["details"].append(detail)
                 continue
             result["single"]["total"] += 1
-            ranked = [i for i, row in enumerate(evidence, start=1) if matches(row, expect)]
-            if ranked:
-                if ranked[0] == 1:
-                    result["single"]["hit@1"] += 1
-                if ranked[0] <= 5:
-                    result["single"]["hit@5"] += 1
-            detail["rank"] = ranked[0] if ranked else None
-            if expect.get("patch") and evidence and evidence[0].get("patch") == expect["patch"]:
-                result["single"]["version_ok"] += 1
-            detail["version_ok"] = bool(evidence) and evidence[0].get("patch") == expect.get("patch")
-            if case.get("value"):
+            targets = expected_rows(retriever, expect, value, strict_field=True) if value else []
+            field_note = ""
+            if value and not targets:
+                targets = expected_rows(retriever, expect, value, strict_field=False)
+                if targets:
+                    field_note = f"语料字段键为 {targets[0].get('field_key')}"
+            target_ids = {row["id"] for row in targets}
+            if target_ids:
+                ids = [row["id"] for row in evidence]
+                ranked = [ids.index(row_id) + 1 for row_id in target_ids if row_id in ids]
+                if ranked:
+                    if min(ranked) == 1:
+                        result["single"]["hit@1"] += 1
+                    if min(ranked) <= 5:
+                        result["single"]["hit@5"] += 1
+                    detail["rank"] = min(ranked)
+                else:
+                    detail["rank"] = None
+            else:
+                ranked = [i for i, row in enumerate(evidence, start=1) if matches(row, expect)]
+                if ranked:
+                    result["single"]["hit@1"] += int(ranked[0] == 1)
+                    result["single"]["hit@5"] += int(ranked[0] <= 5)
+                detail["rank"] = ranked[0] if ranked else None
+            if field_note:
+                detail["field_key_note"] = field_note
+            asked = bool(ASKED_VERSION_RE.search(case["question"]))
+            detail["version_asked"] = asked
+            if asked and evidence:
+                ok = evidence[0].get("patch") == expect.get("patch")
+                result["single"]["version_ok"] += int(ok)
+                detail["version_ok"] = ok
+            if value:
                 result["single"]["value_total"] += 1
-                ok = case["value"] in answer.replace(" ", "").replace("\u3000", "") or case["value"] in answer
+                compact = answer.replace(" ", "").replace("\u3000", "")
+                ok = value.replace(" ", "") in compact
                 result["single"]["value_ok"] += int(ok)
                 detail["value_ok"] = ok
         elif case["kind"] == "overview":
@@ -200,10 +247,13 @@ def summarise(name: str, arm: dict) -> list[str]:
             line += f"、Jev 首选命中 **{pinned['jev_pick_ok']}/{pinned['jev_picks']}**"
         lines.append(line)
     if single["total"]:
+        version_note = ""
+        asked = sum(1 for detail in arm["details"] if detail.get("kind") == "single" and detail.get("version_asked"))
+        version_note = f"（其中 {asked} 条问题写了版本，按问题判定版本正确性）"
         lines.append(
-            f"- 单点问题 {single['total']} 条：命中@1 **{single['hit@1']}/{single['total']}**、"
+            f"- 单点问题 {single['total']} 条{version_note}：命中@1 **{single['hit@1']}/{single['total']}**、"
             f"命中@5 **{single['hit@5']}/{single['total']}**、"
-            f"版本正确 **{single['version_ok']}/{single['total']}**、"
+            f"版本正确 **{single['version_ok']}/{asked}**、"
             f"数值正确 **{single['value_ok']}/{single['value_total']}**"
         )
     if single.get("gt_missing"):
@@ -282,6 +332,11 @@ def main() -> int:
     parser.add_argument("--cases", default="", help="逗号分隔的案例文件；默认内置两组")
     parser.add_argument("--out", default="", help="报告输出路径；默认 docs/评测报告.md")
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument(
+        "--use-case-version",
+        action="store_true",
+        help="未写版本的题按案例 expect.patch 作为界面版本选择传入（模拟用户在下拉框选中该版本）",
+    )
     args = parser.parse_args()
 
     if args.cases:
@@ -310,7 +365,7 @@ def main() -> int:
             continue
         engine = PatchEngine(retriever, use_jev=use_jev, retrieval_mode=name.replace("+jev", ""), self_check=use_jev)
         started = time.perf_counter()
-        results[name] = run_arm(engine, cases, retriever)
+        results[name] = run_arm(engine, cases, retriever, use_case_version=args.use_case_version)
         print(f"{name} 完成，用时 {time.perf_counter() - started:.1f}s")
 
     lines = [

@@ -25,7 +25,7 @@ LOG = logging.getLogger("ragjev.patch")
 PATCH_RE = re.compile(r"(?<!\d)(\d{1,2})[.．](\d{1,2})(?:[.．]\d+)?(?!\d)")
 ABILITY_RE = re.compile(r"(?i)(?<![a-z])([qwer])(?![a-z])")
 ULTIMATE_RE = re.compile(r"大招|大绝|终极技能")
-PASSIVE_RE = re.compile(r"被动")
+PASSIVE_RE = re.compile(r"被动(?!过|了)")
 CHANGE_INTENT = re.compile(r"改|变|调整|加强|增强|削弱|上调|下调|版本|多少|数值|现在|公告|更新", re.I)
 OVERVIEW_INTENT = re.compile(r"哪些|有哪些|有什么|都有啥|所有|全部|汇总|总结|一览|列表|改动列表|改动|变动|加强|削弱")
 AGGREGATE_INTENT = re.compile(r"哪些|有哪些|有什么|所有|全部|汇总|总结|一览|列表|改动列表")
@@ -314,9 +314,10 @@ class PatchEngine:
             return session
 
         query = self.parse(text)
-        if selected_patch and selected_patch in self.r.supported and not query["patches"]:
-            query["patches"] = [selected_patch]
-            query["defaulted"] = False
+        if selected_patch and selected_patch in self.r.supported and query["defaulted"]:
+            # The UI version selector only applies when the question itself did not
+            # name a version; an explicit version in the text always wins.
+            query.update(patches=[selected_patch], defaulted=False)
         session["question"] = text
         session["query"] = query
         session["trace"].append({"tool": "版本解析", "detail": ", ".join(query["patches"]) or "无"})
@@ -424,17 +425,52 @@ class PatchEngine:
         rift = [row for row in rows if row.get("mode") == "rift"]
         return rift or rows
 
+    def _recent_change(self, session: dict, query: dict) -> dict:
+        """No version given and the latest patch has nothing: show the last change instead.
+
+        Patch notes only record changes, so "现在多少" without a version can only be
+        answered as "the most recent change was ...", and the answer says exactly that.
+        """
+        rows = [row for row in self.r.all({"subject": query["subject"]}) if row.get("field_key") != "narrative"]
+        rows = self._prefer_mode(rows, query.get("mode"))
+        if query.get("ability"):
+            rows = [row for row in rows if row.get("ability") == query["ability"]] or rows
+        if query["field_keys"]:
+            rows = [row for row in rows if row.get("field_key") in query["field_keys"]] or rows
+        if not rows:
+            return self._no_result(session, query)
+        newest = max(patch_sort(row["patch"]) for row in rows)
+        rows = sorted((row for row in rows if patch_sort(row["patch"]) == newest), key=lambda row: row["subject"])
+        patch = rows[0]["patch"]
+        session["status"] = "verify"
+        session["evidence"] = rows[:12]
+        lines = [
+            f"你没有指定版本，而最新收录版本 {self.r.latest} 里没有{query['subject']}的这条改动。",
+            f"最近一次改动是 {patch}（历史版本）：",
+        ]
+        lines += ["- " + self._render(row, with_patch=False) for row in rows[:4]]
+        lines.append("来源：" + rows[0]["source_title"] + "｜" + rows[0]["source_url"])
+        lines.append("公告只记录改动，因此这只是最近一次调整，不等于当前实际数值。")
+        self.add(session, "assistant", "\n".join(lines), kind="recent_change", facts=rows[:12])
+        session["trace"].append({"tool": "版本回退", "detail": f"最新版没有记录，回退到 {patch} 的最近改动"})
+        return session
+
     def _answer_subject(self, session: dict, text: str, query: dict, where: dict) -> dict:
         hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
         structured = [row for row in hits if row.get("field_key") != "narrative"]
         hits = self._prefer_mode(structured or hits, query.get("mode"))
         if not hits:
+            if query.get("defaulted") and query["subject"] and (query["field_keys"] or query.get("ability")):
+                return self._recent_change(session, query)
             return self._no_result(session, query)
         if query["field_keys"]:
             # Soft preference: field matches float to the front, but the rest stay
             # visible so Jev can still pick a row whose label is worded differently.
             preferred = [row for row in hits if row.get("field_key") in query["field_keys"]]
             if not preferred:
+                if query.get("defaulted") and query["subject"]:
+                    # The asked stat exists, just not in the latest patch.
+                    return self._recent_change(session, query)
                 return self._field_not_found(session, query, hits)
             others = [row for row in hits if row.get("field_key") not in query["field_keys"]]
             hits = preferred + others

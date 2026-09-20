@@ -2,7 +2,7 @@
  "title": "测试语料",
  "generated_at": "2026-09-20T00:00:00+00:00",
  "source_note": "手写测试语料，不含官方公告原文。",
- "stats": {"patches": 2, "chunks": 9},
+ "stats": {"patches": 2, "chunks": 10},
  "chunks": [
   {
    "id": "t-yasuo-q-cd",
@@ -83,6 +83,16 @@
    "text": "26.17 版本，薇恩的生命值由 550 + 103/等级 提升至 580 + 98/等级。",
    "keywords": "薇恩 暗夜猎手 Vayne 26.17 生命值 加强",
    "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-yasuo-old-hp",
+   "patch": "26.16", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "", "ability_name": "",
+   "field": "基础生命值", "field_key": "health", "old_value": "100", "new_value": "110", "direction": "buff",
+   "confidence": "high", "aliases": ["疾风剑豪", "Yasuo"],
+   "text": "26.16 版本，亚索的基础生命值由 100 提升至 110。",
+   "keywords": "亚索 Yasuo 26.16 基础生命值 加强",
+   "source_title": "国服 26.16 版本更新公告", "source_url": "https://example.invalid/26.16"
   },
   {
    "id": "t-yasuo-old-q-dmg",

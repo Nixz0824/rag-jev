@@ -1,5 +1,5 @@
 {
- "厄薩斯": {
+ "冥血劍魔": {
   "en": "Aatrox",
   "kind": "champion",
   "primary": "亚托克斯",
@@ -10,14 +10,15 @@
    "暗裔剑魔"
   ]
  },
- "暗裔剑魔": {
+ "厄薩斯": {
   "en": "Aatrox",
   "kind": "champion",
   "primary": "亚托克斯",
   "aliases": [
    "Aatrox",
    "亚托克斯",
-   "剑魔"
+   "剑魔",
+   "暗裔剑魔"
   ]
  },
  "亚托克斯": {
@@ -30,15 +31,14 @@
    "暗裔剑魔"
   ]
  },
- "冥血劍魔": {
+ "暗裔剑魔": {
   "en": "Aatrox",
   "kind": "champion",
   "primary": "亚托克斯",
   "aliases": [
    "Aatrox",
    "亚托克斯",
-   "剑魔",
-   "暗裔剑魔"
+   "剑魔"
   ]
  },
  "九尾妖狐": {
@@ -72,18 +72,6 @@
    "狐狸"
   ]
  },
- "阿卡莉": {
-  "en": "Akali",
-  "kind": "champion",
-  "primary": "阿卡丽",
-  "aliases": [
-   "Akali",
-   "akl",
-   "离群之刺",
-   "阿卡丽",
-   "阿卡利"
-  ]
- },
  "隻影刺客": {
   "en": "Akali",
   "kind": "champion",
@@ -103,6 +91,18 @@
   "aliases": [
    "Akali",
    "akl",
+   "阿卡丽",
+   "阿卡利"
+  ]
+ },
+ "阿卡莉": {
+  "en": "Akali",
+  "kind": "champion",
+  "primary": "阿卡丽",
+  "aliases": [
+   "Akali",
+   "akl",
+   "离群之刺",
    "阿卡丽",
    "阿卡利"
   ]
@@ -128,15 +128,6 @@
    "阿克尚"
   ]
  },
- "影哨": {
-  "en": "Akshan",
-  "kind": "champion",
-  "primary": "阿克尚",
-  "aliases": [
-   "Akshan",
-   "阿克尚"
-  ]
- },
  "阿克尚": {
   "en": "Akshan",
   "kind": "champion",
@@ -156,23 +147,13 @@
    "阿克尚"
   ]
  },
- "亞歷斯塔": {
-  "en": "Alistar",
+ "影哨": {
+  "en": "Akshan",
   "kind": "champion",
-  "primary": "阿利斯塔",
+  "primary": "阿克尚",
   "aliases": [
-   "Alistar",
-   "牛头酋长",
-   "阿利斯塔"
-  ]
- },
- "牛头酋长": {
-  "en": "Alistar",
-  "kind": "champion",
-  "primary": "阿利斯塔",
-  "aliases": [
-   "Alistar",
-   "阿利斯塔"
+   "Akshan",
+   "阿克尚"
   ]
  },
  "阿利斯塔": {
@@ -181,7 +162,20 @@
   "primary": "阿利斯塔",
   "aliases": [
    "Alistar",
+   "牛头",
+   "牛头人",
    "牛头酋长"
+  ]
+ },
+ "牛头酋长": {
+  "en": "Alistar",
+  "kind": "champion",
+  "primary": "阿利斯塔",
+  "aliases": [
+   "Alistar",
+   "牛头",
+   "牛头人",
+   "阿利斯塔"
   ]
  },
  "牛頭酋長": {
@@ -190,27 +184,22 @@
   "primary": "阿利斯塔",
   "aliases": [
    "Alistar",
+   "牛头",
+   "牛头人",
    "牛头酋长",
    "阿利斯塔"
   ]
  },
- "鐵血狼母": {
-  "en": "Ambessa",
+ "亞歷斯塔": {
+  "en": "Alistar",
   "kind": "champion",
-  "primary": "安蓓萨",
+  "primary": "阿利斯塔",
   "aliases": [
-   "Ambessa",
-   "安蓓萨",
-   "铁血狼母"
-  ]
- },
- "铁血狼母": {
-  "en": "Ambessa",
-  "kind": "champion",
-  "primary": "安蓓萨",
-  "aliases": [
-   "Ambessa",
-   "安蓓萨"
+   "Alistar",
+   "牛头",
+   "牛头人",
+   "牛头酋长",
+   "阿利斯塔"
   ]
  },
  "安蓓萨": {
@@ -232,25 +221,23 @@
    "铁血狼母"
   ]
  },
- "阿木木": {
-  "en": "Amumu",
+ "铁血狼母": {
+  "en": "Ambessa",
   "kind": "champion",
-  "primary": "阿木木",
+  "primary": "安蓓萨",
   "aliases": [
-   "Amumu",
-   "木乃伊",
-   "殇之木乃伊"
+   "Ambessa",
+   "安蓓萨"
   ]
  },
- "阿姆姆": {
-  "en": "Amumu",
+ "鐵血狼母": {
+  "en": "Ambessa",
   "kind": "champion",
-  "primary": "阿木木",
+  "primary": "安蓓萨",
   "aliases": [
-   "Amumu",
-   "木乃伊",
-   "殇之木乃伊",
-   "阿木木"
+   "Ambessa",
+   "安蓓萨",
+   "铁血狼母"
   ]
  },
  "殤之木乃伊": {
@@ -264,6 +251,16 @@
    "阿木木"
   ]
  },
+ "阿木木": {
+  "en": "Amumu",
+  "kind": "champion",
+  "primary": "阿木木",
+  "aliases": [
+   "Amumu",
+   "木乃伊",
+   "殇之木乃伊"
+  ]
+ },
  "殇之木乃伊": {
   "en": "Amumu",
   "kind": "champion",
@@ -274,15 +271,15 @@
    "阿木木"
   ]
  },
- "艾妮維亞": {
-  "en": "Anivia",
+ "阿姆姆": {
+  "en": "Amumu",
   "kind": "champion",
-  "primary": "艾尼维亚",
+  "primary": "阿木木",
   "aliases": [
-   "Anivia",
-   "冰晶凤凰",
-   "冰鸟",
-   "艾尼维亚"
+   "Amumu",
+   "木乃伊",
+   "殇之木乃伊",
+   "阿木木"
   ]
  },
  "冰晶凤凰": {
@@ -291,17 +288,6 @@
   "primary": "艾尼维亚",
   "aliases": [
    "Anivia",
-   "冰鸟",
-   "艾尼维亚"
-  ]
- },
- "冰晶鳳凰": {
-  "en": "Anivia",
-  "kind": "champion",
-  "primary": "艾尼维亚",
-  "aliases": [
-   "Anivia",
-   "冰晶凤凰",
    "冰鸟",
    "艾尼维亚"
   ]
@@ -316,14 +302,26 @@
    "冰鸟"
   ]
  },
- "黑暗之女": {
-  "en": "Annie",
+ "冰晶鳳凰": {
+  "en": "Anivia",
   "kind": "champion",
-  "primary": "安妮",
+  "primary": "艾尼维亚",
   "aliases": [
-   "Annie",
-   "安妮",
-   "火女"
+   "Anivia",
+   "冰晶凤凰",
+   "冰鸟",
+   "艾尼维亚"
+  ]
+ },
+ "艾妮維亞": {
+  "en": "Anivia",
+  "kind": "champion",
+  "primary": "艾尼维亚",
+  "aliases": [
+   "Anivia",
+   "冰晶凤凰",
+   "冰鸟",
+   "艾尼维亚"
   ]
  },
  "安妮": {
@@ -336,23 +334,14 @@
    "黑暗之女"
   ]
  },
- "厄斐琉斯": {
-  "en": "Aphelios",
+ "黑暗之女": {
+  "en": "Annie",
   "kind": "champion",
-  "primary": "厄斐琉斯",
+  "primary": "安妮",
   "aliases": [
-   "Aphelios",
-   "残月之肃"
-  ]
- },
- "亞菲利歐": {
-  "en": "Aphelios",
-  "kind": "champion",
-  "primary": "厄斐琉斯",
-  "aliases": [
-   "Aphelios",
-   "厄斐琉斯",
-   "残月之肃"
+   "Annie",
+   "安妮",
+   "火女"
   ]
  },
  "信仰銳武": {
@@ -374,6 +363,25 @@
    "厄斐琉斯"
   ]
  },
+ "亞菲利歐": {
+  "en": "Aphelios",
+  "kind": "champion",
+  "primary": "厄斐琉斯",
+  "aliases": [
+   "Aphelios",
+   "厄斐琉斯",
+   "残月之肃"
+  ]
+ },
+ "厄斐琉斯": {
+  "en": "Aphelios",
+  "kind": "champion",
+  "primary": "厄斐琉斯",
+  "aliases": [
+   "Aphelios",
+   "残月之肃"
+  ]
+ },
  "冰霜射手": {
   "en": "Ashe",
   "kind": "champion",
@@ -384,15 +392,6 @@
    "艾希"
   ]
  },
- "艾希": {
-  "en": "Ashe",
-  "kind": "champion",
-  "primary": "艾希",
-  "aliases": [
-   "Ashe",
-   "寒冰射手"
-  ]
- },
  "寒冰射手": {
   "en": "Ashe",
   "kind": "champion",
@@ -400,6 +399,15 @@
   "aliases": [
    "Ashe",
    "艾希"
+  ]
+ },
+ "艾希": {
+  "en": "Ashe",
+  "kind": "champion",
+  "primary": "艾希",
+  "aliases": [
+   "Ashe",
+   "寒冰射手"
   ]
  },
  "星際漫遊者": {
@@ -413,16 +421,6 @@
    "铸星龙王"
   ]
  },
- "奥瑞利安·索尔": {
-  "en": "Aurelion Sol",
-  "kind": "champion",
-  "primary": "奥瑞利安·索尔",
-  "aliases": [
-   "Aurelion Sol",
-   "AurelionSol",
-   "铸星龙王"
-  ]
- },
  "铸星龙王": {
   "en": "Aurelion Sol",
   "kind": "champion",
@@ -431,6 +429,16 @@
    "Aurelion Sol",
    "AurelionSol",
    "奥瑞利安·索尔"
+  ]
+ },
+ "奥瑞利安·索尔": {
+  "en": "Aurelion Sol",
+  "kind": "champion",
+  "primary": "奥瑞利安·索尔",
+  "aliases": [
+   "Aurelion Sol",
+   "AurelionSol",
+   "铸星龙王"
   ]
  },
  "翱銳龍獸": {
@@ -444,16 +452,6 @@
    "铸星龙王"
   ]
  },
- "歐羅拉": {
-  "en": "Aurora",
-  "kind": "champion",
-  "primary": "阿萝拉",
-  "aliases": [
-   "Aurora",
-   "双界灵兔",
-   "阿萝拉"
-  ]
- },
  "跨界靈使": {
   "en": "Aurora",
   "kind": "champion",
@@ -461,15 +459,6 @@
   "aliases": [
    "Aurora",
    "双界灵兔",
-   "阿萝拉"
-  ]
- },
- "双界灵兔": {
-  "en": "Aurora",
-  "kind": "champion",
-  "primary": "阿萝拉",
-  "aliases": [
-   "Aurora",
    "阿萝拉"
   ]
  },
@@ -482,25 +471,23 @@
    "双界灵兔"
   ]
  },
- "阿兹尔": {
-  "en": "Azir",
+ "双界灵兔": {
+  "en": "Aurora",
   "kind": "champion",
-  "primary": "阿兹尔",
+  "primary": "阿萝拉",
   "aliases": [
-   "Azir",
-   "沙漠皇帝",
-   "沙皇"
+   "Aurora",
+   "阿萝拉"
   ]
  },
- "阿祈爾": {
-  "en": "Azir",
+ "歐羅拉": {
+  "en": "Aurora",
   "kind": "champion",
-  "primary": "阿兹尔",
+  "primary": "阿萝拉",
   "aliases": [
-   "Azir",
-   "沙漠皇帝",
-   "沙皇",
-   "阿兹尔"
+   "Aurora",
+   "双界灵兔",
+   "阿萝拉"
   ]
  },
  "蘇瑞瑪砂皇": {
@@ -524,6 +511,36 @@
    "阿兹尔"
   ]
  },
+ "阿祈爾": {
+  "en": "Azir",
+  "kind": "champion",
+  "primary": "阿兹尔",
+  "aliases": [
+   "Azir",
+   "沙漠皇帝",
+   "沙皇",
+   "阿兹尔"
+  ]
+ },
+ "阿兹尔": {
+  "en": "Azir",
+  "kind": "champion",
+  "primary": "阿兹尔",
+  "aliases": [
+   "Azir",
+   "沙漠皇帝",
+   "沙皇"
+  ]
+ },
+ "巴德": {
+  "en": "Bard",
+  "kind": "champion",
+  "primary": "巴德",
+  "aliases": [
+   "Bard",
+   "星界游神"
+  ]
+ },
  "星界游神": {
   "en": "Bard",
   "kind": "champion",
@@ -543,15 +560,6 @@
    "星界游神"
   ]
  },
- "巴德": {
-  "en": "Bard",
-  "kind": "champion",
-  "primary": "巴德",
-  "aliases": [
-   "Bard",
-   "星界游神"
-  ]
- },
  "貝爾薇斯": {
   "en": "Bel'Veth",
   "kind": "champion",
@@ -560,17 +568,6 @@
    "Bel'Veth",
    "Belveth",
    "卑尔维斯",
-   "大卑",
-   "虚空女皇"
-  ]
- },
- "卑尔维斯": {
-  "en": "Bel'Veth",
-  "kind": "champion",
-  "primary": "卑尔维斯",
-  "aliases": [
-   "Bel'Veth",
-   "Belveth",
    "大卑",
    "虚空女皇"
   ]
@@ -586,6 +583,17 @@
    "大卑"
   ]
  },
+ "卑尔维斯": {
+  "en": "Bel'Veth",
+  "kind": "champion",
+  "primary": "卑尔维斯",
+  "aliases": [
+   "Bel'Veth",
+   "Belveth",
+   "大卑",
+   "虚空女皇"
+  ]
+ },
  "虛空女皇": {
   "en": "Bel'Veth",
   "kind": "champion",
@@ -598,15 +606,6 @@
    "虚空女皇"
   ]
  },
- "布里茨": {
-  "en": "Blitzcrank",
-  "kind": "champion",
-  "primary": "布里茨",
-  "aliases": [
-   "Blitzcrank",
-   "蒸汽机器人"
-  ]
- },
  "蒸汽巨神兵": {
   "en": "Blitzcrank",
   "kind": "champion",
@@ -614,6 +613,15 @@
   "aliases": [
    "Blitzcrank",
    "布里茨",
+   "蒸汽机器人"
+  ]
+ },
+ "布里茨": {
+  "en": "Blitzcrank",
+  "kind": "champion",
+  "primary": "布里茨",
+  "aliases": [
+   "Blitzcrank",
    "蒸汽机器人"
   ]
  },
@@ -626,17 +634,6 @@
    "布里茨"
   ]
  },
- "復仇業火": {
-  "en": "Brand",
-  "kind": "champion",
-  "primary": "布兰德",
-  "aliases": [
-   "Brand",
-   "复仇焰魂",
-   "布兰德",
-   "火男"
-  ]
- },
  "复仇焰魂": {
   "en": "Brand",
   "kind": "champion",
@@ -644,16 +641,6 @@
   "aliases": [
    "Brand",
    "布兰德",
-   "火男"
-  ]
- },
- "布兰德": {
-  "en": "Brand",
-  "kind": "champion",
-  "primary": "布兰德",
-  "aliases": [
-   "Brand",
-   "复仇焰魂",
    "火男"
   ]
  },
@@ -668,7 +655,37 @@
    "火男"
   ]
  },
- "弗雷爾卓德豪腕": {
+ "復仇業火": {
+  "en": "Brand",
+  "kind": "champion",
+  "primary": "布兰德",
+  "aliases": [
+   "Brand",
+   "复仇焰魂",
+   "布兰德",
+   "火男"
+  ]
+ },
+ "布兰德": {
+  "en": "Brand",
+  "kind": "champion",
+  "primary": "布兰德",
+  "aliases": [
+   "Brand",
+   "复仇焰魂",
+   "火男"
+  ]
+ },
+ "布隆": {
+  "en": "Braum",
+  "kind": "champion",
+  "primary": "布隆",
+  "aliases": [
+   "Braum",
+   "弗雷尔卓德之心"
+  ]
+ },
+ "布郎姆": {
   "en": "Braum",
   "kind": "champion",
   "primary": "布隆",
@@ -678,7 +695,7 @@
    "弗雷尔卓德之心"
   ]
  },
- "布郎姆": {
+ "弗雷爾卓德豪腕": {
   "en": "Braum",
   "kind": "champion",
   "primary": "布隆",
@@ -697,13 +714,23 @@
    "布隆"
   ]
  },
- "布隆": {
-  "en": "Braum",
+ "布蕾爾": {
+  "en": "Briar",
   "kind": "champion",
-  "primary": "布隆",
+  "primary": "贝蕾亚",
   "aliases": [
-   "Braum",
-   "弗雷尔卓德之心"
+   "Briar",
+   "狂厄蔷薇",
+   "贝蕾亚"
+  ]
+ },
+ "贝蕾亚": {
+  "en": "Briar",
+  "kind": "champion",
+  "primary": "贝蕾亚",
+  "aliases": [
+   "Briar",
+   "狂厄蔷薇"
   ]
  },
  "披枷饞鬼": {
@@ -725,23 +752,15 @@
    "贝蕾亚"
   ]
  },
- "贝蕾亚": {
-  "en": "Briar",
+ "執法者": {
+  "en": "Caitlyn",
   "kind": "champion",
-  "primary": "贝蕾亚",
+  "primary": "凯特琳",
   "aliases": [
-   "Briar",
-   "狂厄蔷薇"
-  ]
- },
- "布蕾爾": {
-  "en": "Briar",
-  "kind": "champion",
-  "primary": "贝蕾亚",
-  "aliases": [
-   "Briar",
-   "狂厄蔷薇",
-   "贝蕾亚"
+   "Caitlyn",
+   "凯特琳",
+   "女警",
+   "皮城女警"
   ]
  },
  "凯特琳": {
@@ -750,26 +769,8 @@
   "primary": "凯特琳",
   "aliases": [
    "Caitlyn",
+   "女警",
    "皮城女警"
-  ]
- },
- "執法者": {
-  "en": "Caitlyn",
-  "kind": "champion",
-  "primary": "凯特琳",
-  "aliases": [
-   "Caitlyn",
-   "凯特琳",
-   "皮城女警"
-  ]
- },
- "皮城女警": {
-  "en": "Caitlyn",
-  "kind": "champion",
-  "primary": "凯特琳",
-  "aliases": [
-   "Caitlyn",
-   "凯特琳"
   ]
  },
  "凱特琳": {
@@ -779,27 +780,18 @@
   "aliases": [
    "Caitlyn",
    "凯特琳",
+   "女警",
    "皮城女警"
   ]
  },
- "卡蜜兒": {
-  "en": "Camille",
+ "皮城女警": {
+  "en": "Caitlyn",
   "kind": "champion",
-  "primary": "卡蜜尔",
+  "primary": "凯特琳",
   "aliases": [
-   "Camille",
-   "卡蜜尔",
-   "青钢影"
-  ]
- },
- "鋼鐵殘影": {
-  "en": "Camille",
-  "kind": "champion",
-  "primary": "卡蜜尔",
-  "aliases": [
-   "Camille",
-   "卡蜜尔",
-   "青钢影"
+   "Caitlyn",
+   "凯特琳",
+   "女警"
   ]
  },
  "青钢影": {
@@ -820,7 +812,27 @@
    "青钢影"
   ]
  },
- "卡莎碧雅": {
+ "鋼鐵殘影": {
+  "en": "Camille",
+  "kind": "champion",
+  "primary": "卡蜜尔",
+  "aliases": [
+   "Camille",
+   "卡蜜尔",
+   "青钢影"
+  ]
+ },
+ "卡蜜兒": {
+  "en": "Camille",
+  "kind": "champion",
+  "primary": "卡蜜尔",
+  "aliases": [
+   "Camille",
+   "卡蜜尔",
+   "青钢影"
+  ]
+ },
+ "蛇之擁抱": {
   "en": "Cassiopeia",
   "kind": "champion",
   "primary": "卡西奥佩娅",
@@ -830,16 +842,7 @@
    "魔蛇之拥"
   ]
  },
- "卡西奥佩娅": {
-  "en": "Cassiopeia",
-  "kind": "champion",
-  "primary": "卡西奥佩娅",
-  "aliases": [
-   "Cassiopeia",
-   "魔蛇之拥"
-  ]
- },
- "蛇之擁抱": {
+ "卡莎碧雅": {
   "en": "Cassiopeia",
   "kind": "champion",
   "primary": "卡西奥佩娅",
@@ -858,7 +861,16 @@
    "卡西奥佩娅"
   ]
  },
- "科加斯": {
+ "卡西奥佩娅": {
+  "en": "Cassiopeia",
+  "kind": "champion",
+  "primary": "卡西奥佩娅",
+  "aliases": [
+   "Cassiopeia",
+   "魔蛇之拥"
+  ]
+ },
+ "虚空恐惧": {
   "en": "Cho'Gath",
   "kind": "champion",
   "primary": "科加斯",
@@ -866,7 +878,7 @@
    "Cho'Gath",
    "Chogath",
    "大虫子",
-   "虚空恐惧"
+   "科加斯"
   ]
  },
  "虛空恐懼": {
@@ -881,7 +893,7 @@
    "虚空恐惧"
   ]
  },
- "虚空恐惧": {
+ "科加斯": {
   "en": "Cho'Gath",
   "kind": "champion",
   "primary": "科加斯",
@@ -889,7 +901,7 @@
    "Cho'Gath",
    "Chogath",
    "大虫子",
-   "科加斯"
+   "虚空恐惧"
   ]
  },
  "庫奇": {
@@ -899,16 +911,8 @@
   "aliases": [
    "Corki",
    "库奇",
-   "英勇投弹手"
-  ]
- },
- "英勇投弹手": {
-  "en": "Corki",
-  "kind": "champion",
-  "primary": "库奇",
-  "aliases": [
-   "Corki",
-   "库奇"
+   "英勇投弹手",
+   "飞机"
   ]
  },
  "库奇": {
@@ -917,7 +921,18 @@
   "primary": "库奇",
   "aliases": [
    "Corki",
-   "英勇投弹手"
+   "英勇投弹手",
+   "飞机"
+  ]
+ },
+ "英勇投弹手": {
+  "en": "Corki",
+  "kind": "champion",
+  "primary": "库奇",
+  "aliases": [
+   "Corki",
+   "库奇",
+   "飞机"
   ]
  },
  "英勇投彈手": {
@@ -927,27 +942,8 @@
   "aliases": [
    "Corki",
    "库奇",
-   "英勇投弹手"
-  ]
- },
- "達瑞斯": {
-  "en": "Darius",
-  "kind": "champion",
-  "primary": "德莱厄斯",
-  "aliases": [
-   "Darius",
-   "德莱厄斯",
-   "诺克萨斯之手"
-  ]
- },
- "諾克薩斯之力": {
-  "en": "Darius",
-  "kind": "champion",
-  "primary": "德莱厄斯",
-  "aliases": [
-   "Darius",
-   "德莱厄斯",
-   "诺克萨斯之手"
+   "英勇投弹手",
+   "飞机"
   ]
  },
  "德莱厄斯": {
@@ -968,14 +964,24 @@
    "德莱厄斯"
   ]
  },
- "黛安娜": {
-  "en": "Diana",
+ "諾克薩斯之力": {
+  "en": "Darius",
   "kind": "champion",
-  "primary": "黛安娜",
+  "primary": "德莱厄斯",
   "aliases": [
-   "Diana",
-   "皎月",
-   "皎月女神"
+   "Darius",
+   "德莱厄斯",
+   "诺克萨斯之手"
+  ]
+ },
+ "達瑞斯": {
+  "en": "Darius",
+  "kind": "champion",
+  "primary": "德莱厄斯",
+  "aliases": [
+   "Darius",
+   "德莱厄斯",
+   "诺克萨斯之手"
   ]
  },
  "輕藐之月": {
@@ -987,6 +993,16 @@
    "皎月",
    "皎月女神",
    "黛安娜"
+  ]
+ },
+ "黛安娜": {
+  "en": "Diana",
+  "kind": "champion",
+  "primary": "黛安娜",
+  "aliases": [
+   "Diana",
+   "皎月",
+   "皎月女神"
   ]
  },
  "皎月女神": {
@@ -1037,28 +1053,6 @@
    "荣耀行刑官"
   ]
  },
- "佐恩狂人": {
-  "en": "Dr. Mundo",
-  "kind": "champion",
-  "primary": "蒙多医生",
-  "aliases": [
-   "Dr. Mundo",
-   "DrMundo",
-   "祖安狂人",
-   "蒙多医生"
-  ]
- },
- "蒙多醫生": {
-  "en": "Dr. Mundo",
-  "kind": "champion",
-  "primary": "蒙多医生",
-  "aliases": [
-   "Dr. Mundo",
-   "DrMundo",
-   "祖安狂人",
-   "蒙多医生"
-  ]
- },
  "祖安狂人": {
   "en": "Dr. Mundo",
   "kind": "champion",
@@ -1079,13 +1073,26 @@
    "祖安狂人"
   ]
  },
- "艾克": {
-  "en": "Ekko",
+ "蒙多醫生": {
+  "en": "Dr. Mundo",
   "kind": "champion",
-  "primary": "艾克",
+  "primary": "蒙多医生",
   "aliases": [
-   "Ekko",
-   "时间刺客"
+   "Dr. Mundo",
+   "DrMundo",
+   "祖安狂人",
+   "蒙多医生"
+  ]
+ },
+ "佐恩狂人": {
+  "en": "Dr. Mundo",
+  "kind": "champion",
+  "primary": "蒙多医生",
+  "aliases": [
+   "Dr. Mundo",
+   "DrMundo",
+   "祖安狂人",
+   "蒙多医生"
   ]
  },
  "时间刺客": {
@@ -1095,6 +1102,15 @@
   "aliases": [
    "Ekko",
    "艾克"
+  ]
+ },
+ "艾克": {
+  "en": "Ekko",
+  "kind": "champion",
+  "primary": "艾克",
+  "aliases": [
+   "Ekko",
+   "时间刺客"
   ]
  },
  "時空少年": {
@@ -1113,16 +1129,8 @@
   "primary": "伊莉丝",
   "aliases": [
    "Elise",
-   "伊莉丝"
-  ]
- },
- "伊莉丝": {
-  "en": "Elise",
-  "kind": "champion",
-  "primary": "伊莉丝",
-  "aliases": [
-   "Elise",
-   "蜘蛛女皇"
+   "伊莉丝",
+   "蜘蛛"
   ]
  },
  "伊莉絲": {
@@ -1132,6 +1140,17 @@
   "aliases": [
    "Elise",
    "伊莉丝",
+   "蜘蛛",
+   "蜘蛛女皇"
+  ]
+ },
+ "伊莉丝": {
+  "en": "Elise",
+  "kind": "champion",
+  "primary": "伊莉丝",
+  "aliases": [
+   "Elise",
+   "蜘蛛",
    "蜘蛛女皇"
   ]
  },
@@ -1142,17 +1161,18 @@
   "aliases": [
    "Elise",
    "伊莉丝",
+   "蜘蛛",
    "蜘蛛女皇"
   ]
  },
- "痛苦之拥": {
+ "伊芙琳": {
   "en": "Evelynn",
   "kind": "champion",
   "primary": "伊芙琳",
   "aliases": [
    "Evelynn",
-   "伊芙琳",
-   "寡妇"
+   "寡妇",
+   "痛苦之拥"
   ]
  },
  "臨終擁抱": {
@@ -1166,14 +1186,14 @@
    "痛苦之拥"
   ]
  },
- "伊芙琳": {
+ "痛苦之拥": {
   "en": "Evelynn",
   "kind": "champion",
   "primary": "伊芙琳",
   "aliases": [
    "Evelynn",
-   "寡妇",
-   "痛苦之拥"
+   "伊芙琳",
+   "寡妇"
   ]
  },
  "探險家": {
@@ -1201,6 +1221,18 @@
    "小黄毛"
   ]
  },
+ "伊泽瑞尔": {
+  "en": "Ezreal",
+  "kind": "champion",
+  "primary": "伊泽瑞尔",
+  "aliases": [
+   "EZ",
+   "Ezreal",
+   "ez",
+   "小黄毛",
+   "探险家"
+  ]
+ },
  "伊澤瑞爾": {
   "en": "Ezreal",
   "kind": "champion",
@@ -1214,25 +1246,14 @@
    "探险家"
   ]
  },
- "伊泽瑞尔": {
-  "en": "Ezreal",
-  "kind": "champion",
-  "primary": "伊泽瑞尔",
-  "aliases": [
-   "EZ",
-   "Ezreal",
-   "ez",
-   "小黄毛",
-   "探险家"
-  ]
- },
- "远古恐惧": {
+ "費德提克": {
   "en": "Fiddlesticks",
   "kind": "champion",
   "primary": "费德提克",
   "aliases": [
    "Fiddlesticks",
-   "费德提克"
+   "费德提克",
+   "远古恐惧"
   ]
  },
  "费德提克": {
@@ -1244,14 +1265,13 @@
    "远古恐惧"
   ]
  },
- "費德提克": {
+ "远古恐惧": {
   "en": "Fiddlesticks",
   "kind": "champion",
   "primary": "费德提克",
   "aliases": [
    "Fiddlesticks",
-   "费德提克",
-   "远古恐惧"
+   "费德提克"
   ]
  },
  "亙古之懼": {
@@ -1262,27 +1282,6 @@
    "Fiddlesticks",
    "费德提克",
    "远古恐惧"
-  ]
- },
- "菲歐拉": {
-  "en": "Fiora",
-  "kind": "champion",
-  "primary": "菲奥娜",
-  "aliases": [
-   "Fiora",
-   "剑姬",
-   "无双剑姬",
-   "菲奥娜"
-  ]
- },
- "无双剑姬": {
-  "en": "Fiora",
-  "kind": "champion",
-  "primary": "菲奥娜",
-  "aliases": [
-   "Fiora",
-   "剑姬",
-   "菲奥娜"
   ]
  },
  "菲奥娜": {
@@ -1306,12 +1305,55 @@
    "菲奥娜"
   ]
  },
+ "菲歐拉": {
+  "en": "Fiora",
+  "kind": "champion",
+  "primary": "菲奥娜",
+  "aliases": [
+   "Fiora",
+   "剑姬",
+   "无双剑姬",
+   "菲奥娜"
+  ]
+ },
+ "无双剑姬": {
+  "en": "Fiora",
+  "kind": "champion",
+  "primary": "菲奥娜",
+  "aliases": [
+   "Fiora",
+   "剑姬",
+   "菲奥娜"
+  ]
+ },
+ "菲兹": {
+  "en": "Fizz",
+  "kind": "champion",
+  "primary": "菲兹",
+  "aliases": [
+   "Fizz",
+   "小鱼人",
+   "潮汐海灵"
+  ]
+ },
  "潮汐海灵": {
   "en": "Fizz",
   "kind": "champion",
   "primary": "菲兹",
   "aliases": [
    "Fizz",
+   "小鱼人",
+   "菲兹"
+  ]
+ },
+ "飛斯": {
+  "en": "Fizz",
+  "kind": "champion",
+  "primary": "菲兹",
+  "aliases": [
+   "Fizz",
+   "小鱼人",
+   "潮汐海灵",
    "菲兹"
   ]
  },
@@ -1321,45 +1363,9 @@
   "primary": "菲兹",
   "aliases": [
    "Fizz",
+   "小鱼人",
    "潮汐海灵",
    "菲兹"
-  ]
- },
- "菲兹": {
-  "en": "Fizz",
-  "kind": "champion",
-  "primary": "菲兹",
-  "aliases": [
-   "Fizz",
-   "潮汐海灵"
-  ]
- },
- "飛斯": {
-  "en": "Fizz",
-  "kind": "champion",
-  "primary": "菲兹",
-  "aliases": [
-   "Fizz",
-   "潮汐海灵",
-   "菲兹"
-  ]
- },
- "加里奥": {
-  "en": "Galio",
-  "kind": "champion",
-  "primary": "加里奥",
-  "aliases": [
-   "Galio",
-   "正义巨像"
-  ]
- },
- "正义巨像": {
-  "en": "Galio",
-  "kind": "champion",
-  "primary": "加里奥",
-  "aliases": [
-   "Galio",
-   "加里奥"
   ]
  },
  "加里歐": {
@@ -1372,6 +1378,15 @@
    "正义巨像"
   ]
  },
+ "正义巨像": {
+  "en": "Galio",
+  "kind": "champion",
+  "primary": "加里奥",
+  "aliases": [
+   "Galio",
+   "加里奥"
+  ]
+ },
  "禦國巨像": {
   "en": "Galio",
   "kind": "champion",
@@ -1382,13 +1397,13 @@
    "正义巨像"
   ]
  },
- "普朗克": {
-  "en": "Gangplank",
+ "加里奥": {
+  "en": "Galio",
   "kind": "champion",
-  "primary": "普朗克",
+  "primary": "加里奥",
   "aliases": [
-   "Gangplank",
-   "海洋之灾"
+   "Galio",
+   "正义巨像"
   ]
  },
  "海洋之灾": {
@@ -1398,16 +1413,6 @@
   "aliases": [
    "Gangplank",
    "普朗克"
-  ]
- },
- "海洋之災": {
-  "en": "Gangplank",
-  "kind": "champion",
-  "primary": "普朗克",
-  "aliases": [
-   "Gangplank",
-   "普朗克",
-   "海洋之灾"
   ]
  },
  "剛普朗克": {
@@ -1420,24 +1425,23 @@
    "海洋之灾"
   ]
  },
- "盖伦": {
-  "en": "Garen",
+ "普朗克": {
+  "en": "Gangplank",
   "kind": "champion",
-  "primary": "盖伦",
+  "primary": "普朗克",
   "aliases": [
-   "Garen",
-   "德玛西亚之力",
-   "草丛伦"
+   "Gangplank",
+   "海洋之灾"
   ]
  },
- "德玛西亚之力": {
-  "en": "Garen",
+ "海洋之災": {
+  "en": "Gangplank",
   "kind": "champion",
-  "primary": "盖伦",
+  "primary": "普朗克",
   "aliases": [
-   "Garen",
-   "盖伦",
-   "草丛伦"
+   "Gangplank",
+   "普朗克",
+   "海洋之灾"
   ]
  },
  "蒂瑪西亞之力": {
@@ -1447,6 +1451,16 @@
   "aliases": [
    "Garen",
    "德玛西亚之力",
+   "盖伦",
+   "草丛伦"
+  ]
+ },
+ "德玛西亚之力": {
+  "en": "Garen",
+  "kind": "champion",
+  "primary": "盖伦",
+  "aliases": [
+   "Garen",
    "盖伦",
    "草丛伦"
   ]
@@ -1462,22 +1476,14 @@
    "草丛伦"
   ]
  },
- "迷失之牙": {
-  "en": "Gnar",
+ "盖伦": {
+  "en": "Garen",
   "kind": "champion",
-  "primary": "纳尔",
+  "primary": "盖伦",
   "aliases": [
-   "Gnar",
-   "纳尔"
-  ]
- },
- "纳尔": {
-  "en": "Gnar",
-  "kind": "champion",
-  "primary": "纳尔",
-  "aliases": [
-   "Gnar",
-   "迷失之牙"
+   "Garen",
+   "德玛西亚之力",
+   "草丛伦"
   ]
  },
  "吶兒": {
@@ -1500,7 +1506,34 @@
    "迷失之牙"
   ]
  },
- "古拉格斯": {
+ "纳尔": {
+  "en": "Gnar",
+  "kind": "champion",
+  "primary": "纳尔",
+  "aliases": [
+   "Gnar",
+   "迷失之牙"
+  ]
+ },
+ "迷失之牙": {
+  "en": "Gnar",
+  "kind": "champion",
+  "primary": "纳尔",
+  "aliases": [
+   "Gnar",
+   "纳尔"
+  ]
+ },
+ "酒桶": {
+  "en": "Gragas",
+  "kind": "champion",
+  "primary": "古拉加斯",
+  "aliases": [
+   "Gragas",
+   "古拉加斯"
+  ]
+ },
+ "酒桶之王": {
   "en": "Gragas",
   "kind": "champion",
   "primary": "古拉加斯",
@@ -1510,7 +1543,7 @@
    "酒桶"
   ]
  },
- "酒桶之王": {
+ "古拉格斯": {
   "en": "Gragas",
   "kind": "champion",
   "primary": "古拉加斯",
@@ -1529,13 +1562,24 @@
    "酒桶"
   ]
  },
- "酒桶": {
-  "en": "Gragas",
+ "格雷福斯": {
+  "en": "Graves",
   "kind": "champion",
-  "primary": "古拉加斯",
+  "primary": "格雷福斯",
   "aliases": [
-   "Gragas",
-   "古拉加斯"
+   "Graves",
+   "法外狂徒",
+   "男枪"
+  ]
+ },
+ "法外狂徒": {
+  "en": "Graves",
+  "kind": "champion",
+  "primary": "格雷福斯",
+  "aliases": [
+   "Graves",
+   "格雷福斯",
+   "男枪"
   ]
  },
  "葛雷夫": {
@@ -1545,25 +1589,8 @@
   "aliases": [
    "Graves",
    "格雷福斯",
-   "法外狂徒"
-  ]
- },
- "法外狂徒": {
-  "en": "Graves",
-  "kind": "champion",
-  "primary": "格雷福斯",
-  "aliases": [
-   "Graves",
-   "格雷福斯"
-  ]
- },
- "格雷福斯": {
-  "en": "Graves",
-  "kind": "champion",
-  "primary": "格雷福斯",
-  "aliases": [
-   "Graves",
-   "法外狂徒"
+   "法外狂徒",
+   "男枪"
   ]
  },
  "亡命之徒": {
@@ -1573,7 +1600,19 @@
   "aliases": [
    "Graves",
    "格雷福斯",
-   "法外狂徒"
+   "法外狂徒",
+   "男枪"
+  ]
+ },
+ "聖啟織偶": {
+  "en": "Gwen",
+  "kind": "champion",
+  "primary": "格温",
+  "aliases": [
+   "Gwen",
+   "剪刀妹",
+   "格温",
+   "灵罗娃娃"
   ]
  },
  "灵罗娃娃": {
@@ -1586,14 +1625,13 @@
    "格温"
   ]
  },
- "聖啟織偶": {
+ "格温": {
   "en": "Gwen",
   "kind": "champion",
   "primary": "格温",
   "aliases": [
    "Gwen",
    "剪刀妹",
-   "格温",
    "灵罗娃娃"
   ]
  },
@@ -1608,14 +1646,13 @@
    "灵罗娃娃"
   ]
  },
- "格温": {
-  "en": "Gwen",
+ "赫卡里姆": {
+  "en": "Hecarim",
   "kind": "champion",
-  "primary": "格温",
+  "primary": "赫卡里姆",
   "aliases": [
-   "Gwen",
-   "剪刀妹",
-   "灵罗娃娃"
+   "Hecarim",
+   "战争之影"
   ]
  },
  "赫克林": {
@@ -1647,15 +1684,6 @@
    "赫卡里姆"
   ]
  },
- "赫卡里姆": {
-  "en": "Hecarim",
-  "kind": "champion",
-  "primary": "赫卡里姆",
-  "aliases": [
-   "Hecarim",
-   "战争之影"
-  ]
- },
  "大發明家": {
   "en": "Heimerdinger",
   "kind": "champion",
@@ -1664,15 +1692,6 @@
    "Heimerdinger",
    "大发明家",
    "黑默丁格"
-  ]
- },
- "黑默丁格": {
-  "en": "Heimerdinger",
-  "kind": "champion",
-  "primary": "黑默丁格",
-  "aliases": [
-   "Heimerdinger",
-   "大发明家"
   ]
  },
  "大发明家": {
@@ -1692,6 +1711,24 @@
    "Heimerdinger",
    "大发明家",
    "黑默丁格"
+  ]
+ },
+ "黑默丁格": {
+  "en": "Heimerdinger",
+  "kind": "champion",
+  "primary": "黑默丁格",
+  "aliases": [
+   "Heimerdinger",
+   "大发明家"
+  ]
+ },
+ "彗": {
+  "en": "Hwei",
+  "kind": "champion",
+  "primary": "彗",
+  "aliases": [
+   "Hwei",
+   "异画师"
   ]
  },
  "赫威": {
@@ -1723,15 +1760,6 @@
    "彗"
   ]
  },
- "彗": {
-  "en": "Hwei",
-  "kind": "champion",
-  "primary": "彗",
-  "aliases": [
-   "Hwei",
-   "异画师"
-  ]
- },
  "俄洛伊": {
   "en": "Illaoi",
   "kind": "champion",
@@ -1751,6 +1779,15 @@
    "海兽祭司"
   ]
  },
+ "海兽祭司": {
+  "en": "Illaoi",
+  "kind": "champion",
+  "primary": "俄洛伊",
+  "aliases": [
+   "Illaoi",
+   "俄洛伊"
+  ]
+ },
  "伊羅旖": {
   "en": "Illaoi",
   "kind": "champion",
@@ -1761,24 +1798,14 @@
    "海兽祭司"
   ]
  },
- "海兽祭司": {
-  "en": "Illaoi",
-  "kind": "champion",
-  "primary": "俄洛伊",
-  "aliases": [
-   "Illaoi",
-   "俄洛伊"
-  ]
- },
- "舞劍靈使": {
+ "艾瑞莉娅": {
   "en": "Irelia",
   "kind": "champion",
   "primary": "艾瑞莉娅",
   "aliases": [
    "Irelia",
    "刀妹",
-   "刀锋舞者",
-   "艾瑞莉娅"
+   "刀锋舞者"
   ]
  },
  "伊瑞莉雅": {
@@ -1802,24 +1829,15 @@
    "艾瑞莉娅"
   ]
  },
- "艾瑞莉娅": {
+ "舞劍靈使": {
   "en": "Irelia",
   "kind": "champion",
   "primary": "艾瑞莉娅",
   "aliases": [
    "Irelia",
    "刀妹",
-   "刀锋舞者"
-  ]
- },
- "綠林之父": {
-  "en": "Ivern",
-  "kind": "champion",
-  "primary": "艾翁",
-  "aliases": [
-   "Ivern",
-   "翠神",
-   "艾翁"
+   "刀锋舞者",
+   "艾瑞莉娅"
   ]
  },
  "艾翁": {
@@ -1840,6 +1858,16 @@
    "艾翁"
   ]
  },
+ "綠林之父": {
+  "en": "Ivern",
+  "kind": "champion",
+  "primary": "艾翁",
+  "aliases": [
+   "Ivern",
+   "翠神",
+   "艾翁"
+  ]
+ },
  "埃爾文": {
   "en": "Ivern",
   "kind": "champion",
@@ -1848,6 +1876,25 @@
    "Ivern",
    "翠神",
    "艾翁"
+  ]
+ },
+ "迦娜": {
+  "en": "Janna",
+  "kind": "champion",
+  "primary": "迦娜",
+  "aliases": [
+   "Janna",
+   "风暴之怒"
+  ]
+ },
+ "珍娜": {
+  "en": "Janna",
+  "kind": "champion",
+  "primary": "迦娜",
+  "aliases": [
+   "Janna",
+   "迦娜",
+   "风暴之怒"
   ]
  },
  "风暴之怒": {
@@ -1869,23 +1916,15 @@
    "风暴之怒"
   ]
  },
- "迦娜": {
-  "en": "Janna",
+ "德玛西亚皇子": {
+  "en": "Jarvan IV",
   "kind": "champion",
-  "primary": "迦娜",
+  "primary": "嘉文四世",
   "aliases": [
-   "Janna",
-   "风暴之怒"
-  ]
- },
- "珍娜": {
-  "en": "Janna",
-  "kind": "champion",
-  "primary": "迦娜",
-  "aliases": [
-   "Janna",
-   "迦娜",
-   "风暴之怒"
+   "Jarvan IV",
+   "JarvanIV",
+   "嘉文四世",
+   "皇子"
   ]
  },
  "嘉文四世": {
@@ -1911,24 +1950,14 @@
    "皇子"
   ]
  },
- "德玛西亚皇子": {
-  "en": "Jarvan IV",
-  "kind": "champion",
-  "primary": "嘉文四世",
-  "aliases": [
-   "Jarvan IV",
-   "JarvanIV",
-   "嘉文四世",
-   "皇子"
-  ]
- },
- "贾克斯": {
+ "賈克斯": {
   "en": "Jax",
   "kind": "champion",
   "primary": "贾克斯",
   "aliases": [
    "Jax",
-   "武器大师"
+   "武器大师",
+   "贾克斯"
   ]
  },
  "武器達人": {
@@ -1941,14 +1970,13 @@
    "贾克斯"
   ]
  },
- "賈克斯": {
+ "贾克斯": {
   "en": "Jax",
   "kind": "champion",
   "primary": "贾克斯",
   "aliases": [
    "Jax",
-   "武器大师",
-   "贾克斯"
+   "武器大师"
   ]
  },
  "武器大师": {
@@ -1960,13 +1988,12 @@
    "贾克斯"
   ]
  },
- "明日守護者": {
+ "未来守护者": {
   "en": "Jayce",
   "kind": "champion",
   "primary": "杰斯",
   "aliases": [
    "Jayce",
-   "未来守护者",
    "杰斯"
   ]
  },
@@ -1980,12 +2007,13 @@
    "杰斯"
   ]
  },
- "未来守护者": {
+ "明日守護者": {
   "en": "Jayce",
   "kind": "champion",
   "primary": "杰斯",
   "aliases": [
    "Jayce",
+   "未来守护者",
    "杰斯"
   ]
  },
@@ -1996,25 +2024,6 @@
   "aliases": [
    "Jayce",
    "未来守护者"
-  ]
- },
- "戏命师": {
-  "en": "Jhin",
-  "kind": "champion",
-  "primary": "烬",
-  "aliases": [
-   "Jhin",
-   "烬"
-  ]
- },
- "燼": {
-  "en": "Jhin",
-  "kind": "champion",
-  "primary": "烬",
-  "aliases": [
-   "Jhin",
-   "戏命师",
-   "烬"
   ]
  },
  "炫技大師": {
@@ -2036,18 +2045,26 @@
    "戏命师"
   ]
  },
- "吉茵珂絲": {
-  "en": "Jinx",
+ "戏命师": {
+  "en": "Jhin",
   "kind": "champion",
-  "primary": "金克丝",
+  "primary": "烬",
   "aliases": [
-   "Jinx",
-   "暴走萝莉",
-   "爆爆",
-   "金克丝"
+   "Jhin",
+   "烬"
   ]
  },
- "暴走重砲": {
+ "燼": {
+  "en": "Jhin",
+  "kind": "champion",
+  "primary": "烬",
+  "aliases": [
+   "Jhin",
+   "戏命师",
+   "烬"
+  ]
+ },
+ "吉茵珂絲": {
   "en": "Jinx",
   "kind": "champion",
   "primary": "金克丝",
@@ -2074,6 +2091,17 @@
   "primary": "金克丝",
   "aliases": [
    "Jinx",
+   "爆爆",
+   "金克丝"
+  ]
+ },
+ "暴走重砲": {
+  "en": "Jinx",
+  "kind": "champion",
+  "primary": "金克丝",
+  "aliases": [
+   "Jinx",
+   "暴走萝莉",
    "爆爆",
    "金克丝"
   ]
@@ -2124,16 +2152,6 @@
    "虚空之女"
   ]
  },
- "复仇之矛": {
-  "en": "Kalista",
-  "kind": "champion",
-  "primary": "卡莉丝塔",
-  "aliases": [
-   "Kalista",
-   "卡莉丝塔",
-   "滑板鞋"
-  ]
- },
  "卡莉丝塔": {
   "en": "Kalista",
   "kind": "champion",
@@ -2166,6 +2184,35 @@
    "滑板鞋"
   ]
  },
+ "复仇之矛": {
+  "en": "Kalista",
+  "kind": "champion",
+  "primary": "卡莉丝塔",
+  "aliases": [
+   "Kalista",
+   "卡莉丝塔",
+   "滑板鞋"
+  ]
+ },
+ "卡尔玛": {
+  "en": "Karma",
+  "kind": "champion",
+  "primary": "卡尔玛",
+  "aliases": [
+   "Karma",
+   "天启者"
+  ]
+ },
+ "魂之啟者": {
+  "en": "Karma",
+  "kind": "champion",
+  "primary": "卡尔玛",
+  "aliases": [
+   "Karma",
+   "卡尔玛",
+   "天启者"
+  ]
+ },
  "卡瑪": {
   "en": "Karma",
   "kind": "champion",
@@ -2185,23 +2232,25 @@
    "卡尔玛"
   ]
  },
- "魂之啟者": {
-  "en": "Karma",
+ "卡爾瑟斯": {
+  "en": "Karthus",
   "kind": "champion",
-  "primary": "卡尔玛",
+  "primary": "卡尔萨斯",
   "aliases": [
-   "Karma",
-   "卡尔玛",
-   "天启者"
+   "Karthus",
+   "卡尔萨斯",
+   "死亡颂唱者",
+   "死歌"
   ]
  },
- "卡尔玛": {
-  "en": "Karma",
+ "卡尔萨斯": {
+  "en": "Karthus",
   "kind": "champion",
-  "primary": "卡尔玛",
+  "primary": "卡尔萨斯",
   "aliases": [
-   "Karma",
-   "天启者"
+   "Karthus",
+   "死亡颂唱者",
+   "死歌"
   ]
  },
  "死亡頌唱者": {
@@ -2225,27 +2274,6 @@
    "死歌"
   ]
  },
- "卡尔萨斯": {
-  "en": "Karthus",
-  "kind": "champion",
-  "primary": "卡尔萨斯",
-  "aliases": [
-   "Karthus",
-   "死亡颂唱者",
-   "死歌"
-  ]
- },
- "卡爾瑟斯": {
-  "en": "Karthus",
-  "kind": "champion",
-  "primary": "卡尔萨斯",
-  "aliases": [
-   "Karthus",
-   "卡尔萨斯",
-   "死亡颂唱者",
-   "死歌"
-  ]
- },
  "虚空行者": {
   "en": "Kassadin",
   "kind": "champion",
@@ -2264,7 +2292,7 @@
    "虚空行者"
   ]
  },
- "虛空行者": {
+ "卡薩丁": {
   "en": "Kassadin",
   "kind": "champion",
   "primary": "卡萨丁",
@@ -2274,7 +2302,7 @@
    "虚空行者"
   ]
  },
- "卡薩丁": {
+ "虛空行者": {
   "en": "Kassadin",
   "kind": "champion",
   "primary": "卡萨丁",
@@ -2312,16 +2340,6 @@
    "卡特琳娜"
   ]
  },
- "凯尔": {
-  "en": "Kayle",
-  "kind": "champion",
-  "primary": "凯尔",
-  "aliases": [
-   "Kayle",
-   "天使",
-   "正义天使"
-  ]
- },
  "正義天使": {
   "en": "Kayle",
   "kind": "champion",
@@ -2344,6 +2362,16 @@
    "正义天使"
   ]
  },
+ "凯尔": {
+  "en": "Kayle",
+  "kind": "champion",
+  "primary": "凯尔",
+  "aliases": [
+   "Kayle",
+   "天使",
+   "正义天使"
+  ]
+ },
  "正义天使": {
   "en": "Kayle",
   "kind": "champion",
@@ -2352,25 +2380,6 @@
    "Kayle",
    "凯尔",
    "天使"
-  ]
- },
- "影流之镰": {
-  "en": "Kayn",
-  "kind": "champion",
-  "primary": "凯隐",
-  "aliases": [
-   "Kayn",
-   "凯隐"
-  ]
- },
- "闇魂收割者": {
-  "en": "Kayn",
-  "kind": "champion",
-  "primary": "凯隐",
-  "aliases": [
-   "Kayn",
-   "凯隐",
-   "影流之镰"
   ]
  },
  "慨影": {
@@ -2389,6 +2398,25 @@
   "primary": "凯隐",
   "aliases": [
    "Kayn",
+   "影流之镰"
+  ]
+ },
+ "影流之镰": {
+  "en": "Kayn",
+  "kind": "champion",
+  "primary": "凯隐",
+  "aliases": [
+   "Kayn",
+   "凯隐"
+  ]
+ },
+ "闇魂收割者": {
+  "en": "Kayn",
+  "kind": "champion",
+  "primary": "凯隐",
+  "aliases": [
+   "Kayn",
+   "凯隐",
    "影流之镰"
   ]
  },
@@ -2431,17 +2459,6 @@
    "螳螂"
   ]
  },
- "虚空掠夺者": {
-  "en": "Kha'Zix",
-  "kind": "champion",
-  "primary": "卡兹克",
-  "aliases": [
-   "Kha'Zix",
-   "Khazix",
-   "卡兹克",
-   "螳螂"
-  ]
- },
  "虛空掠食者": {
   "en": "Kha'Zix",
   "kind": "champion",
@@ -2466,14 +2483,15 @@
    "螳螂"
   ]
  },
- "鏡爪": {
-  "en": "Kindred",
+ "虚空掠夺者": {
+  "en": "Kha'Zix",
   "kind": "champion",
-  "primary": "千珏",
+  "primary": "卡兹克",
   "aliases": [
-   "Kindred",
-   "千珏",
-   "永猎双子"
+   "Kha'Zix",
+   "Khazix",
+   "卡兹克",
+   "螳螂"
   ]
  },
  "千珏": {
@@ -2495,6 +2513,16 @@
    "永猎双子"
   ]
  },
+ "鏡爪": {
+  "en": "Kindred",
+  "kind": "champion",
+  "primary": "千珏",
+  "aliases": [
+   "Kindred",
+   "千珏",
+   "永猎双子"
+  ]
+ },
  "永猎双子": {
   "en": "Kindred",
   "kind": "champion",
@@ -2504,7 +2532,16 @@
    "千珏"
   ]
  },
- "暴躁騎士": {
+ "克烈": {
+  "en": "Kled",
+  "kind": "champion",
+  "primary": "克烈",
+  "aliases": [
+   "Kled",
+   "暴怒骑士"
+  ]
+ },
+ "克雷德": {
   "en": "Kled",
   "kind": "champion",
   "primary": "克烈",
@@ -2514,7 +2551,7 @@
    "暴怒骑士"
   ]
  },
- "克雷德": {
+ "暴躁騎士": {
   "en": "Kled",
   "kind": "champion",
   "primary": "克烈",
@@ -2533,27 +2570,6 @@
    "克烈"
   ]
  },
- "克烈": {
-  "en": "Kled",
-  "kind": "champion",
-  "primary": "克烈",
-  "aliases": [
-   "Kled",
-   "暴怒骑士"
-  ]
- },
- "寇格魔": {
-  "en": "Kog'Maw",
-  "kind": "champion",
-  "primary": "克格莫",
-  "aliases": [
-   "Kog'Maw",
-   "KogMaw",
-   "克格莫",
-   "大嘴",
-   "深渊巨口"
-  ]
- },
  "克格莫": {
   "en": "Kog'Maw",
   "kind": "champion",
@@ -2561,6 +2577,18 @@
   "aliases": [
    "Kog'Maw",
    "KogMaw",
+   "大嘴",
+   "深渊巨口"
+  ]
+ },
+ "深淵巨口": {
+  "en": "Kog'Maw",
+  "kind": "champion",
+  "primary": "克格莫",
+  "aliases": [
+   "Kog'Maw",
+   "KogMaw",
+   "克格莫",
    "大嘴",
    "深渊巨口"
   ]
@@ -2576,7 +2604,7 @@
    "大嘴"
   ]
  },
- "深淵巨口": {
+ "寇格魔": {
   "en": "Kog'Maw",
   "kind": "champion",
   "primary": "克格莫",
@@ -2598,16 +2626,6 @@
    "奎桑提"
   ]
  },
- "奎桑提": {
-  "en": "K'Sante",
-  "kind": "champion",
-  "primary": "奎桑提",
-  "aliases": [
-   "K'Sante",
-   "KSante",
-   "纳祖芒荣耀"
-  ]
- },
  "納祖瑪之傲": {
   "en": "K'Sante",
   "kind": "champion",
@@ -2616,6 +2634,16 @@
    "K'Sante",
    "KSante",
    "奎桑提",
+   "纳祖芒荣耀"
+  ]
+ },
+ "奎桑提": {
+  "en": "K'Sante",
+  "kind": "champion",
+  "primary": "奎桑提",
+  "aliases": [
+   "K'Sante",
+   "KSante",
    "纳祖芒荣耀"
   ]
  },
@@ -2630,18 +2658,6 @@
    "纳祖芒荣耀"
   ]
  },
- "勒布朗": {
-  "en": "LeBlanc",
-  "kind": "champion",
-  "primary": "乐芙兰",
-  "aliases": [
-   "LeBlanc",
-   "Leblanc",
-   "乐芙兰",
-   "妖姬",
-   "诡术妖姬"
-  ]
- },
  "诡术妖姬": {
   "en": "LeBlanc",
   "kind": "champion",
@@ -2651,17 +2667,6 @@
    "Leblanc",
    "乐芙兰",
    "妖姬"
-  ]
- },
- "乐芙兰": {
-  "en": "LeBlanc",
-  "kind": "champion",
-  "primary": "乐芙兰",
-  "aliases": [
-   "LeBlanc",
-   "Leblanc",
-   "妖姬",
-   "诡术妖姬"
   ]
  },
  "詐欺師": {
@@ -2676,15 +2681,27 @@
    "诡术妖姬"
   ]
  },
- "盲眼武僧": {
-  "en": "Lee Sin",
+ "乐芙兰": {
+  "en": "LeBlanc",
   "kind": "champion",
-  "primary": "李青",
+  "primary": "乐芙兰",
   "aliases": [
-   "Lee Sin",
-   "LeeSin",
-   "李青",
-   "盲僧"
+   "LeBlanc",
+   "Leblanc",
+   "妖姬",
+   "诡术妖姬"
+  ]
+ },
+ "勒布朗": {
+  "en": "LeBlanc",
+  "kind": "champion",
+  "primary": "乐芙兰",
+  "aliases": [
+   "LeBlanc",
+   "Leblanc",
+   "乐芙兰",
+   "妖姬",
+   "诡术妖姬"
   ]
  },
  "盲僧": {
@@ -2695,6 +2712,16 @@
    "Lee Sin",
    "LeeSin",
    "李青"
+  ]
+ },
+ "李青": {
+  "en": "Lee Sin",
+  "kind": "champion",
+  "primary": "李青",
+  "aliases": [
+   "Lee Sin",
+   "LeeSin",
+   "盲僧"
   ]
  },
  "李星": {
@@ -2708,35 +2735,15 @@
    "盲僧"
   ]
  },
- "李青": {
+ "盲眼武僧": {
   "en": "Lee Sin",
   "kind": "champion",
   "primary": "李青",
   "aliases": [
    "Lee Sin",
    "LeeSin",
+   "李青",
    "盲僧"
-  ]
- },
- "曙光女神": {
-  "en": "Leona",
-  "kind": "champion",
-  "primary": "蕾欧娜",
-  "aliases": [
-   "Leona",
-   "日女",
-   "蕾欧娜"
-  ]
- },
- "黎明之光": {
-  "en": "Leona",
-  "kind": "champion",
-  "primary": "蕾欧娜",
-  "aliases": [
-   "Leona",
-   "日女",
-   "曙光女神",
-   "蕾欧娜"
   ]
  },
  "雷歐娜": {
@@ -2750,6 +2757,16 @@
    "蕾欧娜"
   ]
  },
+ "曙光女神": {
+  "en": "Leona",
+  "kind": "champion",
+  "primary": "蕾欧娜",
+  "aliases": [
+   "Leona",
+   "日女",
+   "蕾欧娜"
+  ]
+ },
  "蕾欧娜": {
   "en": "Leona",
   "kind": "champion",
@@ -2760,6 +2777,27 @@
    "曙光女神"
   ]
  },
+ "黎明之光": {
+  "en": "Leona",
+  "kind": "champion",
+  "primary": "蕾欧娜",
+  "aliases": [
+   "Leona",
+   "日女",
+   "曙光女神",
+   "蕾欧娜"
+  ]
+ },
+ "羞赧綻華": {
+  "en": "Lillia",
+  "kind": "champion",
+  "primary": "莉莉娅",
+  "aliases": [
+   "Lillia",
+   "含羞蓓蕾",
+   "莉莉娅"
+  ]
+ },
  "莉莉娅": {
   "en": "Lillia",
   "kind": "champion",
@@ -2767,15 +2805,6 @@
   "aliases": [
    "Lillia",
    "含羞蓓蕾"
-  ]
- },
- "含羞蓓蕾": {
-  "en": "Lillia",
-  "kind": "champion",
-  "primary": "莉莉娅",
-  "aliases": [
-   "Lillia",
-   "莉莉娅"
   ]
  },
  "莉莉亞": {
@@ -2788,14 +2817,22 @@
    "莉莉娅"
   ]
  },
- "羞赧綻華": {
+ "含羞蓓蕾": {
   "en": "Lillia",
   "kind": "champion",
   "primary": "莉莉娅",
   "aliases": [
    "Lillia",
-   "含羞蓓蕾",
    "莉莉娅"
+  ]
+ },
+ "丽桑卓": {
+  "en": "Lissandra",
+  "kind": "champion",
+  "primary": "丽桑卓",
+  "aliases": [
+   "Lissandra",
+   "冰霜女巫"
   ]
  },
  "冰霜女巫": {
@@ -2827,24 +2864,6 @@
    "冰霜女巫"
   ]
  },
- "丽桑卓": {
-  "en": "Lissandra",
-  "kind": "champion",
-  "primary": "丽桑卓",
-  "aliases": [
-   "Lissandra",
-   "冰霜女巫"
-  ]
- },
- "洛克": {
-  "en": "Locke",
-  "kind": "champion",
-  "primary": "洛克",
-  "aliases": [
-   "Locke",
-   "灰烬驱魔人"
-  ]
- },
  "灰烬驱魔人": {
   "en": "Locke",
   "kind": "champion",
@@ -2864,7 +2883,16 @@
    "灰烬驱魔人"
   ]
  },
- "圣枪游侠": {
+ "洛克": {
+  "en": "Locke",
+  "kind": "champion",
+  "primary": "洛克",
+  "aliases": [
+   "Locke",
+   "灰烬驱魔人"
+  ]
+ },
+ "驅魔聖槍": {
   "en": "Lucian",
   "kind": "champion",
   "primary": "卢锡安",
@@ -2872,6 +2900,7 @@
    "Lucian",
    "卢锡安",
    "圣枪",
+   "圣枪游侠",
    "奥巴马"
   ]
  },
@@ -2887,6 +2916,17 @@
    "奥巴马"
   ]
  },
+ "圣枪游侠": {
+  "en": "Lucian",
+  "kind": "champion",
+  "primary": "卢锡安",
+  "aliases": [
+   "Lucian",
+   "卢锡安",
+   "圣枪",
+   "奥巴马"
+  ]
+ },
  "卢锡安": {
   "en": "Lucian",
   "kind": "champion",
@@ -2898,26 +2938,13 @@
    "奥巴马"
   ]
  },
- "驅魔聖槍": {
-  "en": "Lucian",
-  "kind": "champion",
-  "primary": "卢锡安",
-  "aliases": [
-   "Lucian",
-   "卢锡安",
-   "圣枪",
-   "圣枪游侠",
-   "奥巴马"
-  ]
- },
- "精靈魔法使": {
+ "璐璐": {
   "en": "Lulu",
   "kind": "champion",
   "primary": "璐璐",
   "aliases": [
    "Lulu",
-   "仙灵女巫",
-   "璐璐"
+   "仙灵女巫"
   ]
  },
  "仙灵女巫": {
@@ -2939,31 +2966,14 @@
    "璐璐"
   ]
  },
- "璐璐": {
+ "精靈魔法使": {
   "en": "Lulu",
   "kind": "champion",
   "primary": "璐璐",
   "aliases": [
    "Lulu",
-   "仙灵女巫"
-  ]
- },
- "拉克丝": {
-  "en": "Lux",
-  "kind": "champion",
-  "primary": "拉克丝",
-  "aliases": [
-   "Lux",
-   "光辉女郎"
-  ]
- },
- "光辉女郎": {
-  "en": "Lux",
-  "kind": "champion",
-  "primary": "拉克丝",
-  "aliases": [
-   "Lux",
-   "拉克丝"
+   "仙灵女巫",
+   "璐璐"
   ]
  },
  "光之少女": {
@@ -2986,14 +2996,22 @@
    "拉克丝"
   ]
  },
- "墨菲特": {
-  "en": "Malphite",
+ "拉克丝": {
+  "en": "Lux",
   "kind": "champion",
-  "primary": "墨菲特",
+  "primary": "拉克丝",
   "aliases": [
-   "Malphite",
-   "熔岩巨兽",
-   "石头人"
+   "Lux",
+   "光辉女郎"
+  ]
+ },
+ "光辉女郎": {
+  "en": "Lux",
+  "kind": "champion",
+  "primary": "拉克丝",
+  "aliases": [
+   "Lux",
+   "拉克丝"
   ]
  },
  "熔岩巨兽": {
@@ -3003,6 +3021,16 @@
   "aliases": [
    "Malphite",
    "墨菲特",
+   "石头人"
+  ]
+ },
+ "墨菲特": {
+  "en": "Malphite",
+  "kind": "champion",
+  "primary": "墨菲特",
+  "aliases": [
+   "Malphite",
+   "熔岩巨兽",
    "石头人"
   ]
  },
@@ -3017,26 +3045,7 @@
    "石头人"
   ]
  },
- "玛尔扎哈": {
-  "en": "Malzahar",
-  "kind": "champion",
-  "primary": "玛尔扎哈",
-  "aliases": [
-   "Malzahar",
-   "虚空先知"
-  ]
- },
  "馬爾札哈": {
-  "en": "Malzahar",
-  "kind": "champion",
-  "primary": "玛尔扎哈",
-  "aliases": [
-   "Malzahar",
-   "玛尔扎哈",
-   "虚空先知"
-  ]
- },
- "虛空先知": {
   "en": "Malzahar",
   "kind": "champion",
   "primary": "玛尔扎哈",
@@ -3055,12 +3064,42 @@
    "玛尔扎哈"
   ]
  },
+ "玛尔扎哈": {
+  "en": "Malzahar",
+  "kind": "champion",
+  "primary": "玛尔扎哈",
+  "aliases": [
+   "Malzahar",
+   "虚空先知"
+  ]
+ },
+ "虛空先知": {
+  "en": "Malzahar",
+  "kind": "champion",
+  "primary": "玛尔扎哈",
+  "aliases": [
+   "Malzahar",
+   "玛尔扎哈",
+   "虚空先知"
+  ]
+ },
+ "扭曲树精": {
+  "en": "Maokai",
+  "kind": "champion",
+  "primary": "茂凯",
+  "aliases": [
+   "Maokai",
+   "大树",
+   "茂凯"
+  ]
+ },
  "茂凯": {
   "en": "Maokai",
   "kind": "champion",
   "primary": "茂凯",
   "aliases": [
    "Maokai",
+   "大树",
    "扭曲树精"
   ]
  },
@@ -3070,6 +3109,7 @@
   "primary": "茂凯",
   "aliases": [
    "Maokai",
+   "大树",
    "扭曲树精",
    "茂凯"
   ]
@@ -3080,16 +3120,8 @@
   "primary": "茂凯",
   "aliases": [
    "Maokai",
+   "大树",
    "扭曲树精",
-   "茂凯"
-  ]
- },
- "扭曲树精": {
-  "en": "Maokai",
-  "kind": "champion",
-  "primary": "茂凯",
-  "aliases": [
-   "Maokai",
    "茂凯"
   ]
  },
@@ -3105,7 +3137,7 @@
    "易大师"
   ]
  },
- "易大師": {
+ "無極劍聖": {
   "en": "Master Yi",
   "kind": "champion",
   "primary": "易",
@@ -3118,7 +3150,7 @@
    "易大师"
   ]
  },
- "無極劍聖": {
+ "易大師": {
   "en": "Master Yi",
   "kind": "champion",
   "primary": "易",
@@ -3152,15 +3184,6 @@
    "梅尔"
   ]
  },
- "梅尔": {
-  "en": "Mel",
-  "kind": "champion",
-  "primary": "梅尔",
-  "aliases": [
-   "Mel",
-   "流光镜影"
-  ]
- },
  "梅爾": {
   "en": "Mel",
   "kind": "champion",
@@ -3168,6 +3191,15 @@
   "aliases": [
    "Mel",
    "梅尔",
+   "流光镜影"
+  ]
+ },
+ "梅尔": {
+  "en": "Mel",
+  "kind": "champion",
+  "primary": "梅尔",
+  "aliases": [
+   "Mel",
    "流光镜影"
   ]
  },
@@ -3181,7 +3213,26 @@
    "流光镜影"
   ]
  },
+ "明烛": {
+  "en": "Milio",
+  "kind": "champion",
+  "primary": "米利欧",
+  "aliases": [
+   "Milio",
+   "米利欧"
+  ]
+ },
  "溫煦良焰": {
+  "en": "Milio",
+  "kind": "champion",
+  "primary": "米利欧",
+  "aliases": [
+   "Milio",
+   "明烛",
+   "米利欧"
+  ]
+ },
+ "米里歐": {
   "en": "Milio",
   "kind": "champion",
   "primary": "米利欧",
@@ -3200,25 +3251,6 @@
    "明烛"
   ]
  },
- "米里歐": {
-  "en": "Milio",
-  "kind": "champion",
-  "primary": "米利欧",
-  "aliases": [
-   "Milio",
-   "明烛",
-   "米利欧"
-  ]
- },
- "明烛": {
-  "en": "Milio",
-  "kind": "champion",
-  "primary": "米利欧",
-  "aliases": [
-   "Milio",
-   "米利欧"
-  ]
- },
  "厄运小姐": {
   "en": "Miss Fortune",
   "kind": "champion",
@@ -3226,6 +3258,7 @@
   "aliases": [
    "Miss Fortune",
    "MissFortune",
+   "女枪",
    "赏金猎人"
   ]
  },
@@ -3237,6 +3270,7 @@
    "Miss Fortune",
    "MissFortune",
    "厄运小姐",
+   "女枪",
    "赏金猎人"
   ]
  },
@@ -3248,6 +3282,7 @@
    "Miss Fortune",
    "MissFortune",
    "厄运小姐",
+   "女枪",
    "赏金猎人"
   ]
  },
@@ -3258,29 +3293,8 @@
   "aliases": [
    "Miss Fortune",
    "MissFortune",
-   "厄运小姐"
-  ]
- },
- "齊天大聖": {
-  "en": "Wukong",
-  "kind": "champion",
-  "primary": "孙悟空",
-  "aliases": [
-   "MonkeyKing",
-   "Wukong",
-   "孙悟空",
-   "齐天大圣"
-  ]
- },
- "悟空": {
-  "en": "Wukong",
-  "kind": "champion",
-  "primary": "孙悟空",
-  "aliases": [
-   "MonkeyKing",
-   "Wukong",
-   "孙悟空",
-   "齐天大圣"
+   "厄运小姐",
+   "女枪"
   ]
  },
  "齐天大圣": {
@@ -3303,14 +3317,26 @@
    "齐天大圣"
   ]
  },
- "魔鬥凱薩": {
-  "en": "Mordekaiser",
+ "悟空": {
+  "en": "Wukong",
   "kind": "champion",
-  "primary": "莫德凯撒",
+  "primary": "孙悟空",
   "aliases": [
-   "Mordekaiser",
-   "莫德凯撒",
-   "铁铠冥魂"
+   "MonkeyKing",
+   "Wukong",
+   "孙悟空",
+   "齐天大圣"
+  ]
+ },
+ "齊天大聖": {
+  "en": "Wukong",
+  "kind": "champion",
+  "primary": "孙悟空",
+  "aliases": [
+   "MonkeyKing",
+   "Wukong",
+   "孙悟空",
+   "齐天大圣"
   ]
  },
  "铁铠冥魂": {
@@ -3328,6 +3354,16 @@
   "primary": "莫德凯撒",
   "aliases": [
    "Mordekaiser",
+   "铁铠冥魂"
+  ]
+ },
+ "魔鬥凱薩": {
+  "en": "Mordekaiser",
+  "kind": "champion",
+  "primary": "莫德凯撒",
+  "aliases": [
+   "Mordekaiser",
+   "莫德凯撒",
    "铁铠冥魂"
   ]
  },
@@ -3351,13 +3387,13 @@
    "莫甘娜"
   ]
  },
- "莫甘娜": {
+ "堕落天使": {
   "en": "Morgana",
   "kind": "champion",
   "primary": "莫甘娜",
   "aliases": [
    "Morgana",
-   "堕落天使"
+   "莫甘娜"
   ]
  },
  "魔甘娜": {
@@ -3370,13 +3406,13 @@
    "莫甘娜"
   ]
  },
- "堕落天使": {
+ "莫甘娜": {
   "en": "Morgana",
   "kind": "champion",
   "primary": "莫甘娜",
   "aliases": [
    "Morgana",
-   "莫甘娜"
+   "堕落天使"
   ]
  },
  "百裂冥犬": {
@@ -3385,16 +3421,6 @@
   "primary": "纳亚菲利",
   "aliases": [
    "Naafiri",
-   "纳亚菲利"
-  ]
- },
- "娜菲芮": {
-  "en": "Naafiri",
-  "kind": "champion",
-  "primary": "纳亚菲利",
-  "aliases": [
-   "Naafiri",
-   "百裂冥犬",
    "纳亚菲利"
   ]
  },
@@ -3417,25 +3443,14 @@
    "纳亚菲利"
   ]
  },
- "海潮之音": {
-  "en": "Nami",
+ "娜菲芮": {
+  "en": "Naafiri",
   "kind": "champion",
-  "primary": "娜美",
+  "primary": "纳亚菲利",
   "aliases": [
-   "Nami",
-   "唤潮鲛姬",
-   "娜美",
-   "美人鱼"
-  ]
- },
- "娜美": {
-  "en": "Nami",
-  "kind": "champion",
-  "primary": "娜美",
-  "aliases": [
-   "Nami",
-   "唤潮鲛姬",
-   "美人鱼"
+   "Naafiri",
+   "百裂冥犬",
+   "纳亚菲利"
   ]
  },
  "娜米": {
@@ -3459,6 +3474,37 @@
    "美人鱼"
   ]
  },
+ "娜美": {
+  "en": "Nami",
+  "kind": "champion",
+  "primary": "娜美",
+  "aliases": [
+   "Nami",
+   "唤潮鲛姬",
+   "美人鱼"
+  ]
+ },
+ "海潮之音": {
+  "en": "Nami",
+  "kind": "champion",
+  "primary": "娜美",
+  "aliases": [
+   "Nami",
+   "唤潮鲛姬",
+   "娜美",
+   "美人鱼"
+  ]
+ },
+ "沙漠死神": {
+  "en": "Nasus",
+  "kind": "champion",
+  "primary": "内瑟斯",
+  "aliases": [
+   "Nasus",
+   "内瑟斯",
+   "狗头"
+  ]
+ },
  "納瑟斯": {
   "en": "Nasus",
   "kind": "champion",
@@ -3480,14 +3526,15 @@
    "狗头"
   ]
  },
- "沙漠死神": {
-  "en": "Nasus",
+ "深淵巨人": {
+  "en": "Nautilus",
   "kind": "champion",
-  "primary": "内瑟斯",
+  "primary": "诺提勒斯",
   "aliases": [
-   "Nasus",
-   "内瑟斯",
-   "狗头"
+   "Nautilus",
+   "泰坦",
+   "深海泰坦",
+   "诺提勒斯"
   ]
  },
  "納帝魯斯": {
@@ -3496,7 +3543,18 @@
   "primary": "诺提勒斯",
   "aliases": [
    "Nautilus",
+   "泰坦",
    "深海泰坦",
+   "诺提勒斯"
+  ]
+ },
+ "深海泰坦": {
+  "en": "Nautilus",
+  "kind": "champion",
+  "primary": "诺提勒斯",
+  "aliases": [
+   "Nautilus",
+   "泰坦",
    "诺提勒斯"
   ]
  },
@@ -3506,26 +3564,18 @@
   "primary": "诺提勒斯",
   "aliases": [
    "Nautilus",
+   "泰坦",
    "深海泰坦"
   ]
  },
- "深海泰坦": {
-  "en": "Nautilus",
+ "妮可": {
+  "en": "Neeko",
   "kind": "champion",
-  "primary": "诺提勒斯",
+  "primary": "妮蔻",
   "aliases": [
-   "Nautilus",
-   "诺提勒斯"
-  ]
- },
- "深淵巨人": {
-  "en": "Nautilus",
-  "kind": "champion",
-  "primary": "诺提勒斯",
-  "aliases": [
-   "Nautilus",
-   "深海泰坦",
-   "诺提勒斯"
+   "Neeko",
+   "万花通灵",
+   "妮蔻"
   ]
  },
  "妮蔻": {
@@ -3535,15 +3585,6 @@
   "aliases": [
    "Neeko",
    "万花通灵"
-  ]
- },
- "万花通灵": {
-  "en": "Neeko",
-  "kind": "champion",
-  "primary": "妮蔻",
-  "aliases": [
-   "Neeko",
-   "妮蔻"
   ]
  },
  "好奇變色龍": {
@@ -3556,14 +3597,33 @@
    "妮蔻"
   ]
  },
- "妮可": {
+ "万花通灵": {
   "en": "Neeko",
   "kind": "champion",
   "primary": "妮蔻",
   "aliases": [
    "Neeko",
-   "万花通灵",
    "妮蔻"
+  ]
+ },
+ "狂野女猎手": {
+  "en": "Nidalee",
+  "kind": "champion",
+  "primary": "奈德丽",
+  "aliases": [
+   "Nidalee",
+   "奈德丽",
+   "豹女"
+  ]
+ },
+ "奈德丽": {
+  "en": "Nidalee",
+  "kind": "champion",
+  "primary": "奈德丽",
+  "aliases": [
+   "Nidalee",
+   "狂野女猎手",
+   "豹女"
   ]
  },
  "奈德麗": {
@@ -3588,26 +3648,6 @@
    "豹女"
   ]
  },
- "奈德丽": {
-  "en": "Nidalee",
-  "kind": "champion",
-  "primary": "奈德丽",
-  "aliases": [
-   "Nidalee",
-   "狂野女猎手",
-   "豹女"
-  ]
- },
- "狂野女猎手": {
-  "en": "Nidalee",
-  "kind": "champion",
-  "primary": "奈德丽",
-  "aliases": [
-   "Nidalee",
-   "奈德丽",
-   "豹女"
-  ]
- },
  "淣菈": {
   "en": "Nilah",
   "kind": "champion",
@@ -3615,6 +3655,24 @@
   "aliases": [
    "Nilah",
    "不羁之悦",
+   "尼菈"
+  ]
+ },
+ "尼菈": {
+  "en": "Nilah",
+  "kind": "champion",
+  "primary": "尼菈",
+  "aliases": [
+   "Nilah",
+   "不羁之悦"
+  ]
+ },
+ "不羁之悦": {
+  "en": "Nilah",
+  "kind": "champion",
+  "primary": "尼菈",
+  "aliases": [
+   "Nilah",
    "尼菈"
   ]
  },
@@ -3628,25 +3686,16 @@
    "尼菈"
   ]
  },
- "不羁之悦": {
-  "en": "Nilah",
+ "魔腾": {
+  "en": "Nocturne",
   "kind": "champion",
-  "primary": "尼菈",
+  "primary": "魔腾",
   "aliases": [
-   "Nilah",
-   "尼菈"
+   "Nocturne",
+   "永恒梦魇"
   ]
  },
- "尼菈": {
-  "en": "Nilah",
-  "kind": "champion",
-  "primary": "尼菈",
-  "aliases": [
-   "Nilah",
-   "不羁之悦"
-  ]
- },
- "永恆夢魘": {
+ "夜曲": {
   "en": "Nocturne",
   "kind": "champion",
   "primary": "魔腾",
@@ -3665,7 +3714,7 @@
    "魔腾"
   ]
  },
- "夜曲": {
+ "永恆夢魘": {
   "en": "Nocturne",
   "kind": "champion",
   "primary": "魔腾",
@@ -3675,24 +3724,15 @@
    "魔腾"
   ]
  },
- "魔腾": {
-  "en": "Nocturne",
-  "kind": "champion",
-  "primary": "魔腾",
-  "aliases": [
-   "Nocturne",
-   "永恒梦魇"
-  ]
- },
- "努努和威朗普": {
+ "雪原双子": {
   "en": "Nunu & Willump",
   "kind": "champion",
   "primary": "努努和威朗普",
   "aliases": [
    "Nunu",
    "Nunu & Willump",
-   "雪人",
-   "雪原双子"
+   "努努和威朗普",
+   "雪人"
   ]
  },
  "冰原拍檔": {
@@ -3707,15 +3747,15 @@
    "雪原双子"
   ]
  },
- "雪原双子": {
+ "努努和威朗普": {
   "en": "Nunu & Willump",
   "kind": "champion",
   "primary": "努努和威朗普",
   "aliases": [
    "Nunu",
    "Nunu & Willump",
-   "努努和威朗普",
-   "雪人"
+   "雪人",
+   "雪原双子"
   ]
  },
  "奥拉夫": {
@@ -3724,6 +3764,16 @@
   "primary": "奥拉夫",
   "aliases": [
    "Olaf",
+   "狂战士"
+  ]
+ },
+ "歐拉夫": {
+  "en": "Olaf",
+  "kind": "champion",
+  "primary": "奥拉夫",
+  "aliases": [
+   "Olaf",
+   "奥拉夫",
    "狂战士"
   ]
  },
@@ -3744,16 +3794,6 @@
   "aliases": [
    "Olaf",
    "奥拉夫"
-  ]
- },
- "歐拉夫": {
-  "en": "Olaf",
-  "kind": "champion",
-  "primary": "奥拉夫",
-  "aliases": [
-   "Olaf",
-   "奥拉夫",
-   "狂战士"
   ]
  },
  "奥莉安娜": {
@@ -3798,6 +3838,17 @@
    "奥莉安娜"
   ]
  },
+ "爐心山神": {
+  "en": "Ornn",
+  "kind": "champion",
+  "primary": "奥恩",
+  "aliases": [
+   "Ornn",
+   "奥恩",
+   "山羊",
+   "山隐之焰"
+  ]
+ },
  "山隐之焰": {
   "en": "Ornn",
   "kind": "champion",
@@ -3808,7 +3859,7 @@
    "山羊"
   ]
  },
- "爐心山神": {
+ "鄂爾": {
   "en": "Ornn",
   "kind": "champion",
   "primary": "奥恩",
@@ -3825,17 +3876,6 @@
   "primary": "奥恩",
   "aliases": [
    "Ornn",
-   "山羊",
-   "山隐之焰"
-  ]
- },
- "鄂爾": {
-  "en": "Ornn",
-  "kind": "champion",
-  "primary": "奥恩",
-  "aliases": [
-   "Ornn",
-   "奥恩",
    "山羊",
    "山隐之焰"
   ]
@@ -3868,15 +3908,6 @@
    "不屈之枪"
   ]
  },
- "波比": {
-  "en": "Poppy",
-  "kind": "champion",
-  "primary": "波比",
-  "aliases": [
-   "Poppy",
-   "圣锤之毅"
-  ]
- },
  "圣锤之毅": {
   "en": "Poppy",
   "kind": "champion",
@@ -3884,6 +3915,15 @@
   "aliases": [
    "Poppy",
    "波比"
+  ]
+ },
+ "波比": {
+  "en": "Poppy",
+  "kind": "champion",
+  "primary": "波比",
+  "aliases": [
+   "Poppy",
+   "圣锤之毅"
   ]
  },
  "聖鎚守護者": {
@@ -3894,6 +3934,17 @@
    "Poppy",
    "圣锤之毅",
    "波比"
+  ]
+ },
+ "血港開膛手": {
+  "en": "Pyke",
+  "kind": "champion",
+  "primary": "派克",
+  "aliases": [
+   "Pyke",
+   "水鬼",
+   "派克",
+   "血港鬼影"
   ]
  },
  "血港鬼影": {
@@ -3916,32 +3967,13 @@
    "血港鬼影"
   ]
  },
- "血港開膛手": {
-  "en": "Pyke",
-  "kind": "champion",
-  "primary": "派克",
-  "aliases": [
-   "Pyke",
-   "水鬼",
-   "派克",
-   "血港鬼影"
-  ]
- },
- "奇亚娜": {
+ "姬亞娜": {
   "en": "Qiyana",
   "kind": "champion",
   "primary": "奇亚娜",
   "aliases": [
    "Qiyana",
-   "元素女皇"
-  ]
- },
- "元素女皇": {
-  "en": "Qiyana",
-  "kind": "champion",
-  "primary": "奇亚娜",
-  "aliases": [
-   "Qiyana",
+   "元素女皇",
    "奇亚娜"
   ]
  },
@@ -3955,14 +3987,22 @@
    "奇亚娜"
   ]
  },
- "姬亞娜": {
+ "元素女皇": {
   "en": "Qiyana",
   "kind": "champion",
   "primary": "奇亚娜",
   "aliases": [
    "Qiyana",
-   "元素女皇",
    "奇亚娜"
+  ]
+ },
+ "奇亚娜": {
+  "en": "Qiyana",
+  "kind": "champion",
+  "primary": "奇亚娜",
+  "aliases": [
+   "Qiyana",
+   "元素女皇"
   ]
  },
  "奎因": {
@@ -4003,15 +4043,6 @@
    "德玛西亚之翼"
   ]
  },
- "幻翎": {
-  "en": "Rakan",
-  "kind": "champion",
-  "primary": "洛",
-  "aliases": [
-   "Rakan",
-   "洛"
-  ]
- },
  "洛": {
   "en": "Rakan",
   "kind": "champion",
@@ -4019,16 +4050,6 @@
   "aliases": [
    "Rakan",
    "幻翎"
-  ]
- },
- "銳空": {
-  "en": "Rakan",
-  "kind": "champion",
-  "primary": "洛",
-  "aliases": [
-   "Rakan",
-   "幻翎",
-   "洛"
   ]
  },
  "惑羽": {
@@ -4041,25 +4062,23 @@
    "洛"
   ]
  },
- "披甲龍龜": {
-  "en": "Rammus",
+ "銳空": {
+  "en": "Rakan",
   "kind": "champion",
-  "primary": "拉莫斯",
+  "primary": "洛",
   "aliases": [
-   "Rammus",
-   "披甲龙龟",
-   "拉莫斯",
-   "龟龟"
+   "Rakan",
+   "幻翎",
+   "洛"
   ]
  },
- "披甲龙龟": {
-  "en": "Rammus",
+ "幻翎": {
+  "en": "Rakan",
   "kind": "champion",
-  "primary": "拉莫斯",
+  "primary": "洛",
   "aliases": [
-   "Rammus",
-   "拉莫斯",
-   "龟龟"
+   "Rakan",
+   "洛"
   ]
  },
  "拉莫斯": {
@@ -4069,7 +4088,7 @@
   "aliases": [
    "Rammus",
    "披甲龙龟",
-   "龟龟"
+   "龙龟"
   ]
  },
  "拉姆斯": {
@@ -4080,7 +4099,52 @@
    "Rammus",
    "披甲龙龟",
    "拉莫斯",
-   "龟龟"
+   "龙龟"
+  ]
+ },
+ "披甲龙龟": {
+  "en": "Rammus",
+  "kind": "champion",
+  "primary": "拉莫斯",
+  "aliases": [
+   "Rammus",
+   "拉莫斯",
+   "龙龟"
+  ]
+ },
+ "披甲龍龜": {
+  "en": "Rammus",
+  "kind": "champion",
+  "primary": "拉莫斯",
+  "aliases": [
+   "Rammus",
+   "披甲龙龟",
+   "拉莫斯",
+   "龙龟"
+  ]
+ },
+ "雷珂煞": {
+  "en": "Rek'Sai",
+  "kind": "champion",
+  "primary": "雷克塞",
+  "aliases": [
+   "Rek'Sai",
+   "RekSai",
+   "挖掘机",
+   "虚空遁地兽",
+   "雷克塞"
+  ]
+ },
+ "虛空穿梭者": {
+  "en": "Rek'Sai",
+  "kind": "champion",
+  "primary": "雷克塞",
+  "aliases": [
+   "Rek'Sai",
+   "RekSai",
+   "挖掘机",
+   "虚空遁地兽",
+   "雷克塞"
   ]
  },
  "虚空遁地兽": {
@@ -4105,56 +4169,12 @@
    "虚空遁地兽"
   ]
  },
- "虛空穿梭者": {
-  "en": "Rek'Sai",
-  "kind": "champion",
-  "primary": "雷克塞",
-  "aliases": [
-   "Rek'Sai",
-   "RekSai",
-   "挖掘机",
-   "虚空遁地兽",
-   "雷克塞"
-  ]
- },
- "雷珂煞": {
-  "en": "Rek'Sai",
-  "kind": "champion",
-  "primary": "雷克塞",
-  "aliases": [
-   "Rek'Sai",
-   "RekSai",
-   "挖掘机",
-   "虚空遁地兽",
-   "雷克塞"
-  ]
- },
- "銳兒": {
-  "en": "Rell",
-  "kind": "champion",
-  "primary": "芮尔",
-  "aliases": [
-   "Rell",
-   "芮尔",
-   "镕铁少女"
-  ]
- },
  "芮尔": {
   "en": "Rell",
   "kind": "champion",
   "primary": "芮尔",
   "aliases": [
    "Rell",
-   "镕铁少女"
-  ]
- },
- "鋼鐵少女": {
-  "en": "Rell",
-  "kind": "champion",
-  "primary": "芮尔",
-  "aliases": [
-   "Rell",
-   "芮尔",
    "镕铁少女"
   ]
  },
@@ -4167,26 +4187,24 @@
    "芮尔"
   ]
  },
- "睿娜妲‧格萊斯克": {
-  "en": "Renata Glasc",
+ "鋼鐵少女": {
+  "en": "Rell",
   "kind": "champion",
-  "primary": "烈娜塔 · 戈拉斯克",
+  "primary": "芮尔",
   "aliases": [
-   "Renata",
-   "Renata Glasc",
-   "炼金男爵",
-   "烈娜塔 · 戈拉斯克"
+   "Rell",
+   "芮尔",
+   "镕铁少女"
   ]
  },
- "化學女爵": {
-  "en": "Renata Glasc",
+ "銳兒": {
+  "en": "Rell",
   "kind": "champion",
-  "primary": "烈娜塔 · 戈拉斯克",
+  "primary": "芮尔",
   "aliases": [
-   "Renata",
-   "Renata Glasc",
-   "炼金男爵",
-   "烈娜塔 · 戈拉斯克"
+   "Rell",
+   "芮尔",
+   "镕铁少女"
   ]
  },
  "炼金男爵": {
@@ -4209,14 +4227,26 @@
    "炼金男爵"
   ]
  },
- "荒漠屠夫": {
-  "en": "Renekton",
+ "睿娜妲‧格萊斯克": {
+  "en": "Renata Glasc",
   "kind": "champion",
-  "primary": "雷克顿",
+  "primary": "烈娜塔 · 戈拉斯克",
   "aliases": [
-   "Renekton",
-   "雷克顿",
-   "鳄鱼"
+   "Renata",
+   "Renata Glasc",
+   "炼金男爵",
+   "烈娜塔 · 戈拉斯克"
+  ]
+ },
+ "化學女爵": {
+  "en": "Renata Glasc",
+  "kind": "champion",
+  "primary": "烈娜塔 · 戈拉斯克",
+  "aliases": [
+   "Renata",
+   "Renata Glasc",
+   "炼金男爵",
+   "烈娜塔 · 戈拉斯克"
   ]
  },
  "雷克顿": {
@@ -4251,13 +4281,33 @@
    "鳄鱼"
   ]
  },
- "雷葛爾": {
+ "荒漠屠夫": {
+  "en": "Renekton",
+  "kind": "champion",
+  "primary": "雷克顿",
+  "aliases": [
+   "Renekton",
+   "雷克顿",
+   "鳄鱼"
+  ]
+ },
+ "傲慢伏擊者": {
   "en": "Rengar",
   "kind": "champion",
   "primary": "雷恩加尔",
   "aliases": [
    "Rengar",
    "傲之追猎者",
+   "狮子狗",
+   "雷恩加尔"
+  ]
+ },
+ "傲之追猎者": {
+  "en": "Rengar",
+  "kind": "champion",
+  "primary": "雷恩加尔",
+  "aliases": [
+   "Rengar",
    "狮子狗",
    "雷恩加尔"
   ]
@@ -4272,17 +4322,7 @@
    "狮子狗"
   ]
  },
- "傲之追猎者": {
-  "en": "Rengar",
-  "kind": "champion",
-  "primary": "雷恩加尔",
-  "aliases": [
-   "Rengar",
-   "狮子狗",
-   "雷恩加尔"
-  ]
- },
- "傲慢伏擊者": {
+ "雷葛爾": {
   "en": "Rengar",
   "kind": "champion",
   "primary": "雷恩加尔",
@@ -4293,6 +4333,16 @@
    "雷恩加尔"
   ]
  },
+ "破刃放逐者": {
+  "en": "Riven",
+  "kind": "champion",
+  "primary": "锐雯",
+  "aliases": [
+   "Riven",
+   "放逐之刃",
+   "锐雯"
+  ]
+ },
  "锐雯": {
   "en": "Riven",
   "kind": "champion",
@@ -4300,15 +4350,6 @@
   "aliases": [
    "Riven",
    "放逐之刃"
-  ]
- },
- "放逐之刃": {
-  "en": "Riven",
-  "kind": "champion",
-  "primary": "锐雯",
-  "aliases": [
-   "Riven",
-   "锐雯"
   ]
  },
  "雷玟": {
@@ -4321,14 +4362,22 @@
    "锐雯"
   ]
  },
- "破刃放逐者": {
+ "放逐之刃": {
   "en": "Riven",
   "kind": "champion",
   "primary": "锐雯",
   "aliases": [
    "Riven",
-   "放逐之刃",
    "锐雯"
+  ]
+ },
+ "机械公敌": {
+  "en": "Rumble",
+  "kind": "champion",
+  "primary": "兰博",
+  "aliases": [
+   "Rumble",
+   "兰博"
   ]
  },
  "武裝機兵": {
@@ -4351,15 +4400,6 @@
    "机械公敌"
   ]
  },
- "机械公敌": {
-  "en": "Rumble",
-  "kind": "champion",
-  "primary": "兰博",
-  "aliases": [
-   "Rumble",
-   "兰博"
-  ]
- },
  "兰博": {
   "en": "Rumble",
   "kind": "champion",
@@ -4367,24 +4407,6 @@
   "aliases": [
    "Rumble",
    "机械公敌"
-  ]
- },
- "瑞兹": {
-  "en": "Ryze",
-  "kind": "champion",
-  "primary": "瑞兹",
-  "aliases": [
-   "Ryze",
-   "符文法师"
-  ]
- },
- "符文法师": {
-  "en": "Ryze",
-  "kind": "champion",
-  "primary": "瑞兹",
-  "aliases": [
-   "Ryze",
-   "瑞兹"
   ]
  },
  "雷茲": {
@@ -4407,17 +4429,25 @@
    "符文法师"
   ]
  },
- "荒漠薔薇": {
-  "en": "Samira",
+ "符文法师": {
+  "en": "Ryze",
   "kind": "champion",
-  "primary": "莎弥拉",
+  "primary": "瑞兹",
   "aliases": [
-   "Samira",
-   "沙漠玫瑰",
-   "莎弥拉"
+   "Ryze",
+   "瑞兹"
   ]
  },
- "煞蜜拉": {
+ "瑞兹": {
+  "en": "Ryze",
+  "kind": "champion",
+  "primary": "瑞兹",
+  "aliases": [
+   "Ryze",
+   "符文法师"
+  ]
+ },
+ "荒漠薔薇": {
   "en": "Samira",
   "kind": "champion",
   "primary": "莎弥拉",
@@ -4445,6 +4475,16 @@
    "沙漠玫瑰"
   ]
  },
+ "煞蜜拉": {
+  "en": "Samira",
+  "kind": "champion",
+  "primary": "莎弥拉",
+  "aliases": [
+   "Samira",
+   "沙漠玫瑰",
+   "莎弥拉"
+  ]
+ },
  "史瓦妮": {
   "en": "Sejuani",
   "kind": "champion",
@@ -4452,24 +4492,7 @@
   "aliases": [
    "Sejuani",
    "北地之怒",
-   "瑟庄妮"
-  ]
- },
- "瑟庄妮": {
-  "en": "Sejuani",
-  "kind": "champion",
-  "primary": "瑟庄妮",
-  "aliases": [
-   "Sejuani",
-   "北地之怒"
-  ]
- },
- "北地之怒": {
-  "en": "Sejuani",
-  "kind": "champion",
-  "primary": "瑟庄妮",
-  "aliases": [
-   "Sejuani",
+   "猪妹",
    "瑟庄妮"
   ]
  },
@@ -4480,7 +4503,38 @@
   "aliases": [
    "Sejuani",
    "北地之怒",
+   "猪妹",
    "瑟庄妮"
+  ]
+ },
+ "北地之怒": {
+  "en": "Sejuani",
+  "kind": "champion",
+  "primary": "瑟庄妮",
+  "aliases": [
+   "Sejuani",
+   "猪妹",
+   "瑟庄妮"
+  ]
+ },
+ "瑟庄妮": {
+  "en": "Sejuani",
+  "kind": "champion",
+  "primary": "瑟庄妮",
+  "aliases": [
+   "Sejuani",
+   "北地之怒",
+   "猪妹"
+  ]
+ },
+ "涤魂圣枪": {
+  "en": "Senna",
+  "kind": "champion",
+  "primary": "赛娜",
+  "aliases": [
+   "Senna",
+   "塞纳",
+   "赛娜"
   ]
  },
  "姍娜": {
@@ -4505,16 +4559,6 @@
    "赛娜"
   ]
  },
- "涤魂圣枪": {
-  "en": "Senna",
-  "kind": "champion",
-  "primary": "赛娜",
-  "aliases": [
-   "Senna",
-   "塞纳",
-   "赛娜"
-  ]
- },
  "赛娜": {
   "en": "Senna",
   "kind": "champion",
@@ -4525,28 +4569,7 @@
    "涤魂圣枪"
   ]
  },
- "萨勒芬妮": {
-  "en": "Seraphine",
-  "kind": "champion",
-  "primary": "萨勒芬妮",
-  "aliases": [
-   "Seraphine",
-   "星籁歌姬",
-   "酸辣粉"
-  ]
- },
  "燦眸歌姬": {
-  "en": "Seraphine",
-  "kind": "champion",
-  "primary": "萨勒芬妮",
-  "aliases": [
-   "Seraphine",
-   "星籁歌姬",
-   "萨勒芬妮",
-   "酸辣粉"
-  ]
- },
- "瑟菈紛": {
   "en": "Seraphine",
   "kind": "champion",
   "primary": "萨勒芬妮",
@@ -4567,22 +4590,25 @@
    "酸辣粉"
   ]
  },
- "瑟提": {
-  "en": "Sett",
+ "瑟菈紛": {
+  "en": "Seraphine",
   "kind": "champion",
-  "primary": "瑟提",
+  "primary": "萨勒芬妮",
   "aliases": [
-   "Sett",
-   "腕豪"
+   "Seraphine",
+   "星籁歌姬",
+   "萨勒芬妮",
+   "酸辣粉"
   ]
  },
- "腕豪": {
-  "en": "Sett",
+ "萨勒芬妮": {
+  "en": "Seraphine",
   "kind": "champion",
-  "primary": "瑟提",
+  "primary": "萨勒芬妮",
   "aliases": [
-   "Sett",
-   "瑟提"
+   "Seraphine",
+   "星籁歌姬",
+   "酸辣粉"
   ]
  },
  "獸血拳皇": {
@@ -4592,6 +4618,15 @@
   "aliases": [
    "Sett",
    "瑟提",
+   "腕豪"
+  ]
+ },
+ "瑟提": {
+  "en": "Sett",
+  "kind": "champion",
+  "primary": "瑟提",
+  "aliases": [
+   "Sett",
    "腕豪"
   ]
  },
@@ -4605,22 +4640,13 @@
    "腕豪"
   ]
  },
- "恶魔小丑": {
-  "en": "Shaco",
+ "腕豪": {
+  "en": "Sett",
   "kind": "champion",
-  "primary": "萨科",
+  "primary": "瑟提",
   "aliases": [
-   "Shaco",
-   "萨科"
-  ]
- },
- "萨科": {
-  "en": "Shaco",
-  "kind": "champion",
-  "primary": "萨科",
-  "aliases": [
-   "Shaco",
-   "恶魔小丑"
+   "Sett",
+   "瑟提"
   ]
  },
  "惡魔小丑": {
@@ -4641,6 +4667,24 @@
    "Shaco",
    "恶魔小丑",
    "萨科"
+  ]
+ },
+ "恶魔小丑": {
+  "en": "Shaco",
+  "kind": "champion",
+  "primary": "萨科",
+  "aliases": [
+   "Shaco",
+   "萨科"
+  ]
+ },
+ "萨科": {
+  "en": "Shaco",
+  "kind": "champion",
+  "primary": "萨科",
+  "aliases": [
+   "Shaco",
+   "恶魔小丑"
   ]
  },
  "暮光之眼": {
@@ -4692,15 +4736,6 @@
    "龙血武姬"
   ]
  },
- "辛吉德": {
-  "en": "Singed",
-  "kind": "champion",
-  "primary": "辛吉德",
-  "aliases": [
-   "Singed",
-   "炼金术士"
-  ]
- },
  "瘋狂煉金師": {
   "en": "Singed",
   "kind": "champion",
@@ -4709,6 +4744,15 @@
    "Singed",
    "炼金术士",
    "辛吉德"
+  ]
+ },
+ "辛吉德": {
+  "en": "Singed",
+  "kind": "champion",
+  "primary": "辛吉德",
+  "aliases": [
+   "Singed",
+   "炼金术士"
   ]
  },
  "炼金术士": {
@@ -4720,13 +4764,14 @@
    "辛吉德"
   ]
  },
- "赛恩": {
+ "賽恩": {
   "en": "Sion",
   "kind": "champion",
   "primary": "赛恩",
   "aliases": [
    "Sion",
-   "亡灵战神"
+   "亡灵战神",
+   "赛恩"
   ]
  },
  "亡灵战神": {
@@ -4735,16 +4780,6 @@
   "primary": "赛恩",
   "aliases": [
    "Sion",
-   "赛恩"
-  ]
- },
- "賽恩": {
-  "en": "Sion",
-  "kind": "champion",
-  "primary": "赛恩",
-  "aliases": [
-   "Sion",
-   "亡灵战神",
    "赛恩"
   ]
  },
@@ -4758,13 +4793,31 @@
    "赛恩"
   ]
  },
- "戰爭女神": {
+ "赛恩": {
+  "en": "Sion",
+  "kind": "champion",
+  "primary": "赛恩",
+  "aliases": [
+   "Sion",
+   "亡灵战神"
+  ]
+ },
+ "战争女神": {
   "en": "Sivir",
   "kind": "champion",
   "primary": "希维尔",
   "aliases": [
    "Sivir",
    "希维尔",
+   "轮子妈"
+  ]
+ },
+ "希维尔": {
+  "en": "Sivir",
+  "kind": "champion",
+  "primary": "希维尔",
+  "aliases": [
+   "Sivir",
    "战争女神",
    "轮子妈"
   ]
@@ -4780,23 +4833,14 @@
    "轮子妈"
   ]
  },
- "希维尔": {
-  "en": "Sivir",
-  "kind": "champion",
-  "primary": "希维尔",
-  "aliases": [
-   "Sivir",
-   "战争女神",
-   "轮子妈"
-  ]
- },
- "战争女神": {
+ "戰爭女神": {
   "en": "Sivir",
   "kind": "champion",
   "primary": "希维尔",
   "aliases": [
    "Sivir",
    "希维尔",
+   "战争女神",
    "轮子妈"
   ]
  },
@@ -4807,16 +4851,8 @@
   "aliases": [
    "Skarner",
    "上古领主",
-   "斯卡纳"
-  ]
- },
- "上古领主": {
-  "en": "Skarner",
-  "kind": "champion",
-  "primary": "斯卡纳",
-  "aliases": [
-   "Skarner",
-   "斯卡纳"
+   "斯卡纳",
+   "蝎子"
   ]
  },
  "斯卡纳": {
@@ -4825,7 +4861,8 @@
   "primary": "斯卡纳",
   "aliases": [
    "Skarner",
-   "上古领主"
+   "上古领主",
+   "蝎子"
   ]
  },
  "遠古強者": {
@@ -4835,7 +4872,29 @@
   "aliases": [
    "Skarner",
    "上古领主",
-   "斯卡纳"
+   "斯卡纳",
+   "蝎子"
+  ]
+ },
+ "上古领主": {
+  "en": "Skarner",
+  "kind": "champion",
+  "primary": "斯卡纳",
+  "aliases": [
+   "Skarner",
+   "斯卡纳",
+   "蝎子"
+  ]
+ },
+ "史矛德": {
+  "en": "Smolder",
+  "kind": "champion",
+  "primary": "斯莫德",
+  "aliases": [
+   "Smolder",
+   "小火龙",
+   "斯莫德",
+   "炽炎雏龙"
   ]
  },
  "炽炎雏龙": {
@@ -4859,17 +4918,6 @@
    "炽炎雏龙"
   ]
  },
- "史矛德": {
-  "en": "Smolder",
-  "kind": "champion",
-  "primary": "斯莫德",
-  "aliases": [
-   "Smolder",
-   "小火龙",
-   "斯莫德",
-   "炽炎雏龙"
-  ]
- },
  "斯莫德": {
   "en": "Smolder",
   "kind": "champion",
@@ -4880,14 +4928,14 @@
    "炽炎雏龙"
   ]
  },
- "琴瑟仙女": {
+ "娑娜": {
   "en": "Sona",
   "kind": "champion",
   "primary": "娑娜",
   "aliases": [
    "Sona",
-   "娑娜",
-   "琴女"
+   "琴女",
+   "琴瑟仙女"
   ]
  },
  "琴仙": {
@@ -4912,14 +4960,24 @@
    "琴瑟仙女"
   ]
  },
- "娑娜": {
+ "琴瑟仙女": {
   "en": "Sona",
   "kind": "champion",
   "primary": "娑娜",
   "aliases": [
    "Sona",
-   "琴女",
-   "琴瑟仙女"
+   "娑娜",
+   "琴女"
+  ]
+ },
+ "众星之子": {
+  "en": "Soraka",
+  "kind": "champion",
+  "primary": "索拉卡",
+  "aliases": [
+   "Soraka",
+   "奶妈",
+   "索拉卡"
   ]
  },
  "眾星之子": {
@@ -4933,16 +4991,6 @@
    "索拉卡"
   ]
  },
- "众星之子": {
-  "en": "Soraka",
-  "kind": "champion",
-  "primary": "索拉卡",
-  "aliases": [
-   "Soraka",
-   "奶妈",
-   "索拉卡"
-  ]
- },
  "索拉卡": {
   "en": "Soraka",
   "kind": "champion",
@@ -4951,6 +4999,17 @@
    "Soraka",
    "众星之子",
    "奶妈"
+  ]
+ },
+ "諾克薩斯總帥": {
+  "en": "Swain",
+  "kind": "champion",
+  "primary": "斯维因",
+  "aliases": [
+   "Swain",
+   "乌鸦",
+   "斯维因",
+   "诺克萨斯统领"
   ]
  },
  "斯溫": {
@@ -4974,17 +5033,6 @@
    "斯维因"
   ]
  },
- "諾克薩斯總帥": {
-  "en": "Swain",
-  "kind": "champion",
-  "primary": "斯维因",
-  "aliases": [
-   "Swain",
-   "乌鸦",
-   "斯维因",
-   "诺克萨斯统领"
-  ]
- },
  "斯维因": {
   "en": "Swain",
   "kind": "champion",
@@ -4993,6 +5041,15 @@
    "Swain",
    "乌鸦",
    "诺克萨斯统领"
+  ]
+ },
+ "塞拉斯": {
+  "en": "Sylas",
+  "kind": "champion",
+  "primary": "塞拉斯",
+  "aliases": [
+   "Sylas",
+   "解脱者"
   ]
  },
  "罪鍊術士": {
@@ -5005,6 +5062,15 @@
    "解脱者"
   ]
  },
+ "解脱者": {
+  "en": "Sylas",
+  "kind": "champion",
+  "primary": "塞拉斯",
+  "aliases": [
+   "Sylas",
+   "塞拉斯"
+  ]
+ },
  "賽勒斯": {
   "en": "Sylas",
   "kind": "champion",
@@ -5015,22 +5081,15 @@
    "解脱者"
   ]
  },
- "塞拉斯": {
-  "en": "Sylas",
+ "黑暗領主": {
+  "en": "Syndra",
   "kind": "champion",
-  "primary": "塞拉斯",
+  "primary": "辛德拉",
   "aliases": [
-   "Sylas",
-   "解脱者"
-  ]
- },
- "解脱者": {
-  "en": "Sylas",
-  "kind": "champion",
-  "primary": "塞拉斯",
-  "aliases": [
-   "Sylas",
-   "塞拉斯"
+   "Syndra",
+   "暗黑元首",
+   "球女",
+   "辛德拉"
   ]
  },
  "暗黑元首": {
@@ -5039,17 +5098,6 @@
   "primary": "辛德拉",
   "aliases": [
    "Syndra",
-   "球女",
-   "辛德拉"
-  ]
- },
- "黑暗領主": {
-  "en": "Syndra",
-  "kind": "champion",
-  "primary": "辛德拉",
-  "aliases": [
-   "Syndra",
-   "暗黑元首",
    "球女",
    "辛德拉"
   ]
@@ -5073,28 +5121,6 @@
    "Syndra",
    "暗黑元首",
    "球女"
-  ]
- },
- "塔姆": {
-  "en": "Tahm Kench",
-  "kind": "champion",
-  "primary": "塔姆",
-  "aliases": [
-   "Tahm Kench",
-   "TahmKench",
-   "河流之王",
-   "蛤蟆"
-  ]
- },
- "河流之王": {
-  "en": "Tahm Kench",
-  "kind": "champion",
-  "primary": "塔姆",
-  "aliases": [
-   "Tahm Kench",
-   "TahmKench",
-   "塔姆",
-   "蛤蟆"
   ]
  },
  "貪啃奇": {
@@ -5121,7 +5147,29 @@
    "蛤蟆"
   ]
  },
- "塔莉雅": {
+ "塔姆": {
+  "en": "Tahm Kench",
+  "kind": "champion",
+  "primary": "塔姆",
+  "aliases": [
+   "Tahm Kench",
+   "TahmKench",
+   "河流之王",
+   "蛤蟆"
+  ]
+ },
+ "河流之王": {
+  "en": "Tahm Kench",
+  "kind": "champion",
+  "primary": "塔姆",
+  "aliases": [
+   "Tahm Kench",
+   "TahmKench",
+   "塔姆",
+   "蛤蟆"
+  ]
+ },
+ "岩石編織者": {
   "en": "Taliyah",
   "kind": "champion",
   "primary": "塔莉垭",
@@ -5140,6 +5188,16 @@
    "岩雀"
   ]
  },
+ "塔莉雅": {
+  "en": "Taliyah",
+  "kind": "champion",
+  "primary": "塔莉垭",
+  "aliases": [
+   "Taliyah",
+   "塔莉垭",
+   "岩雀"
+  ]
+ },
  "岩雀": {
   "en": "Taliyah",
   "kind": "champion",
@@ -5149,14 +5207,14 @@
    "塔莉垭"
   ]
  },
- "岩石編織者": {
-  "en": "Taliyah",
+ "刀锋之影": {
+  "en": "Talon",
   "kind": "champion",
-  "primary": "塔莉垭",
+  "primary": "泰隆",
   "aliases": [
-   "Taliyah",
-   "塔莉垭",
-   "岩雀"
+   "Talon",
+   "泰隆",
+   "男刀"
   ]
  },
  "泰隆": {
@@ -5169,12 +5227,13 @@
    "男刀"
   ]
  },
- "刀锋之影": {
+ "塔隆": {
   "en": "Talon",
   "kind": "champion",
   "primary": "泰隆",
   "aliases": [
    "Talon",
+   "刀锋之影",
    "泰隆",
    "男刀"
   ]
@@ -5190,15 +5249,24 @@
    "男刀"
   ]
  },
- "塔隆": {
-  "en": "Talon",
+ "瓦洛兰之盾": {
+  "en": "Taric",
   "kind": "champion",
-  "primary": "泰隆",
+  "primary": "塔里克",
   "aliases": [
-   "Talon",
-   "刀锋之影",
-   "泰隆",
-   "男刀"
+   "Taric",
+   "塔里克",
+   "宝石"
+  ]
+ },
+ "塔里克": {
+  "en": "Taric",
+  "kind": "champion",
+  "primary": "塔里克",
+  "aliases": [
+   "Taric",
+   "宝石",
+   "瓦洛兰之盾"
   ]
  },
  "瓦羅然之盾": {
@@ -5208,34 +5276,8 @@
   "aliases": [
    "Taric",
    "塔里克",
+   "宝石",
    "瓦洛兰之盾"
-  ]
- },
- "塔里克": {
-  "en": "Taric",
-  "kind": "champion",
-  "primary": "塔里克",
-  "aliases": [
-   "Taric",
-   "瓦洛兰之盾"
-  ]
- },
- "瓦洛兰之盾": {
-  "en": "Taric",
-  "kind": "champion",
-  "primary": "塔里克",
-  "aliases": [
-   "Taric",
-   "塔里克"
-  ]
- },
- "迅捷斥候": {
-  "en": "Teemo",
-  "kind": "champion",
-  "primary": "提莫",
-  "aliases": [
-   "Teemo",
-   "提莫"
   ]
  },
  "提莫": {
@@ -5257,23 +5299,13 @@
    "迅捷斥候"
   ]
  },
- "鍊魂獄長": {
-  "en": "Thresh",
+ "迅捷斥候": {
+  "en": "Teemo",
   "kind": "champion",
-  "primary": "锤石",
+  "primary": "提莫",
   "aliases": [
-   "Thresh",
-   "锤石",
-   "魂锁典狱长"
-  ]
- },
- "锤石": {
-  "en": "Thresh",
-  "kind": "champion",
-  "primary": "锤石",
-  "aliases": [
-   "Thresh",
-   "魂锁典狱长"
+   "Teemo",
+   "提莫"
   ]
  },
  "魂锁典狱长": {
@@ -5295,25 +5327,23 @@
    "魂锁典狱长"
   ]
  },
- "麦林炮手": {
-  "en": "Tristana",
+ "鍊魂獄長": {
+  "en": "Thresh",
   "kind": "champion",
-  "primary": "崔丝塔娜",
+  "primary": "锤石",
   "aliases": [
-   "Tristana",
-   "小炮",
-   "崔丝塔娜"
+   "Thresh",
+   "锤石",
+   "魂锁典狱长"
   ]
  },
- "崔絲塔娜": {
-  "en": "Tristana",
+ "锤石": {
+  "en": "Thresh",
   "kind": "champion",
-  "primary": "崔丝塔娜",
+  "primary": "锤石",
   "aliases": [
-   "Tristana",
-   "小炮",
-   "崔丝塔娜",
-   "麦林炮手"
+   "Thresh",
+   "魂锁典狱长"
   ]
  },
  "約德爾炮手": {
@@ -5337,6 +5367,38 @@
    "麦林炮手"
   ]
  },
+ "崔絲塔娜": {
+  "en": "Tristana",
+  "kind": "champion",
+  "primary": "崔丝塔娜",
+  "aliases": [
+   "Tristana",
+   "小炮",
+   "崔丝塔娜",
+   "麦林炮手"
+  ]
+ },
+ "麦林炮手": {
+  "en": "Tristana",
+  "kind": "champion",
+  "primary": "崔丝塔娜",
+  "aliases": [
+   "Tristana",
+   "小炮",
+   "崔丝塔娜"
+  ]
+ },
+ "巨魔王": {
+  "en": "Trundle",
+  "kind": "champion",
+  "primary": "特朗德尔",
+  "aliases": [
+   "Trundle",
+   "巨魔",
+   "巨魔之王",
+   "特朗德尔"
+  ]
+ },
  "巨魔之王": {
   "en": "Trundle",
   "kind": "champion",
@@ -5347,7 +5409,7 @@
    "特朗德尔"
   ]
  },
- "巨魔王": {
+ "特朗德": {
   "en": "Trundle",
   "kind": "champion",
   "primary": "特朗德尔",
@@ -5368,28 +5430,6 @@
    "巨魔之王"
   ]
  },
- "特朗德": {
-  "en": "Trundle",
-  "kind": "champion",
-  "primary": "特朗德尔",
-  "aliases": [
-   "Trundle",
-   "巨魔",
-   "巨魔之王",
-   "特朗德尔"
-  ]
- },
- "泰達米爾": {
-  "en": "Tryndamere",
-  "kind": "champion",
-  "primary": "泰达米尔",
-  "aliases": [
-   "Tryndamere",
-   "泰达米尔",
-   "蛮族之王",
-   "蛮王"
-  ]
- },
  "蛮族之王": {
   "en": "Tryndamere",
   "kind": "champion",
@@ -5397,6 +5437,16 @@
   "aliases": [
    "Tryndamere",
    "泰达米尔",
+   "蛮王"
+  ]
+ },
+ "泰达米尔": {
+  "en": "Tryndamere",
+  "kind": "champion",
+  "primary": "泰达米尔",
+  "aliases": [
+   "Tryndamere",
+   "蛮族之王",
    "蛮王"
   ]
  },
@@ -5411,12 +5461,13 @@
    "蛮王"
   ]
  },
- "泰达米尔": {
+ "泰達米爾": {
   "en": "Tryndamere",
   "kind": "champion",
   "primary": "泰达米尔",
   "aliases": [
    "Tryndamere",
+   "泰达米尔",
    "蛮族之王",
    "蛮王"
   ]
@@ -5428,18 +5479,19 @@
   "aliases": [
    "Twisted Fate",
    "TwistedFate",
+   "卡牌",
    "卡牌大师",
    "崔斯特"
   ]
  },
- "卡牌大師": {
+ "卡牌大师": {
   "en": "Twisted Fate",
   "kind": "champion",
   "primary": "崔斯特",
   "aliases": [
    "Twisted Fate",
    "TwistedFate",
-   "卡牌大师",
+   "卡牌",
    "崔斯特"
   ]
  },
@@ -5450,27 +5502,20 @@
   "aliases": [
    "Twisted Fate",
    "TwistedFate",
+   "卡牌",
    "卡牌大师"
   ]
  },
- "卡牌大师": {
+ "卡牌大師": {
   "en": "Twisted Fate",
   "kind": "champion",
   "primary": "崔斯特",
   "aliases": [
    "Twisted Fate",
    "TwistedFate",
+   "卡牌",
+   "卡牌大师",
    "崔斯特"
-  ]
- },
- "图奇": {
-  "en": "Twitch",
-  "kind": "champion",
-  "primary": "图奇",
-  "aliases": [
-   "Twitch",
-   "瘟疫之源",
-   "老鼠"
   ]
  },
  "圖奇": {
@@ -5480,6 +5525,16 @@
   "aliases": [
    "Twitch",
    "图奇",
+   "瘟疫之源",
+   "老鼠"
+  ]
+ },
+ "图奇": {
+  "en": "Twitch",
+  "kind": "champion",
+  "primary": "图奇",
+  "aliases": [
+   "Twitch",
    "瘟疫之源",
    "老鼠"
   ]
@@ -5494,6 +5549,16 @@
    "老鼠"
   ]
  },
+ "神靈行者": {
+  "en": "Udyr",
+  "kind": "champion",
+  "primary": "乌迪尔",
+  "aliases": [
+   "Udyr",
+   "乌迪尔",
+   "兽灵行者"
+  ]
+ },
  "兽灵行者": {
   "en": "Udyr",
   "kind": "champion",
@@ -5503,7 +5568,7 @@
    "乌迪尔"
   ]
  },
- "神靈行者": {
+ "烏迪爾": {
   "en": "Udyr",
   "kind": "champion",
   "primary": "乌迪尔",
@@ -5520,37 +5585,6 @@
   "aliases": [
    "Udyr",
    "兽灵行者"
-  ]
- },
- "烏迪爾": {
-  "en": "Udyr",
-  "kind": "champion",
-  "primary": "乌迪尔",
-  "aliases": [
-   "Udyr",
-   "乌迪尔",
-   "兽灵行者"
-  ]
- },
- "重裝無畏": {
-  "en": "Urgot",
-  "kind": "champion",
-  "primary": "厄加特",
-  "aliases": [
-   "Urgot",
-   "厄加特",
-   "无畏战车",
-   "螃蟹"
-  ]
- },
- "无畏战车": {
-  "en": "Urgot",
-  "kind": "champion",
-  "primary": "厄加特",
-  "aliases": [
-   "Urgot",
-   "厄加特",
-   "螃蟹"
   ]
  },
  "厄加特": {
@@ -5574,6 +5608,27 @@
    "螃蟹"
   ]
  },
+ "无畏战车": {
+  "en": "Urgot",
+  "kind": "champion",
+  "primary": "厄加特",
+  "aliases": [
+   "Urgot",
+   "厄加特",
+   "螃蟹"
+  ]
+ },
+ "重裝無畏": {
+  "en": "Urgot",
+  "kind": "champion",
+  "primary": "厄加特",
+  "aliases": [
+   "Urgot",
+   "厄加特",
+   "无畏战车",
+   "螃蟹"
+  ]
+ },
  "惩戒之箭": {
   "en": "Varus",
   "kind": "champion",
@@ -5582,6 +5637,16 @@
    "Varus",
    "维鲁斯",
    "韦鲁斯"
+  ]
+ },
+ "韦鲁斯": {
+  "en": "Varus",
+  "kind": "champion",
+  "primary": "韦鲁斯",
+  "aliases": [
+   "Varus",
+   "惩戒之箭",
+   "维鲁斯"
   ]
  },
  "懲戒之箭": {
@@ -5606,17 +5671,7 @@
    "韦鲁斯"
   ]
  },
- "韦鲁斯": {
-  "en": "Varus",
-  "kind": "champion",
-  "primary": "韦鲁斯",
-  "aliases": [
-   "Varus",
-   "惩戒之箭",
-   "维鲁斯"
-  ]
- },
- "汎": {
+ "薇恩": {
   "en": "Vayne",
   "kind": "champion",
   "primary": "薇恩",
@@ -5624,11 +5679,10 @@
    "VN",
    "Vayne",
    "vn",
-   "暗夜猎手",
-   "薇恩"
+   "暗夜猎手"
   ]
  },
- "暗夜獵人": {
+ "汎": {
   "en": "Vayne",
   "kind": "champion",
   "primary": "薇恩",
@@ -5651,7 +5705,7 @@
    "薇恩"
   ]
  },
- "薇恩": {
+ "暗夜獵人": {
   "en": "Vayne",
   "kind": "champion",
   "primary": "薇恩",
@@ -5659,20 +5713,11 @@
    "VN",
    "Vayne",
    "vn",
-   "暗夜猎手"
+   "暗夜猎手",
+   "薇恩"
   ]
  },
- "维迦": {
-  "en": "Veigar",
-  "kind": "champion",
-  "primary": "维迦",
-  "aliases": [
-   "Veigar",
-   "小法师",
-   "邪恶小法师"
-  ]
- },
- "維迦": {
+ "邪惡小法師": {
   "en": "Veigar",
   "kind": "champion",
   "primary": "维迦",
@@ -5693,7 +5738,7 @@
    "维迦"
   ]
  },
- "邪惡小法師": {
+ "維迦": {
   "en": "Veigar",
   "kind": "champion",
   "primary": "维迦",
@@ -5704,26 +5749,14 @@
    "邪恶小法师"
   ]
  },
- "维克兹": {
-  "en": "Vel'Koz",
+ "维迦": {
+  "en": "Veigar",
   "kind": "champion",
-  "primary": "维克兹",
+  "primary": "维迦",
   "aliases": [
-   "Vel'Koz",
-   "Velkoz",
-   "大眼",
-   "虚空之眼"
-  ]
- },
- "虚空之眼": {
-  "en": "Vel'Koz",
-  "kind": "champion",
-  "primary": "维克兹",
-  "aliases": [
-   "Vel'Koz",
-   "Velkoz",
-   "大眼",
-   "维克兹"
+   "Veigar",
+   "小法师",
+   "邪恶小法师"
   ]
  },
  "虛空魔眼": {
@@ -5750,15 +5783,26 @@
    "虚空之眼"
   ]
  },
- "薇可絲": {
-  "en": "Vex",
+ "虚空之眼": {
+  "en": "Vel'Koz",
   "kind": "champion",
-  "primary": "薇古丝",
+  "primary": "维克兹",
   "aliases": [
-   "Vex",
-   "愁云使者",
-   "熬夜波比",
-   "薇古丝"
+   "Vel'Koz",
+   "Velkoz",
+   "大眼",
+   "维克兹"
+  ]
+ },
+ "维克兹": {
+  "en": "Vel'Koz",
+  "kind": "champion",
+  "primary": "维克兹",
+  "aliases": [
+   "Vel'Koz",
+   "Velkoz",
+   "大眼",
+   "虚空之眼"
   ]
  },
  "愁云使者": {
@@ -5771,14 +5815,15 @@
    "薇古丝"
   ]
  },
- "薇古丝": {
+ "薇可絲": {
   "en": "Vex",
   "kind": "champion",
   "primary": "薇古丝",
   "aliases": [
    "Vex",
    "愁云使者",
-   "熬夜波比"
+   "熬夜波比",
+   "薇古丝"
   ]
  },
  "愁霧影巫": {
@@ -5792,23 +5837,14 @@
    "薇古丝"
   ]
  },
- "蔚": {
-  "en": "Vi",
+ "薇古丝": {
+  "en": "Vex",
   "kind": "champion",
-  "primary": "蔚",
+  "primary": "薇古丝",
   "aliases": [
-   "Vi",
-   "皮城执法官"
-  ]
- },
- "菲艾": {
-  "en": "Vi",
-  "kind": "champion",
-  "primary": "蔚",
-  "aliases": [
-   "Vi",
-   "皮城执法官",
-   "蔚"
+   "Vex",
+   "愁云使者",
+   "熬夜波比"
   ]
  },
  "鐵腕特警": {
@@ -5830,25 +5866,23 @@
    "蔚"
   ]
  },
- "佛耶戈": {
-  "en": "Viego",
+ "菲艾": {
+  "en": "Vi",
   "kind": "champion",
-  "primary": "佛耶戈",
+  "primary": "蔚",
   "aliases": [
-   "Viego",
-   "破败之王",
-   "破败王"
+   "Vi",
+   "皮城执法官",
+   "蔚"
   ]
  },
- "維爾戈": {
-  "en": "Viego",
+ "蔚": {
+  "en": "Vi",
   "kind": "champion",
-  "primary": "佛耶戈",
+  "primary": "蔚",
   "aliases": [
-   "Viego",
-   "佛耶戈",
-   "破败之王",
-   "破败王"
+   "Vi",
+   "皮城执法官"
   ]
  },
  "殞落王者": {
@@ -5858,6 +5892,16 @@
   "aliases": [
    "Viego",
    "佛耶戈",
+   "破败之王",
+   "破败王"
+  ]
+ },
+ "佛耶戈": {
+  "en": "Viego",
+  "kind": "champion",
+  "primary": "佛耶戈",
+  "aliases": [
+   "Viego",
    "破败之王",
    "破败王"
   ]
@@ -5872,13 +5916,26 @@
    "破败王"
   ]
  },
+ "維爾戈": {
+  "en": "Viego",
+  "kind": "champion",
+  "primary": "佛耶戈",
+  "aliases": [
+   "Viego",
+   "佛耶戈",
+   "破败之王",
+   "破败王"
+  ]
+ },
  "維克特": {
   "en": "Viktor",
   "kind": "champion",
   "primary": "维克托",
   "aliases": [
    "Viktor",
+   "三只手",
    "奥术先驱",
+   "机械先驱",
    "维克托"
   ]
  },
@@ -5888,16 +5945,9 @@
   "primary": "维克托",
   "aliases": [
    "Viktor",
+   "三只手",
    "奥术先驱",
-   "维克托"
-  ]
- },
- "奥术先驱": {
-  "en": "Viktor",
-  "kind": "champion",
-  "primary": "维克托",
-  "aliases": [
-   "Viktor",
+   "机械先驱",
    "维克托"
   ]
  },
@@ -5907,27 +5957,29 @@
   "primary": "维克托",
   "aliases": [
    "Viktor",
-   "奥术先驱"
+   "三只手",
+   "奥术先驱",
+   "机械先驱"
   ]
  },
- "猩红收割者": {
+ "奥术先驱": {
+  "en": "Viktor",
+  "kind": "champion",
+  "primary": "维克托",
+  "aliases": [
+   "Viktor",
+   "三只手",
+   "机械先驱",
+   "维克托"
+  ]
+ },
+ "弗拉基米尔": {
   "en": "Vladimir",
   "kind": "champion",
   "primary": "弗拉基米尔",
   "aliases": [
    "Vladimir",
    "吸血鬼",
-   "弗拉基米尔"
-  ]
- },
- "血色收割者": {
-  "en": "Vladimir",
-  "kind": "champion",
-  "primary": "弗拉基米尔",
-  "aliases": [
-   "Vladimir",
-   "吸血鬼",
-   "弗拉基米尔",
    "猩红收割者"
   ]
  },
@@ -5942,17 +5994,39 @@
    "猩红收割者"
   ]
  },
- "弗拉基米尔": {
+ "血色收割者": {
   "en": "Vladimir",
   "kind": "champion",
   "primary": "弗拉基米尔",
   "aliases": [
    "Vladimir",
    "吸血鬼",
+   "弗拉基米尔",
    "猩红收割者"
   ]
  },
+ "猩红收割者": {
+  "en": "Vladimir",
+  "kind": "champion",
+  "primary": "弗拉基米尔",
+  "aliases": [
+   "Vladimir",
+   "吸血鬼",
+   "弗拉基米尔"
+  ]
+ },
  "無情風暴": {
+  "en": "Volibear",
+  "kind": "champion",
+  "primary": "沃利贝尔",
+  "aliases": [
+   "Volibear",
+   "不灭狂雷",
+   "沃利贝尔",
+   "狗熊"
+  ]
+ },
+ "弗力貝爾": {
   "en": "Volibear",
   "kind": "champion",
   "primary": "沃利贝尔",
@@ -5983,26 +6057,14 @@
    "狗熊"
   ]
  },
- "弗力貝爾": {
-  "en": "Volibear",
-  "kind": "champion",
-  "primary": "沃利贝尔",
-  "aliases": [
-   "Volibear",
-   "不灭狂雷",
-   "沃利贝尔",
-   "狗熊"
-  ]
- },
- "沃維克": {
+ "祖安怒兽": {
   "en": "Warwick",
   "kind": "champion",
   "primary": "沃里克",
   "aliases": [
    "Warwick",
    "沃里克",
-   "狼人",
-   "祖安怒兽"
+   "狼人"
   ]
  },
  "沃里克": {
@@ -6013,16 +6075,6 @@
    "Warwick",
    "狼人",
    "祖安怒兽"
-  ]
- },
- "祖安怒兽": {
-  "en": "Warwick",
-  "kind": "champion",
-  "primary": "沃里克",
-  "aliases": [
-   "Warwick",
-   "沃里克",
-   "狼人"
   ]
  },
  "嗜血狂怒": {
@@ -6036,13 +6088,15 @@
    "祖安怒兽"
   ]
  },
- "逆羽": {
-  "en": "Xayah",
+ "沃維克": {
+  "en": "Warwick",
   "kind": "champion",
-  "primary": "霞",
+  "primary": "沃里克",
   "aliases": [
-   "Xayah",
-   "霞"
+   "Warwick",
+   "沃里克",
+   "狼人",
+   "祖安怒兽"
   ]
  },
  "霞": {
@@ -6064,23 +6118,13 @@
    "霞"
   ]
  },
- "远古巫灵": {
-  "en": "Xerath",
+ "逆羽": {
+  "en": "Xayah",
   "kind": "champion",
-  "primary": "泽拉斯",
+  "primary": "霞",
   "aliases": [
-   "Xerath",
-   "泽拉斯"
-  ]
- },
- "齊勒斯": {
-  "en": "Xerath",
-  "kind": "champion",
-  "primary": "泽拉斯",
-  "aliases": [
-   "Xerath",
-   "泽拉斯",
-   "远古巫灵"
+   "Xayah",
+   "霞"
   ]
  },
  "遠古魔導": {
@@ -6102,6 +6146,25 @@
    "远古巫灵"
   ]
  },
+ "远古巫灵": {
+  "en": "Xerath",
+  "kind": "champion",
+  "primary": "泽拉斯",
+  "aliases": [
+   "Xerath",
+   "泽拉斯"
+  ]
+ },
+ "齊勒斯": {
+  "en": "Xerath",
+  "kind": "champion",
+  "primary": "泽拉斯",
+  "aliases": [
+   "Xerath",
+   "泽拉斯",
+   "远古巫灵"
+  ]
+ },
  "德邦总管": {
   "en": "Xin Zhao",
   "kind": "champion",
@@ -6111,17 +6174,6 @@
    "XinZhao",
    "菊花信",
    "赵信"
-  ]
- },
- "赵信": {
-  "en": "Xin Zhao",
-  "kind": "champion",
-  "primary": "赵信",
-  "aliases": [
-   "Xin Zhao",
-   "XinZhao",
-   "德邦总管",
-   "菊花信"
   ]
  },
  "蒂瑪西亞總管": {
@@ -6148,22 +6200,24 @@
    "赵信"
   ]
  },
- "疾风剑豪": {
+ "赵信": {
+  "en": "Xin Zhao",
+  "kind": "champion",
+  "primary": "赵信",
+  "aliases": [
+   "Xin Zhao",
+   "XinZhao",
+   "德邦总管",
+   "菊花信"
+  ]
+ },
+ "放逐浪人": {
   "en": "Yasuo",
   "kind": "champion",
   "primary": "亚索",
   "aliases": [
    "Yasuo",
    "亚索",
-   "压缩"
-  ]
- },
- "亚索": {
-  "en": "Yasuo",
-  "kind": "champion",
-  "primary": "亚索",
-  "aliases": [
-   "Yasuo",
    "压缩",
    "疾风剑豪"
   ]
@@ -6179,15 +6233,42 @@
    "疾风剑豪"
   ]
  },
- "放逐浪人": {
+ "亚索": {
+  "en": "Yasuo",
+  "kind": "champion",
+  "primary": "亚索",
+  "aliases": [
+   "Yasuo",
+   "压缩",
+   "疾风剑豪"
+  ]
+ },
+ "疾风剑豪": {
   "en": "Yasuo",
   "kind": "champion",
   "primary": "亚索",
   "aliases": [
    "Yasuo",
    "亚索",
-   "压缩",
-   "疾风剑豪"
+   "压缩"
+  ]
+ },
+ "永恩": {
+  "en": "Yone",
+  "kind": "champion",
+  "primary": "永恩",
+  "aliases": [
+   "Yone",
+   "封魔剑魂"
+  ]
+ },
+ "封魔剑魂": {
+  "en": "Yone",
+  "kind": "champion",
+  "primary": "永恩",
+  "aliases": [
+   "Yone",
+   "永恩"
   ]
  },
  "犽凝": {
@@ -6200,15 +6281,6 @@
    "永恩"
   ]
  },
- "永恩": {
-  "en": "Yone",
-  "kind": "champion",
-  "primary": "永恩",
-  "aliases": [
-   "Yone",
-   "封魔剑魂"
-  ]
- },
  "不滅劍豪": {
   "en": "Yone",
   "kind": "champion",
@@ -6219,13 +6291,24 @@
    "永恩"
   ]
  },
- "封魔剑魂": {
-  "en": "Yone",
+ "约里克": {
+  "en": "Yorick",
   "kind": "champion",
-  "primary": "永恩",
+  "primary": "约里克",
   "aliases": [
-   "Yone",
-   "永恩"
+   "Yorick",
+   "掘墓",
+   "牧魂人"
+  ]
+ },
+ "牧魂人": {
+  "en": "Yorick",
+  "kind": "champion",
+  "primary": "约里克",
+  "aliases": [
+   "Yorick",
+   "掘墓",
+   "约里克"
   ]
  },
  "約瑞科": {
@@ -6236,16 +6319,6 @@
    "Yorick",
    "掘墓",
    "牧魂人",
-   "约里克"
-  ]
- },
- "牧魂人": {
-  "en": "Yorick",
-  "kind": "champion",
-  "primary": "约里克",
-  "aliases": [
-   "Yorick",
-   "掘墓",
    "约里克"
   ]
  },
@@ -6260,14 +6333,13 @@
    "约里克"
   ]
  },
- "约里克": {
-  "en": "Yorick",
+ "不破之誓": {
+  "en": "Yunara",
   "kind": "champion",
-  "primary": "约里克",
+  "primary": "芸阿娜",
   "aliases": [
-   "Yorick",
-   "掘墓",
-   "牧魂人"
+   "Yunara",
+   "芸阿娜"
   ]
  },
  "芸阿娜": {
@@ -6277,15 +6349,6 @@
   "aliases": [
    "Yunara",
    "不破之誓"
-  ]
- },
- "不破之誓": {
-  "en": "Yunara",
-  "kind": "champion",
-  "primary": "芸阿娜",
-  "aliases": [
-   "Yunara",
-   "芸阿娜"
   ]
  },
  "尤娜拉": {
@@ -6308,6 +6371,15 @@
    "芸阿娜"
   ]
  },
+ "悠米": {
+  "en": "Yuumi",
+  "kind": "champion",
+  "primary": "悠米",
+  "aliases": [
+   "Yuumi",
+   "魔法猫咪"
+  ]
+ },
  "魔法猫咪": {
   "en": "Yuumi",
   "kind": "champion",
@@ -6327,15 +6399,6 @@
    "魔法猫咪"
   ]
  },
- "悠米": {
-  "en": "Yuumi",
-  "kind": "champion",
-  "primary": "悠米",
-  "aliases": [
-   "Yuumi",
-   "魔法猫咪"
-  ]
- },
  "魔法靈貓": {
   "en": "Yuumi",
   "kind": "champion",
@@ -6344,6 +6407,15 @@
    "Yuumi",
    "悠米",
    "魔法猫咪"
+  ]
+ },
+ "不落魔锋": {
+  "en": "Zaahen",
+  "kind": "champion",
+  "primary": "亚恒",
+  "aliases": [
+   "Zaahen",
+   "亚恒"
   ]
  },
  "薩亨": {
@@ -6356,25 +6428,6 @@
    "亚恒"
   ]
  },
- "不滅冥聖": {
-  "en": "Zaahen",
-  "kind": "champion",
-  "primary": "亚恒",
-  "aliases": [
-   "Zaahen",
-   "不落魔锋",
-   "亚恒"
-  ]
- },
- "不落魔锋": {
-  "en": "Zaahen",
-  "kind": "champion",
-  "primary": "亚恒",
-  "aliases": [
-   "Zaahen",
-   "亚恒"
-  ]
- },
  "亚恒": {
   "en": "Zaahen",
   "kind": "champion",
@@ -6384,14 +6437,14 @@
    "不落魔锋"
   ]
  },
- "扎克": {
-  "en": "Zac",
+ "不滅冥聖": {
+  "en": "Zaahen",
   "kind": "champion",
-  "primary": "扎克",
+  "primary": "亚恒",
   "aliases": [
-   "Zac",
-   "史莱姆",
-   "生化魔人"
+   "Zaahen",
+   "不落魔锋",
+   "亚恒"
   ]
  },
  "札克": {
@@ -6405,16 +6458,6 @@
    "生化魔人"
   ]
  },
- "生化魔人": {
-  "en": "Zac",
-  "kind": "champion",
-  "primary": "扎克",
-  "aliases": [
-   "Zac",
-   "史莱姆",
-   "扎克"
-  ]
- },
  "魔人": {
   "en": "Zac",
   "kind": "champion",
@@ -6426,14 +6469,24 @@
    "生化魔人"
   ]
  },
- "影忍至尊": {
-  "en": "Zed",
+ "扎克": {
+  "en": "Zac",
   "kind": "champion",
-  "primary": "劫",
+  "primary": "扎克",
   "aliases": [
-   "Zed",
-   "劫",
-   "影流之主"
+   "Zac",
+   "史莱姆",
+   "生化魔人"
+  ]
+ },
+ "生化魔人": {
+  "en": "Zac",
+  "kind": "champion",
+  "primary": "扎克",
+  "aliases": [
+   "Zac",
+   "史莱姆",
+   "扎克"
   ]
  },
  "劫": {
@@ -6452,6 +6505,35 @@
   "aliases": [
    "Zed",
    "劫"
+  ]
+ },
+ "影忍至尊": {
+  "en": "Zed",
+  "kind": "champion",
+  "primary": "劫",
+  "aliases": [
+   "Zed",
+   "劫",
+   "影流之主"
+  ]
+ },
+ "婕莉": {
+  "en": "Zeri",
+  "kind": "champion",
+  "primary": "泽丽",
+  "aliases": [
+   "Zeri",
+   "泽丽",
+   "祖安花火"
+  ]
+ },
+ "泽丽": {
+  "en": "Zeri",
+  "kind": "champion",
+  "primary": "泽丽",
+  "aliases": [
+   "Zeri",
+   "祖安花火"
   ]
  },
  "祖安花火": {
@@ -6473,25 +6555,6 @@
    "祖安花火"
   ]
  },
- "泽丽": {
-  "en": "Zeri",
-  "kind": "champion",
-  "primary": "泽丽",
-  "aliases": [
-   "Zeri",
-   "祖安花火"
-  ]
- },
- "婕莉": {
-  "en": "Zeri",
-  "kind": "champion",
-  "primary": "泽丽",
-  "aliases": [
-   "Zeri",
-   "泽丽",
-   "祖安花火"
-  ]
- },
  "爆破鬼才": {
   "en": "Ziggs",
   "kind": "champion",
@@ -6501,7 +6564,7 @@
    "吉格斯"
   ]
  },
- "希格斯": {
+ "魔法爆破專家": {
   "en": "Ziggs",
   "kind": "champion",
   "primary": "吉格斯",
@@ -6520,7 +6583,7 @@
    "爆破鬼才"
   ]
  },
- "魔法爆破專家": {
+ "希格斯": {
   "en": "Ziggs",
   "kind": "champion",
   "primary": "吉格斯",
@@ -6528,28 +6591,6 @@
    "Ziggs",
    "吉格斯",
    "爆破鬼才"
-  ]
- },
- "極靈": {
-  "en": "Zilean",
-  "kind": "champion",
-  "primary": "基兰",
-  "aliases": [
-   "Zilean",
-   "基兰",
-   "时光守护者",
-   "时光老头"
-  ]
- },
- "時光守護者": {
-  "en": "Zilean",
-  "kind": "champion",
-  "primary": "基兰",
-  "aliases": [
-   "Zilean",
-   "基兰",
-   "时光守护者",
-   "时光老头"
   ]
  },
  "时光守护者": {
@@ -6572,6 +6613,47 @@
    "时光老头"
   ]
  },
+ "時光守護者": {
+  "en": "Zilean",
+  "kind": "champion",
+  "primary": "基兰",
+  "aliases": [
+   "Zilean",
+   "基兰",
+   "时光守护者",
+   "时光老头"
+  ]
+ },
+ "極靈": {
+  "en": "Zilean",
+  "kind": "champion",
+  "primary": "基兰",
+  "aliases": [
+   "Zilean",
+   "基兰",
+   "时光守护者",
+   "时光老头"
+  ]
+ },
+ "暮光星靈": {
+  "en": "Zoe",
+  "kind": "champion",
+  "primary": "佐伊",
+  "aliases": [
+   "Zoe",
+   "佐伊",
+   "暮光星灵"
+  ]
+ },
+ "佐伊": {
+  "en": "Zoe",
+  "kind": "champion",
+  "primary": "佐伊",
+  "aliases": [
+   "Zoe",
+   "暮光星灵"
+  ]
+ },
  "暮光星灵": {
   "en": "Zoe",
   "kind": "champion",
@@ -6591,32 +6673,14 @@
    "暮光星灵"
   ]
  },
- "佐伊": {
-  "en": "Zoe",
-  "kind": "champion",
-  "primary": "佐伊",
-  "aliases": [
-   "Zoe",
-   "暮光星灵"
-  ]
- },
- "暮光星靈": {
-  "en": "Zoe",
-  "kind": "champion",
-  "primary": "佐伊",
-  "aliases": [
-   "Zoe",
-   "佐伊",
-   "暮光星灵"
-  ]
- },
- "荆棘之兴": {
+ "荊棘漫遊者": {
   "en": "Zyra",
   "kind": "champion",
   "primary": "婕拉",
   "aliases": [
    "Zyra",
-   "婕拉"
+   "婕拉",
+   "荆棘之兴"
   ]
  },
  "婕拉": {
@@ -6638,14 +6702,13 @@
    "荆棘之兴"
   ]
  },
- "荊棘漫遊者": {
+ "荆棘之兴": {
   "en": "Zyra",
   "kind": "champion",
   "primary": "婕拉",
   "aliases": [
    "Zyra",
-   "婕拉",
-   "荆棘之兴"
+   "婕拉"
   ]
  },
  "鞋子": {

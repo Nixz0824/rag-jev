@@ -1,0 +1,425 @@
+{
+  "note": "总题数38；kind数量：single=20、overview=8、absent=5、out_of_scope=5；覆盖版本：26.9、26.10、26.11、26.12、26.13、26.14、26.15、26.16、26.17、26.18；来源：国服官方公告页面（全部）；自检：single 的 value 与 overview 的 subjects_any 均已按对应公告正文逐字核验，未发现重复的（版本+对象+字段），每个覆盖版本至少3题，约32%题目省略版本号；JSON 已按 UTF-8 结构化生成，并已完成可解析性复核。",
+  "cases": [
+    {
+      "id": "b01",
+      "question": "ez 的 Q AP 加成现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.9",
+        "subject": "伊泽瑞尔",
+        "field_key": "ability_power",
+        "ability": "Q",
+        "value": "40%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37084056.html"
+    },
+    {
+      "id": "b02",
+      "question": "26.9 希瓦娜 W 冷却现在几秒",
+      "kind": "single",
+      "expect": {
+        "patch": "26.9",
+        "subject": "希瓦娜",
+        "field_key": "cooldown",
+        "ability": "W",
+        "value": "13 / 12 / 11 / 10 / 9"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37084056.html"
+    },
+    {
+      "id": "b03",
+      "question": "26.10 艾尼维亚基础护甲改成多少了",
+      "kind": "single",
+      "expect": {
+        "patch": "26.10",
+        "subject": "艾尼维亚",
+        "field_key": "armor",
+        "value": "19"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37085528.html"
+    },
+    {
+      "id": "b04",
+      "question": "李青 W 的护盾现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.10",
+        "subject": "李青",
+        "field_key": "shield",
+        "ability": "W",
+        "value": "60 / 105 / 150 / 195 / 240"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37085528.html"
+    },
+    {
+      "id": "b05",
+      "question": "26.11 布兰德基础护甲变多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.11",
+        "subject": "布兰德",
+        "field_key": "armor",
+        "value": "24"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37086884.html"
+    },
+    {
+      "id": "b06",
+      "question": "卡萨丁 Q 冷却现在几秒",
+      "kind": "single",
+      "expect": {
+        "patch": "26.11",
+        "subject": "卡萨丁",
+        "field_key": "cooldown",
+        "ability": "Q",
+        "value": "9 / 8.5 / 8 / 7.5 / 7"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37086884.html"
+    },
+    {
+      "id": "b07",
+      "question": "26.12 亚托克斯 Q 甜蜜点伤害改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.12",
+        "subject": "亚托克斯",
+        "field_key": "damage",
+        "ability": "Q",
+        "value": "75"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37088140.html"
+    },
+    {
+      "id": "b08",
+      "question": "奥莉安娜基础生命值现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.12",
+        "subject": "奥莉安娜",
+        "field_key": "health",
+        "value": "565"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37088140.html"
+    },
+    {
+      "id": "b09",
+      "question": "26.13 Kai'Sa W 冷却现在几秒",
+      "kind": "single",
+      "expect": {
+        "patch": "26.13",
+        "subject": "卡莎",
+        "field_key": "cooldown",
+        "ability": "W",
+        "value": "20 / 18.5 / 17 / 15.5 / 14"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37089201.html"
+    },
+    {
+      "id": "b10",
+      "question": "赛娜被动暴击伤害惩罚现在是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.13",
+        "subject": "赛娜",
+        "field_key": "crit",
+        "ability": "被动",
+      "value": "-15%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37089201.html"
+    },
+    {
+      "id": "b11",
+      "question": "26.14 盖伦 R 的真实伤害现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.14",
+        "subject": "盖伦",
+        "field_key": "damage",
+        "ability": "R",
+        "value": "125 / 200 / 275"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37091415.html"
+    },
+    {
+      "id": "b12",
+      "question": "娜美 E 每次伤害改成多少了",
+      "kind": "single",
+      "expect": {
+        "patch": "26.14",
+        "subject": "娜美",
+        "field_key": "damage",
+        "ability": "E",
+        "value": "20 / 35 / 50 / 65 / 80"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37091415.html"
+    },
+    {
+      "id": "b13",
+      "question": "26.15 牛头移速现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.15",
+        "subject": "阿利斯塔",
+        "field_key": "movement_speed",
+        "value": "335"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37092739.html"
+    },
+    {
+      "id": "b14",
+      "question": "26.15 锐雯 R 额外攻击力加成现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.15",
+        "subject": "锐雯",
+        "field_key": "attack_damage",
+        "ability": "R",
+        "value": "20%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37092739.html"
+    },
+    {
+      "id": "b15",
+      "question": "26.16 阿兹尔 Q 伤害现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.16",
+        "subject": "阿兹尔",
+        "field_key": "damage",
+        "ability": "Q",
+        "value": "75 / 95 / 115 / 135 / 155"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37093830.html"
+    },
+    {
+      "id": "b16",
+      "question": "26.16 卡蜜尔基础法力值变多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.16",
+        "subject": "卡蜜尔",
+        "field_key": "mana",
+        "value": "375"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37093830.html"
+    },
+    {
+      "id": "b17",
+      "question": "Yasuo 被动暴击伤害惩罚现在是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.17",
+        "subject": "亚索",
+        "field_key": "crit",
+        "ability": "被动",
+        "value": "-5%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37094929.html"
+    },
+    {
+      "id": "b18",
+      "question": "26.17 Vayne W 的真实伤害现在几%",
+      "kind": "single",
+      "expect": {
+        "patch": "26.17",
+        "subject": "薇恩",
+        "field_key": "damage",
+        "ability": "W",
+      "value": "4 / 5.5 / 7 / 8.5 / 10%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37094929.html"
+    },
+    {
+      "id": "b19",
+      "question": "萨勒芬妮 E 冷却现在几秒",
+      "kind": "single",
+      "expect": {
+        "patch": "26.18",
+        "subject": "萨勒芬妮",
+        "field_key": "cooldown",
+        "ability": "E",
+        "value": "11秒"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37096116.html"
+    },
+    {
+      "id": "b20",
+      "question": "26.18 Kassadin Q AP ratio 现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.18",
+        "subject": "卡萨丁",
+        "field_key": "ability_power",
+        "ability": "Q",
+        "value": "80%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37096116.html"
+    },
+    {
+      "id": "o01",
+      "question": "26.9 哪些英雄在这版动过数值",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.9",
+        "subjects_any": ["伊泽瑞尔", "希瓦娜", "佐伊"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37084056.html"
+    },
+    {
+      "id": "o02",
+      "question": "26.10 哪些英雄这版被削了",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.10",
+        "subjects_any": ["艾尼维亚", "艾希", "李青", "希瓦娜"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37085528.html"
+    },
+    {
+      "id": "o03",
+      "question": "哪些英雄在这一版被动过",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.11",
+        "subjects_any": ["布兰德", "卡萨丁", "提莫"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37086884.html"
+    },
+    {
+      "id": "o04",
+      "question": "26.12 哪些英雄获得了加强",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.12",
+        "subjects_any": ["亚托克斯", "格温", "贾克斯", "辛德拉", "崔丝塔娜", "悠米"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37088140.html"
+    },
+    {
+      "id": "o05",
+      "question": "26.13 哪些英雄被削弱",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.13",
+        "subjects_any": ["巴德", "卡西奥佩娅", "赛娜", "赛恩", "兰博"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37089201.html"
+    },
+    {
+      "id": "o06",
+      "question": "这版哪些英雄被加强",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.14",
+        "subjects_any": ["库奇", "莫德凯撒", "娜美"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37091415.html"
+    },
+    {
+      "id": "o07",
+      "question": "26.15 哪些英雄被削弱了",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.15",
+        "subjects_any": ["卑尔维斯", "锐雯", "塞拉斯", "纳亚菲利"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37092739.html"
+    },
+    {
+      "id": "o08",
+      "question": "26.18 哪些英雄在召唤师峡谷有改动",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.18",
+        "subjects_any": ["巴德", "卡西奥佩娅", "艾克", "卡萨丁", "易", "诺提勒斯"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37096116.html"
+    },
+    {
+      "id": "a01",
+      "question": "阿狸在这版改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.9",
+        "subject": "阿狸"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37084056.html"
+    },
+    {
+      "id": "a02",
+      "question": "26.10 亚索有改动吗",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.10",
+        "subject": "亚索"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37085528.html"
+    },
+    {
+      "id": "a03",
+      "question": "26.11 迦娜改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.11",
+        "subject": "迦娜"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37086884.html"
+    },
+    {
+      "id": "a04",
+      "question": "26.16 迦娜这版改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.16",
+        "subject": "迦娜"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37093830.html"
+    },
+    {
+      "id": "a05",
+      "question": "26.18 阿狸改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.18",
+        "subject": "阿狸"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37096116.html"
+    },
+    {
+      "id": "x01",
+      "question": "26.17 出了哪些新皮肤",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "不属于公告数值范围"
+    },
+    {
+      "id": "x02",
+      "question": "26.9 亚索现在胜率多少",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "不属于公告数值范围"
+    },
+    {
+      "id": "x03",
+      "question": "26.99 哪些英雄被削了",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "不属于公告数值范围"
+    },
+    {
+      "id": "x04",
+      "question": "26.18 亚索怎么出装",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "不属于公告数值范围"
+    },
+    {
+      "id": "x05",
+      "question": "这版本打野玩谁最强",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "不属于公告数值范围"
+    }
+  ]
+}

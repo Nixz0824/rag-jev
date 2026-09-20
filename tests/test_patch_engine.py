@@ -1,5 +1,6 @@
 """Patch-engine tests: parsing, mode preference, deterministic rendering."""
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -138,6 +139,46 @@ class AnswerTests(unittest.TestCase):
     def test_jev_is_off_by_default_in_tests(self):
         session = ask(self.engine, "26.17 亚索 Q 冷却")
         self.assertFalse(any(trace["tool"] == "Jev 重排" for trace in session["trace"]))
+
+
+class VersionContextTests(unittest.TestCase):
+    """Behaviours the blind set exposed: selectors, past tense, latest-change fallback."""
+
+    def setUp(self):
+        self.engine = build()
+
+    def test_past_tense_passive_is_not_an_ability(self):
+        query = self.engine.parse("哪些英雄在这一版被动过")
+        self.assertIsNone(query["ability"])
+        self.assertTrue(query["overview"])
+
+    def test_ui_selection_applies_only_without_an_explicit_version(self):
+        session = self.engine.new("s-context")
+        session = self.engine.chat(session, "亚索改了什么", selected_patch="26.16")
+        self.assertEqual(session["query"]["patches"], ["26.16"])
+        session = self.engine.chat(self.engine.new("s-context2"), "26.17 亚索改了什么", selected_patch="26.16")
+        self.assertEqual(session["query"]["patches"], ["26.17"])
+
+    def test_missing_stat_falls_back_to_the_latest_change(self):
+        session = ask(self.engine, "亚索生命值现在多少")
+        text = answer_text(session)
+        self.assertEqual(session["status"], "verify")
+        self.assertIn("最近一次改动", text)
+        self.assertIn("26.16", text)
+        self.assertIn("110", text)
+        self.assertTrue(any(step["tool"] == "版本回退" for step in session["trace"]))
+
+    def test_explicit_version_still_abstains_instead_of_falling_back(self):
+        session = ask(self.engine, "26.17 亚索生命值")
+        self.assertEqual(session["status"], "abstained")
+
+    def test_slang_nickname_resolves(self):
+        self.assertEqual(self.engine.parse("压缩改了什么")["subject"], "亚索")
+
+    def test_shipped_alias_table_contains_common_nicknames(self):
+        aliases = json.loads((ROOT / "data" / "patch" / "aliases.json").read_text(encoding="utf-8"))
+        for nickname, subject in (("牛头", "阿利斯塔"), ("男枪", "格雷福斯"), ("女警", "凯特琳"), ("飞机", "库奇")):
+            self.assertIn(nickname, aliases.get(subject, {}).get("aliases", []), f"{nickname} → {subject}")
 
 
 class ClaimTests(unittest.TestCase):
