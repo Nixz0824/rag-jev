@@ -67,6 +67,7 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
         "absent": {"total": 0, "refused": 0},
         "out_of_scope": {"total": 0, "refused": 0},
         "trap": {"total": 0, "ok": 0},
+        "selfcheck": {"total": 0, "pass": 0},
         "jev": {"calls": 0, "choice_picked": 0, "choice_hit": 0, "choice_none": 0, "cost_usd": 0.0},
         "details": [],
     }
@@ -81,6 +82,11 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
             if step["tool"] == "Jev 重排" and "ms" in parts:
                 result["jev"]["calls"] += 1
         result["jev"]["cost_usd"] += session.get("cost_usd", 0.0)
+        check = session.get("self_check")
+        if check:
+            result["selfcheck"]["total"] += 1
+            result["selfcheck"]["pass"] += int(check["min"] >= 0.5)
+            detail["self_check_min"] = check["min"]
 
         if case["kind"] == "pinned":
             result["pinned"]["total"] += 1
@@ -185,6 +191,11 @@ def summarise(name: str, arm: dict) -> list[str]:
             f"- 陷阱题 {arm['trap']['total']} 条（规则定义，与语料不同源）：符合预期 **{arm['trap']['ok']}/{arm['trap']['total']}**"
         )
     jev_stats = arm["jev"]
+    if arm["selfcheck"]["total"]:
+        check = arm["selfcheck"]
+        lines.append(
+            f"- 回答自检（Jev noul）：{check['total']} 条回答，最低支持度 ≥ 0.5 的 **{check['pass']}/{check['total']}**"
+        )
     if jev_stats["calls"]:
         lines.append(
             f"- Jev：调用 {jev_stats['calls']} 次，合计 ${jev_stats['cost_usd']:.5f}"
@@ -258,7 +269,7 @@ def main() -> int:
         if use_jev and not jev.available():
             print(f"跳过 {name}：没有 TYPESAFE_API_KEY")
             continue
-        engine = PatchEngine(retriever, use_jev=use_jev, retrieval_mode=name.replace("+jev", ""))
+        engine = PatchEngine(retriever, use_jev=use_jev, retrieval_mode=name.replace("+jev", ""), self_check=use_jev)
         started = time.perf_counter()
         results[name] = run_arm(engine, cases, retriever)
         print(f"{name} 完成，用时 {time.perf_counter() - started:.1f}s")

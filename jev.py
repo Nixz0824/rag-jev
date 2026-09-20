@@ -222,3 +222,45 @@ def judge(statement: str, evidence: str, api_key: str | None = None) -> dict | N
         "latency_ms": result["latency_ms"],
         "cost_usd": result["cost_usd"],
     }
+
+
+def judge_many(pairs: list[tuple[str, str]], api_key: str | None = None, timeout: int = 60) -> dict | None:
+    """One call, one noul per (statement, evidence) pair — used as an answer self-check.
+
+    Returns ``{"scores": [float, ...], "min": float, "mean": float, "usage": {...},
+    "latency_ms": int, "cost_usd": float}`` or ``None``.
+    """
+    pairs = [(s, e) for s, e in pairs if s and e][:12]
+    if not pairs or not (api_key or load_api_key()):
+        return None
+    state = "\n".join(
+        f"陈述 {index}：{compact(statement, 400)}\n证据 {index}：{compact(evidence, 600)}"
+        for index, (statement, evidence) in enumerate(pairs)
+    )
+    questions = {
+        f"c{index}": {
+            "type": "noul",
+            "instructions": (
+                f"Does 证据 {index} support 陈述 {index} exactly as written — same numbers, same patch, "
+                "no extra claim that is not in the evidence?"
+            ),
+        }
+        for index in range(len(pairs))
+    }
+    result = ask(state, questions, api_key=api_key, timeout=timeout)
+    if not result:
+        return None
+    scores = []
+    for index in range(len(pairs)):
+        answer = result["answers"].get(f"c{index}") or {}
+        value = answer.get("noul")
+        scores.append(round(float(value), 4) if isinstance(value, (int, float)) else 0.0)
+    return {
+        "scores": scores,
+        "min": min(scores),
+        "mean": round(sum(scores) / len(scores), 4),
+        "usage": result["usage"],
+        "latency_ms": result["latency_ms"],
+        "cost_usd": result["cost_usd"],
+        "model": result["model"],
+    }

@@ -139,10 +139,12 @@ class PatchRetriever(Retriever):
 class PatchEngine:
     """Parse a version-aware question, filter, retrieve (optionally via Jev), render."""
 
-    def __init__(self, retriever: PatchRetriever, use_jev: bool = True, retrieval_mode: str = "hybrid"):
+    def __init__(self, retriever: PatchRetriever, use_jev: bool = True, retrieval_mode: str = "hybrid", self_check: bool = False):
         self.r = retriever
         self.use_jev = use_jev and jev.available()
         self.retrieval_mode = retrieval_mode
+        # One extra Jev call per answer: does the rendered line match its evidence?
+        self.self_check = self_check and self.use_jev
         self.feedback_file = RUNTIME / "feedback.jsonl"
 
     # ------------------------------------------------------------------ sessions
@@ -425,6 +427,12 @@ class PatchEngine:
                 lines.append(f"· {DIRECTION_LABELS[other[0]['direction']]}：")
                 lines += ["- " + self._render(row, with_patch=False) for row in other[:3]]
                 lines.append("来源：" + same[0]["source_title"] + "｜" + same[0]["source_url"])
+                caution = self._self_check_lines(
+                    session,
+                    [(self._render(row, with_patch=False), self._evidence_for(row)) for row in (same[:3] + other[:3])],
+                )
+                if caution:
+                    lines.append(caution)
                 self.add(session, "assistant", "\n".join(lines), kind="claim_check", facts=ordered[:12])
                 session["trace"].append(
                     {"tool": "核对断言", "detail": f"用户说{claim_word}，公告两个方向都有（{len(same)}/{len(other)} 条）"}
@@ -434,12 +442,23 @@ class PatchEngine:
                 actual = top.get("direction")
                 actual_label = DIRECTION_LABELS.get(actual, "调整")
                 session["status"] = "verify"
+                claim_line = f"{query['subject']}在 {', '.join(query['patches'])} 没有被{claim_word}：公告里是{actual_label}。"
+                caution = self._self_check_lines(
+                    session,
+                    [
+                        (claim_line, self._evidence_for(top)),
+                        (self._render(top, with_patch=False), self._evidence_for(top)),
+                    ],
+                )
                 self.add(
                     session,
                     "assistant",
                     self._note(query)
-                    + f"\n{query['subject']}在 {', '.join(query['patches'])} 没有被{claim_word}：公告里是{actual_label}。"
-                    + "\n- " + self._render(top, with_patch=False)
+                    + "\n"
+                    + claim_line
+                    + "\n- "
+                    + self._render(top, with_patch=False)
+                    + ("\n" + caution if caution else "")
                     + "\n来源：" + top["source_title"] + "｜" + top["source_url"],
                     kind="claim_check",
                     facts=ordered[:12],
@@ -456,6 +475,12 @@ class PatchEngine:
             lines.append("\n同一对象的其他改动：")
             lines += ["- " + self._render(row, with_patch=False) for row in others[:4]]
         lines.append("\n来源：" + top["source_title"] + "｜" + top["source_url"])
+        caution = self._self_check_lines(
+            session,
+            [(self._render(row, with_patch=False), self._evidence_for(row)) for row in [top, *others[:3]]],
+        )
+        if caution:
+            lines.append(caution)
         self.add(session, "assistant", "\n".join(lines), kind="patch_answer", facts=ordered[:12])
         return session
 
@@ -481,6 +506,41 @@ class PatchEngine:
         session["evidence"] = rows[:40]
         self.add(session, "assistant", "\n".join(lines), kind="patch_overview", facts=rows[:40])
         return session
+
+    @staticmethod
+    def _evidence_for(row: dict) -> str:
+        """Corpus sentence plus the structured values, so wording cannot be mistaken
+        for a grounding failure while wrong numbers still are."""
+        values = f"字段 {row.get('field', '')}：{row.get('old_value', '')} → {row.get('new_value', '')}".strip()
+        return f"{row.get('text', '')}｜{values}｜版本 {row.get('patch', '')}"
+
+    def _self_check_lines(self, session: dict, pairs: list[tuple[str, str]]) -> str:
+        """Judge rendered lines against their evidence; return a caution line or ''."""
+        if not self.self_check or not pairs:
+            return ""
+        result = jev.judge_many(pairs)
+        if not result:
+            session["trace"].append({"tool": "回答自检", "detail": "不可用，跳过"})
+            return ""
+        session["cost_usd"] += result["cost_usd"]
+        weak = [index for index, score in enumerate(result["scores"]) if score < 0.5]
+        session["self_check"] = {
+            "min": result["min"],
+            "mean": result["mean"],
+            "scores": result["scores"],
+            "weak": weak,
+        }
+        session["trace"].append(
+            {
+                "tool": "回答自检",
+                "detail": f"{result['model']}｜{len(result['scores'])} 条｜最低 {result['min']:.2f}"
+                f"｜${result['cost_usd']:.6f}"
+                + (f"｜弱证据 {weak}" if weak else ""),
+            }
+        )
+        if weak:
+            return "（自检：这条回答与证据的一致性偏低，请以公告原文为准。）"
+        return ""
 
     def _rerank(self, text: str, hits: list[dict]) -> tuple[list[dict], dict | None]:
         if not self.use_jev or len(hits) < 2:

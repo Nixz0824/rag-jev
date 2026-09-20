@@ -183,6 +183,54 @@ class ClaimTests(unittest.TestCase):
         self.assertIn("国服", answer_text(session))
 
 
+class SelfCheckTests(unittest.TestCase):
+    """The answer self-check must be visible when it fires and absent when it does not."""
+
+    def setUp(self):
+        self.engine = build()
+        self.engine.use_jev = True
+        self.engine.self_check = True
+        self.original = patch_engine.jev.judge_many
+
+    def tearDown(self):
+        patch_engine.jev.judge_many = self.original
+
+    @staticmethod
+    def verdict(minimum: float):
+        def fake(pairs, **kwargs):
+            return {
+                "scores": [minimum] * len(pairs),
+                "min": minimum,
+                "mean": minimum,
+                "usage": {"input_tokens": 300},
+                "latency_ms": 90,
+                "cost_usd": 0.000013,
+                "model": "jev-test",
+            }
+
+        return fake
+
+    def test_weak_evidence_adds_a_caution(self):
+        patch_engine.jev.judge_many = self.verdict(0.2)
+        session = ask(self.engine, "26.17 亚索 Q 冷却")
+        self.assertIn("一致性偏低", answer_text(session))
+        self.assertEqual(session["self_check"]["min"], 0.2)
+        self.assertTrue(any(step["tool"] == "回答自检" for step in session["trace"]))
+
+    def test_strong_evidence_stays_silent(self):
+        patch_engine.jev.judge_many = self.verdict(0.93)
+        session = ask(self.engine, "26.17 亚索 Q 冷却")
+        self.assertNotIn("一致性偏低", answer_text(session))
+        self.assertEqual(session["self_check"]["min"], 0.93)
+
+    def test_self_check_is_off_by_default(self):
+        self.engine.self_check = False
+        calls = []
+        patch_engine.jev.judge_many = lambda pairs, **kwargs: calls.append(pairs) or self.verdict(0.9)(pairs)
+        ask(self.engine, "26.17 亚索 Q 冷却")
+        self.assertEqual(calls, [])
+
+
 class FeedbackTests(unittest.TestCase):
     def setUp(self):
         self.engine = build()

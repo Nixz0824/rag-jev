@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import sqlite3
 import threading
@@ -94,7 +95,8 @@ def bootstrap() -> None:
     try:
         RETRIEVER = PatchRetriever()
         RETRIEVER.build()
-        ENGINE = PatchEngine(RETRIEVER)
+        # Answer self-check costs one extra Jev call per answer; RAGJEV_SELF_CHECK=0 disables it.
+        ENGINE = PatchEngine(RETRIEVER, self_check=os.environ.get("RAGJEV_SELF_CHECK", "1") != "0")
     except Exception as error:  # noqa: BLE001 - surfaced through /api/health
         ENGINE_ERROR = str(error)
         LOG.exception("bootstrap failed")
@@ -214,7 +216,11 @@ def health() -> dict:
         "service": SERVICE,
         "ready": ready,
         "error": ENGINE_ERROR,
-        "jev": {"enabled": ready and ENGINE.use_jev, "key": jev_available()},
+        "jev": {
+            "enabled": ready and ENGINE.use_jev,
+            "key": jev_available(),
+            "self_check": ready and ENGINE.self_check,
+        },
     }
     if ready:
         payload["chunks"] = len(RETRIEVER.chunks)
