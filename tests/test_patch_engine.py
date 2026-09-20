@@ -69,6 +69,17 @@ class ParseTests(unittest.TestCase):
         self.assertEqual(self.engine.parse("经典模式亚索改了什么")["mode"], "classic")
         self.assertIsNone(self.engine.parse("亚索改了什么")["mode"])
 
+    def test_colloquial_ability_and_field_words(self):
+        query = self.engine.parse("压缩的大招几秒")
+        self.assertEqual(query["subject"], "亚索")
+        self.assertEqual(query["ability"], "R")
+        self.assertIn("cooldown", query["field_keys"])
+
+    def test_latin_name_next_to_a_version_still_resolves(self):
+        query = self.engine.parse("Yasuo 26.17 改了什么")
+        self.assertEqual(query["subject"], "亚索")
+        self.assertEqual(query["patches"], ["26.17"])
+
     def test_field_keys_helper(self):
         self.assertEqual(field_keys("冷却和攻击速度"), ["cooldown", "attack_speed"])
         self.assertEqual(field_keys("价格"), ["price"])

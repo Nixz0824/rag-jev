@@ -148,8 +148,10 @@ def main() -> int:
     base = f"https://ddragon.leagueoflegends.com/cdn/{version}/data"
     zh_champions = fetch_json(f"{base}/zh_CN/champion.json", RAW / "champion-zh_CN.json", args.offline)["data"]
     en_champions = fetch_json(f"{base}/en_US/champion.json", RAW / "champion-en_US.json", args.offline)["data"]
+    tw_champions = fetch_json(f"{base}/zh_TW/champion.json", RAW / "champion-zh_TW.json", args.offline)["data"]
     zh_items = fetch_json(f"{base}/zh_CN/item.json", RAW / "item-zh_CN.json", args.offline)["data"]
     en_items = fetch_json(f"{base}/en_US/item.json", RAW / "item-en_US.json", args.offline)["data"]
+    tw_items = fetch_json(f"{base}/zh_TW/item.json", RAW / "item-zh_TW.json", args.offline)["data"]
 
     aliases: dict[str, dict] = {}
     learned = learned_names()
@@ -163,7 +165,9 @@ def main() -> int:
         # style is "称号 名字", and the ingest records what it actually saw.
         primary = learned.get(english_name) or chinese_title or chinese_name
         slang = SLANG.get(key, [])
-        for spelling in {chinese_name, chinese_title}:
+        # Taiwan spellings are accepted too (犽宿 → 亚索), they just never become primary.
+        taiwan = tw_champions.get(key, {})
+        for spelling in {chinese_name, chinese_title, taiwan.get("name", ""), taiwan.get("title", "")}:
             if not spelling:
                 continue
             entries = {chinese_name, chinese_title, key, english_name, *slang}
@@ -173,14 +177,14 @@ def main() -> int:
                 "primary": primary,
                 "aliases": sorted(entry for entry in entries if entry and entry != spelling),
             }
-
     items = 0
     for item_id, item in zh_items.items():
         chinese_name = item.get("name", "")
         english_name = en_items.get(item_id, {}).get("name", "")
+        taiwan_name = tw_items.get(item_id, {}).get("name", "")
         if not chinese_name or not english_name or item.get("maps", {}).get("11") is not True:
             continue
-        entries = {english_name, item_id, *SLANG.get(chinese_name, [])}
+        entries = {english_name, item_id, taiwan_name, *SLANG.get(chinese_name, [])}
         aliases[chinese_name] = {
             "en": english_name,
             "kind": "item",

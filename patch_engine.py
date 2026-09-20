@@ -24,12 +24,14 @@ LOG = logging.getLogger("ragjev.patch")
 # 26.17 is the announcement number; Data Dragon calls the same patch 16.17.1.
 PATCH_RE = re.compile(r"(?<!\d)(\d{1,2})[.．](\d{1,2})(?:[.．]\d+)?(?!\d)")
 ABILITY_RE = re.compile(r"(?i)(?<![a-z])([qwer])(?![a-z])")
+ULTIMATE_RE = re.compile(r"大招|大绝|终极技能")
+PASSIVE_RE = re.compile(r"被动")
 CHANGE_INTENT = re.compile(r"改|变|调整|加强|增强|削弱|上调|下调|版本|多少|数值|现在|公告|更新", re.I)
 OVERVIEW_INTENT = re.compile(r"哪些|有哪些|有什么|都有啥|所有|全部|汇总|总结|一览|列表|改动列表|改动|变动|加强|削弱")
 AGGREGATE_INTENT = re.compile(r"哪些|有哪些|有什么|所有|全部|汇总|总结|一览|列表|改动列表")
 POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野位|adc|sup)")
 UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
-OFF_TOPIC_INTENT = re.compile(r"写.{0,4}诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
+OFF_TOPIC_INTENT = re.compile(r"写.{0,10}诗|写诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
 OTHER_SERVER_INTENT = re.compile(r"美服|韩服|欧服|日服|台服|国际服|外服|其它服务器|其他服务器")
 # Words that never are a champion or item name, used when guessing an unknown subject.
 STOPWORDS = re.compile(
@@ -51,7 +53,10 @@ def patch_sort(value: str) -> int:
 
 
 def normalise(value: str) -> str:
-    return re.sub(r"[\s·・'’\-_（）()]", "", value).lower()
+    """Case- and punctuation-insensitive form; whitespace is kept as a separator
+    so latin names do not glue onto numbers ('Yasuo 26.17' stays two tokens)."""
+    value = re.sub(r"[·・'’\-_（）()]", "", value)
+    return re.sub(r"\s+", " ", value).strip().lower()
 
 
 def field_keys(text: str) -> list[str]:
@@ -183,7 +188,14 @@ class PatchEngine:
         patches = list(dict.fromkeys(patches))
         subject, kind = self.r.resolve_subject(text)
         ability_match = ABILITY_RE.search(text)
-        ability = ability_match.group(1).upper() if ability_match else ("被动" if "被动" in text else None)
+        if ability_match:
+            ability = ability_match.group(1).upper()
+        elif ULTIMATE_RE.search(text):
+            ability = "R"
+        elif PASSIVE_RE.search(text):
+            ability = "被动"
+        else:
+            ability = None
         direction = next(
             (key for key, words in DIRECTION_WORDS.items() if any(word in text for word in words)), None
         )

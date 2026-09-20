@@ -24,6 +24,11 @@ class FieldKeyTests(unittest.TestCase):
         self.assertEqual(field_key("总花费"), "price")
         self.assertEqual(field_key("技能急速"), "ability_haste")
 
+    def test_colloquial_phrasings_map_too(self):
+        self.assertEqual(field_key("几秒"), "cooldown")
+        self.assertEqual(field_key("多少钱"), "price")
+        self.assertEqual(field_key("大招伤害"), "damage")
+
     def test_specific_pattern_wins(self):
         self.assertEqual(field_key("生命偷取"), "lifesteal")
         self.assertEqual(field_key("生命回复"), "health_regen")
