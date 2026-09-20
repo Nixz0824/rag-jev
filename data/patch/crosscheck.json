@@ -1,0 +1,738 @@
+{
+ "generated_at": "2026-09-20T13:34:08",
+ "patches": [
+  {
+   "patch": "26.9",
+   "en_arrows": 88,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Ambessa",
+      "Briar",
+      "Ezreal",
+      "Gragas",
+      "Shyvana",
+      "Tahm Kench",
+      "Taliyah",
+      "Udyr",
+      "Warwick",
+      "Xin Zhao",
+      "Zeri",
+      "Zoe"
+     ],
+     "en": [
+      "Ambessa",
+      "Briar",
+      "Ezreal",
+      "Gragas",
+      "Kennen",
+      "Shyvana",
+      "Tahm Kench",
+      "Taliyah",
+      "Teemo",
+      "Udyr",
+      "Warwick",
+      "Xin Zhao",
+      "Zeri",
+      "Zoe"
+     ],
+     "both": [
+      "Ambessa",
+      "Briar",
+      "Ezreal",
+      "Gragas",
+      "Shyvana",
+      "Tahm Kench",
+      "Taliyah",
+      "Udyr",
+      "Warwick",
+      "Xin Zhao",
+      "Zeri",
+      "Zoe"
+     ],
+     "cn_only": [],
+     "en_only": [
+      "Kennen",
+      "Teemo"
+     ]
+    },
+    "item": {
+     "cn": [
+      "Axiom Arc",
+      "Dusk and Dawn",
+      "Endless Hunger",
+      "Hubris",
+      "Staff of Flowing Water",
+      "Voltaic Cyclosword"
+     ],
+     "en": [
+      "Axiom Arc",
+      "Dusk And Dawn",
+      "Endless Hunger",
+      "Hubris",
+      "Staff of Flowing Water",
+      "[NEW] Doran's Bow",
+      "[NEW] Doran's Helm",
+      "[NEW] Gluttonous Greaves",
+      "[REMOVED] Opportunity",
+      "[REMOVED] Trailblazer",
+      "[REWORKED] Statikk Shiv",
+      "[REWORKED] Voltaic Cyclosword"
+     ],
+     "both": [
+      "Axiom Arc",
+      "Endless Hunger",
+      "Hubris",
+      "Staff of Flowing Water"
+     ],
+     "cn_only": [
+      "Dusk and Dawn",
+      "Voltaic Cyclosword"
+     ],
+     "en_only": [
+      "Dusk And Dawn",
+      "[NEW] Doran's Bow",
+      "[NEW] Doran's Helm",
+      "[NEW] Gluttonous Greaves",
+      "[REMOVED] Opportunity",
+      "[REMOVED] Trailblazer",
+      "[REWORKED] Statikk Shiv",
+      "[REWORKED] Voltaic Cyclosword"
+     ]
+    }
+   }
+  },
+  {
+   "patch": "26.10",
+   "en_arrows": 88,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Ambessa",
+      "Anivia",
+      "Ashe",
+      "Galio",
+      "Lee Sin",
+      "Naafiri",
+      "Quinn",
+      "Shyvana",
+      "Smolder",
+      "Wukong",
+      "Zed",
+      "Zeri"
+     ],
+     "en": [
+      "Ambessa",
+      "Anivia",
+      "Ashe",
+      "Galio",
+      "Lee Sin",
+      "Naafiri",
+      "Quinn",
+      "Shyvana",
+      "Smolder",
+      "Wukong",
+      "Zed",
+      "Zeri"
+     ],
+     "both": [
+      "Ambessa",
+      "Anivia",
+      "Ashe",
+      "Galio",
+      "Lee Sin",
+      "Naafiri",
+      "Quinn",
+      "Shyvana",
+      "Smolder",
+      "Wukong",
+      "Zed",
+      "Zeri"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Doran's Bow",
+      "Doran's Helm",
+      "Lich Bane",
+      "Voltaic Cyclosword"
+     ],
+     "en": [
+      "Doran's Bow",
+      "Doran's Helm",
+      "Gluttonous Greaves / Immortal Path",
+      "Lich Bane",
+      "Voltaic Cyclosword"
+     ],
+     "both": [
+      "Doran's Bow",
+      "Doran's Helm",
+      "Lich Bane",
+      "Voltaic Cyclosword"
+     ],
+     "cn_only": [],
+     "en_only": [
+      "Gluttonous Greaves / Immortal Path"
+     ]
+    }
+   }
+  },
+  {
+   "patch": "26.11",
+   "en_arrows": 133,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Brand",
+      "Diana",
+      "Ekko",
+      "Heimerdinger",
+      "Kassadin",
+      "Quinn",
+      "Smolder",
+      "Teemo",
+      "Xin Zhao"
+     ],
+     "en": [
+      "Brand",
+      "Diana",
+      "Ekko",
+      "Heimerdinger",
+      "Kassadin",
+      "Quinn",
+      "Smolder",
+      "Teemo",
+      "Xin Zhao"
+     ],
+     "both": [
+      "Brand",
+      "Diana",
+      "Ekko",
+      "Heimerdinger",
+      "Kassadin",
+      "Quinn",
+      "Smolder",
+      "Teemo",
+      "Xin Zhao"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [],
+     "en": [
+      "Experimental Hexplate",
+      "Heartsteel",
+      "Statikk Shiv"
+     ],
+     "both": [],
+     "cn_only": [],
+     "en_only": [
+      "Experimental Hexplate",
+      "Heartsteel",
+      "Statikk Shiv"
+     ]
+    }
+   }
+  },
+  {
+   "patch": "26.12",
+   "en_arrows": 88,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Aatrox",
+      "Gwen",
+      "Hwei",
+      "Jax",
+      "Lee Sin",
+      "Nocturne",
+      "Orianna",
+      "Ryze",
+      "Sylas",
+      "Syndra",
+      "Tristana",
+      "Varus",
+      "Xin Zhao",
+      "Yuumi"
+     ],
+     "en": [
+      "Aatrox",
+      "Gwen",
+      "Hwei",
+      "Jax",
+      "Lee Sin",
+      "Nocturne",
+      "Orianna",
+      "Ryze",
+      "Sylas",
+      "Syndra",
+      "Tristana",
+      "Varus",
+      "Xin Zhao",
+      "Yuumi"
+     ],
+     "both": [
+      "Aatrox",
+      "Gwen",
+      "Hwei",
+      "Jax",
+      "Lee Sin",
+      "Nocturne",
+      "Orianna",
+      "Ryze",
+      "Sylas",
+      "Syndra",
+      "Tristana",
+      "Varus",
+      "Xin Zhao",
+      "Yuumi"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [],
+     "en": [],
+     "both": [],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  },
+  {
+   "patch": "26.13",
+   "en_arrows": 102,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Aphelios",
+      "Bard",
+      "Brand",
+      "Cassiopeia",
+      "Draven",
+      "K'Sante",
+      "Kai'Sa",
+      "LeBlanc",
+      "Olaf",
+      "Poppy",
+      "Qiyana",
+      "Rek'Sai",
+      "Rumble",
+      "Senna",
+      "Sion",
+      "Vex",
+      "Zaahen"
+     ],
+     "en": [
+      "Aphelios",
+      "Bard",
+      "Brand",
+      "Cassiopeia",
+      "Draven",
+      "K'Sante",
+      "Kai'Sa",
+      "LeBlanc",
+      "Olaf",
+      "Poppy",
+      "Qiyana",
+      "Rek'Sai",
+      "Rumble",
+      "Senna",
+      "Sion",
+      "Vex",
+      "Zaahen"
+     ],
+     "both": [
+      "Aphelios",
+      "Bard",
+      "Brand",
+      "Cassiopeia",
+      "Draven",
+      "K'Sante",
+      "Kai'Sa",
+      "LeBlanc",
+      "Olaf",
+      "Poppy",
+      "Qiyana",
+      "Rek'Sai",
+      "Rumble",
+      "Senna",
+      "Sion",
+      "Vex",
+      "Zaahen"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Doran's Helm",
+      "Imperial Mandate"
+     ],
+     "en": [
+      "Doran's Helm",
+      "Imperial Mandate"
+     ],
+     "both": [
+      "Doran's Helm",
+      "Imperial Mandate"
+     ],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  },
+  {
+   "patch": "26.14",
+   "en_arrows": 74,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Corki",
+      "Garen",
+      "Jayce",
+      "Locke",
+      "Mordekaiser",
+      "Nami",
+      "Senna",
+      "Seraphine",
+      "Yunara"
+     ],
+     "en": [
+      "Azir",
+      "Corki",
+      "Garen",
+      "Jayce",
+      "Locke",
+      "Mordekaiser",
+      "Nami",
+      "Senna",
+      "Seraphine",
+      "Yunara"
+     ],
+     "both": [
+      "Corki",
+      "Garen",
+      "Jayce",
+      "Locke",
+      "Mordekaiser",
+      "Nami",
+      "Senna",
+      "Seraphine",
+      "Yunara"
+     ],
+     "cn_only": [],
+     "en_only": [
+      "Azir"
+     ]
+    },
+    "item": {
+     "cn": [
+      "Hextech Rocketbelt",
+      "Immortal Path",
+      "Protoplasm Harness"
+     ],
+     "en": [
+      "Hextech Rocketbelt",
+      "Immortal Path",
+      "Protoplasm Harness"
+     ],
+     "both": [
+      "Hextech Rocketbelt",
+      "Immortal Path",
+      "Protoplasm Harness"
+     ],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  },
+  {
+   "patch": "26.15",
+   "en_arrows": 167,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Alistar",
+      "Bel'Veth",
+      "Kai'Sa",
+      "Locke",
+      "Maokai",
+      "Mordekaiser",
+      "Naafiri",
+      "Riven",
+      "Sylas",
+      "Volibear",
+      "Zac"
+     ],
+     "en": [
+      "Alistar",
+      "Bel'Veth",
+      "Kai'Sa",
+      "Locke",
+      "Maokai",
+      "Mordekaiser",
+      "Naafiri",
+      "Riven",
+      "Sylas",
+      "Volibear",
+      "Zac"
+     ],
+     "both": [
+      "Alistar",
+      "Bel'Veth",
+      "Kai'Sa",
+      "Locke",
+      "Maokai",
+      "Mordekaiser",
+      "Naafiri",
+      "Riven",
+      "Sylas",
+      "Volibear",
+      "Zac"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Bastionbreaker",
+      "Terminus",
+      "Yun Tal Wildarrows"
+     ],
+     "en": [
+      "Bastionbreaker",
+      "Terminus",
+      "Yun Tal Wildarrows"
+     ],
+     "both": [
+      "Bastionbreaker",
+      "Terminus",
+      "Yun Tal Wildarrows"
+     ],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  },
+  {
+   "patch": "26.16",
+   "en_arrows": 171,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Azir",
+      "Bel'Veth",
+      "Camille",
+      "Gwen",
+      "Kennen",
+      "Nasus",
+      "Poppy"
+     ],
+     "en": [
+      "Azir",
+      "Bel'Veth",
+      "Camille",
+      "Gwen",
+      "Kennen",
+      "Nasus",
+      "Poppy"
+     ],
+     "both": [
+      "Azir",
+      "Bel'Veth",
+      "Camille",
+      "Gwen",
+      "Kennen",
+      "Nasus",
+      "Poppy"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Berserker's Greaves",
+      "Black Cleaver",
+      "Chainlaced Crushers",
+      "Eclipse",
+      "Runaan's Hurricane",
+      "Spellslinger's Shoes",
+      "Sterak's Gage",
+      "Sundered Sky",
+      "Sunfire Aegis",
+      "Tiamat"
+     ],
+     "en": [
+      "Berserker's Greaves",
+      "Black Cleaver",
+      "Chainlaced Crushers",
+      "Eclipse",
+      "Runaan's Hurricane",
+      "Spellslinger's Shoes",
+      "Sterak's Gage",
+      "Sundered Sky",
+      "Sunfire Cape",
+      "Tiamat"
+     ],
+     "both": [
+      "Berserker's Greaves",
+      "Black Cleaver",
+      "Chainlaced Crushers",
+      "Eclipse",
+      "Runaan's Hurricane",
+      "Spellslinger's Shoes",
+      "Sterak's Gage",
+      "Sundered Sky",
+      "Tiamat"
+     ],
+     "cn_only": [
+      "Sunfire Aegis"
+     ],
+     "en_only": [
+      "Sunfire Cape"
+     ]
+    }
+   }
+  },
+  {
+   "patch": "26.17",
+   "en_arrows": 132,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Aurelion Sol",
+      "Cho'Gath",
+      "Graves",
+      "Irelia",
+      "LeBlanc",
+      "Nasus",
+      "Nocturne",
+      "Qiyana",
+      "Thresh",
+      "Trundle",
+      "Vayne",
+      "Xerath",
+      "Yasuo",
+      "Yone"
+     ],
+     "en": [
+      "Aurelion Sol",
+      "Cho'Gath",
+      "Graves",
+      "Irelia",
+      "LeBlanc",
+      "Nasus",
+      "Nocturne",
+      "Qiyana",
+      "Thresh",
+      "Trundle",
+      "Vayne",
+      "Xerath",
+      "Yasuo",
+      "Yone"
+     ],
+     "both": [
+      "Aurelion Sol",
+      "Cho'Gath",
+      "Graves",
+      "Irelia",
+      "LeBlanc",
+      "Nasus",
+      "Nocturne",
+      "Qiyana",
+      "Thresh",
+      "Trundle",
+      "Vayne",
+      "Xerath",
+      "Yasuo",
+      "Yone"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Stormrazor",
+      "Sundered Sky"
+     ],
+     "en": [
+      "Stormrazor",
+      "Sundered Sky"
+     ],
+     "both": [
+      "Stormrazor",
+      "Sundered Sky"
+     ],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  },
+  {
+   "patch": "26.18",
+   "en_arrows": 53,
+   "sections": {
+    "champion": {
+     "cn": [
+      "Bard",
+      "Cassiopeia",
+      "Ekko",
+      "Kassadin",
+      "Master Yi",
+      "Nautilus",
+      "Seraphine",
+      "Syndra",
+      "Viego",
+      "Zaahen",
+      "Zeri"
+     ],
+     "en": [
+      "Bard",
+      "Cassiopeia",
+      "Ekko",
+      "Kassadin",
+      "Master Yi",
+      "Nautilus",
+      "Seraphine",
+      "Syndra",
+      "Viego",
+      "Zaahen",
+      "Zeri"
+     ],
+     "both": [
+      "Bard",
+      "Cassiopeia",
+      "Ekko",
+      "Kassadin",
+      "Master Yi",
+      "Nautilus",
+      "Seraphine",
+      "Syndra",
+      "Viego",
+      "Zaahen",
+      "Zeri"
+     ],
+     "cn_only": [],
+     "en_only": []
+    },
+    "item": {
+     "cn": [
+      "Guinsoo's Rageblade"
+     ],
+     "en": [
+      "Guinsoo's Rageblade"
+     ],
+     "both": [
+      "Guinsoo's Rageblade"
+     ],
+     "cn_only": [],
+     "en_only": []
+    }
+   }
+  }
+ ]
+}
