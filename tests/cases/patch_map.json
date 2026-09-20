@@ -1,0 +1,6 @@
+{
+ "patches": {
+  "26.16": {"date": "2026-08-12", "url": "https://example.invalid/26.16", "ddragon": "16.16.1", "chunks": 1, "modes": ["rift"]},
+  "26.17": {"date": "2026-08-26", "url": "https://example.invalid/26.17", "ddragon": "16.17.1", "chunks": 6, "modes": ["rift", "classic"]}
+ }
+}

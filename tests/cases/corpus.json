@@ -1,0 +1,78 @@
+{
+ "title": "测试语料",
+ "generated_at": "2026-09-20T00:00:00+00:00",
+ "source_note": "手写测试语料，不含官方公告原文。",
+ "stats": {"patches": 2, "chunks": 7},
+ "chunks": [
+  {
+   "id": "t-yasuo-q-cd",
+   "patch": "26.17", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "Q", "ability_name": "斩钢闪",
+   "field": "冷却时间", "field_key": "cooldown", "old_value": "4", "new_value": "3.5", "direction": "buff",
+   "confidence": "high", "aliases": ["疾风剑豪", "Yasuo", "压缩"],
+   "text": "26.17 版本，亚索 Q（斩钢闪）的冷却时间由 4 降低至 3.5。",
+   "keywords": "亚索 疾风剑豪 Yasuo 压缩 26.17 冷却时间 Q 加强",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-yasuo-q-dmg",
+   "patch": "26.17", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "Q", "ability_name": "斩钢闪",
+   "field": "伤害", "field_key": "damage", "old_value": "20", "new_value": "25", "direction": "buff",
+   "confidence": "high", "aliases": ["疾风剑豪", "Yasuo"],
+   "text": "26.17 版本，亚索 Q（斩钢闪）的伤害由 20 提升至 25。",
+   "keywords": "亚索 Yasuo 26.17 伤害 Q 加强",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-yasuo-classic-ad",
+   "patch": "26.17", "mode": "classic", "mode_label": "经典模式", "section": "经典模式", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "", "ability_name": "",
+   "field": "攻击力", "field_key": "attack_damage", "old_value": "60", "new_value": "62", "direction": "buff",
+   "confidence": "high", "aliases": ["疾风剑豪", "Yasuo"],
+   "text": "26.17 版本（经典模式），亚索的攻击力由 60 提升至 62。",
+   "keywords": "亚索 26.17 攻击力 经典模式 加强",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-yasuo-note",
+   "patch": "26.17", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "", "ability_name": "",
+   "field": "说明", "field_key": "narrative", "old_value": "", "new_value": "团队希望暴击流重新可用。", "direction": "adjust",
+   "confidence": "narrative", "aliases": ["疾风剑豪"],
+   "text": "26.17 版本（英雄）：亚索——团队希望暴击流重新可用。",
+   "keywords": "亚索 26.17 说明",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-anchor-as",
+   "patch": "26.17", "mode": "rift", "mode_label": "召唤师峡谷", "section": "装备", "type": "item",
+   "subject": "岚切", "subject_title": "", "subject_en": "Stormrazor", "ability": "", "ability_name": "",
+   "field": "攻击速度", "field_key": "attack_speed", "old_value": "20%", "new_value": "25%", "direction": "buff",
+   "confidence": "high", "aliases": ["Stormrazor"],
+   "text": "26.17 版本，岚切的攻击速度由 20% 提升至 25%。",
+   "keywords": "岚切 Stormrazor 26.17 攻击速度 加强",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-zed-q-dmg",
+   "patch": "26.17", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "劫", "subject_title": "影流之主", "subject_en": "Zed", "ability": "Q", "ability_name": "影奥义！诸刃",
+   "field": "伤害", "field_key": "damage", "old_value": "70", "new_value": "65", "direction": "nerf",
+   "confidence": "high", "aliases": ["影流之主", "Zed"],
+   "text": "26.17 版本，劫 Q（影奥义！诸刃）的伤害由 70 降低至 65。",
+   "keywords": "劫 影流之主 Zed 26.17 伤害 Q 削弱",
+   "source_title": "国服 26.17 版本更新公告", "source_url": "https://example.invalid/26.17"
+  },
+  {
+   "id": "t-yasuo-old-q-dmg",
+   "patch": "26.16", "mode": "rift", "mode_label": "召唤师峡谷", "section": "英雄", "type": "champion",
+   "subject": "亚索", "subject_title": "疾风剑豪", "subject_en": "Yasuo", "ability": "Q", "ability_name": "斩钢闪",
+   "field": "伤害", "field_key": "damage", "old_value": "18", "new_value": "20", "direction": "buff",
+   "confidence": "high", "aliases": ["疾风剑豪", "Yasuo"],
+   "text": "26.16 版本，亚索 Q（斩钢闪）的伤害由 18 提升至 20。",
+   "keywords": "亚索 Yasuo 26.16 伤害 Q 加强",
+   "source_title": "国服 26.16 版本更新公告", "source_url": "https://example.invalid/26.16"
+  }
+ ]
+}
