@@ -12,21 +12,19 @@ Jev（TypeSafe System One）只做「候选里的相对选择 / 相关性打分 
 
 | 项 | 值 |
 |---|---|
-| 项目根 | `D:\python项目\RAG Jev` |
-| Python | `C:\Users\USER\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe`（3.12.14 + numpy 2.3.5） |
+| 项目根 | 本仓库根目录 |
+| Python | `python`（3.12.14 + numpy 2.3.5） |
 | 端口 | 18890 应用 / 18891 聊天模型 / 18892 向量模型（只绑 127.0.0.1） |
-| 模型 | `models/`（本机为指向旧项目 models 目录的 junction，或 `RAGJEV_MODELS` 指向外部目录） |
+| 模型 | `models/`（本机下载，或用 `RAGJEV_MODELS` 指向外部模型目录） |
 | Key | `TYPESAFE_API_KEY`（环境变量或 `runtime/jev-key.txt`），只检查是否存在，不输出值 |
 
 ## 常用命令
 
 ```powershell
-$py = 'C:\Users\USER\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
-
-& $py -m unittest discover -s .\tests      # 59 项，不需要模型和网络
-& $py .\scripts\ingest_qq.py --offline     # 用缓存重建语料
-& $py .\launch.py --no-open                # 启动三进程
-& $py .\launch.py --stop                   # 停止
+python -m unittest discover -s .\tests      # 59 项，不需要模型和网络
+python .\scripts\ingest_qq.py --offline     # 用缓存重建语料
+python .\launch.py --no-open                # 启动三进程
+python .\launch.py --stop                   # 停止
 ```
 
 ## 必须遵守
