@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RAG Jev · 版本更新公告问答</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">RJ</span>
+    <div>
+      <h1>RAG Jev</h1>
+      <p>国服《英雄联盟》版本更新公告问答 · 本地检索 + Jev 决策层</p>
+    </div>
+  </div>
+  <div class="status" id="status">
+    <span class="dot" id="status-dot"></span>
+    <span id="status-text">连接中…</span>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="chat">
+    <div class="toolbar">
+      <label class="field">
+        <span>版本</span>
+        <select id="patch-select"><option value="">自动（默认最新）</option></select>
+      </label>
+      <span class="hint" id="patch-hint"></span>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <form class="composer" id="composer">
+      <textarea id="input" rows="2" placeholder="例如：26.17 亚索改了什么 / 26.17 有哪些英雄被削弱 / 26.17 岚切怎么调整的"></textarea>
+      <button type="submit" id="send">提问</button>
+    </form>
+    <div class="examples" id="examples"></div>
+  </section>
+
+  <aside class="rail">
+    <section class="card">
+      <h2>数据覆盖</h2>
+      <dl id="coverage"><dt>加载中</dt><dd>…</dd></dl>
+    </section>
+    <section class="card">
+      <h2>本次证据</h2>
+      <ol class="evidence" id="evidence"><li class="muted">提问后显示命中的公告条目</li></ol>
+    </section>
+    <section class="card">
+      <h2>决策轨迹</h2>
+      <ol class="trace" id="trace"><li class="muted">版本解析、Jev 重排耗时与费用会显示在这里</li></ol>
+    </section>
+    <section class="card note">
+      <h2>边界</h2>
+      <p id="source-note">数据来自国服官方公告，仅本地检索；公告原文不进公开仓库。</p>
+    </section>
+  </aside>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

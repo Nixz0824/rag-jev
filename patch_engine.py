@@ -1,0 +1,478 @@
+"""Version-aware patch-note question answering on top of the retrieval core.
+
+Numbers in an answer are copied from the corpus, never generated. Every answer
+carries its patch, its source and (when available) a Jev rerank trace, so a user
+can check the claim against the official announcement.
+"""
+
+from __future__ import annotations
+
+import collections
+import json
+import logging
+import re
+import time
+from pathlib import Path
+
+from config import PATCH_DATA, RUNTIME
+from engine import BLOCKED, GREETING, Retriever, redact
+import jev
+from patch_schema import FIELDS, detect_mode
+
+LOG = logging.getLogger("ragjev.patch")
+
+# 26.17 is the announcement number; Data Dragon calls the same patch 16.17.1.
+PATCH_RE = re.compile(r"(?<!\d)(\d{1,2})[.．](\d{1,2})(?:[.．]\d+)?(?!\d)")
+ABILITY_RE = re.compile(r"(?i)(?<![a-z])([qwer])(?![a-z])")
+CHANGE_INTENT = re.compile(r"改|变|调整|加强|增强|削弱|上调|下调|版本|多少|数值|现在|公告|更新", re.I)
+OVERVIEW_INTENT = re.compile(r"哪些|有哪些|有什么|都有啥|所有|全部|汇总|总结|一览|列表|改动列表|改动|变动|加强|削弱")
+AGGREGATE_INTENT = re.compile(r"哪些|有哪些|有什么|所有|全部|汇总|总结|一览|列表|改动列表")
+POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野位|adc|sup)")
+UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
+# Words that never are a champion or item name, used when guessing an unknown subject.
+STOPWORDS = re.compile(
+    r"这个|那个|当前|最新|上个|上一|版本|公告|英雄|装备|物品|技能|被动|模式|经典|大乱斗|竞技场|加强|削弱|调整|改动|"
+    r"所有|全部|哪些|什么|怎么|多少|为什么|现在|都|有|的|了|吗|呢|请|帮|我|看看|查|一下|查询|和|与|在|是|会被|被"
+)
+
+DIRECTION_WORDS = {"buff": ("加强", "增强", "提升", "上调"), "nerf": ("削弱", "降低", "下调")}
+
+
+def patch_sort(value: str) -> int:
+    major, minor = value.split(".")[:2]
+    return int(major) * 100 + int(minor)
+
+
+def normalise(value: str) -> str:
+    return re.sub(r"[\s·・'’\-_（）()]", "", value).lower()
+
+
+def field_keys(text: str) -> list[str]:
+    """Canonical field keys the question mentions, most specific pattern first."""
+    return [key for key, pattern in FIELDS if re.search(pattern, text, re.I)]
+
+
+class PatchRetriever(Retriever):
+    """Retriever pre-configured for the patch-note corpus."""
+
+    def __init__(self, corpus_path=None, embed_fn=None, alias_path=None, patch_map_path=None, thresholds_path=None):
+        path = Path(corpus_path) if corpus_path else PATCH_DATA / "knowledge.json"
+        self.alias_path = Path(alias_path) if alias_path else PATCH_DATA / "aliases.json"
+        self.patch_map_path = Path(patch_map_path) if patch_map_path else PATCH_DATA / "patch_map.json"
+        self.thresholds_path = Path(thresholds_path) if thresholds_path else PATCH_DATA / "thresholds.json"
+        self.aliases = []
+        super().__init__(
+            path,
+            instruction="Instruct: Retrieve the exact League of Legends patch note change.\nQuery: ",
+            model_tag="Qwen3-Embedding-0.6B-Q8_0",
+            embed_fn=embed_fn,
+        )
+        self.patch_map = self._load_json(self.patch_map_path, {})
+        self.thresholds = self._load_json(self.thresholds_path, None)
+        self.supported = sorted((self.patch_map.get("patches") or {}).keys(), key=patch_sort)
+        self.latest = self.supported[-1] if self.supported else ""
+        self._build_aliases()
+
+    @staticmethod
+    def _load_json(path, default):
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return default
+
+    def _build_aliases(self) -> None:
+        """Longest-first alias list: official name, title, English name, slang.
+
+        Data Dragon has shipped the Chinese name and title in either order, so the
+        alias file is keyed by both and every spelling is mapped onto the subject
+        that actually appears in the corpus (matched through the English name).
+        """
+        canonical: dict[tuple[str, str], str] = {}
+        for row in self.chunks:
+            if row.get("type") in ("champion", "item") and row.get("subject_en"):
+                canonical.setdefault((row["type"], row["subject_en"]), row["subject"])
+        values: set[tuple[str, str, str]] = set()
+        for subject, meta in self._load_json(self.alias_path, {}).items():
+            meta = meta if isinstance(meta, dict) else {"aliases": meta}
+            kind = meta.get("kind") or "champion"
+            if kind not in ("champion", "item"):
+                continue
+            english = meta.get("en", "")
+            target = canonical.get((kind, english)) or meta.get("primary") or subject
+            for alias in [subject, english, meta.get("primary", ""), *meta.get("aliases", [])]:
+                if alias:
+                    values.add((normalise(alias), target, kind))
+        for row in self.chunks:
+            if row.get("type") not in ("champion", "item"):
+                continue
+            values.add((normalise(row["subject"]), row["subject"], row["type"]))
+            for alias in row.get("aliases", []):
+                if alias:
+                    values.add((normalise(alias), row["subject"], row["type"]))
+        self.aliases = sorted(values, key=lambda item: len(item[0]), reverse=True)
+
+    def resolve_subject(self, text: str) -> tuple[str | None, str | None]:
+        value = normalise(text)
+        for alias, subject, kind in self.aliases:
+            if not alias or alias not in value:
+                continue
+            if re.fullmatch("[a-z0-9]+", alias) and not re.search(r"(?<![a-z0-9])" + re.escape(alias) + r"(?![a-z0-9])", value):
+                continue
+            return subject, kind
+        return None, None
+
+
+class PatchEngine:
+    """Parse a version-aware question, filter, retrieve (optionally via Jev), render."""
+
+    def __init__(self, retriever: PatchRetriever, use_jev: bool = True):
+        self.r = retriever
+        self.use_jev = use_jev and jev.available()
+        self.feedback_file = RUNTIME / "feedback.jsonl"
+
+    # ------------------------------------------------------------------ sessions
+
+    def new(self, session_id: str) -> dict:
+        return {
+            "id": session_id,
+            "domain": "patch",
+            "created_at": int(time.time()),
+            "status": "new",
+            "question": "",
+            "messages": [],
+            "evidence": [],
+            "query": None,
+            "attempts": [],
+            "feedback": [],
+            "trace": [],
+            "cost_usd": 0.0,
+        }
+
+    def add(self, session: dict, role: str, text: str, **fields) -> None:
+        session["messages"].append({"role": role, "text": redact(text), "time": int(time.time()), **fields})
+
+    # -------------------------------------------------------------------- parsing
+
+    def canonical_patch(self, value: str) -> str | None:
+        """Accept 26.17, 16.17 and 16.17.1 and return the announcement number."""
+        major, minor = (int(part) for part in value.split(".")[:2])
+        if major >= 20:
+            candidate = f"{major}.{minor}"
+        elif 10 <= major <= 19:
+            candidate = f"{major + 10}.{minor}"
+        else:
+            candidate = f"{major + 20}.{minor}"
+        return candidate if candidate in self.r.supported else None
+
+    def parse(self, text: str) -> dict:
+        patches = []
+        for match in PATCH_RE.finditer(text):
+            canonical = self.canonical_patch(f"{match.group(1)}.{match.group(2)}")
+            raw = f"{int(match.group(1))}.{int(match.group(2))}"
+            patches.append(canonical or raw)
+        patches = list(dict.fromkeys(patches))
+        subject, kind = self.r.resolve_subject(text)
+        ability_match = ABILITY_RE.search(text)
+        ability = ability_match.group(1).upper() if ability_match else ("被动" if "被动" in text else None)
+        direction = next(
+            (key for key, words in DIRECTION_WORDS.items() if any(word in text for word in words)), None
+        )
+        requested_type = "item" if re.search(r"装备|物品", text) else ("champion" if re.search(r"英雄", text) else kind)
+        keys = field_keys(text)
+        defaulted = False
+        if not patches:
+            defaulted = not re.search("当前版本|最新版本|最新版|这个版本|这版本|上个版本|上一版本", text)
+            if re.search("上个版本|上一版本", text) and len(self.r.supported) > 1:
+                patches = [self.r.supported[-2]]
+            else:
+                patches = [self.r.latest]
+        return {
+            "patches": [value for value in patches if value in self.r.supported],
+            "outside": [value for value in patches if value not in self.r.supported],
+            "defaulted": defaulted,
+            "subject": subject,
+            "type": requested_type,
+            "ability": ability,
+            "direction": direction,
+            "field_keys": keys,
+            "mode": detect_mode(text),
+            "overview": bool(AGGREGATE_INTENT.search(text)) or self._bare_aggregate(text),
+        }
+
+    @staticmethod
+    def _bare_aggregate(text: str) -> bool:
+        """'26.17改了什么' with nothing else in it still asks for the whole patch."""
+        stripped = STOPWORDS.sub("", PATCH_RE.sub("", text))
+        stripped = re.sub(r"[\s?？。，,.!！~～\-+也]", "", stripped)
+        return not stripped
+
+    @staticmethod
+    def _unresolved_token(text: str) -> str:
+        """A short Chinese token the alias table did not recognise, if any."""
+        stripped = STOPWORDS.sub(" ", PATCH_RE.sub(" ", text))
+        candidates = re.findall(r"[\u4e00-\u9fff]{2,4}", stripped)
+        return candidates[0] if candidates else ""
+
+    # --------------------------------------------------------------------- chat
+
+    def chat(self, session: dict, text: str, selected_patch: str | None = None) -> dict:
+        text = redact(text.strip())
+        if not text:
+            raise ValueError("请先输入问题")
+        if len(text) > 1000:
+            raise ValueError("单次输入请控制在1000字以内")
+        self.add(session, "user", text)
+
+        if GREETING.fullmatch(text):
+            self.add(
+                session,
+                "assistant",
+                "你好。可以直接问版本改动，例如“26.17 亚索改了什么”“26.17 有哪些英雄被削弱”，"
+                "不写版本时我按最新收录版本回答并在回答里注明。",
+                kind="greeting",
+            )
+            return session
+
+        if BLOCKED.search(text):
+            session["status"] = "abstained"
+            self.add(session, "assistant", "这条请求超出我的范围：我只回答版本公告内容，不输出凭据。", kind="abstention")
+            return session
+
+        query = self.parse(text)
+        if selected_patch and selected_patch in self.r.supported and not query["patches"]:
+            query["patches"] = [selected_patch]
+            query["defaulted"] = False
+        session["question"] = text
+        session["query"] = query
+        session["trace"].append({"tool": "版本解析", "detail": ", ".join(query["patches"]) or "无"})
+
+        if query["outside"]:
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                f"没有收录版本 {', '.join(query['outside'])} 的更新公告。当前覆盖 "
+                f"{self.r.supported[0]}—{self.r.supported[-1]}（共 {len(self.r.supported)} 个版本），"
+                f"最新版本是 {self.r.latest}。",
+                kind="abstention",
+            )
+            return session
+
+        if UNSUPPORTED_INTENT.search(text):
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                "当前语料只收录公告里的英雄、装备与系统数值改动，皮肤/炫彩、云顶之弈等内容不在覆盖范围内。",
+                kind="abstention",
+            )
+            return session
+
+        if POSITION_INTENT.search(text) and not query["subject"]:
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                "公告不标注英雄位置，我不能可靠回答“哪些打野/上单被改动”。"
+                "可以改问具体英雄，或问这个版本的全部改动。",
+                kind="abstention",
+            )
+            return session
+
+        where = {key: query[key] for key in ("subject", "type", "ability", "direction") if query.get(key)}
+        where["patches"] = query["patches"]
+        if query.get("mode"):
+            where["mode"] = query["mode"]
+        if query["subject"] and not query["overview"]:
+            return self._answer_subject(session, text, query, where)
+        if query["subject"] and query["overview"] and OVERVIEW_INTENT.search(text):
+            return self._answer_subject(session, text, query, where)
+        if not query["subject"] and not query["overview"]:
+            return self._clarify(session, text, query, where)
+        return self._answer_overview(session, text, query, where)
+
+    def _clarify(self, session: dict, text: str, query: dict, where: dict) -> dict:
+        token = self._unresolved_token(text)
+        known = self.r.all({"patches": query["patches"]})
+        subjects = list(dict.fromkeys(row["subject"] for row in known if row.get("field_key") != "narrative"))
+        session["status"] = "clarifying"
+        session["evidence"] = []
+        lines = [
+            (f"没认出「{token}」是哪个英雄或装备。" if token else "请补充英雄或装备名称。"),
+            f"这个版本（{', '.join(query['patches'])}）收录了 {len(subjects)} 个对象，例如："
+            + "、".join(subjects[:8])
+            + "。",
+            "也可以问“26.17 有哪些改动”查看全量列表。",
+        ]
+        self.add(session, "assistant", "\n".join(lines), kind="clarification")
+        session["trace"].append({"tool": "追问对象名称", "detail": token or "未识别出名称"})
+        return session
+
+    # ------------------------------------------------------------------- answers
+
+    @staticmethod
+    def _prefer_mode(rows: list[dict], mode: str | None) -> list[dict]:
+        """Rift changes win by default; another mode only when it is all we have."""
+        if mode or not rows:
+            return rows
+        rift = [row for row in rows if row.get("mode") == "rift"]
+        return rift or rows
+
+    def _answer_subject(self, session: dict, text: str, query: dict, where: dict) -> dict:
+        hits = self.r.search(text, k=len(self.r.chunks), where=where)
+        structured = [row for row in hits if row.get("field_key") != "narrative"]
+        hits = self._prefer_mode(structured or hits, query.get("mode"))
+        if not hits:
+            return self._no_result(session, query)
+        if query["field_keys"]:
+            filtered = [row for row in hits if row.get("field_key") in query["field_keys"]]
+            hits = filtered or hits
+        ordered, jev_meta = self._rerank(text, hits)
+        session["evidence"] = ordered[:12]
+        if jev_meta:
+            session["cost_usd"] += jev_meta["cost_usd"]
+            session["trace"].append(
+                {
+                    "tool": "Jev 重排",
+                    "detail": f"{jev_meta['model']}｜{jev_meta['latency_ms']}ms｜${jev_meta['cost_usd']:.6f}"
+                    f"｜首选 {jev_meta['choice_id'] or '无'}",
+                }
+            )
+        elif self.use_jev:
+            detail = "候选不足 2 条，未调用" if len(hits) < 2 else "调用失败，保留 BM25+向量排序"
+            session["trace"].append({"tool": "Jev 重排", "detail": detail})
+        top = ordered[0]
+        if query["direction"] and top.get("direction") != query["direction"]:
+            same = [row for row in ordered if row.get("direction") == query["direction"]]
+            if not same:
+                session["status"] = "answered"
+                self.add(
+                    session,
+                    "assistant",
+                    self._note(query) + f"\n在 {', '.join(query['patches'])} 的公告里，"
+                    f"{query['subject']} 没有{'加强' if query['direction'] == 'buff' else '削弱'}记录。",
+                    kind="patch_answer",
+                )
+                return session
+            ordered = same
+            session["evidence"] = ordered[:12]
+            top = ordered[0]
+        session["status"] = "verify"
+        lines = [self._note(query), self._render(top)]
+        others = [row for row in ordered[1:6] if row["subject"] == top["subject"] and row["patch"] == top["patch"]]
+        if others:
+            lines.append("\n同一对象的其他改动：")
+            lines += ["- " + self._render(row, with_patch=False) for row in others[:4]]
+        lines.append("\n来源：" + top["source_title"] + "｜" + top["source_url"])
+        self.add(session, "assistant", "\n".join(lines), kind="patch_answer", facts=ordered[:12])
+        return session
+
+    def _answer_overview(self, session: dict, text: str, query: dict, where: dict) -> dict:
+        rows = [row for row in self.r.all(where) if row.get("field_key") != "narrative"]
+        rows = self._prefer_mode(rows, query.get("mode"))
+        if not rows:
+            return self._no_result(session, query)
+        grouped = collections.defaultdict(list)
+        for row in rows:
+            grouped[(row["patch"], row["type"], row["subject"])].append(row)
+        ordered = sorted(grouped.items(), key=lambda item: (patch_sort(item[0][0]), item[0][1], item[0][2]))
+        lines = [self._note(query)]
+        for (patch, kind, subject), changes in ordered[:40]:
+            fields = "、".join(dict.fromkeys(row["field"] for row in changes))
+            label = f"{subject}（{len(changes)} 项：{fields}）"
+            lines.append(("- " + label) if len(ordered) <= 40 else label)
+        if len(ordered) > 40:
+            lines.append(f"…共 {len(ordered)} 个对象，{sum(len(c) for _, c in ordered)} 条改动（已截断显示）。")
+        lines.append(f"\n共 {len(ordered)} 个对象、{sum(len(c) for _, c in ordered)} 条改动。")
+        lines.append("来源：" + "、".join(sorted({row["source_title"] for row in rows}))[:200])
+        session["status"] = "verify"
+        session["evidence"] = rows[:40]
+        self.add(session, "assistant", "\n".join(lines), kind="patch_overview", facts=rows[:40])
+        return session
+
+    def _rerank(self, text: str, hits: list[dict]) -> tuple[list[dict], dict | None]:
+        if not self.use_jev or len(hits) < 2:
+            return hits, None
+        meta = jev.rerank(text, hits[: jev.MAX_CANDIDATES])
+        if not meta:
+            return hits, None
+        by_id = {row["id"]: row for row in hits}
+        ordered = [by_id[row["id"]] for row in meta["ordered"] if row["id"] in by_id]
+        ordered += [row for row in hits if row["id"] not in {item["id"] for item in ordered}]
+        return ordered, meta
+
+    # ------------------------------------------------------------------ rendering
+
+    def _note(self, query: dict) -> str:
+        prefix = "你没有指定版本；" if query["defaulted"] else ""
+        label = "最新收录版本" if query["patches"] and query["patches"][-1] == self.r.latest else "历史版本"
+        return f"{prefix}按{label} {', '.join(query['patches'])} 的国服公告回答。"
+
+    @staticmethod
+    def _render(row: dict, with_patch: bool = True) -> str:
+        head = f"{row['subject']}"
+        if row.get("ability"):
+            head += f" {row['ability']}"
+            if row.get("ability_name"):
+                head += f"（{row['ability_name']}）"
+        change = f"{row['field']}：{row['old_value']} → {row['new_value']}" if row.get("old_value") else (
+            f"{row['field']}：{row['new_value']}"
+        )
+        return f"{head} {change}" + (f"（{row['patch']}）" if with_patch else "")
+
+    def _no_result(self, session: dict, query: dict) -> dict:
+        subject = query.get("subject") or "该条件"
+        others = []
+        if query.get("subject"):
+            others = self.r.all({"subject": query["subject"], "patches": query["patches"]})[:6]
+        lines = [
+            self._note(query),
+            f"在 {', '.join(query['patches'])} 的公告里没有找到“{subject}”对应的记录。",
+        ]
+        if others:
+            lines.append("该版本里这个对象实际收录的改动：")
+            lines += ["- " + self._render(row, with_patch=False) for row in others]
+        elif query.get("subject"):
+            elsewhere = [row for row in self.r.all({"subject": query["subject"]}) if row.get("field_key") != "narrative"]
+            if elsewhere:
+                patches = list(dict.fromkeys(row["patch"] for row in elsewhere))[:6]
+                lines.append(
+                    f"其它版本里有这个对象的记录：{ '、'.join(patches) }。可以问其中某个版本，例如"
+                    f"“{patches[-1]} {query['subject']}改了什么”。"
+                )
+        lines.append("如果这条改动来自版本内热修（公告之外的调整），当前语料不包含。")
+        session["status"] = "abstained"
+        session["evidence"] = others
+        self.add(session, "assistant", "\n".join(lines), kind="abstention")
+        return session
+
+    # ------------------------------------------------------------------- feedback
+
+    def feedback(self, session: dict, result: str, note: str = "") -> dict:
+        if result not in ("accurate", "incorrect", "outdated"):
+            raise ValueError("反馈类型无效")
+        if session.get("status") != "verify":
+            raise ValueError("当前没有等待准确性反馈的回答")
+        record = {
+            "session_id": session["id"],
+            "question": session.get("question", ""),
+            "query": session.get("query"),
+            "result": result,
+            "note": redact(note[:500]),
+            "evidence_ids": [row["id"] for row in session.get("evidence", [])],
+            "time": int(time.time()),
+        }
+        self.feedback_file.parent.mkdir(exist_ok=True)
+        with self.feedback_file.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+        session["feedback"].append(record)
+        session["status"] = "done" if result == "accurate" else "needs_review"
+        labels = {"accurate": "准确", "incorrect": "有误", "outdated": "可能过时"}
+        self.add(session, "assistant", f"已记录“{labels[result]}”反馈。", kind="feedback_recorded")
+        return session
+
+
+FIELD_KEY_CHOICES = {key: pattern for key, pattern in FIELDS}
