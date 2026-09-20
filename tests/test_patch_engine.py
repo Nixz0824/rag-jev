@@ -129,6 +129,49 @@ class AnswerTests(unittest.TestCase):
         self.assertFalse(any(trace["tool"] == "Jev 重排" for trace in session["trace"]))
 
 
+class ClaimTests(unittest.TestCase):
+    """A question that asserts the wrong direction must be corrected, not confirmed."""
+
+    def setUp(self):
+        self.engine = build()
+
+    def test_false_claim_is_corrected(self):
+        session = ask(self.engine, "26.17 亚索被削了吗")
+        text = answer_text(session)
+        self.assertIn("没有被削弱", text)
+        self.assertIn("加强", text)
+
+    def test_mixed_directions_are_both_reported(self):
+        session = ask(self.engine, "26.17 薇恩被削弱了吗")
+        text = answer_text(session)
+        self.assertIn("既有削弱也有加强", text)
+        self.assertIn("真实伤害", text)
+        self.assertIn("生命值", text)
+
+    def test_listing_question_still_filters_by_direction(self):
+        session = ask(self.engine, "26.17 有哪些英雄被削弱")
+        text = answer_text(session)
+        self.assertIn("薇恩", text)
+        self.assertNotIn("亚索", text)
+
+    def test_claim_check_is_traced(self):
+        session = ask(self.engine, "26.17 亚索被削了吗")
+        self.assertTrue(any(step["tool"] == "核对断言" for step in session["trace"]))
+
+    def test_absent_field_abstains_and_lists_what_exists(self):
+        session = ask(self.engine, "26.17 亚索 Q 射程是多少")
+        self.assertEqual(session["status"], "abstained")
+        text = answer_text(session)
+        self.assertIn("没有", text)
+        self.assertIn("射程/范围", text)
+        self.assertIn("冷却时间", text)
+
+    def test_other_server_question_is_out_of_scope(self):
+        session = ask(self.engine, "美服 26.17 亚索数值和国服一样吗")
+        self.assertEqual(session["status"], "abstained")
+        self.assertIn("国服", answer_text(session))
+
+
 class FeedbackTests(unittest.TestCase):
     def setUp(self):
         self.engine = build()

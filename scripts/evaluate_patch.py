@@ -66,6 +66,7 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
         "overview": {"total": 0, "ok": 0, "subject_miss": 0},
         "absent": {"total": 0, "refused": 0},
         "out_of_scope": {"total": 0, "refused": 0},
+        "trap": {"total": 0, "ok": 0},
         "jev": {"calls": 0, "choice_picked": 0, "choice_hit": 0, "choice_none": 0, "cost_usd": 0.0},
         "details": [],
     }
@@ -132,6 +133,25 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever) -
             refused = session["status"] in ("abstained", "clarifying") and any(word in answer for word in REFUSAL_WORDS)
             bucket["refused"] += int(refused)
             detail["refused"] = refused
+        elif case["kind"] == "trap":
+            result["trap"]["total"] += 1
+            expect = case.get("expect") or {}
+            behavior = expect.get("behavior", "refuse")
+            refused = session["status"] in ("abstained", "clarifying")
+            if behavior == "refuse":
+                ok = refused
+            elif behavior == "correct":
+                opposite = expect.get("opposite", "")
+                ok = refused or opposite in answer
+                claimed = "削弱" if opposite == "加强" else "加强"
+                if not refused and claimed in answer and opposite not in answer:
+                    ok = False
+            else:
+                ok = False
+            if ok and expect.get("mentions"):
+                ok = expect["mentions"] in answer
+            result["trap"]["ok"] += int(ok)
+            detail["trap_ok"] = ok
         result["details"].append(detail)
     return result
 
@@ -160,6 +180,10 @@ def summarise(name: str, arm: dict) -> list[str]:
         bucket = arm[kind]
         if bucket["total"]:
             lines.append(f"- {label} {bucket['total']} 条：正确拒答/追问 **{bucket['refused']}/{bucket['total']}**")
+    if arm["trap"]["total"]:
+        lines.append(
+            f"- 陷阱题 {arm['trap']['total']} 条（规则定义，与语料不同源）：符合预期 **{arm['trap']['ok']}/{arm['trap']['total']}**"
+        )
     jev_stats = arm["jev"]
     if jev_stats["calls"]:
         lines.append(
@@ -217,6 +241,8 @@ def main() -> int:
     args = parser.parse_args()
 
     cases = json.loads(CASES.read_text(encoding="utf-8"))["cases"]
+    traps = json.loads((TESTS / "cases" / "trap_cases.json").read_text(encoding="utf-8"))["cases"]
+    cases = cases + traps
     if args.limit:
         cases = cases[: args.limit]
 
@@ -269,6 +295,8 @@ def main() -> int:
             bits.append("含预期对象" if detail["overview_ok"] else "未含预期对象")
         if "refused" in detail:
             bits.append("已拒答" if detail["refused"] else "未拒答")
+        if "trap_ok" in detail:
+            bits.append("符合预期" if detail["trap_ok"] else "不符合预期")
         lines.append(f"| {detail['id']} | {detail['kind']} | {detail['status']} | {'；'.join(bits)} |")
 
     DOCS.mkdir(exist_ok=True)

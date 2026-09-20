@@ -56,12 +56,46 @@ FIELDS = (
     ("speed", r"(?<!攻击)(?<!移动)(?<!飞行)速度"),
 )
 
-MODE_HINTS = (
-    ("classic", ("经典模式", "怀旧模式", "经典服")),
+MODE_HINTS = (    ("classic", ("经典模式", "怀旧模式", "经典服")),
     ("aram", ("大乱斗", "海克斯大乱斗")),
     ("arena", ("竞技场", "斗魂")),
 )
 MODE_ORDER = {"rift": 0, "classic": 1, "aram": 2, "arena": 3, "other": 4}
+
+# Human labels for the canonical keys, used when a requested stat has no record.
+FIELD_LABELS = {
+    "damage": "伤害",
+    "cooldown": "冷却时间",
+    "cost": "消耗",
+    "crit": "暴击相关",
+    "health": "生命值",
+    "health_regen": "生命回复",
+    "lifesteal": "生命偷取",
+    "mana": "法力值",
+    "armor": "护甲",
+    "magic_resist": "魔抗",
+    "resistances": "双抗",
+    "attack_damage": "攻击力",
+    "ability_power": "法术强度",
+    "attack_speed": "攻击速度",
+    "movement_speed": "移动速度",
+    "range": "射程/范围",
+    "shield": "护盾",
+    "heal": "治疗",
+    "price": "价格",
+    "exp": "经验",
+    "speed": "速度",
+    "ability_haste": "技能急速",
+    "cast_time": "施法时间",
+    "duration": "持续时间",
+    "stacks": "层数/灵魂",
+    "max_rank": "最大等级",
+    "magic_pen": "法术穿透",
+    "armor_pen": "护甲穿透",
+    "slow": "减速",
+    "tenacity": "韧性",
+    "stolen_stat": "属性偷取",
+}
 
 
 def clean(text: str) -> str:

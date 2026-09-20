@@ -17,7 +17,7 @@ from pathlib import Path
 from config import PATCH_DATA, RUNTIME
 from engine import BLOCKED, GREETING, Retriever, redact
 import jev
-from patch_schema import FIELDS, detect_mode
+from patch_schema import FIELD_LABELS, FIELDS, detect_mode
 
 LOG = logging.getLogger("ragjev.patch")
 
@@ -30,6 +30,7 @@ AGGREGATE_INTENT = re.compile(r"哪些|有哪些|有什么|所有|全部|汇总|
 POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野位|adc|sup)")
 UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
 OFF_TOPIC_INTENT = re.compile(r"写.{0,4}诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
+OTHER_SERVER_INTENT = re.compile(r"美服|韩服|欧服|日服|台服|国际服|外服|其它服务器|其他服务器")
 # Words that never are a champion or item name, used when guessing an unknown subject.
 STOPWORDS = re.compile(
     r"这个|那个|当前|最新|上个|上一|版本|公告|英雄|装备|物品|技能|被动|模式|经典|大乱斗|竞技场|加强|削弱|调整|改动|"
@@ -37,7 +38,11 @@ STOPWORDS = re.compile(
     r"改|变|变化|更新|内容|啥|东西|一共|一共改"
 )
 
-DIRECTION_WORDS = {"buff": ("加强", "增强", "提升", "上调"), "nerf": ("削弱", "降低", "下调")}
+DIRECTION_WORDS = {
+    "buff": ("加强", "增强", "提升", "上调", "变强"),
+    "nerf": ("削弱", "降低", "下调", "被削", "削", "砍"),
+}
+DIRECTION_LABELS = {"buff": "加强", "nerf": "削弱", "adjust": "调整"}
 
 
 def patch_sort(value: str) -> int:
@@ -275,6 +280,18 @@ class PatchEngine:
             )
             return session
 
+        if OTHER_SERVER_INTENT.search(text):
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                "我只收录国服公告的数值，不能断言其它服务器的数值是否相同。"
+                "可以问国服这个版本的改动，例如“26.17 亚索改了什么”。",
+                kind="abstention",
+            )
+            return session
+
         if OFF_TOPIC_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
@@ -299,10 +316,14 @@ class PatchEngine:
             )
             return session
 
-        where = {key: query[key] for key in ("subject", "type", "ability", "direction") if query.get(key)}
+        where = {key: query[key] for key in ("subject", "type", "ability") if query.get(key)}
         where["patches"] = query["patches"]
         if query.get("mode"):
             where["mode"] = query["mode"]
+        if not query["subject"] and query.get("direction"):
+            # A direction word in a listing question is a filter; in a subject
+            # question it is a claim to check, so both directions must be visible.
+            where["direction"] = query["direction"]
         if query["subject"] and not query["overview"]:
             return self._answer_subject(session, text, query, where)
         if query["subject"] and query["overview"] and OVERVIEW_INTENT.search(text):
@@ -348,6 +369,8 @@ class PatchEngine:
             # Soft preference: field matches float to the front, but the rest stay
             # visible so Jev can still pick a row whose label is worded differently.
             preferred = [row for row in hits if row.get("field_key") in query["field_keys"]]
+            if not preferred:
+                return self._field_not_found(session, query, hits)
             others = [row for row in hits if row.get("field_key") not in query["field_keys"]]
             hits = preferred + others
         ordered, jev_meta = self._rerank(text, hits)
@@ -372,17 +395,44 @@ class PatchEngine:
             detail = "候选不足 2 条，未调用" if len(hits) < 2 else "调用失败，保留 BM25+向量排序"
             session["trace"].append({"tool": "Jev 重排", "detail": detail})
         top = ordered[0]
-        if query["direction"] and top.get("direction") != query["direction"]:
-            same = [row for row in ordered if row.get("direction") == query["direction"]]
+        if query["direction"]:
+            claimed = query["direction"]
+            same = [row for row in ordered if row.get("direction") == claimed]
+            other = [row for row in ordered if row.get("direction") in ("buff", "nerf") and row.get("direction") != claimed]
+            claim_word = DIRECTION_LABELS[claimed]
+            if same and other:
+                # Both directions exist for this subject: saying only one would mislead.
+                session["status"] = "verify"
+                lines = [
+                    self._note(query),
+                    f"{query['subject']}在 {', '.join(query['patches'])} 既有{claim_word}也有"
+                    f"{DIRECTION_LABELS[other[0]['direction']]}：",
+                    f"· {claim_word}：",
+                ]
+                lines += ["- " + self._render(row, with_patch=False) for row in same[:3]]
+                lines.append(f"· {DIRECTION_LABELS[other[0]['direction']]}：")
+                lines += ["- " + self._render(row, with_patch=False) for row in other[:3]]
+                lines.append("来源：" + same[0]["source_title"] + "｜" + same[0]["source_url"])
+                self.add(session, "assistant", "\n".join(lines), kind="claim_check", facts=ordered[:12])
+                session["trace"].append(
+                    {"tool": "核对断言", "detail": f"用户说{claim_word}，公告两个方向都有（{len(same)}/{len(other)} 条）"}
+                )
+                return session
             if not same:
-                session["status"] = "answered"
+                actual = top.get("direction")
+                actual_label = DIRECTION_LABELS.get(actual, "调整")
+                session["status"] = "verify"
                 self.add(
                     session,
                     "assistant",
-                    self._note(query) + f"\n在 {', '.join(query['patches'])} 的公告里，"
-                    f"{query['subject']} 没有{'加强' if query['direction'] == 'buff' else '削弱'}记录。",
-                    kind="patch_answer",
+                    self._note(query)
+                    + f"\n{query['subject']}在 {', '.join(query['patches'])} 没有被{claim_word}：公告里是{actual_label}。"
+                    + "\n- " + self._render(top, with_patch=False)
+                    + "\n来源：" + top["source_title"] + "｜" + top["source_url"],
+                    kind="claim_check",
+                    facts=ordered[:12],
                 )
+                session["trace"].append({"tool": "核对断言", "detail": f"用户说{claim_word}，公告是{actual_label}"})
                 return session
             ordered = same
             session["evidence"] = ordered[:12]
@@ -450,14 +500,35 @@ class PatchEngine:
         )
         return f"{head} {change}" + (f"（{row['patch']}）" if with_patch else "")
 
+    def _field_not_found(self, session: dict, query: dict, hits: list[dict]) -> dict:
+        """The user named a stat that this patch simply does not touch."""
+        labels = "、".join(FIELD_LABELS.get(key, key) for key in query["field_keys"])
+        head = query["subject"] + (f" {query['ability']}" if query.get("ability") else "")
+        session["status"] = "abstained"
+        session["evidence"] = hits[:6]
+        lines = [
+            self._note(query),
+            f"公告里没有{head}的{labels}改动记录。",
+        ]
+        if hits:
+            lines.append("这个版本收录的是：")
+            lines += ["- " + self._render(row, with_patch=False) for row in hits[:5]]
+        lines.append("如果改动来自版本内热修（公告之外），当前语料不包含。")
+        self.add(session, "assistant", "\n".join(lines), kind="abstention")
+        session["trace"].append({"tool": "字段核对", "detail": f"没有 {labels} 记录，给出实际收录项"})
+        return session
+
     def _no_result(self, session: dict, query: dict) -> dict:
         subject = query.get("subject") or "该条件"
+        target = subject + (f" {query['ability']}" if query.get("ability") else "")
+        if query.get("field_keys"):
+            target += " 的" + "、".join(FIELD_LABELS.get(key, key) for key in query["field_keys"])
         others = []
         if query.get("subject"):
             others = self.r.all({"subject": query["subject"], "patches": query["patches"]})[:6]
         lines = [
             self._note(query),
-            f"在 {', '.join(query['patches'])} 的公告里没有找到“{subject}”对应的记录。",
+            f"在 {', '.join(query['patches'])} 的公告里没有找到“{target}”对应的记录。",
         ]
         if others:
             lines.append("该版本里这个对象实际收录的改动：")

@@ -82,7 +82,7 @@ class ModeTests(unittest.TestCase):
         vector = retriever.search("亚索", mode="vector", k=10)
         hybrid = retriever.search("亚索", mode="hybrid", k=10)
         for hits in (bm25, vector, hybrid):
-            self.assertEqual(len(hits), 7)
+            self.assertEqual(len(hits), len(retriever.chunks))
             self.assertEqual(hits[0]["rank"], 1)
         self.assertIn("bm25", bm25[0])
         self.assertIn("similarity", vector[0])

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T13:32:23",
+ "generated_at": "2026-09-20T13:45:36",
  "corpus": {
   "chunks": 1176,
   "patches": [
@@ -15,7 +15,7 @@
    "26.18"
   ]
  },
- "cases": 54,
+ "cases": 72,
  "arms": {
   "bm25": {
    "single": {
@@ -46,6 +46,10 @@
    "out_of_scope": {
     "total": 4,
     "refused": 4
+   },
+   "trap": {
+    "total": 18,
+    "ok": 18
    },
    "jev": {
     "calls": 0,
@@ -449,6 +453,114 @@
      "status": "verify",
      "rank": 1,
      "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
     }
    ]
   },
@@ -482,6 +594,10 @@
     "total": 4,
     "refused": 4
    },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
    "jev": {
     "calls": 0,
     "choice_picked": 0,
@@ -884,6 +1000,114 @@
      "status": "verify",
      "rank": 1,
      "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
     }
    ]
   },
@@ -917,6 +1141,10 @@
     "total": 4,
     "refused": 4
    },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
    "jev": {
     "calls": 0,
     "choice_picked": 0,
@@ -1319,6 +1547,114 @@
      "status": "verify",
      "rank": 1,
      "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
     }
    ]
   },
@@ -1352,12 +1688,16 @@
     "total": 4,
     "refused": 4
    },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
    "jev": {
-    "calls": 29,
+    "calls": 32,
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.0010969999999999999
+    "cost_usd": 0.0012989999999999998
    },
    "details": [
     {
@@ -1765,6 +2105,114 @@
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
     }
    ]
   }
