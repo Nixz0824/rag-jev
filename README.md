@@ -57,10 +57,27 @@ python -m unittest discover -s tests          # 59 项，不需要模型与网�
 python scripts/ingest_qq.py --offline         # 用已缓存公告重建语料
 python scripts/ingest_qq.py --count 10 --pages 40
 python scripts/build_aliases.py --offline     # 重建英雄/装备别名表
+python scripts/evaluate_patch.py              # 四组检索口径 A/B（需模型在跑；Jev 需要 key）
+python scripts/calibrate.py --report          # 门槛测量（结论见 docs/门槛校准.md）
+python scripts/ingest_en.py --offline         # 与英文公告对照核验
 ```
 
 产出：`data/patch/knowledge.json`（语料）、`data/patch/patch_map.json`（版本映射）、
-`data/patch/aliases.json`（别名）、`docs/解析覆盖率.md`（解析质量报告）。
+`data/patch/aliases.json`（别名）、`docs/解析覆盖率.md`（解析质量）、`docs/评测报告.md`（A/B）、
+`docs/门槛校准.md`、`docs/对照核验.md`。
+
+## 当前指标（同源案例，非盲测）
+
+| 指标 | bm25 | vector | hybrid | hybrid+Jev |
+|---|---|---|---|---|
+| 定点问题命中@1（15 条） | 14 | 14 | 14 | **15** |
+| 单点问题命中@1（28 条） | 28 | 28 | 28 | 28 |
+| 汇总含预期对象（4 条） | 4 | 4 | 4 | 4 |
+| 无记录/越界拒答（7 条） | 7 | 7 | 7 | 7 |
+
+元数据过滤之后候选通常只有 1—6 条，三种排序方式因此打平；Jev 的差异只出现在
+「问题用词与字段标签不一致」的定点问题上（案例 h05）。平均成本 $0.000038/次。
+范围门槛经测量后**不采用**：领域内与越界问题的相似度重叠（0.5458 / 0.5980）。
 
 ## 数据边界（请按此引用本项目）
 
