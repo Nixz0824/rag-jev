@@ -1,0 +1,12 @@
+{
+  "adopted": false,
+  "similarity": null,
+  "bm25": null,
+  "calibrated_at": "2026-09-20T13:31:21",
+  "cases": 24,
+  "out_max_similarity": 0.598,
+  "in_min_similarity": 0.5458,
+  "out_max_bm25": 14.055,
+  "in_min_bm25": 0.001,
+  "note": "在 tests/cases/gate_cases.json 上测量；同源案例、无留出集。范围内与越界重叠，未采用数值门槛，继续用关键词黑名单与必填对象追问。"
+}

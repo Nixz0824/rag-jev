@@ -10,7 +10,6 @@ data/patch/index-meta.json
 # generated corpus contains full patch-notes text -> not for a public repo
 data/patch/knowledge.json
 data/patch/knowledge.full.json
-docs/评测报告.md
 
 __pycache__/
 *.py[cod]

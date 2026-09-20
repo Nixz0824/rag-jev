@@ -29,10 +29,12 @@ OVERVIEW_INTENT = re.compile(r"哪些|有哪些|有什么|都有啥|所有|全�
 AGGREGATE_INTENT = re.compile(r"哪些|有哪些|有什么|所有|全部|汇总|总结|一览|列表|改动列表")
 POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野位|adc|sup)")
 UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
+OFF_TOPIC_INTENT = re.compile(r"写.{0,4}诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
 # Words that never are a champion or item name, used when guessing an unknown subject.
 STOPWORDS = re.compile(
     r"这个|那个|当前|最新|上个|上一|版本|公告|英雄|装备|物品|技能|被动|模式|经典|大乱斗|竞技场|加强|削弱|调整|改动|"
-    r"所有|全部|哪些|什么|怎么|多少|为什么|现在|都|有|的|了|吗|呢|请|帮|我|看看|查|一下|查询|和|与|在|是|会被|被"
+    r"所有|全部|哪些|什么|怎么|多少|为什么|现在|都|有|的|了|吗|呢|请|帮|我|看看|查|一下|查询|和|与|在|是|会被|被|"
+    r"改|变|变化|更新|内容|啥|东西|一共|一共改"
 )
 
 DIRECTION_WORDS = {"buff": ("加强", "增强", "提升", "上调"), "nerf": ("削弱", "降低", "下调")}
@@ -69,6 +71,8 @@ class PatchRetriever(Retriever):
         )
         self.patch_map = self._load_json(self.patch_map_path, {})
         self.thresholds = self._load_json(self.thresholds_path, None)
+        # Gate thresholds were measured and deliberately not adopted; see docs/门槛校准.md.
+        self.calibration = self._load_json(PATCH_DATA / "gate-calibration.json", None)
         self.supported = sorted((self.patch_map.get("patches") or {}).keys(), key=patch_sort)
         self.latest = self.supported[-1] if self.supported else ""
         self._build_aliases()
@@ -125,9 +129,10 @@ class PatchRetriever(Retriever):
 class PatchEngine:
     """Parse a version-aware question, filter, retrieve (optionally via Jev), render."""
 
-    def __init__(self, retriever: PatchRetriever, use_jev: bool = True):
+    def __init__(self, retriever: PatchRetriever, use_jev: bool = True, retrieval_mode: str = "hybrid"):
         self.r = retriever
         self.use_jev = use_jev and jev.available()
+        self.retrieval_mode = retrieval_mode
         self.feedback_file = RUNTIME / "feedback.jsonl"
 
     # ------------------------------------------------------------------ sessions
@@ -270,6 +275,18 @@ class PatchEngine:
             )
             return session
 
+        if OFF_TOPIC_INTENT.search(text):
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                "我只回答版本公告里的改动数值，不做攻略、出装推荐或写作。"
+                "可以问“26.17 亚索改了什么”这类问题。",
+                kind="abstention",
+            )
+            return session
+
         if POSITION_INTENT.search(text) and not query["subject"]:
             session["status"] = "abstained"
             session["evidence"] = []
@@ -322,18 +339,28 @@ class PatchEngine:
         return rift or rows
 
     def _answer_subject(self, session: dict, text: str, query: dict, where: dict) -> dict:
-        hits = self.r.search(text, k=len(self.r.chunks), where=where)
+        hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
         structured = [row for row in hits if row.get("field_key") != "narrative"]
         hits = self._prefer_mode(structured or hits, query.get("mode"))
         if not hits:
             return self._no_result(session, query)
         if query["field_keys"]:
-            filtered = [row for row in hits if row.get("field_key") in query["field_keys"]]
-            hits = filtered or hits
+            # Soft preference: field matches float to the front, but the rest stay
+            # visible so Jev can still pick a row whose label is worded differently.
+            preferred = [row for row in hits if row.get("field_key") in query["field_keys"]]
+            others = [row for row in hits if row.get("field_key") not in query["field_keys"]]
+            hits = preferred + others
         ordered, jev_meta = self._rerank(text, hits)
         session["evidence"] = ordered[:12]
         if jev_meta:
             session["cost_usd"] += jev_meta["cost_usd"]
+            session["jev"] = {
+                "choice_id": jev_meta["choice_id"],
+                "latency_ms": jev_meta["latency_ms"],
+                "cost_usd": jev_meta["cost_usd"],
+                "model": jev_meta["model"],
+                "scores": jev_meta["scores"],
+            }
             session["trace"].append(
                 {
                     "tool": "Jev 重排",

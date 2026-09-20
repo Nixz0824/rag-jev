@@ -25,9 +25,10 @@ from config import EMBED_PORT, KEY_FILE
 HTTP = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 LOG = logging.getLogger("ragjev")
 
-# Scope gate. These are a policy, not calibrated confidence: they are chosen on
-# tests/cases/gate_cases.json and are re-checked whenever the corpus changes.
-# A corpus may override them with data/patch/thresholds.json.
+# Scope gate. Measured on tests/cases/gate_cases.json and **not adopted**: on this
+# corpus the in-scope and out-of-scope similarity ranges overlap (0.55–0.60), so a
+# threshold would misfire in both directions. Scope decisions are made by the
+# keyword blocks and by asking for a subject instead. See docs/门槛校准.md.
 GATE_SIMILARITY = 0.48
 GATE_BM25 = 6.0
 
