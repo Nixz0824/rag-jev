@@ -75,6 +75,11 @@ class HelperTests(unittest.TestCase):
         self.assertEqual(ingest_qq.ddragon_map("26.17", versions), "16.17.1")
         self.assertEqual(ingest_qq.ddragon_map("26.9", versions), "")
 
+    def test_ddragon_mapping_handles_both_numbering_schemes(self):
+        versions = ["16.18.1", "16.17.1", "15.15.1", "15.13.1"]
+        self.assertEqual(ingest_qq.ddragon_map("15.13", versions), "15.13.1")
+        self.assertEqual(ingest_qq.ddragon_map("25.15", versions), "15.15.1")
+
     def test_title_patterns(self):
         self.assertTrue(ingest_qq.TITLE_RE.match("26.18版本更新公告"))
         self.assertTrue(ingest_qq.TITLE_RE.match("26.11版本公告-辅助格局一新"))

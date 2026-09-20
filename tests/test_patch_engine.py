@@ -85,6 +85,14 @@ class ParseTests(unittest.TestCase):
         self.assertEqual(field_keys("冷却和攻击速度"), ["cooldown", "attack_speed"])
         self.assertEqual(field_keys("价格"), ["price"])
 
+    def test_exact_version_spelling_wins_over_offset(self):
+        """2025 used both 15.x and 25.x; an exact corpus match must not be shifted."""
+        self.engine.r.supported = ["15.13", "26.16", "26.17"]
+        self.assertEqual(self.engine.canonical_patch("15.13"), "15.13")
+        self.assertEqual(self.engine.canonical_patch("25.13"), "15.13")
+        self.assertEqual(self.engine.canonical_patch("16.17"), "26.17")
+        self.assertIsNone(self.engine.canonical_patch("31.7"))
+
 
 class AnswerTests(unittest.TestCase):
     def setUp(self):

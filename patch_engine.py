@@ -223,15 +223,16 @@ class PatchEngine:
     # -------------------------------------------------------------------- parsing
 
     def canonical_patch(self, value: str) -> str | None:
-        """Accept 26.17, 16.17 and 16.17.1 and return the announcement number."""
+        """Accept any spelling of a patch and return the one this corpus uses.
+
+        The corpus may contain both schemes (15.13 and 25.15 are both real entries),
+        so an exact match wins, then the +10 and -10 interpretations in that order.
+        """
         major, minor = (int(part) for part in value.split(".")[:2])
-        if major >= 20:
-            candidate = f"{major}.{minor}"
-        elif 10 <= major <= 19:
-            candidate = f"{major + 10}.{minor}"
-        else:
-            candidate = f"{major + 20}.{minor}"
-        return candidate if candidate in self.r.supported else None
+        for candidate in (f"{major}.{minor}", f"{major + 10}.{minor}", f"{major - 10}.{minor}"):
+            if candidate in self.r.supported:
+                return candidate
+        return None
 
     def parse(self, text: str) -> dict:
         patches = []

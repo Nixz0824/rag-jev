@@ -1,10 +1,233 @@
 {
-  "generated_at": "2026-09-20T05:50:26.516633+00:00",
+  "generated_at": "2026-09-20T07:43:08.710231+00:00",
   "note": "patch 为公告版本号；ddragon 为对应 Data Dragon 版本；github 仓库不包含公告原文。",
   "patches": {
+    "15.13": {
+      "date": "2025-06-25",
+      "url": "https://lol.qq.com/gicp/news/410/37064044.html",
+      "ddragon": "15.13.1",
+      "chunks": 98,
+      "chars": 33746,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.14": {
+      "date": "2025-07-16",
+      "url": "https://lol.qq.com/gicp/news/410/37065167.html",
+      "ddragon": "15.14.1",
+      "chunks": 199,
+      "chars": 45800,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.16": {
+      "date": "2025-08-13",
+      "url": "https://lol.qq.com/gicp/news/410/37066709.html",
+      "ddragon": "15.16.1",
+      "chunks": 206,
+      "chars": 48638,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.17": {
+      "date": "2025-08-27",
+      "url": "https://lol.qq.com/gicp/news/410/37067524.html",
+      "ddragon": "15.17.1",
+      "chunks": 166,
+      "chars": 42060,
+      "modes": [
+        "rift"
+      ]
+    },
+    "15.18": {
+      "date": "2025-09-10",
+      "url": "https://lol.qq.com/gicp/news/410/37068328.html",
+      "ddragon": "15.18.1",
+      "chunks": 239,
+      "chars": 48418,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.19": {
+      "date": "2025-09-24",
+      "url": "https://lol.qq.com/gicp/news/410/37069098.html",
+      "ddragon": "15.19.1",
+      "chunks": 104,
+      "chars": 37798,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.20": {
+      "date": "2025-10-08",
+      "url": "https://lol.qq.com/gicp/news/410/37069618.html",
+      "ddragon": "15.20.1",
+      "chunks": 210,
+      "chars": 39945,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "15.21": {
+      "date": "2025-10-22",
+      "url": "https://lol.qq.com/gicp/news/410/37070614.html",
+      "ddragon": "15.21.1",
+      "chunks": 87,
+      "chars": 33310,
+      "modes": [
+        "rift",
+        "aram"
+      ]
+    },
+    "15.22": {
+      "date": "2025-11-05",
+      "url": "https://lol.qq.com/gicp/news/410/37071522.html",
+      "ddragon": "15.22.1",
+      "chunks": 169,
+      "chars": 35862,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "15.23": {
+      "date": "2025-11-19",
+      "url": "https://lol.qq.com/gicp/news/410/37072148.html",
+      "ddragon": "15.23.1",
+      "chunks": 165,
+      "chars": 42983,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "15.24": {
+      "date": "2025-12-03",
+      "url": "https://lol.qq.com/gicp/news/410/37072785.html",
+      "ddragon": "15.24.1",
+      "chunks": 148,
+      "chars": 35547,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "25.10": {
+      "date": "2025-05-14",
+      "url": "https://lol.qq.com/gicp/news/410/37062169.html",
+      "ddragon": "15.10.1",
+      "chunks": 99,
+      "chars": 33485,
+      "modes": [
+        "rift"
+      ]
+    },
+    "25.11": {
+      "date": "2025-05-28",
+      "url": "https://lol.qq.com/gicp/news/410/37062815.html",
+      "ddragon": "15.11.1",
+      "chunks": 263,
+      "chars": 42277,
+      "modes": [
+        "rift"
+      ]
+    },
+    "25.15": {
+      "date": "2025-07-30",
+      "url": "https://lol.qq.com/gicp/news/410/37065938.html",
+      "ddragon": "15.15.1",
+      "chunks": 115,
+      "chars": 35500,
+      "modes": [
+        "rift"
+      ]
+    },
+    "26.1": {
+      "date": "2026-01-07",
+      "url": "https://lol.qq.com/gicp/news/410/37074870.html",
+      "ddragon": "16.1.1",
+      "chunks": 737,
+      "chars": 92262,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.2": {
+      "date": "2026-01-21",
+      "url": "https://lol.qq.com/gicp/news/410/37075848.html",
+      "ddragon": "16.2.1",
+      "chunks": 121,
+      "chars": 36518,
+      "modes": [
+        "rift",
+        "arena"
+      ]
+    },
+    "26.3": {
+      "date": "2026-02-03",
+      "url": "https://lol.qq.com/gicp/news/410/37076766.html",
+      "ddragon": "16.3.1",
+      "chunks": 282,
+      "chars": 61896,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.6": {
+      "date": "2026-03-18",
+      "url": "https://lol.qq.com/gicp/news/410/37079862.html",
+      "ddragon": "16.6.1",
+      "chunks": 171,
+      "chars": 37201,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
+    "26.7": {
+      "date": "2026-03-31",
+      "url": "https://lol.qq.com/gicp/news/410/37081175.html",
+      "ddragon": "16.7.1",
+      "chunks": 124,
+      "chars": 32326,
+      "modes": [
+        "rift",
+        "aram"
+      ]
+    },
+    "26.8": {
+      "date": "2026-04-15",
+      "url": "https://lol.qq.com/gicp/news/410/37082722.html",
+      "ddragon": "16.8.1",
+      "chunks": 116,
+      "chars": 30775,
+      "modes": [
+        "rift",
+        "aram",
+        "arena"
+      ]
+    },
     "26.9": {
-      "date": "",
-      "url": "",
+      "date": "2026-04-28",
+      "url": "https://lol.qq.com/gicp/news/410/37084056.html",
       "ddragon": "16.9.1",
       "chunks": 266,
       "chars": 64013,
@@ -15,8 +238,8 @@
       ]
     },
     "26.10": {
-      "date": "",
-      "url": "",
+      "date": "2026-05-13",
+      "url": "https://lol.qq.com/gicp/news/410/37085528.html",
       "ddragon": "16.10.1",
       "chunks": 191,
       "chars": 47100,
@@ -27,8 +250,8 @@
       ]
     },
     "26.11": {
-      "date": "",
-      "url": "",
+      "date": "2026-05-27",
+      "url": "https://lol.qq.com/gicp/news/410/37086884.html",
       "ddragon": "16.11.1",
       "chunks": 64,
       "chars": 49013,
@@ -39,8 +262,8 @@
       ]
     },
     "26.12": {
-      "date": "",
-      "url": "",
+      "date": "2026-06-10",
+      "url": "https://lol.qq.com/gicp/news/410/37088140.html",
       "ddragon": "16.12.1",
       "chunks": 73,
       "chars": 47633,
@@ -51,8 +274,8 @@
       ]
     },
     "26.13": {
-      "date": "",
-      "url": "",
+      "date": "2026-06-24",
+      "url": "https://lol.qq.com/gicp/news/410/37089201.html",
       "ddragon": "16.13.1",
       "chunks": 80,
       "chars": 47710,
@@ -63,8 +286,8 @@
       ]
     },
     "26.14": {
-      "date": "",
-      "url": "",
+      "date": "2026-07-15",
+      "url": "https://lol.qq.com/gicp/news/410/37091415.html",
       "ddragon": "16.14.1",
       "chunks": 62,
       "chars": 37512,
@@ -75,8 +298,8 @@
       ]
     },
     "26.15": {
-      "date": "",
-      "url": "",
+      "date": "2026-07-29",
+      "url": "https://lol.qq.com/gicp/news/410/37092739.html",
       "ddragon": "16.15.1",
       "chunks": 136,
       "chars": 48708,
@@ -87,8 +310,8 @@
       ]
     },
     "26.16": {
-      "date": "",
-      "url": "",
+      "date": "2026-08-12",
+      "url": "https://lol.qq.com/gicp/news/410/37093830.html",
       "ddragon": "16.16.1",
       "chunks": 112,
       "chars": 60423,
@@ -100,8 +323,8 @@
       ]
     },
     "26.17": {
-      "date": "",
-      "url": "",
+      "date": "2026-08-26",
+      "url": "https://lol.qq.com/gicp/news/410/37094929.html",
       "ddragon": "16.17.1",
       "chunks": 107,
       "chars": 52379,
@@ -113,8 +336,8 @@
       ]
     },
     "26.18": {
-      "date": "",
-      "url": "",
+      "date": "2026-09-09",
+      "url": "https://lol.qq.com/gicp/news/410/37096116.html",
       "ddragon": "16.18.1",
       "chunks": 85,
       "chars": 45299,

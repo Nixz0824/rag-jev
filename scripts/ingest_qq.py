@@ -322,11 +322,22 @@ def parse_article(patch: str, document: str, aliases: dict[str, dict]) -> tuple[
 
 
 def ddragon_map(patch: str, versions: list[str]) -> str:
-    major, minor = patch.split(".")
-    target = f"{int(major) - 10}.{minor}."
-    for version in versions:
-        if version.startswith(target):
-            return version
+    """Announcement number -> Data Dragon version.
+
+    Riot renamed public patches to a season-prefixed scheme (25.x / 26.x) while Data
+    Dragon kept counting from 10 (15.x / 16.x), and Tencent used both schemes in 2025.
+    So a patch number that already looks like a Data Dragon number is used as is.
+    """
+    major, minor = patch.split(".")[:2]
+    candidates = [f"{major}.{minor}."]
+    if int(major) >= 20:
+        candidates.append(f"{int(major) - 10}.{minor}.")
+    else:
+        candidates.append(f"{int(major) + 10}.{minor}.")
+    for target in candidates:
+        for version in versions:
+            if version.startswith(target):
+                return version
     return ""
 
 
@@ -340,6 +351,8 @@ def main() -> int:
 
     RAW.mkdir(parents=True, exist_ok=True)
     DOCS.mkdir(parents=True, exist_ok=True)
+    listing_file = RAW / "listing.json"
+    listing: dict[str, dict] = json.loads(listing_file.read_text(encoding="utf-8")) if listing_file.exists() else {}
     aliases_file = PATCH_DATA / "aliases.json"
     aliases = json.loads(aliases_file.read_text(encoding="utf-8")) if aliases_file.exists() else {}
 
@@ -376,10 +389,21 @@ def main() -> int:
                 print(f"  从日期标题公告解析出 {patch}（{candidate['date']}）")
         if not wanted:
             for cached in RAW.glob("qq-*.html"):
-                wanted[cached.stem.replace("qq-", "", 1)] = {}
+                patch = cached.stem.replace("qq-", "", 1)
+                wanted[patch] = listing.get(patch, {})
         wanted = dict(
             sorted(wanted.items(), key=lambda item: tuple(int(x) for x in item[0].split(".")), reverse=True)[: args.count]
         )
+    # Keep the listing metadata (date / url / title) so offline rebuilds keep it too.
+    for patch, meta in wanted.items():
+        if (meta or {}).get("url") or (meta or {}).get("date"):
+            listing[patch] = {
+                "url": (meta or {}).get("url", ""),
+                "date": (meta or {}).get("date", ""),
+                "title": (meta or {}).get("title", ""),
+            }
+    if listing:
+        listing_file.write_text(json.dumps(listing, ensure_ascii=False, indent=1), encoding="utf-8")
 
     all_chunks: list[dict] = []
     patch_map: dict[str, dict] = {}
