@@ -30,6 +30,9 @@ MODEL = os.environ.get("TYPESAFE_MODEL", "jev-latest")
 PRICE_PER_INPUT_TOKEN_USD = 0.042 / 1e6
 MAX_CANDIDATES = 20
 MAX_CANDIDATE_CHARS = 320
+# A rerank only applies when the winner is clearly ahead; a near-tie keeps the
+# retrieval order, because two indistinguishable rows are equally correct.
+MIN_RERANK_GAP = 0.15
 
 
 def load_api_key() -> str:
@@ -159,9 +162,16 @@ def rerank(question: str, hits: list[dict], api_key: str | None = None, timeout:
         key=lambda hit: (scores.get(hit["id"]) if scores.get(hit["id"]) is not None else -1.0, -hit.get("rank", 0)),
         reverse=True,
     )
+    ranked_scores = sorted((value for value in scores.values() if value is not None), reverse=True)
+    gap = (ranked_scores[0] - ranked_scores[1]) if len(ranked_scores) > 1 else 1.0
+    decisive = gap >= MIN_RERANK_GAP
+    if not decisive:
+        ordered = list(hits)
     return {
         "ordered": ordered,
         "scores": scores,
+        "decisive": decisive,
+        "gap": round(gap, 4),
         "choice_id": labels.get(choice_label) if choice_label in labels else None,
         "pick_probabilities": answers["pick"].get("probabilities", {}),
         "pick_confidence": answers["pick"].get("confidence"),

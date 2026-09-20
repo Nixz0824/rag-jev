@@ -33,6 +33,7 @@ POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野
 UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
 OFF_TOPIC_INTENT = re.compile(r"写.{0,10}诗|写诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
 OTHER_SERVER_INTENT = re.compile(r"美服|韩服|欧服|日服|台服|国际服|外服|其它服务器|其他服务器")
+WHY_INTENT = re.compile(r"为什么|为何|原因|动机|机制|设计|说明|缘由|调整理由|怎么想|出于")
 # Words that never are a champion or item name, used when guessing an unknown subject.
 STOPWORDS = re.compile(
     r"这个|那个|当前|最新|上个|上一|版本|公告|英雄|装备|物品|技能|被动|模式|经典|大乱斗|竞技场|加强|削弱|调整|改动|"
@@ -271,6 +272,7 @@ class PatchEngine:
             "direction": direction,
             "field_keys": keys,
             "mode": detect_mode(text),
+            "why": bool(WHY_INTENT.search(text)),
             "overview": bool(AGGREGATE_INTENT.search(text)) or self._bare_aggregate(text),
         }
 
@@ -489,7 +491,8 @@ class PatchEngine:
                 {
                     "tool": "Jev 重排",
                     "detail": f"{jev_meta['model']}｜{jev_meta['latency_ms']}ms｜${jev_meta['cost_usd']:.6f}"
-                    f"｜首选 {jev_meta['choice_id'] or '无'}",
+                    f"｜首选 {jev_meta['choice_id'] or '无'}"
+                    + ("" if jev_meta.get("decisive", True) else f"｜分差 {jev_meta.get('gap', 0):.2f} 未达阈值，保留检索顺序"),
                 }
             )
         elif self.use_jev:
@@ -562,6 +565,15 @@ class PatchEngine:
             lines.append("\n同一对象的其他改动：")
             lines += ["- " + self._render(row, with_patch=False) for row in others[:4]]
         lines.append("\n来源：" + top["source_title"] + "｜" + top["source_url"])
+        if query.get("why"):
+            notes = [
+                row
+                for row in self.r.all({"patches": query["patches"], "subject": top["subject"]})
+                if row.get("field_key") == "narrative" and row.get("mode") == top.get("mode")
+            ]
+            if notes:
+                lines.append("\n公告里的说明：")
+                lines += ["- " + note["new_value"][:220] for note in notes[:2]]
         caution = self._self_check_lines(
             session,
             [(self._render(row, with_patch=False), self._evidence_for(row)) for row in [top, *others[:3]]],

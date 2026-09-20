@@ -1,0 +1,2416 @@
+{
+ "generated_at": "2026-09-20T15:12:08",
+ "case_file": [
+  "eval_cases.json",
+  "trap_cases.json"
+ ],
+ "use_case_version": false,
+ "corpus": {
+  "chunks": 1176,
+  "patches": [
+   "26.9",
+   "26.10",
+   "26.11",
+   "26.12",
+   "26.13",
+   "26.14",
+   "26.15",
+   "26.16",
+   "26.17",
+   "26.18"
+  ]
+ },
+ "cases": 72,
+ "arms": {
+  "bm25": {
+   "single": {
+    "total": 28,
+    "hit@1": 25,
+    "hit@5": 28,
+    "value_ok": 28,
+    "value_total": 28,
+    "version_ok": 28,
+    "gt_missing": 0,
+    "version_asked": 28
+   },
+   "pinned": {
+    "total": 15,
+    "hit@1": 14,
+    "hit@5": 15,
+    "value_ok": 15,
+    "jev_pick_ok": 0,
+    "jev_picks": 0
+   },
+   "overview": {
+    "total": 4,
+    "ok": 4,
+    "subject_miss": 0
+   },
+   "absent": {
+    "total": 3,
+    "refused": 3
+   },
+   "out_of_scope": {
+    "total": 4,
+    "refused": 4
+   },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
+   "selfcheck": {
+    "total": 0,
+    "pass": 0
+   },
+   "jev": {
+    "calls": 0,
+    "choice_picked": 0,
+    "choice_hit": 0,
+    "choice_none": 0,
+    "cost_usd": 0.0,
+    "latency_total": 0,
+    "latency_calls": 0
+   },
+   "details": [
+    {
+     "id": "s01",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s02",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s03",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s04",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s05",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s06",
+     "kind": "single",
+     "status": "verify",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s07",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s08",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s09",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s10",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s11",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s12",
+     "kind": "single",
+     "status": "verify",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s13",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s14",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s15",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s16",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s17",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s18",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s19",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s20",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s21",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s22",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s23",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s24",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s25",
+     "kind": "single",
+     "status": "abstained",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s26",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s27",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s28",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "h01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "h06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h09",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h10",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h11",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h12",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h13",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h14",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h15",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    }
+   ]
+  },
+  "vector": {
+   "single": {
+    "total": 28,
+    "hit@1": 25,
+    "hit@5": 28,
+    "value_ok": 28,
+    "value_total": 28,
+    "version_ok": 28,
+    "gt_missing": 0,
+    "version_asked": 28
+   },
+   "pinned": {
+    "total": 15,
+    "hit@1": 14,
+    "hit@5": 15,
+    "value_ok": 15,
+    "jev_pick_ok": 0,
+    "jev_picks": 0
+   },
+   "overview": {
+    "total": 4,
+    "ok": 4,
+    "subject_miss": 0
+   },
+   "absent": {
+    "total": 3,
+    "refused": 3
+   },
+   "out_of_scope": {
+    "total": 4,
+    "refused": 4
+   },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
+   "selfcheck": {
+    "total": 0,
+    "pass": 0
+   },
+   "jev": {
+    "calls": 0,
+    "choice_picked": 0,
+    "choice_hit": 0,
+    "choice_none": 0,
+    "cost_usd": 0.0,
+    "latency_total": 0,
+    "latency_calls": 0
+   },
+   "details": [
+    {
+     "id": "s01",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s02",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s03",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s04",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s05",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s06",
+     "kind": "single",
+     "status": "verify",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s07",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s08",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s09",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s10",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s11",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s12",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s13",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s14",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s15",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s16",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s17",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s18",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s19",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s20",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s21",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s22",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s23",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s24",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s25",
+     "kind": "single",
+     "status": "abstained",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s26",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s27",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s28",
+     "kind": "single",
+     "status": "verify",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "h01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "h06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h09",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h10",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h11",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h12",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h13",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h14",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h15",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    }
+   ]
+  },
+  "hybrid": {
+   "single": {
+    "total": 28,
+    "hit@1": 26,
+    "hit@5": 28,
+    "value_ok": 28,
+    "value_total": 28,
+    "version_ok": 28,
+    "gt_missing": 0,
+    "version_asked": 28
+   },
+   "pinned": {
+    "total": 15,
+    "hit@1": 14,
+    "hit@5": 15,
+    "value_ok": 15,
+    "jev_pick_ok": 0,
+    "jev_picks": 0
+   },
+   "overview": {
+    "total": 4,
+    "ok": 4,
+    "subject_miss": 0
+   },
+   "absent": {
+    "total": 3,
+    "refused": 3
+   },
+   "out_of_scope": {
+    "total": 4,
+    "refused": 4
+   },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
+   "selfcheck": {
+    "total": 0,
+    "pass": 0
+   },
+   "jev": {
+    "calls": 0,
+    "choice_picked": 0,
+    "choice_hit": 0,
+    "choice_none": 0,
+    "cost_usd": 0.0,
+    "latency_total": 0,
+    "latency_calls": 0
+   },
+   "details": [
+    {
+     "id": "s01",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s02",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s03",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s04",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s05",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s06",
+     "kind": "single",
+     "status": "verify",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s07",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s08",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s09",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s10",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s11",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s12",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s13",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s14",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s15",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s16",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s17",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s18",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s19",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s20",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s21",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s22",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s23",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s24",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s25",
+     "kind": "single",
+     "status": "abstained",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s26",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s27",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s28",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "h01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "h06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h09",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h10",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h11",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h12",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h13",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h14",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h15",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    }
+   ]
+  },
+  "hybrid+jev": {
+   "single": {
+    "total": 28,
+    "hit@1": 26,
+    "hit@5": 28,
+    "value_ok": 28,
+    "value_total": 28,
+    "version_ok": 28,
+    "gt_missing": 0,
+    "version_asked": 28
+   },
+   "pinned": {
+    "total": 15,
+    "hit@1": 15,
+    "hit@5": 15,
+    "value_ok": 15,
+    "jev_pick_ok": 11,
+    "jev_picks": 11
+   },
+   "overview": {
+    "total": 4,
+    "ok": 4,
+    "subject_miss": 0
+   },
+   "absent": {
+    "total": 3,
+    "refused": 3
+   },
+   "out_of_scope": {
+    "total": 4,
+    "refused": 4
+   },
+   "trap": {
+    "total": 18,
+    "ok": 18
+   },
+   "selfcheck": {
+    "total": 47,
+    "pass": 47
+   },
+   "jev": {
+    "calls": 32,
+    "choice_picked": 0,
+    "choice_hit": 0,
+    "choice_none": 0,
+    "cost_usd": 0.0027519999999999997,
+    "latency_total": 37531,
+    "latency_calls": 32
+   },
+   "details": [
+    {
+     "id": "s01",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.78,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s02",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s03",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.71,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s04",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.86,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s05",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s06",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s07",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.86,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s08",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s09",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s10",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s11",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.81,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s12",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s13",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s14",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s15",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s16",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.76,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s17",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s18",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s19",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s20",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s21",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.96,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s22",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s23",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s24",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s25",
+     "kind": "single",
+     "status": "abstained",
+     "rank": 2,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s26",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s27",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "s28",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.96,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "h01",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h02",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h03",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h04",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h05",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h06",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.91,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h07",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h08",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h09",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h10",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.87,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h11",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h12",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.82,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "h13",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.87,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h14",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "h15",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "t01",
+     "kind": "trap",
+     "status": "verify",
+     "self_check_min": 0.6,
+     "trap_ok": true
+    },
+    {
+     "id": "t02",
+     "kind": "trap",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "trap_ok": true
+    },
+    {
+     "id": "t03",
+     "kind": "trap",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "trap_ok": true
+    },
+    {
+     "id": "t04",
+     "kind": "trap",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "trap_ok": true
+    },
+    {
+     "id": "t05",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t06",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t07",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t08",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t09",
+     "kind": "trap",
+     "status": "clarifying",
+     "trap_ok": true
+    },
+    {
+     "id": "t10",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t11",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t12",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t13",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t14",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t15",
+     "kind": "trap",
+     "status": "verify",
+     "self_check_min": 0.62,
+     "trap_ok": true
+    },
+    {
+     "id": "t16",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t17",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    },
+    {
+     "id": "t18",
+     "kind": "trap",
+     "status": "abstained",
+     "trap_ok": true
+    }
+   ]
+  }
+ }
+}

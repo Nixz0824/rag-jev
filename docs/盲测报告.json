@@ -1,5 +1,9 @@
 {
- "generated_at": "2026-09-20T14:53:00",
+ "generated_at": "2026-09-20T15:12:34",
+ "case_file": [
+  "_cases.json"
+ ],
+ "use_case_version": false,
  "corpus": {
   "chunks": 1176,
   "patches": [
@@ -21,11 +25,12 @@
    "single": {
     "total": 20,
     "hit@1": 19,
-    "hit@5": 20,
-    "value_ok": 20,
+    "hit@5": 19,
+    "value_ok": 19,
     "value_total": 20,
     "version_ok": 12,
-    "gt_missing": 0
+    "gt_missing": 0,
+    "version_asked": 12
    },
    "pinned": {
     "total": 0,
@@ -37,8 +42,8 @@
    },
    "overview": {
     "total": 8,
-    "ok": 8,
-    "subject_miss": 0
+    "ok": 7,
+    "subject_miss": 1
    },
    "absent": {
     "total": 5,
@@ -53,22 +58,23 @@
     "ok": 0
    },
    "selfcheck": {
-    "total": 20,
-    "pass": 20
+    "total": 13,
+    "pass": 13
    },
    "jev": {
-    "calls": 8,
+    "calls": 5,
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.000838
+    "cost_usd": 0.0005600000000000001,
+    "latency_total": 6538,
+    "latency_calls": 5
    },
    "details": [
     {
      "id": "b01",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -77,7 +83,7 @@
      "id": "b02",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.85,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -87,7 +93,7 @@
      "id": "b03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.96,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -97,7 +103,6 @@
      "id": "b04",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -106,7 +111,7 @@
      "id": "b05",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.85,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -116,7 +121,6 @@
      "id": "b06",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -135,7 +139,6 @@
      "id": "b08",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.96,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -144,7 +147,7 @@
      "id": "b09",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.82,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -154,16 +157,15 @@
      "id": "b10",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
-     "rank": 1,
+     "rank": null,
      "version_asked": false,
-     "value_ok": true
+     "value_ok": false
     },
     {
      "id": "b11",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.85,
+     "self_check_min": 0.8,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -173,7 +175,6 @@
      "id": "b12",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -182,7 +183,7 @@
      "id": "b13",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.78,
+     "self_check_min": 0.77,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -192,8 +193,8 @@
      "id": "b14",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.83,
-     "rank": 2,
+     "self_check_min": 0.89,
+     "rank": 1,
      "version_asked": true,
      "version_ok": true,
      "value_ok": true
@@ -202,7 +203,7 @@
      "id": "b15",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.84,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -223,7 +224,6 @@
      "id": "b17",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.64,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -242,7 +242,7 @@
      "id": "b19",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.91,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -251,7 +251,7 @@
      "id": "b20",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.89,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -291,7 +291,7 @@
      "id": "o06",
      "kind": "overview",
      "status": "verify",
-     "overview_ok": true
+     "overview_ok": false
     },
     {
      "id": "o07",

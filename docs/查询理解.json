@@ -1,0 +1,44 @@
+{
+ "generated_at": "2026-09-20T15:14:35",
+ "cases": 48,
+ "cases_passed": 48,
+ "slots": {
+  "subject": {
+   "ok": 37,
+   "total": 37
+  },
+  "patches": {
+   "ok": 10,
+   "total": 10
+  },
+  "ability": {
+   "ok": 14,
+   "total": 14
+  },
+  "field_any": {
+   "ok": 19,
+   "total": 19
+  },
+  "mode": {
+   "ok": 3,
+   "total": 3
+  },
+  "direction": {
+   "ok": 2,
+   "total": 2
+  },
+  "overview": {
+   "ok": 2,
+   "total": 2
+  },
+  "outside": {
+   "ok": 1,
+   "total": 1
+  }
+ },
+ "guard": {
+  "ok": 7,
+  "total": 7
+ },
+ "failures": []
+}

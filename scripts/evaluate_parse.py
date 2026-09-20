@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -141,6 +142,21 @@ def main() -> int:
         for case_id, text, problems in failures:
             lines.append(f"| {case_id} | {'；'.join(problems)} | {text} |")
     (DOCS / "查询理解.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (DOCS / "查询理解.json").write_text(
+        json.dumps(
+            {
+                "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "cases": len(cases),
+                "cases_passed": passed,
+                "slots": {slot: {"ok": slot_ok[slot], "total": slot_total[slot]} for slot in SLOTS if slot_total[slot]},
+                "guard": {"ok": guard_ok, "total": guard_total},
+                "failures": [{"id": case_id, "question": text, "problems": problems} for case_id, text, problems in failures],
+            },
+            ensure_ascii=False,
+            indent=1,
+        ),
+        encoding="utf-8",
+    )
     print(f"\n报告：{DOCS / '查询理解.md'}")
     return 0 if passed == len(cases) else 1
 

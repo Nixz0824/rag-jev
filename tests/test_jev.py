@@ -89,6 +89,43 @@ class RerankTests(unittest.TestCase):
         self.assertIsNone(jev.rerank("问题", [], api_key="test-key"))
 
 
+class ConfidenceGateTests(unittest.TestCase):
+    """A near-tie must keep the retrieval order; only a clear winner may reorder."""
+
+    hits = [
+        {"id": "first", "text": "26.15 锐雯 R 额外攻击力收益 25% → 20%", "rank": 1},
+        {"id": "second", "text": "26.15 锐雯 R 额外攻击力收益 最小60%/最大180% → 最小55%/最大165%", "rank": 2},
+    ]
+
+    def run_with_scores(self, scores):
+        answers = {"pick": {"choice": "i1", "confidence": 0.8, "probabilities": {"i1": 0.8, "i2": 0.2}}}
+        for index, (label, value) in enumerate(zip(("i1", "i2"), scores), start=1):
+            answers[f"rel_{label}"] = {"noul": value}
+        original = jev.ask
+        jev.ask = lambda state, questions, **kwargs: {
+            "answers": answers,
+            "usage": {"input_tokens": 500},
+            "model": "jev-test",
+            "latency_ms": 100,
+            "cost_usd": 0.00002,
+        }
+        try:
+            return jev.rerank("26.15 锐雯 R 额外攻击力收益", self.hits, api_key="test-key")
+        finally:
+            jev.ask = original
+
+    def test_near_tie_keeps_the_retrieval_order(self):
+        result = self.run_with_scores([0.34, 0.39])
+        self.assertFalse(result["decisive"])
+        self.assertEqual([row["id"] for row in result["ordered"]], ["first", "second"])
+        self.assertAlmostEqual(result["gap"], 0.05, places=2)
+
+    def test_clear_winner_reorders(self):
+        result = self.run_with_scores([0.04, 0.78])
+        self.assertTrue(result["decisive"])
+        self.assertEqual([row["id"] for row in result["ordered"]], ["second", "first"])
+
+
 class DegradationTests(unittest.TestCase):
     def test_ask_returns_none_on_transport_failure(self):
         original = jev.load_api_key

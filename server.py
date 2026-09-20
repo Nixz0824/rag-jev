@@ -16,7 +16,7 @@ import time
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from config import APP_PORT, DB_PATH, PATCH_DATA, SERVICE, WEB
+from config import APP_PORT, DB_PATH, DOCS, PATCH_DATA, SERVICE, WEB
 from engine import GREETING
 from jev import available as jev_available
 from patch_engine import PatchEngine, PatchRetriever, compare_versions
@@ -150,6 +150,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_json(patch_meta())
         if path == "/api/patch/compare":
             return self.send_json(patch_compare(self.path))
+        if path == "/api/evaluation":
+            return self.send_json(evaluation())
         if path == "/api/session":
             session_id = (self.path.split("session_id=") + [""])[1].split("&")[0]
             if not SESSION_RE.fullmatch(session_id or ""):
@@ -251,6 +253,68 @@ EXAMPLE_QUESTIONS = [
     "26.17 有哪些英雄被削弱",
     "26.17 岚切怎么调整的",
 ]
+
+
+def evaluation() -> dict:
+    """Serve the newest evaluation runs so the UI never hard-codes numbers."""
+    runs = []
+    for path in sorted(DOCS.glob("*.json")):
+        if path.name.startswith("_") or path.parent.name == "patch":
+            continue
+        if not (path.name.startswith(("评测报告", "盲测报告"))):
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        arms = {}
+        for name, arm in (payload.get("arms") or {}).items():
+            single = arm.get("single") or {}
+            jev_stats = arm.get("jev") or {}
+            calls = jev_stats.get("latency_calls") or 0
+            arms[name] = {
+                "single": single,
+                "pinned": arm.get("pinned") or {},
+                "overview": arm.get("overview") or {},
+                "absent": arm.get("absent") or {},
+                "out_of_scope": arm.get("out_of_scope") or {},
+                "trap": arm.get("trap") or {},
+                "selfcheck": arm.get("selfcheck") or {},
+                "jev": {
+                    "calls": jev_stats.get("calls", 0),
+                    "cost_usd": round(jev_stats.get("cost_usd", 0.0), 6),
+                    "mean_latency_ms": round(jev_stats.get("latency_total", 0) / calls) if calls else 0,
+                },
+            }
+        runs.append(
+            {
+                "name": path.stem,
+                "generated_at": payload.get("generated_at", ""),
+                "case_file": payload.get("case_file", []),
+                "use_case_version": payload.get("use_case_version", False),
+                "cases": payload.get("cases", 0),
+                "corpus": payload.get("corpus", {}),
+                "arms": arms,
+            }
+        )
+    parse_file = DOCS / "查询理解.json"
+    if parse_file.exists():
+        try:
+            payload = json.loads(parse_file.read_text(encoding="utf-8"))
+            runs.append(
+                {
+                    "name": "查询理解",
+                    "generated_at": payload.get("generated_at", ""),
+                    "cases": payload.get("cases", 0),
+                    "cases_passed": payload.get("cases_passed", 0),
+                    "slots": payload.get("slots", {}),
+                    "guard": payload.get("guard", {}),
+                    "arms": {},
+                }
+            )
+        except (OSError, json.JSONDecodeError):
+            pass
+    return {"runs": runs}
 
 
 def patch_compare(path: str) -> dict:

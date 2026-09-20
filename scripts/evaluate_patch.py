@@ -107,7 +107,8 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever, u
         "out_of_scope": {"total": 0, "refused": 0},
         "trap": {"total": 0, "ok": 0},
         "selfcheck": {"total": 0, "pass": 0},
-        "jev": {"calls": 0, "choice_picked": 0, "choice_hit": 0, "choice_none": 0, "cost_usd": 0.0},
+        "jev": {"calls": 0, "choice_picked": 0, "choice_hit": 0, "choice_none": 0, "cost_usd": 0.0,
+                "latency_total": 0, "latency_calls": 0},
         "details": [],
     }
     for index, case in enumerate(cases):
@@ -126,6 +127,9 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever, u
             if step["tool"] == "Jev 重排" and "ms" in parts:
                 result["jev"]["calls"] += 1
         result["jev"]["cost_usd"] += session.get("cost_usd", 0.0)
+        if session.get("jev"):
+            result["jev"]["latency_total"] += session["jev"].get("latency_ms", 0)
+            result["jev"]["latency_calls"] += 1
         check = session.get("self_check")
         if check:
             result["selfcheck"]["total"] += 1
@@ -247,8 +251,8 @@ def summarise(name: str, arm: dict) -> list[str]:
             line += f"、Jev 首选命中 **{pinned['jev_pick_ok']}/{pinned['jev_picks']}**"
         lines.append(line)
     if single["total"]:
-        version_note = ""
         asked = sum(1 for detail in arm["details"] if detail.get("kind") == "single" and detail.get("version_asked"))
+        single["version_asked"] = asked
         version_note = f"（其中 {asked} 条问题写了版本，按问题判定版本正确性）"
         lines.append(
             f"- 单点问题 {single['total']} 条{version_note}：命中@1 **{single['hit@1']}/{single['total']}**、"
@@ -412,10 +416,13 @@ def main() -> int:
     report_path = Path(args.out) if args.out else DOCS / "评测报告.md"
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    (DOCS / "evaluation.json").write_text(
+    data_path = report_path.with_suffix(".json")
+    data_path.write_text(
         json.dumps(
             {
                 "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "case_file": [path.name for path in paths],
+                "use_case_version": args.use_case_version,
                 "corpus": {"chunks": len(retriever.chunks), "patches": retriever.supported},
                 "cases": len(cases),
                 "arms": results,
@@ -425,7 +432,7 @@ def main() -> int:
         ),
         encoding="utf-8",
     )
-    print(f"\n报告：{report_path}")
+    print(f"\n报告：{report_path}\n数据：{data_path}")
     return 0
 
 
