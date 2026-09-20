@@ -69,6 +69,14 @@
   {"id": "h14", "question": "26.16 卡蜜尔被动护盾", "kind": "pinned",
    "target": {"patch": "26.16", "subject": "卡蜜尔", "field_contains": "护盾"}},
   {"id": "h15", "question": "26.13 帝国指令法强", "kind": "pinned",
-   "target": {"patch": "26.13", "subject": "帝国指令", "field_contains": "法术强度"}}
+   "target": {"patch": "26.13", "subject": "帝国指令", "field_contains": "法术强度"}},
+  {"id": "g01", "question": "赛娜从 26.13 到 26.18 一共改了几次", "kind": "aggregate",
+   "expect": {"subject": "赛娜", "patches": ["26.13", "26.14"], "mentions": "其它模式"}},
+  {"id": "g02", "question": "亚恒历次改动有哪些", "kind": "aggregate",
+   "expect": {"subject": "亚恒", "patches": ["26.1", "26.18"], "mentions": "共被改动"}},
+  {"id": "g03", "question": "26.9 到 26.12 赵信一共被改了几次", "kind": "aggregate",
+   "expect": {"subject": "赵信", "patches": ["26.9", "26.11", "26.12"], "mentions": "其它模式"}},
+  {"id": "g04", "question": "沃利贝尔历次被削弱的记录", "kind": "aggregate",
+   "expect": {"subject": "沃利贝尔", "mentions": "削弱"}}
  ]
 }

@@ -189,6 +189,46 @@ class VersionContextTests(unittest.TestCase):
             self.assertIn(nickname, aliases.get(subject, {}).get("aliases", []), f"{nickname} → {subject}")
 
 
+class AggregateTests(unittest.TestCase):
+    """Cross-version aggregation: one subject over a span of patches."""
+
+    def setUp(self):
+        self.engine = build()
+
+    def test_range_question_returns_a_timeline(self):
+        session = ask(self.engine, "亚索从 26.16 到 26.17 一共改了几次")
+        text = answer_text(session)
+        self.assertEqual(session["status"], "verify")
+        self.assertIn("共被改动", text)
+        self.assertIn("26.16", text)
+        self.assertIn("26.17", text)
+        self.assertTrue(any(step["tool"] == "跨版本聚合" for step in session["trace"]))
+
+    def test_aggregate_question_without_a_range_covers_the_whole_corpus(self):
+        session = ask(self.engine, "亚索历次改动有哪些")
+        text = answer_text(session)
+        self.assertIn("26.16", text)
+        self.assertIn("方向：加强", text)
+
+    def test_direction_narrows_the_timeline(self):
+        session = ask(self.engine, "薇恩历次被削弱的记录")
+        text = answer_text(session)
+        self.assertIn("削弱", text)
+        self.assertIn("真实伤害", text)
+        self.assertNotIn("生命值", text)
+
+    def test_missing_direction_is_reported_instead_of_showing_everything(self):
+        session = ask(self.engine, "26.17 亚索历次被削弱的记录")
+        text = answer_text(session)
+        self.assertIn("没有削弱记录", text)
+        self.assertIn("全部改动", text)
+
+    def test_unknown_subject_still_asks_for_a_name(self):
+        session = ask(self.engine, "阿狸从 26.16 到 26.17 一共改了几次")
+        self.assertEqual(session["status"], "clarifying")
+        self.assertIn("阿狸", answer_text(session))
+
+
 class ClaimTests(unittest.TestCase):
     """A question that asserts the wrong direction must be corrected, not confirmed."""
 

@@ -106,6 +106,7 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever, u
         "absent": {"total": 0, "refused": 0},
         "out_of_scope": {"total": 0, "refused": 0},
         "trap": {"total": 0, "ok": 0},
+        "aggregate": {"total": 0, "ok": 0},
         "selfcheck": {"total": 0, "pass": 0},
         "jev": {"calls": 0, "choice_picked": 0, "choice_hit": 0, "choice_none": 0, "cost_usd": 0.0,
                 "latency_total": 0, "latency_calls": 0},
@@ -216,6 +217,16 @@ def run_arm(engine: PatchEngine, cases: list[dict], retriever: PatchRetriever, u
             refused = session["status"] in ("abstained", "clarifying") and any(word in answer for word in REFUSAL_WORDS)
             bucket["refused"] += int(refused)
             detail["refused"] = refused
+        elif case["kind"] == "aggregate":
+            result["aggregate"]["total"] += 1
+            expect = case.get("expect") or {}
+            ok = session["status"] == "verify" and all(
+                patch in answer for patch in expect.get("patches", [])
+            )
+            if ok and expect.get("mentions"):
+                ok = expect["mentions"] in answer
+            result["aggregate"]["ok"] += int(ok)
+            detail["aggregate_ok"] = ok
         elif case["kind"] == "trap":
             result["trap"]["total"] += 1
             expect = case.get("expect") or {}
@@ -274,6 +285,10 @@ def summarise(name: str, arm: dict) -> list[str]:
     if arm["trap"]["total"]:
         lines.append(
             f"- 陷阱题 {arm['trap']['total']} 条（规则定义，与语料不同源）：符合预期 **{arm['trap']['ok']}/{arm['trap']['total']}**"
+        )
+    if arm["aggregate"]["total"]:
+        lines.append(
+            f"- 跨版本聚合 {arm['aggregate']['total']} 条：时间线覆盖预期版本 **{arm['aggregate']['ok']}/{arm['aggregate']['total']}**"
         )
     jev_stats = arm["jev"]
     if arm["selfcheck"]["total"]:

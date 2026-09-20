@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T16:00:46",
+ "generated_at": "2026-09-20T16:21:04",
  "case_file": [
   "eval_cases.json",
   "trap_cases.json"
@@ -40,7 +40,7 @@
    "26.18"
   ]
  },
- "cases": 72,
+ "cases": 76,
  "arms": {
   "bm25": {
    "single": {
@@ -77,6 +77,10 @@
    "trap": {
     "total": 18,
     "ok": 18
+   },
+   "aggregate": {
+    "total": 4,
+    "ok": 4
    },
    "selfcheck": {
     "total": 0,
@@ -514,6 +518,30 @@
      "status": "verify",
      "rank": 1,
      "value_ok": true
+    },
+    {
+     "id": "g01",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g02",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g03",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g04",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
     },
     {
      "id": "t01",
@@ -661,6 +689,10 @@
     "total": 18,
     "ok": 18
    },
+   "aggregate": {
+    "total": 4,
+    "ok": 4
+   },
    "selfcheck": {
     "total": 0,
     "pass": 0
@@ -1097,6 +1129,30 @@
      "status": "verify",
      "rank": 1,
      "value_ok": true
+    },
+    {
+     "id": "g01",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g02",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g03",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g04",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
     },
     {
      "id": "t01",
@@ -1244,6 +1300,10 @@
     "total": 18,
     "ok": 18
    },
+   "aggregate": {
+    "total": 4,
+    "ok": 4
+   },
    "selfcheck": {
     "total": 0,
     "pass": 0
@@ -1682,6 +1742,30 @@
      "value_ok": true
     },
     {
+     "id": "g01",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g02",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g03",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g04",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
      "id": "t01",
      "kind": "trap",
      "status": "verify",
@@ -1827,6 +1911,10 @@
     "total": 18,
     "ok": 18
    },
+   "aggregate": {
+    "total": 4,
+    "ok": 4
+   },
    "selfcheck": {
     "total": 47,
     "pass": 47
@@ -1837,7 +1925,7 @@
     "choice_hit": 0,
     "choice_none": 0,
     "cost_usd": 0.002754,
-    "latency_total": 36703,
+    "latency_total": 52124,
     "latency_calls": 32
    },
    "details": [
@@ -1845,7 +1933,7 @@
      "id": "s01",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.71,
+     "self_check_min": 0.73,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1855,7 +1943,7 @@
      "id": "s02",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.94,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1865,7 +1953,7 @@
      "id": "s03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.68,
+     "self_check_min": 0.69,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1875,7 +1963,7 @@
      "id": "s04",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.86,
+     "self_check_min": 0.87,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1885,7 +1973,7 @@
      "id": "s05",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.81,
+     "self_check_min": 0.82,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1905,7 +1993,7 @@
      "id": "s07",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1915,7 +2003,7 @@
      "id": "s08",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.9,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1935,7 +2023,7 @@
      "id": "s10",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1955,7 +2043,7 @@
      "id": "s12",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.96,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1975,7 +2063,7 @@
      "id": "s14",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.87,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1985,7 +2073,7 @@
      "id": "s15",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.82,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1995,7 +2083,7 @@
      "id": "s16",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.73,
+     "self_check_min": 0.78,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2015,7 +2103,7 @@
      "id": "s18",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2025,7 +2113,7 @@
      "id": "s19",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2075,7 +2163,7 @@
      "id": "s24",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.91,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2094,7 +2182,7 @@
      "id": "s26",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.94,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2104,7 +2192,7 @@
      "id": "s27",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.92,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2114,7 +2202,7 @@
      "id": "s28",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.96,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2199,7 +2287,7 @@
      "id": "h02",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.92,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2208,7 +2296,7 @@
      "id": "h03",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.86,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2217,7 +2305,7 @@
      "id": "h04",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.88,
+     "self_check_min": 0.89,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2226,7 +2314,7 @@
      "id": "h05",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.95,
      "rank": 1,
      "value_ok": true
     },
@@ -2234,7 +2322,7 @@
      "id": "h06",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.91,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2252,7 +2340,7 @@
      "id": "h08",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.95,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2261,7 +2349,7 @@
      "id": "h09",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.92,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2270,7 +2358,7 @@
      "id": "h10",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.91,
      "rank": 1,
      "value_ok": true
     },
@@ -2286,7 +2374,7 @@
      "id": "h12",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.76,
+     "self_check_min": 0.82,
      "rank": 1,
      "value_ok": true
     },
@@ -2294,7 +2382,7 @@
      "id": "h13",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.89,
+     "self_check_min": 0.87,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2312,10 +2400,34 @@
      "id": "h15",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.9,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
+    },
+    {
+     "id": "g01",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g02",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g03",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g04",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
     },
     {
      "id": "t01",
@@ -2328,21 +2440,21 @@
      "id": "t02",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.94,
      "trap_ok": true
     },
     {
      "id": "t03",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.96,
      "trap_ok": true
     },
     {
      "id": "t04",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.92,
      "trap_ok": true
     },
     {
@@ -2409,7 +2521,7 @@
      "id": "t15",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.62,
+     "self_check_min": 0.6,
      "trap_ok": true
     },
     {

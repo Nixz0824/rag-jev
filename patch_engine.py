@@ -34,6 +34,9 @@ UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模�
 OFF_TOPIC_INTENT = re.compile(r"写.{0,10}诗|写诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
 OTHER_SERVER_INTENT = re.compile(r"美服|韩服|欧服|日服|台服|国际服|外服|其它服务器|其他服务器")
 WHY_INTENT = re.compile(r"为什么|为何|原因|动机|机制|设计|说明|缘由|调整理由|怎么想|出于")
+# "历次 / 一共几次 / 从 X 到 Y" — a multi-hop question about one subject over many patches.
+ACROSS_INTENT = re.compile(r"历次|历史|一共|总共|合计|改了几次|改动几次|几次改动|演变|变化史|改动史|所有改动|全部改动|都被改|改过几次")
+RANGE_INTENT = re.compile(r"从.{0,14}到|至\s*\d{1,2}[.．]|到\s*\d{1,2}[.．]\d{1,2}")
 # Words that never are a champion or item name, used when guessing an unknown subject.
 STOPWORDS = re.compile(
     r"这个|那个|当前|最新|上个|上一|版本|公告|英雄|装备|物品|技能|被动|模式|经典|大乱斗|竞技场|加强|削弱|调整|改动|"
@@ -263,8 +266,17 @@ class PatchEngine:
                 patches = [self.r.supported[-2]]
             else:
                 patches = [self.r.latest]
+        supported = [value for value in patches if value in self.r.supported]
+        span = None
+        if len(supported) >= 2 and (RANGE_INTENT.search(text) or ACROSS_INTENT.search(text)):
+            start, end = sorted(supported, key=patch_sort)[0], sorted(supported, key=patch_sort)[-1]
+            span = [value for value in self.r.supported if patch_sort(start) <= patch_sort(value) <= patch_sort(end)]
+        aggregate = bool(subject) and (bool(ACROSS_INTENT.search(text)) or (span is not None and bool(RANGE_INTENT.search(text))))
+        if aggregate:
+            span = span or list(self.r.supported)
+            patches = span
         return {
-            "patches": [value for value in patches if value in self.r.supported],
+            "patches": patches,
             "outside": [value for value in patches if value not in self.r.supported],
             "defaulted": defaulted,
             "subject": subject,
@@ -274,6 +286,8 @@ class PatchEngine:
             "field_keys": keys,
             "mode": detect_mode(text),
             "why": bool(WHY_INTENT.search(text)),
+            "span": span,
+            "aggregate": aggregate,
             "overview": bool(AGGREGATE_INTENT.search(text)) or self._bare_aggregate(text),
         }
 
@@ -393,6 +407,8 @@ class PatchEngine:
             # A direction word in a listing question is a filter; in a subject
             # question it is a claim to check, so both directions must be visible.
             where["direction"] = query["direction"]
+        if query.get("aggregate"):
+            return self._answer_aggregate(session, query)
         if query["subject"] and not query["overview"]:
             return self._answer_subject(session, text, query, where)
         if query["subject"] and query["overview"] and OVERVIEW_INTENT.search(text):
@@ -427,6 +443,106 @@ class PatchEngine:
             return rows
         rift = [row for row in rows if row.get("mode") == "rift"]
         return rift or rows
+
+    def _answer_aggregate(self, session: dict, query: dict) -> dict:
+        """One subject across many patches: a timeline with counts, not a single row.
+
+        Patch notes only record changes, so this is a history of adjustments — the
+        answer says so instead of pretending it is the current value.
+        """
+        span = query.get("span") or self.r.supported
+        all_rows = [row for row in self.r.all({"subject": query["subject"]}) if row.get("field_key") != "narrative"]
+        all_rows = [row for row in all_rows if patch_sort(span[0]) <= patch_sort(row["patch"]) <= patch_sort(span[-1])]
+        rows = self._prefer_mode(all_rows, query.get("mode"))
+        narrowed = []
+        if query.get("ability"):
+            narrowed = [row for row in rows if row.get("ability") == query["ability"]]
+        if query["field_keys"]:
+            narrowed = [row for row in narrowed or rows if row.get("field_key") in query["field_keys"]]
+        if narrowed:
+            rows = narrowed
+        if query.get("direction"):
+            filtered = [row for row in rows if row.get("direction") == query["direction"]]
+            if filtered:
+                rows = filtered
+            else:
+                word = "加强" if query["direction"] == "buff" else "削弱"
+                session["status"] = "verify"
+                session["evidence"] = rows[:12]
+                lines = [
+                    f"{query['subject']} 在 {span[0]}—{span[-1]} 之间没有{word}记录。",
+                    f"同一区间的全部改动共 {len(rows)} 条：",
+                ]
+                lines += [f"- {row['patch']}：{self._render(row, with_patch=False)}" for row in rows[:8]]
+                lines.append("公告只记录改动，这份列表是历次调整的汇总，不等于当前实际数值。")
+                self.add(session, "assistant", "\n".join(lines), kind="aggregate", facts=rows[:12])
+                session["trace"].append({"tool": "跨版本聚合", "detail": f"没有{word}记录，列出全部 {len(rows)} 条"})
+                return session
+        if not rows:
+            return self._no_result(session, query)
+
+        by_patch: dict[str, list[dict]] = collections.defaultdict(list)
+        for row in rows:
+            by_patch[row["patch"]].append(row)
+        directions = collections.Counter(row["direction"] for row in rows)
+        fields = collections.Counter(row["field"] for row in rows).most_common(5)
+        head = query["subject"] + (f" {query['ability']}" if query.get("ability") else "")
+        direction_word = DIRECTION_LABELS.get(query["direction"], "") if query.get("direction") else ""
+
+        # Show at least one row per patch, then fill up to the budget, so a long
+        # history never hides the earliest or the latest version.
+        ordered_patches = sorted(by_patch, key=patch_sort)
+        shown: dict[str, list[dict]] = {patch: [by_patch[patch][0]] for patch in ordered_patches}
+        position = 1
+        while sum(len(items) for items in shown.values()) < 18:
+            added = False
+            for patch in ordered_patches:
+                if len(by_patch[patch]) > position:
+                    shown[patch].append(by_patch[patch][position])
+                    added = True
+                    if sum(len(items) for items in shown.values()) >= 18:
+                        break
+            if not added:
+                break
+            position += 1
+
+        lines = [
+            (
+                f"{head} 在 {span[0]}—{span[-1]} 之间共有 {len(rows)} 条{direction_word}记录，跨 {len(by_patch)} 个版本。"
+                if direction_word
+                else f"{head} 在 {span[0]}—{span[-1]} 之间共被改动 {len(rows)} 次，跨 {len(by_patch)} 个版本。"
+            ),
+            "",
+        ]
+        total_shown = 0
+        for patch in ordered_patches:
+            for row in shown[patch]:
+                lines.append(f"- {patch}：{self._render(row, with_patch=False)}")
+                total_shown += 1
+            hidden = len(by_patch[patch]) - len(shown[patch])
+            if hidden > 0:
+                lines.append(f"  · {patch} 另有 {hidden} 条未列出")
+        if len(rows) > total_shown:
+            lines.append(f"…共 {len(rows)} 条，这里列出 {total_shown} 条。")
+        dropped = [row for row in all_rows if row not in rows]
+        if dropped:
+            modes = "、".join(sorted({row.get("mode_label", row.get("mode", "")) for row in dropped}))
+            lines.append(f"（另有 {len(dropped)} 条来自其它模式：{modes}，可用「{modes.split('、')[0]}」再问。）")
+        lines += [
+            "",
+            f"方向：加强 {directions['buff']} 项、削弱 {directions['nerf']} 项、调整 {directions['adjust']} 项。",
+            "最常被调整的字段：" + "、".join(f"{name}（{count} 次）" for name, count in fields),
+            "来源：" + "、".join(sorted({row["source_title"] for row in rows})[:3])
+            + ("等" if len({row["source_title"] for row in rows}) > 3 else ""),
+            "公告只记录改动，这份列表是历次调整的汇总，不等于当前实际数值。",
+        ]
+        session["status"] = "verify"
+        session["evidence"] = rows[:30]
+        self.add(session, "assistant", "\n".join(lines), kind="aggregate", facts=rows[:30])
+        session["trace"].append(
+            {"tool": "跨版本聚合", "detail": f"{span[0]}—{span[-1]} 共 {len(rows)} 条，跨 {len(by_patch)} 个版本"}
+        )
+        return session
 
     def _recent_change(self, session: dict, query: dict) -> dict:
         """No version given and the latest patch has nothing: show the last change instead.
