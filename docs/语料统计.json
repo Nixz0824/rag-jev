@@ -1,0 +1,296 @@
+{
+ "generated_at": "2026-09-21T14:16:59",
+ "totals": {
+  "patches": 30,
+  "chunks": 4995,
+  "structured": 2212,
+  "narrative": 2783,
+  "unknown": 198,
+  "limited": 410,
+  "champions": 156,
+  "items": 58,
+  "abilities": 1008
+ },
+ "recent": {
+  "window": 10,
+  "patches": 10,
+  "chunks": 1176,
+  "structured": 503,
+  "narrative": 673,
+  "unknown": 46,
+  "limited": 111,
+  "champions": 86,
+  "items": 29,
+  "abilities": 265
+ },
+ "per_patch": [
+  {
+   "patch": "15.13",
+   "ddragon": "15.13.1",
+   "date": "2025-06-25",
+   "chunks": 98,
+   "structured": 31,
+   "narrative": 67
+  },
+  {
+   "patch": "15.14",
+   "ddragon": "15.14.1",
+   "date": "2025-07-16",
+   "chunks": 199,
+   "structured": 80,
+   "narrative": 119
+  },
+  {
+   "patch": "15.16",
+   "ddragon": "15.16.1",
+   "date": "2025-08-13",
+   "chunks": 206,
+   "structured": 97,
+   "narrative": 109
+  },
+  {
+   "patch": "15.17",
+   "ddragon": "15.17.1",
+   "date": "2025-08-27",
+   "chunks": 166,
+   "structured": 60,
+   "narrative": 106
+  },
+  {
+   "patch": "15.18",
+   "ddragon": "15.18.1",
+   "date": "2025-09-10",
+   "chunks": 239,
+   "structured": 123,
+   "narrative": 116
+  },
+  {
+   "patch": "15.19",
+   "ddragon": "15.19.1",
+   "date": "2025-09-24",
+   "chunks": 104,
+   "structured": 50,
+   "narrative": 54
+  },
+  {
+   "patch": "15.20",
+   "ddragon": "15.20.1",
+   "date": "2025-10-08",
+   "chunks": 210,
+   "structured": 149,
+   "narrative": 61
+  },
+  {
+   "patch": "15.21",
+   "ddragon": "15.21.1",
+   "date": "2025-10-22",
+   "chunks": 87,
+   "structured": 40,
+   "narrative": 47
+  },
+  {
+   "patch": "15.22",
+   "ddragon": "15.22.1",
+   "date": "2025-11-05",
+   "chunks": 169,
+   "structured": 83,
+   "narrative": 86
+  },
+  {
+   "patch": "15.23",
+   "ddragon": "15.23.1",
+   "date": "2025-11-19",
+   "chunks": 165,
+   "structured": 66,
+   "narrative": 99
+  },
+  {
+   "patch": "15.24",
+   "ddragon": "15.24.1",
+   "date": "2025-12-03",
+   "chunks": 148,
+   "structured": 62,
+   "narrative": 86
+  },
+  {
+   "patch": "25.10",
+   "ddragon": "15.10.1",
+   "date": "2025-05-14",
+   "chunks": 99,
+   "structured": 52,
+   "narrative": 47
+  },
+  {
+   "patch": "25.11",
+   "ddragon": "15.11.1",
+   "date": "2025-05-28",
+   "chunks": 263,
+   "structured": 196,
+   "narrative": 67
+  },
+  {
+   "patch": "25.15",
+   "ddragon": "15.15.1",
+   "date": "2025-07-30",
+   "chunks": 115,
+   "structured": 61,
+   "narrative": 54
+  },
+  {
+   "patch": "26.1",
+   "ddragon": "16.1.1",
+   "date": "2026-01-07",
+   "chunks": 737,
+   "structured": 271,
+   "narrative": 466
+  },
+  {
+   "patch": "26.2",
+   "ddragon": "16.2.1",
+   "date": "2026-01-21",
+   "chunks": 121,
+   "structured": 49,
+   "narrative": 72
+  },
+  {
+   "patch": "26.3",
+   "ddragon": "16.3.1",
+   "date": "2026-02-03",
+   "chunks": 282,
+   "structured": 109,
+   "narrative": 173
+  },
+  {
+   "patch": "26.6",
+   "ddragon": "16.6.1",
+   "date": "2026-03-18",
+   "chunks": 171,
+   "structured": 62,
+   "narrative": 109
+  },
+  {
+   "patch": "26.7",
+   "ddragon": "16.7.1",
+   "date": "2026-03-31",
+   "chunks": 124,
+   "structured": 13,
+   "narrative": 111
+  },
+  {
+   "patch": "26.8",
+   "ddragon": "16.8.1",
+   "date": "2026-04-15",
+   "chunks": 116,
+   "structured": 55,
+   "narrative": 61
+  },
+  {
+   "patch": "26.9",
+   "ddragon": "16.9.1",
+   "date": "2026-04-28",
+   "chunks": 266,
+   "structured": 86,
+   "narrative": 180
+  },
+  {
+   "patch": "26.10",
+   "ddragon": "16.10.1",
+   "date": "2026-05-13",
+   "chunks": 191,
+   "structured": 86,
+   "narrative": 105
+  },
+  {
+   "patch": "26.11",
+   "ddragon": "16.11.1",
+   "date": "2026-05-27",
+   "chunks": 64,
+   "structured": 17,
+   "narrative": 47
+  },
+  {
+   "patch": "26.12",
+   "ddragon": "16.12.1",
+   "date": "2026-06-10",
+   "chunks": 73,
+   "structured": 34,
+   "narrative": 39
+  },
+  {
+   "patch": "26.13",
+   "ddragon": "16.13.1",
+   "date": "2026-06-24",
+   "chunks": 80,
+   "structured": 38,
+   "narrative": 42
+  },
+  {
+   "patch": "26.14",
+   "ddragon": "16.14.1",
+   "date": "2026-07-15",
+   "chunks": 62,
+   "structured": 26,
+   "narrative": 36
+  },
+  {
+   "patch": "26.15",
+   "ddragon": "16.15.1",
+   "date": "2026-07-29",
+   "chunks": 136,
+   "structured": 97,
+   "narrative": 39
+  },
+  {
+   "patch": "26.16",
+   "ddragon": "16.16.1",
+   "date": "2026-08-12",
+   "chunks": 112,
+   "structured": 39,
+   "narrative": 73
+  },
+  {
+   "patch": "26.17",
+   "ddragon": "16.17.1",
+   "date": "2026-08-26",
+   "chunks": 107,
+   "structured": 52,
+   "narrative": 55
+  },
+  {
+   "patch": "26.18",
+   "ddragon": "16.18.1",
+   "date": "2026-09-09",
+   "chunks": 85,
+   "structured": 28,
+   "narrative": 57
+  }
+ ],
+ "field_keys": {
+  "damage": 726,
+  "cooldown": 219,
+  "unknown": 198,
+  "attack_damage": 149,
+  "health": 101,
+  "price": 82,
+  "ability_power": 81,
+  "armor": 73,
+  "attack_speed": 70,
+  "movement_speed": 63,
+  "heal": 62,
+  "ability_haste": 56,
+  "crit": 56,
+  "cost": 54,
+  "duration": 42,
+  "shield": 41,
+  "slow": 18,
+  "resistances": 15,
+  "stacks": 14,
+  "tenacity": 14
+ },
+ "modes": {
+  "rift": 3582,
+  "arena": 740,
+  "aram": 589,
+  "classic": 84
+ }
+}

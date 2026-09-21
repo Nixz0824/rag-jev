@@ -10,6 +10,7 @@
 <body>
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <nav class="rail" id="rail">
   <a class="rail-mark" href="#top" aria-label="回到顶部">RJ</a>
@@ -166,10 +167,40 @@
     <div class="section-head reveal">
       <span class="index">04</span>
       <h2>数据</h2>
-      <p>全部数字由 <code>scripts/evaluate_patch.py</code> 跑出并写入 <code>docs/*.json</code>，页面只读取、不硬编码。</p>
+      <p>全部数字由 <code>scripts/evaluate_patch.py</code> 等脚本跑出并写入 <code>docs/*.json</code>，页面只读取、不硬编码。</p>
     </div>
 
-    <div class="tiles" id="tiles"></div>
+    <div class="charts" id="charts">
+      <figure class="chart reveal wide" id="chart-blind">
+        <figcaption><b>盲测 78 题</b><span>Codex 出题，出题时禁止读语料；两批覆盖 15.13—26.18</span></figcaption>
+        <div class="chart-body" data-chart="blind"></div>
+      </figure>
+
+      <figure class="chart reveal" id="chart-selfcheck">
+        <figcaption><b>回答自检：注入错误数字</b><span>把已答对回答的最后一个数字改掉 1，再送自检</span></figcaption>
+        <div class="chart-body" data-chart="selfcheck"></div>
+      </figure>
+
+      <figure class="chart reveal" id="chart-ranker">
+        <figcaption><b>排序能力（去掉字段预过滤）</b><span>同一批候选，两种排序的首选命中</span></figcaption>
+        <div class="chart-body" data-chart="ranker"></div>
+      </figure>
+
+      <figure class="chart reveal" id="chart-effect">
+        <figcaption><b>生产链路：Jev 改了几条</b><span>83 条可判定案例逐条记账</span></figcaption>
+        <div class="chart-body" data-chart="effect"></div>
+      </figure>
+
+      <figure class="chart reveal wide" id="chart-corpus">
+        <figcaption><b>语料规模：每个版本多少条</b><span>深色为结构化数值改动，浅色为公告叙述</span></figcaption>
+        <div class="chart-body" data-chart="corpus"></div>
+      </figure>
+
+      <figure class="chart reveal" id="chart-scale">
+        <figcaption><b>扩容前后</b><span>10 个版本 → 30 个版本</span></figcaption>
+        <div class="chart-body" data-chart="scale"></div>
+      </figure>
+    </div>
 
     <div class="table-wrap reveal">
       <table class="ab" id="ab-table">

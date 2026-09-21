@@ -125,9 +125,27 @@ function observeRail() {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       links.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id));
+      sections.forEach((section) => section.classList.toggle("is-active", section === entry.target));
     });
   }, { rootMargin: "-45% 0px -45% 0px" });
   sections.forEach((section) => observer.observe(section));
+}
+
+function scrollProgress() {
+  const bar = $("progress");
+  const hero = $("hero");
+  const update = () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = total > 0 ? Math.min(window.scrollY / total, 1) : 0;
+    bar.style.width = (ratio * 100).toFixed(2) + "%";
+    if (!reduced) {
+      const shift = Math.min(window.scrollY, 400) * 0.12;
+      hero.querySelector(".display").style.transform = `translateY(${-shift}px)`;
+      hero.style.opacity = String(Math.max(1 - window.scrollY / (window.innerHeight * 0.9), 0.15));
+    }
+  };
+  update();
+  window.addEventListener("scroll", update, { passive: true });
 }
 
 function countUp(node, target, suffix = "") {
@@ -342,6 +360,227 @@ async function feedback(result) {
   }
 }
 
+/* ------------------------------------------------------------------ charts */
+const NS = "http://www.w3.org/2000/svg";
+
+function svg(width, height) {
+  const node = document.createElementNS(NS, "svg");
+  node.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  node.setAttribute("role", "img");
+  return node;
+}
+
+function add(node, tag, attrs, text) {
+  const child = document.createElementNS(NS, tag);
+  Object.entries(attrs || {}).forEach(([key, value]) => child.setAttribute(key, value));
+  if (text !== undefined) child.textContent = text;
+  node.appendChild(child);
+  return child;
+}
+
+function gradients(node) {
+  const defs = add(node, "defs", {});
+  const gradient = add(defs, "linearGradient", { id: "gradJev", x1: "0", x2: "1" });
+  add(gradient, "stop", { offset: "0", "stop-color": "#b79cff" });
+  add(gradient, "stop", { offset: "1", "stop-color": "#7cd4ff" });
+}
+
+/* 盲测成绩：横向条形 */
+function chartBlind(box, runs) {
+  const blind = runs.find((run) => run.name === "盲测报告-合并") || {};
+  const arms = blind.arms || {};
+  const arm = arms["hybrid+jev"] || arms["hybrid"] || {};
+  const rows = [
+    ["单点数值正确", arm.single?.value_ok, arm.single?.value_total],
+    ["检索命中@1", arm.single?.["hit@1"], arm.single?.total],
+    ["版本正确", arm.single?.version_ok, arm.single?.version_asked],
+    ["汇总含预期对象", arm.overview?.ok, arm.overview?.total],
+    ["跨版本聚合", arm.aggregate?.ok, arm.aggregate?.total],
+    ["无记录 / 越界拒答", (arm.absent?.refused || 0) + (arm.out_of_scope?.refused || 0),
+      (arm.absent?.total || 0) + (arm.out_of_scope?.total || 0)],
+    ["回答自检", arm.selfcheck?.pass, arm.selfcheck?.total],
+  ].filter(([, part, total]) => typeof part === "number" && total);
+  const width = 520;
+  const height = rows.length * 30 + 10;
+  const node = svg(width, height);
+  gradients(node);
+  rows.forEach(([label, part, total], index) => {
+    const y = index * 30 + 6;
+    const ratio = part / total;
+    add(node, "text", { x: 0, y: y + 10, class: "row-label" }, label);
+    add(node, "rect", { x: 132, y: y, width: 320, height: 12, rx: 6, class: "bar-bg" });
+    const fill = add(node, "rect", { x: 132, y: y, width: 0, height: 12, rx: 6, class: "bar-fill" });
+    fill.dataset.width = 320 * ratio;
+    add(node, "text", { x: 462, y: y + 10, class: "row-value" }, `${part}/${total}`);
+  });
+  box.appendChild(node);
+  add(node, "text", { x: 132, y: height - 1, class: "axis" }, "满分 100% · 全部来自 docs/盲测报告-合并.json");
+}
+
+/* 自检注入：点图，两组分布在阈值两侧 */
+function chartSelfcheck(box, payload) {
+  const check = payload.jev_selfcheck || {};
+  const width = 520;
+  const height = 190;
+  const node = svg(width, height);
+  const left = 60;
+  const right = width - 20;
+  const x = (value) => left + (right - left) * value;
+  const threshold = check.threshold ?? 0.5;
+  add(node, "line", { x1: x(threshold), y1: 24, x2: x(threshold), y2: 150, class: "threshold" });
+  add(node, "text", { x: x(threshold) + 4, y: 18, class: "threshold-label" }, `阈值 ${threshold}`);
+  for (const [label, scores, bad, y] of [
+    ["对照（正确回答）", (payload.jev_selfcheck?.control_scores) || [], false, 60],
+    ["注入（数字改错）", (payload.jev_selfcheck?.mutation_scores) || [], true, 120],
+  ]) {
+    add(node, "text", { x: 0, y: y + 4, class: "row-label" }, label);
+    scores.forEach((score, index) => {
+      add(node, "circle", {
+        cx: x(score), cy: y - 14 + (index % 6) * 5, r: 4,
+        class: bad ? "dot bad" : "dot", "fill-opacity": 0.75,
+      });
+    });
+    const mean = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    add(node, "text", { x: x(mean) - 12, y: y + 26, class: "row-value" }, `均值 ${mean.toFixed(2)}`);
+  }
+  add(node, "text", { x: left, y: 170, class: "axis" }, "支持度 0 ────────────── 1");
+  box.appendChild(node);
+  const note = document.createElement("p");
+  note.className = "chart-note";
+  note.textContent = `检出 ${check.detected ?? "—"}/${check.cases ?? "—"}，误报 ${check.false_alarms ?? "—"}/${check.cases ?? "—"}`;
+  box.appendChild(note);
+}
+
+/* 排序能力：配对条形 */
+function chartRanker(box, payload) {
+  const stats = payload.jev_ranker || {};
+  const total = stats.total || 0;
+  const width = 520;
+  const height = 130;
+  const node = svg(width, height);
+  gradients(node);
+  const rows = [
+    ["BM25", stats.bm25_ok || 0, true],
+    ["Jev 重排", stats.jev_ok || 0, false],
+  ];
+  rows.forEach(([label, value, plain], index) => {
+    const y = 24 + index * 42;
+    add(node, "text", { x: 0, y: y + 12, class: "row-label" }, label);
+    add(node, "rect", { x: 92, y: y, width: 360, height: 16, rx: 8, class: "bar-bg" });
+    const fill = add(node, "rect", {
+      x: 92, y: y, width: 0, height: 16, rx: 8, class: plain ? "bar-fill plain" : "bar-fill",
+    });
+    fill.dataset.width = total ? 360 * (value / total) : 0;
+    add(node, "text", { x: 462, y: y + 13, class: "row-value" }, `${value}/${total}`);
+  });
+  add(node, "text", { x: 92, y: 122, class: "axis" }, `Jev 独对 ${stats.jev_only ?? 0} · BM25 独对 ${stats.bm25_only ?? 0}`);
+  box.appendChild(node);
+}
+
+/* 生产链路记账：一条堆叠条 + 说明 */
+function chartEffect(box, payload) {
+  const stats = payload.jev_effect || {};
+  const total = stats.total || 0;
+  const width = 520;
+  const height = 120;
+  const node = svg(width, height);
+  const kept = stats.kept || 0;
+  const reordered = stats.reordered || 0;
+  const keptWidth = total ? (520 - 20) * (kept / total) : 0;
+  const reorderWidth = total ? (520 - 20) * (reordered / total) : 0;
+  add(node, "rect", { x: 0, y: 20, width: keptWidth, height: 22, rx: 6, class: "bar-bg" });
+  add(node, "rect", { x: keptWidth, y: 20, width: Math.max(reorderWidth, 4), height: 22, rx: 6, class: "bar-fill" });
+  const under = stats.candidates_lt2 || 0;
+  const underWidth = total ? (520 - 20) * (under / total) : 0;
+  add(node, "rect", { x: 0, y: 20, width: underWidth, height: 22, rx: 6, class: "bar-fill plain", "fill-opacity": 0.25 });
+  add(node, "text", { x: 0, y: 14, class: "row-label" }, `保留检索顺序 ${kept} 条（其中候选不足 2 条：${under}）`);
+  add(node, "text", { x: keptWidth + 8, y: 14, class: "row-value" }, `改序 ${reordered}`);
+  add(node, "text", { x: 0, y: 66, class: "axis" }, `共 ${total} 条可判定案例：改对 ${stats.reordered_ok ?? 0}、改错 ${stats.reordered_bad ?? 0}`);
+  add(node, "text", { x: 0, y: 86, class: "axis" }, "元数据过滤已经把候选压到 1—6 条，重排空间很小");
+  box.appendChild(node);
+}
+
+/* 语料规模：逐版本堆叠柱 */
+function chartCorpus(box, payload) {
+  const rows = (payload.corpus_stats || {}).per_patch || [];
+  if (!rows.length) { box.innerHTML = '<p class="ghost">语料统计不可用（运行 scripts/corpus_stats.py）</p>'; return; }
+  const width = 1040;
+  const height = 220;
+  const node = svg(width, height);
+  const max = Math.max(...rows.map((row) => row.chunks));
+  const bar = (width - 40) / rows.length;
+  rows.forEach((row, index) => {
+    const x = 20 + index * bar;
+    const structured = (row.structured / max) * (height - 60);
+    const narrative = (row.narrative / max) * (height - 60);
+    const title = `${row.patch}（${row.ddragon || "—"}）：结构化 ${row.structured} · 叙述 ${row.narrative}`;
+    const col = add(node, "rect", {
+      x: x + 1, y: height - 30 - narrative, width: bar - 3, height: narrative, class: "col narrative",
+    });
+    add(col, "title", {}, title);
+    const top = add(node, "rect", {
+      x: x + 1, y: height - 30 - narrative - structured, width: bar - 3, height: structured, class: "col",
+    });
+    add(top, "title", {}, title);
+    if (index % 3 === 0) add(node, "text", { x: x + 1, y: height - 16, class: "axis" }, row.patch);
+  });
+  box.appendChild(node);
+  const legend = document.createElement("div");
+  legend.className = "legend";
+  legend.innerHTML = '<span><i style="background:rgba(183,156,255,0.75)"></i>结构化数值改动</span>'
+    + '<span><i style="background:rgba(255,255,255,0.16)"></i>公告叙述</span>';
+  box.appendChild(legend);
+}
+
+/* 扩容前后：两组对比 */
+function chartScale(box, payload) {
+  const totals = (payload.corpus_stats || {}).totals || {};
+  const recent = (payload.corpus_stats || {}).recent || {};
+  const width = 520;
+  const height = 150;
+  const node = svg(width, height);
+  gradients(node);
+  const rows = [
+    [`最近 ${recent.window || 10} 个版本`, recent.chunks || 0, recent.structured || 0],
+    [`全部 ${totals.patches || 30} 个版本`, totals.chunks || 0, totals.structured || 0],
+  ];
+  const max = Math.max(...rows.map(([, chunks]) => chunks)) || 1;
+  rows.forEach(([label, chunks, structured], index) => {
+    const y = 24 + index * 52;
+    add(node, "text", { x: 0, y: y + 12, class: "row-label" }, label);
+    add(node, "rect", { x: 130, y: y, width: 330, height: 18, rx: 9, class: "bar-bg" });
+    const fill = add(node, "rect", { x: 130, y: y, width: 0, height: 18, rx: 9, class: "bar-fill" });
+    fill.dataset.width = 330 * (chunks / max);
+    add(node, "text", { x: 470, y: y + 13, class: "row-value" }, `${chunks}`);
+    add(node, "text", { x: 130, y: y + 34, class: "axis" }, `其中结构化数值改动 ${structured} 条`);
+  });
+  box.appendChild(node);
+}
+
+function animateCharts() {
+  document.querySelectorAll(".chart-body .bar-fill").forEach((node) => {
+    const width = Number(node.dataset.width || 0);
+    requestAnimationFrame(() => { node.style.width = width; });
+  });
+}
+
+function renderCharts(payload) {
+  const boxes = {
+    blind: chartBlind,
+    selfcheck: chartSelfcheck,
+    ranker: chartRanker,
+    effect: chartEffect,
+    corpus: chartCorpus,
+    scale: chartScale,
+  };
+  document.querySelectorAll("[data-chart]").forEach((box) => {
+    const renderer = boxes[box.dataset.chart];
+    if (renderer) renderer(box, payload);
+  });
+  animateCharts();
+  observeReveals();
+}
+
 /* ------------------------------------------------------------------ evaluation */
 function pct(part, total) {
   return total ? `${part}/${total}` : "—";
@@ -365,56 +604,8 @@ async function loadEvaluation() {
   const jevArm = (run) => (run?.arms || {})["hybrid+jev"] || {};
   const arms = (run) => run?.arms || {};
 
-  const tiles = [
-    {
-      value: () => pct(jevArm(blindCtx).single?.value_ok, jevArm(blindCtx).single?.value_total),
-      label: "盲测数值正确率（38 题中的 20 条单点）",
-      source: "盲测 · 出题方未接触语料",
-      blind: true,
-    },
-    {
-      value: () => pct(jevArm(blindCtx).single?.["hit@1"], jevArm(blindCtx).single?.total),
-      label: "盲测检索命中@1",
-      source: "盲测 · 界面选中版本",
-      blind: true,
-    },
-    {
-      value: () => pct(jevArm(blindCtx).selfcheck?.pass, jevArm(blindCtx).selfcheck?.total),
-      label: "Jev 回答自检通过（支持度 ≥ 0.5）",
-      source: "盲测 · 只有 Jev 能做",
-      blind: true,
-    },
-    {
-      value: () => {
-        const base = arms(same).hybrid?.pinned?.["hit@1"];
-        const jev = jevArm(same).pinned?.["hit@1"];
-        return base && jev ? `${base}→${jev}` : "—";
-      },
-      label: "定点命中@1（同源模糊候选）",
-      source: "同源 · hybrid 对比 hybrid+Jev",
-    },
-    {
-      value: () => pct(arms(same).hybrid?.trap?.ok, arms(same).hybrid?.trap?.total),
-      label: "陷阱题（错误断言 / 越界 / 注入）",
-      source: "规则定义 · 不同源",
-    },
-    {
-      value: () => (parse ? pct(parse.cases_passed, parse.cases) : "48/48"),
-      label: "查询理解盲测（主体/版本/技能/字段）",
-      source: "盲测 · 解析层",
-    },
-  ];
-
-  $("tiles").innerHTML = tiles.map((tile) => `
-    <div class="tile ${tile.blind ? "blind" : ""} reveal">
-      <div class="value" data-value="${esc(tile.value())}">${esc(tile.value())}</div>
-      <div class="label">${esc(tile.label)}</div>
-      <div class="source">${esc(tile.source)}</div>
-    </div>`).join("");
-
-  $("stat-blind").textContent = tiles[0].value();
-  const cost = jevArm(same).jev;
-  if (cost?.calls) $("stat-cost").textContent = "$" + (cost.cost_usd / cost.calls).toFixed(6);
+  const blindCost = jevArm(same).jev;
+  if (blindCost?.calls) $("stat-cost").textContent = "$" + (blindCost.cost_usd / blindCost.calls).toFixed(6);
 
   const rows = [];
   const pushArm = (run, name, arm, scope) => {
@@ -463,6 +654,7 @@ async function loadEvaluation() {
       <li class="minus"><i>－</i><span><b>三种排序在同源案例上打平</b>：元数据过滤后候选常只剩 1–6 条，BM25/向量/混合没有差别；Jev 的价值集中在候选难以区分或问法与标签不一致的地方。</span></li>
       <li class="minus"><i>－</i><span><b>解析层没有用 Jev</b>：字段与意图识别是确定性正则，48 条查询理解盲测全过且零延迟——不该用模型的地方不用。</span></li>
     </ul>`;
+  renderCharts(payload);
   observeReveals();
 }
 
@@ -520,6 +712,7 @@ field();
 bind();
 observeReveals();
 observeRail();
+scrollProgress();
 loadHealth();
 loadMeta();
 loadEvaluation();

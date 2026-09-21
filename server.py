@@ -316,6 +316,17 @@ def evaluation() -> dict:
             pass
 
     extras = {}
+    corpus_file = DOCS / "语料统计.json"
+    if corpus_file.exists():
+        try:
+            payload = json.loads(corpus_file.read_text(encoding="utf-8"))
+            extras["corpus_stats"] = {
+                "totals": payload.get("totals", {}),
+                "recent": payload.get("recent", {}),
+                "per_patch": payload.get("per_patch", []),
+            }
+        except (OSError, json.JSONDecodeError):
+            pass
     for key, filename in (
         ("jev_effect", "Jev效果.json"),
         ("jev_ranker", "Jev效果-排序对照.json"),
@@ -336,6 +347,8 @@ def evaluation() -> dict:
                 "threshold": payload.get("threshold", 0.5),
                 "control_mean": (payload.get("control") or {}).get("mean", 0),
                 "mutation_mean": (payload.get("mutation") or {}).get("mean", 0),
+                "control_scores": (payload.get("control") or {}).get("scores", []),
+                "mutation_scores": (payload.get("mutation") or {}).get("scores", []),
                 "cost_usd": payload.get("cost_usd", 0),
             }
         else:

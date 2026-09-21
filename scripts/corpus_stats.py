@@ -181,6 +181,31 @@ def main() -> int:
 
     DOCS.mkdir(exist_ok=True)
     (DOCS / "语料统计.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (DOCS / "语料统计.json").write_text(
+        json.dumps(
+            {
+                "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "totals": all_stat,
+                "recent": {"window": args.recent, "patches": recent, **recent_stat},
+                "per_patch": [
+                    {
+                        "patch": patch,
+                        "ddragon": patch_map.get(patch, {}).get("ddragon", ""),
+                        "date": patch_map.get(patch, {}).get("date", ""),
+                        "chunks": len([row for row in chunks if row["patch"] == patch]),
+                        "structured": len([row for row in chunks if row["patch"] == patch and row["field_key"] != "narrative"]),
+                        "narrative": len([row for row in chunks if row["patch"] == patch and row["field_key"] == "narrative"]),
+                    }
+                    for patch in patches
+                ],
+                "field_keys": dict(field_keys.most_common(20)),
+                "modes": dict(modes),
+            },
+            ensure_ascii=False,
+            indent=1,
+        ),
+        encoding="utf-8",
+    )
     print(f"版本 {all_stat['patches']} 个｜chunk {all_stat['chunks']}（结构化 {all_stat['structured']} / 叙述 {all_stat['narrative']}）"
           f"｜英雄 {all_stat['champions']}｜装备 {all_stat['items']}")
     print(f"最近 {args.recent} 版：chunk {recent_stat['chunks']}（结构化 {recent_stat['structured']}）")
