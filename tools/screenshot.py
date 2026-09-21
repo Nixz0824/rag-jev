@@ -14,16 +14,18 @@ import argparse
 import asyncio
 import base64
 import json
+import os
 import subprocess
+import tempfile
 import time
 import urllib.request
 from pathlib import Path
 
 import websockets
 
-EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-BASE = "http://127.0.0.1:18890"
-PROFILE = Path(r"C:\Users\USER\AppData\Local\Temp\opencode\edge-cdp")
+EDGE = os.environ.get("RAGJEV_EDGE", r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+BASE = os.environ.get("RAGJEV_BASE", "http://127.0.0.1:18890")
+PROFILE = Path(tempfile.gettempdir()) / "ragjev-edge-profile"
 
 SHOTS = (
     {"name": "ask", "query": "?q=26.17 薇恩 W 真实伤害是多少", "section": "ask", "wait_answer": True},
