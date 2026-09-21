@@ -1,0 +1,458 @@
+{
+  "note": "总题数40；kind数量：single 22、overview 6、aggregate 6、absent 3、out_of_scope 3；覆盖版本：15.13、15.14、15.16、15.17、15.18、15.19、15.20、15.21、15.22、15.23、15.24、25.10、25.11、25.15、26.1、26.2、26.3、26.6、26.7、26.8；来源：国服官方公告（lol.qq.com/gicp/news/410），out_of_scope题的expect为空。",
+  "cases": [
+    {
+      "id": "c01",
+      "question": "15.13 船长 Q 蓝耗改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.13",
+        "subject": "普朗克",
+        "ability": "Q",
+        "field_key": "cost",
+        "value": "50 / 45 / 40 / 35 / 30"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37064044.html"
+    },
+    {
+      "id": "c02",
+      "question": "鸟皇基础生命值现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.14",
+        "subject": "阿兹尔",
+        "field_key": "health",
+        "value": "575"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37065167.html"
+    },
+    {
+      "id": "c03",
+      "question": "15.16 格温基础护甲改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.16",
+        "subject": "格温",
+        "field_key": "armor",
+        "value": "33"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37066709.html"
+    },
+    {
+      "id": "c04",
+      "question": "15.17 格温成长攻速现在是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.17",
+        "subject": "格温",
+        "field_key": "attack_speed",
+        "value": "2.5%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37067524.html"
+    },
+    {
+      "id": "c05",
+      "question": "15.18 熊被动每100法强的攻速收益现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.18",
+        "subject": "沃利贝尔",
+        "ability": "被动",
+        "field_key": "ability_power",
+        "value": "3%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37068328.html"
+    },
+    {
+      "id": "c06",
+      "question": "15.19 女警基础攻击力改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.19",
+        "subject": "凯特琳",
+        "field_key": "attack_damage",
+        "value": "62"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37069098.html"
+    },
+    {
+      "id": "c07",
+      "question": "15.20 艾尼维亚 Q 冷却时间现在是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.20",
+        "subject": "艾尼维亚",
+        "ability": "Q",
+        "field_key": "cooldown",
+        "value": "11/10/9/8/7秒"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37069618.html"
+    },
+    {
+      "id": "c08",
+      "question": "Volibear E AP ratio 现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.20",
+        "subject": "沃利贝尔",
+        "ability": "E",
+        "field_key": "ability_power",
+        "value": "70%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37069618.html"
+    },
+    {
+      "id": "c09",
+      "question": "15.20 狼人后期成长攻击力改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.20",
+        "subject": "沃里克",
+        "field_key": "attack_damage",
+        "value": "2.5"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37069618.html"
+    },
+    {
+      "id": "c10",
+      "question": "15.21 ez 的成长攻击力改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.21",
+        "subject": "伊泽瑞尔",
+        "field_key": "attack_damage",
+        "value": "3.25"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37070614.html"
+    },
+    {
+      "id": "c11",
+      "question": "15.22 熊的基础护甲现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.22",
+        "subject": "沃利贝尔",
+        "field_key": "armor",
+        "value": "35"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37071522.html"
+    },
+    {
+      "id": "c12",
+      "question": "斯卡纳 Q 对目标最大生命值的伤害现在多少",
+      "kind": "single",
+      "expect": {
+        "patch": "15.23",
+        "subject": "斯卡纳",
+        "ability": "Q",
+        "field_key": "damage",
+        "value": "9%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37072148.html"
+    },
+    {
+      "id": "c13",
+      "question": "15.24 维克托 Q 护盾值改成什么",
+      "kind": "single",
+      "expect": {
+        "patch": "15.24",
+        "subject": "维克托",
+        "ability": "Q",
+        "field_key": "shield",
+        "value": "40-140 (基于等级) (+25%法术强度)"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37072785.html"
+    },
+    {
+      "id": "c14",
+      "question": "25.10 赵信成长护甲变多少",
+      "kind": "single",
+      "expect": {
+        "patch": "25.10",
+        "subject": "赵信",
+        "field_key": "armor",
+        "value": "4.4"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37062169.html"
+    },
+    {
+      "id": "c15",
+      "question": "瑞兹 R 被动过载涌动伤害现在怎么改的",
+      "kind": "single",
+      "expect": {
+        "patch": "25.11",
+        "subject": "瑞兹",
+        "ability": "R",
+        "field_key": "damage",
+        "value": "50 / 75 / 100%"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37062815.html"
+    },
+    {
+      "id": "c16",
+      "question": "25.15 牛头基础护甲削到多少",
+      "kind": "single",
+      "expect": {
+        "patch": "25.15",
+        "subject": "阿利斯塔",
+        "field_key": "armor",
+        "value": "40"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37065938.html"
+    },
+    {
+      "id": "c17",
+      "question": "26.1 凯特琳 R 的 crit scaling 现在怎么写",
+      "kind": "single",
+      "expect": {
+        "patch": "26.1",
+        "subject": "凯特琳",
+        "ability": "R",
+        "field_key": "crit",
+        "value": "30%额外暴击伤害：最高1.3x/配合无尽之刃1.39x"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37074870.html"
+    },
+    {
+      "id": "c18",
+      "question": "26.2 石头人 E 伤害新数值是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.2",
+        "subject": "墨菲特",
+        "ability": "E",
+        "field_key": "damage",
+        "value": "60 / 95 / 130 / 165 / 200 (+ 60%法术强度) (+ 40%护甲)"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37075848.html"
+    },
+    {
+      "id": "c19",
+      "question": "Volibear Q 额外物理伤害的新数值是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.3",
+        "subject": "沃利贝尔",
+        "ability": "Q",
+        "field_key": "damage",
+        "value": "10 / 20 / 30 / 40 / 50 (+ 140%额外攻击力)"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "c20",
+      "question": "26.6 希瓦娜 Q 的冷却时间是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.6",
+        "subject": "希瓦娜",
+        "ability": "Q",
+        "field_key": "cooldown",
+        "value": "6秒"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37079862.html"
+    },
+    {
+      "id": "c21",
+      "question": "男枪基础攻击力现在是多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.7",
+        "subject": "格雷福斯",
+        "field_key": "attack_damage",
+        "value": "66"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37081175.html"
+    },
+    {
+      "id": "c22",
+      "question": "26.8 卢锡安 E cooldown 改成多少",
+      "kind": "single",
+      "expect": {
+        "patch": "26.8",
+        "subject": "卢锡安",
+        "ability": "E",
+        "field_key": "cooldown",
+        "value": "16 / 15.5 / 15 / 14.5 / 14"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37082722.html"
+    },
+    {
+      "id": "o01",
+      "question": "这版哪些英雄被削弱",
+      "kind": "overview",
+      "expect": {
+        "patch": "15.20",
+        "subjects_any": ["沃利贝尔", "沃里克", "孙悟空"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37069618.html"
+    },
+    {
+      "id": "o02",
+      "question": "15.14 哪些英雄被加强",
+      "kind": "overview",
+      "expect": {
+        "patch": "15.14",
+        "subjects_any": ["阿兹尔", "德莱厄斯", "菲奥娜", "菲兹", "吉格斯"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37065167.html"
+    },
+    {
+      "id": "o03",
+      "question": "15.22 哪些英雄拿到了增强",
+      "kind": "overview",
+      "expect": {
+        "patch": "15.22",
+        "subjects_any": ["斯卡纳", "沃利贝尔"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37071522.html"
+    },
+    {
+      "id": "o04",
+      "question": "26.3 哪些英雄被加强",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.3",
+        "subjects_any": ["阿狸", "卑尔维斯"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "o05",
+      "question": "26.6 哪些英雄获得了增强",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.6",
+        "subjects_any": ["阿兹尔", "丽桑卓", "斯卡纳", "泰达米尔"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37079862.html"
+    },
+    {
+      "id": "o06",
+      "question": "这版哪些英雄被加强",
+      "kind": "overview",
+      "expect": {
+        "patch": "26.8",
+        "subjects_any": ["卢锡安", "悠米", "彗", "莉莉娅"]
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37082722.html"
+    },
+    {
+      "id": "g01",
+      "question": "沃利贝尔从15.13到26.3一共改了几次",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "沃利贝尔",
+        "patches": ["15.18", "15.20", "15.22", "26.3"],
+        "mentions": "共被改动"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37068328.html；https://lol.qq.com/gicp/news/410/37069618.html；https://lol.qq.com/gicp/news/410/37071522.html；https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "g02",
+      "question": "希瓦娜从15.17到26.8历次改动有哪几版",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "希瓦娜",
+        "patches": ["26.6", "26.7"],
+        "mentions": "共被改动"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37079862.html；https://lol.qq.com/gicp/news/410/37081175.html"
+    },
+    {
+      "id": "g03",
+      "question": "锐雯历次被削弱是哪些版本",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "锐雯",
+        "patches": ["15.14", "26.3"],
+        "mentions": "削弱"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37065167.html；https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "g04",
+      "question": "阿狸从26.1到26.8一共被改了几版",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "阿狸",
+        "patches": ["26.3", "26.6"],
+        "mentions": "共被改动"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37076766.html；https://lol.qq.com/gicp/news/410/37079862.html"
+    },
+    {
+      "id": "g05",
+      "question": "赵信从25.10到26.3有哪些改动版本",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "赵信",
+        "patches": ["25.10", "26.3"],
+        "mentions": "共被改动"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37062169.html；https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "g06",
+      "question": "瑞兹从15.13到26.3一共改过哪些版本",
+      "kind": "aggregate",
+      "expect": {
+        "subject": "瑞兹",
+        "patches": ["15.13", "25.11", "26.3"],
+        "mentions": "共被改动"
+      },
+      "source_url": "逐版本核对：https://lol.qq.com/gicp/news/410/37064044.html；https://lol.qq.com/gicp/news/410/37062815.html；https://lol.qq.com/gicp/news/410/37076766.html"
+    },
+    {
+      "id": "a01",
+      "question": "沃利贝尔这版改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "15.21",
+        "subject": "沃利贝尔"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37070614.html"
+    },
+    {
+      "id": "a02",
+      "question": "25.10 沃利贝尔改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "25.10",
+        "subject": "沃利贝尔"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37062169.html"
+    },
+    {
+      "id": "a03",
+      "question": "维克托这版改了什么",
+      "kind": "absent",
+      "expect": {
+        "patch": "26.7",
+        "subject": "维克托"
+      },
+      "source_url": "https://lol.qq.com/gicp/news/410/37081175.html"
+    },
+    {
+      "id": "x01",
+      "question": "15.20 出了哪些新皮肤",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "https://lol.qq.com/gicp/news/410/37069618.html"
+    },
+    {
+      "id": "x02",
+      "question": "现在胜率最高的英雄是谁",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "https://lol.qq.com/gicp/news/410/37082722.html"
+    },
+    {
+      "id": "x03",
+      "question": "26.8 男枪怎么出装",
+      "kind": "out_of_scope",
+      "expect": {},
+      "source_url": "https://lol.qq.com/gicp/news/410/37082722.html"
+    }
+  ]
+}

@@ -130,14 +130,25 @@ class PatchRetriever(Retriever):
         self.aliases = sorted(values, key=lambda item: len(item[0]), reverse=True)
 
     def resolve_subject(self, text: str) -> tuple[str | None, str | None]:
+        """Pick the subject a question is about.
+
+        Longest alias wins, then the earliest occurrence, then champions over items —
+        without the position tie-break, a short item name inside an ability name
+        ("被动过载涌动伤害") could outrank the champion the question is about.
+        """
         value = normalise(text)
+        best: tuple[tuple[int, int, int], str, str] | None = None
         for alias, subject, kind in self.aliases:
             if not alias or alias not in value:
                 continue
-            if re.fullmatch("[a-z0-9]+", alias) and not re.search(r"(?<![a-z0-9])" + re.escape(alias) + r"(?![a-z0-9])", value):
+            if re.fullmatch("[a-z0-9]+", alias) and not re.search(
+                r"(?<![a-z0-9])" + re.escape(alias) + r"(?![a-z0-9])", value
+            ):
                 continue
-            return subject, kind
-        return None, None
+            rank = (len(alias), -value.find(alias), 1 if kind == "champion" else 0)
+            if best is None or rank > best[0]:
+                best = (rank, subject, kind)
+        return (best[1], best[2]) if best else (None, None)
 
 
 def compare_versions(rows_a: list[dict], rows_b: list[dict]) -> list[dict]:
@@ -453,7 +464,8 @@ class PatchEngine:
         span = query.get("span") or self.r.supported
         all_rows = [row for row in self.r.all({"subject": query["subject"]}) if row.get("field_key") != "narrative"]
         all_rows = [row for row in all_rows if patch_sort(span[0]) <= patch_sort(row["patch"]) <= patch_sort(span[-1])]
-        rows = self._prefer_mode(all_rows, query.get("mode"))
+        mode_rows = self._prefer_mode(all_rows, query.get("mode"))
+        rows = mode_rows
         narrowed = []
         if query.get("ability"):
             narrowed = [row for row in rows if row.get("ability") == query["ability"]]
@@ -524,10 +536,13 @@ class PatchEngine:
                 lines.append(f"  · {patch} 另有 {hidden} 条未列出")
         if len(rows) > total_shown:
             lines.append(f"…共 {len(rows)} 条，这里列出 {total_shown} 条。")
-        dropped = [row for row in all_rows if row not in rows]
+        dropped = [row for row in all_rows if row not in mode_rows]
         if dropped:
             modes = "、".join(sorted({row.get("mode_label", row.get("mode", "")) for row in dropped}))
-            lines.append(f"（另有 {len(dropped)} 条来自其它模式：{modes}，可用「{modes.split('、')[0]}」再问。）")
+            patches = "、".join(sorted({row["patch"] for row in dropped}, key=patch_sort))
+            lines.append(
+                f"（另有 {len(dropped)} 条来自其它模式：{modes}（{patches}），可用「{modes.split('、')[0]}」再问。）"
+            )
         lines += [
             "",
             f"方向：加强 {directions['buff']} 项、削弱 {directions['nerf']} 项、调整 {directions['adjust']} 项。",

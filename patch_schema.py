@@ -18,7 +18,9 @@ CHANGE_LINE_RE = re.compile(r"^(?P<label>[^：:]{1,28})[：:]\s*(?P<old>.+?)\s*(
 ABILITY_LINE_RE = re.compile(r"^(?P<ability>被动|[QWER]{1,4})\s*[-－—–]\s*(?P<name>.+)$")
 # Bracketed subject such as 【岚切】 used in item rewrites
 BRACKET_RE = re.compile(r"^【(?P<name>[^】]{1,20})】")
-NUMBER_RE = re.compile(r"-?\d+(?:\.\d+)?")
+# A hyphen inside a range ("30-60%") is a separator, not a minus sign, so a sign is
+# only accepted when it is not preceded by a digit.
+NUMBER_RE = re.compile(r"(?<![\d.])-?\d+(?:\.\d+)?")
 
 # Canonical stat keys. Order matters: the first pattern that matches wins, so
 # more specific patterns come first (生命回复 before 生命值, 技能急速 before 急速).
@@ -118,10 +120,25 @@ def numbers(value: str) -> list[float]:
 
 
 def direction(old: str, new: str) -> str:
-    """buff / nerf / adjust, derived from the first number on each side."""
+    """buff / nerf / adjust, derived from every number on both sides.
+
+    Comparing only the first number misses range changes ("30-60% → 30-50%" keeps the
+    first number and is still a nerf), so equal-length lists are compared element by
+    element: all up is a buff, all down is a nerf, mixed falls back to the sum.
+    """
     before, after = numbers(old), numbers(new)
     if not before or not after:
         return "adjust"
+    if len(before) == len(after):
+        deltas = [new_value - old_value for old_value, new_value in zip(before, after)]
+        if all(delta > 0 for delta in deltas):
+            return "buff"
+        if all(delta < 0 for delta in deltas):
+            return "nerf"
+        if all(delta == 0 for delta in deltas):
+            return "adjust"
+        total = sum(deltas)
+        return "buff" if total > 0 else "nerf" if total < 0 else "adjust"
     if after[0] > before[0]:
         return "buff"
     if after[0] < before[0]:

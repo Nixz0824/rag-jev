@@ -230,6 +230,13 @@ def parse_article(patch: str, document: str, aliases: dict[str, dict]) -> tuple[
             if change and ARROW_RE.search(line):
                 stats["arrow_lines"] += 1
                 label = change.group("label").strip()
+                # Some announcements put the ability inside the label ("R 被动过载涌动伤害").
+                prefix = re.match(r"^([QWER])[\s　]*([\u4e00-\u9fff].*)$", label)
+                if prefix:
+                    if not paragraph_ability:
+                        paragraph_ability = prefix.group(1)
+                        ability = paragraph_ability
+                    label = prefix.group(2).strip()
                 key = field_key(label)
                 if not key:
                     stats["unknown_field"] += 1

@@ -185,8 +185,17 @@ class VersionContextTests(unittest.TestCase):
 
     def test_shipped_alias_table_contains_common_nicknames(self):
         aliases = json.loads((ROOT / "data" / "patch" / "aliases.json").read_text(encoding="utf-8"))
-        for nickname, subject in (("牛头", "阿利斯塔"), ("男枪", "格雷福斯"), ("女警", "凯特琳"), ("飞机", "库奇")):
+        for nickname, subject in (("牛头", "阿利斯塔"), ("男枪", "格雷福斯"), ("女警", "凯特琳"), ("飞机", "库奇"),
+                                  ("船长", "普朗克"), ("鸟皇", "阿兹尔"), ("熊", "沃利贝尔")):
             self.assertIn(nickname, aliases.get(subject, {}).get("aliases", []), f"{nickname} → {subject}")
+
+    def test_earlier_subject_wins_over_a_shorter_item_inside_an_ability_name(self):
+        """'瑞兹 R 被动过载涌动伤害' must resolve to 瑞兹, not to the item 过载."""
+        engine = self.engine
+        engine.r.aliases = sorted(
+            {("瑞兹", "瑞兹", "champion"), ("过载", "过载", "item")}, key=lambda item: len(item[0]), reverse=True
+        )
+        self.assertEqual(engine.r.resolve_subject("瑞兹 R 被动过载涌动伤害"), ("瑞兹", "champion"))
 
 
 class AggregateTests(unittest.TestCase):

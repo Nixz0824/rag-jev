@@ -36,12 +36,27 @@ class FieldKeyTests(unittest.TestCase):
 
 
 class DirectionTests(unittest.TestCase):
-    def test_first_number_decides(self):
+    def test_single_values(self):
         self.assertEqual(direction("4", "3.5"), "nerf")
         self.assertEqual(direction("20", "25"), "buff")
         self.assertEqual(direction("-10%", "-5%"), "buff")
         self.assertEqual(direction("50%", "50%"), "adjust")
         self.assertEqual(direction("很久", "更久"), "adjust")
+
+    def test_ranges_compare_every_number(self):
+        """A hyphen in a range is a separator: 30-60 → 30-50 is a nerf, not a buff."""
+        self.assertEqual(direction("30-60% (基于等级)", "30-50% (基于等级)"), "nerf")
+        self.assertEqual(direction("30-50%", "30-45%"), "nerf")
+        self.assertEqual(direction("20-40%", "20-50%"), "buff")
+        self.assertEqual(direction("30-60%", "30-60%"), "adjust")
+
+    def test_mixed_lists_fall_back_to_the_sum(self):
+        self.assertEqual(direction("550 + 103/等级", "580 + 98/等级"), "buff")
+        self.assertEqual(direction("100 + 50", "90 + 40"), "nerf")
+        self.assertEqual(direction("100 + 50", "90 + 60"), "adjust")
+
+    def test_ratios_in_parentheses_count_too(self):
+        self.assertEqual(direction("50 / 75 / 100 (+65% 攻击力)", "50 / 75 / 100 (+55% 攻击力)"), "nerf")
 
 
 class CleanTests(unittest.TestCase):
