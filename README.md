@@ -20,7 +20,7 @@
 | 负面结论 | 不写 | 三种排序在过滤后打平、门槛测量后不采用、Jev 曾把答案挤到 @2（已加置信闸门）——都留在报告里 |
 | 模型定位 | 全流程交给 LLM | 解析用确定性正则（48/48 盲测全过、零延迟）；Jev 只做重排与自检，**$0.0001/次** |
 | 拒答 | 靠提示词祈祷 | 关键词黑名单 + 覆盖边界 + 「最近一次改动」回退 + 其它服务器边界，盲测拒答 **16/16** |
-| 工程 | 一个 notebook | 93 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
+| 工程 | 一个 notebook | 98 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
 
 ---
 
@@ -185,7 +185,12 @@ $env:TYPESAFE_API_KEY = "sk-..."   # 或写入 runtime/jev-key.txt
 | `赛娜从 26.13 到 26.18 一共改了几次` | **跨版本聚合**：逐版本时间线 + 方向统计 + 最常被改的字段，并说明其它模式被略过多少条 |
 | `沃利贝尔历次被削弱的记录` | 不带版本范围时按全部收录版本聚合，可再按方向收窄 |
 | `娜美 E 每次伤害改成多少了` | 未写版本且最新版没有 → 回退到**最近一次改动**并标注历史版本 |
+| `26.15 锐雯的放逐之锋怎么改了` | **按技能名提问**（865 条技能名映射到 Q/W/E/R/被动） |
+| `电刀现在多少钱` / `IE 多少钱` | **装备俗称与英文缩写**（电刀=斯塔缇克电刃，IE=无尽之刃） |
+| `卢登的配枪改了什么` / `C44 改了什么` | 公告里的**历史名与内部代号**（已改名或 Data Dragon 未收录）也能命中 |
 | `26.17 亚索为什么被调整` | 附上公告里的设计说明（叙述语料） |
+| `26.16 迦娜这版改了什么` | 公告只有说明文字、没有数值条目时，明确说「不给数值」，而不是把说明当改动 |
+| `26.6 希瓦娜重做了什么` | 重做/大型更新是描述性文字，如实说明不收录 |
 | `26.18 阿卡丽改了什么` | 该版本没有记录时，提示其它版本里有记录 |
 
 ---
@@ -193,7 +198,7 @@ $env:TYPESAFE_API_KEY = "sk-..."   # 或写入 runtime/jev-key.txt
 ## 命令
 
 ```powershell
-python -m unittest discover -s tests          # 93 项，不需要模型与网络
+python -m unittest discover -s tests          # 98 项，不需要模型与网络
 python scripts/ingest_qq.py --offline         # 用已缓存公告重建语料
 python scripts/corpus_stats.py                # 语料统计表（docs/语料统计.md）
 python scripts/build_aliases.py --offline     # 重建英雄/装备别名表
@@ -235,7 +240,7 @@ jev.py              TypeSafe System One 客户端（重排 / 分类 / 自检）
 server.py           本地 HTTP API 与静态页面
 launch.py           三进程监督（Windows Job Object，退出即回收）
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              93 项单元测试 + 手写样例语料 + 盲测集
+tests/              98 项单元测试 + 手写样例语料 + 盲测集
 web/                单页工作台（问答 / 结构 / 数据 / 版本对比）
 docs/               评测报告、盲测报告、语料统计、门槛校准、对照核验、交接文档
 ```

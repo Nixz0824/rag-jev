@@ -381,8 +381,8 @@ function add(node, tag, attrs, text) {
 function gradients(node) {
   const defs = add(node, "defs", {});
   const gradient = add(defs, "linearGradient", { id: "gradJev", x1: "0", x2: "1" });
-  add(gradient, "stop", { offset: "0", "stop-color": "#b79cff" });
-  add(gradient, "stop", { offset: "1", "stop-color": "#7cd4ff" });
+  add(gradient, "stop", { offset: "0", "stop-color": "#c8a24a" });
+  add(gradient, "stop", { offset: "1", "stop-color": "#e0c078" });
 }
 
 /* 盲测成绩：横向条形 */

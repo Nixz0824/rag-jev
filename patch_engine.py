@@ -8,6 +8,7 @@ can check the claim against the official announcement.
 from __future__ import annotations
 
 import collections
+import difflib
 import json
 import logging
 import re
@@ -33,6 +34,7 @@ POSITION_INTENT = re.compile(r"(打野|上单|中单|下路|射手|辅助|打野
 UNSUPPORTED_INTENT = re.compile(r"皮肤|炫彩|野区|大龙|小龙|地图|模式改动|赛季奖励|通行证|云顶")
 OFF_TOPIC_INTENT = re.compile(r"写.{0,10}诗|写诗|讲.{0,4}故事|攻略|出装推荐|怎么上分|胜率|天气|翻译|算命|写代码|做个网页")
 OTHER_SERVER_INTENT = re.compile(r"美服|韩服|欧服|日服|台服|国际服|外服|其它服务器|其他服务器")
+REWORK_INTENT = re.compile(r"重做|重制|大型更新|remake|重做版")
 WHY_INTENT = re.compile(r"为什么|为何|原因|动机|机制|设计|说明|缘由|调整理由|怎么想|出于")
 # "历次 / 一共几次 / 从 X 到 Y" — a multi-hop question about one subject over many patches.
 ACROSS_INTENT = re.compile(r"历次|历史|一共|总共|合计|改了几次|改动几次|几次改动|演变|变化史|改动史|所有改动|全部改动|都被改|改过几次")
@@ -87,6 +89,8 @@ class PatchRetriever(Retriever):
         self.thresholds = self._load_json(self.thresholds_path, None)
         # Gate thresholds were measured and deliberately not adopted; see docs/门槛校准.md.
         self.calibration = self._load_json(PATCH_DATA / "gate-calibration.json", None)
+        # Ability names ("斩钢闪" -> Q) so questions can be asked by skill name.
+        self.abilities = self._load_json(PATCH_DATA / "abilities.json", {})
         self.supported = sorted((self.patch_map.get("patches") or {}).keys(), key=patch_sort)
         self.latest = self.supported[-1] if self.supported else ""
         self._build_aliases()
@@ -265,6 +269,14 @@ class PatchEngine:
             ability = "被动"
         else:
             ability = None
+        ability_from_name = ""
+        if ability is None and subject:
+            # "亚索的斩钢闪改了吗" — players name skills far more often than letters.
+            names = self.r.abilities.get(subject) or {}
+            for slot, name in sorted(names.items(), key=lambda item: -len(item[1])):
+                if name and name in text:
+                    ability, ability_from_name = slot, name
+                    break
         direction = next(
             (key for key, words in DIRECTION_WORDS.items() if any(word in text for word in words)), None
         )
@@ -293,6 +305,7 @@ class PatchEngine:
             "subject": subject,
             "type": requested_type,
             "ability": ability,
+            "ability_from_name": ability_from_name,
             "direction": direction,
             "field_keys": keys,
             "mode": detect_mode(text),
@@ -374,6 +387,18 @@ class PatchEngine:
             )
             return session
 
+        if REWORK_INTENT.search(text):
+            session["status"] = "abstained"
+            session["evidence"] = []
+            self.add(
+                session,
+                "assistant",
+                "重做/大型更新类公告用描述性文字发布新技能组，不是「旧值 ⇒ 新值」的改动，当前结构化语料不收录。"
+                "可以问这个版本其它对象的改动，例如“26.6 有哪些英雄被削弱”。",
+                kind="abstention",
+            )
+            return session
+
         if OTHER_SERVER_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
@@ -410,7 +435,11 @@ class PatchEngine:
             )
             return session
 
-        where = {key: query[key] for key in ("subject", "type", "ability") if query.get(key)}
+        # A resolved subject already identifies the object; filtering by type as well would
+        # hide rows the announcement filed under another section (arena items, for example).
+        where = {key: query[key] for key in ("subject", "ability") if query.get(key)}
+        if not query["subject"] and query.get("type"):
+            where["type"] = query["type"]
         where["patches"] = query["patches"]
         if query.get("mode"):
             where["mode"] = query["mode"]
@@ -431,19 +460,43 @@ class PatchEngine:
     def _clarify(self, session: dict, text: str, query: dict, where: dict) -> dict:
         token = self._unresolved_token(text)
         known = self.r.all({"patches": query["patches"]})
-        subjects = list(dict.fromkeys(row["subject"] for row in known if row.get("field_key") != "narrative"))
+        rows = [row for row in known if row.get("field_key") != "narrative"]
+        champions = list(dict.fromkeys(row["subject"] for row in rows if row["type"] == "champion"))
+        items = list(dict.fromkeys(row["subject"] for row in rows if row["type"] == "item"))
+        guess = self._closest_subject(token)
         session["status"] = "clarifying"
         session["evidence"] = []
-        lines = [
-            (f"没认出「{token}」是哪个英雄或装备。" if token else "请补充英雄或装备名称。"),
-            f"这个版本（{', '.join(query['patches'])}）收录了 {len(subjects)} 个对象，例如："
-            + "、".join(subjects[:8])
-            + "。",
-            "也可以问“26.17 有哪些改动”查看全量列表。",
-        ]
+        if guess:
+            lines = [f"没认出「{token}」。你是不是想问「{guess}」？可以直接说「{guess}改了什么」。"]
+        else:
+            lines = [(f"没认出「{token}」是哪个英雄或装备。" if token else "请补充英雄或装备名称。")]
+        if champions:
+            lines.append(f"这个版本（{', '.join(query['patches'])}）收录的英雄例如：" + "、".join(champions[:6]) + "。")
+        if items:
+            lines.append("装备例如：" + "、".join(items[:4]) + "（官方名与常见俗称都可以，例如「电刀」=斯塔缇克电刃）。")
+        else:
+            lines.append("装备请用官方名或俗称，例如「岚切」「无尽之刃」「电刀」。")
+        lines.append("也可以问“26.17 有哪些改动”查看全量列表。")
         self.add(session, "assistant", "\n".join(lines), kind="clarification")
         session["trace"].append({"tool": "追问对象名称", "detail": token or "未识别出名称"})
         return session
+
+    def _closest_subject(self, token: str) -> str:
+        """A fuzzy "did you mean" that only suggests objects the corpus can answer about."""
+        if not token or len(token) < 2:
+            return ""
+        value = normalise(token)
+        pool: dict[str, str] = {}
+        answerable = {row["subject"] for row in self.r.chunks if row.get("field_key") != "narrative"}
+        for alias, subject, _ in self.r.aliases:
+            if subject in answerable:
+                pool.setdefault(alias, subject)
+        for subject in answerable:
+            pool.setdefault(normalise(subject), subject)
+        for match in difflib.get_close_matches(value, list(pool), n=1, cutoff=0.72):
+            return pool[match]
+        contained = [subject for subject in answerable if value in normalise(subject) or normalise(subject) in value]
+        return contained[0] if contained else ""
 
     # ------------------------------------------------------------------- answers
 
@@ -574,27 +627,39 @@ class PatchEngine:
         if not rows:
             return self._no_result(session, query)
         newest = max(patch_sort(row["patch"]) for row in rows)
-        rows = sorted((row for row in rows if patch_sort(row["patch"]) == newest), key=lambda row: row["subject"])
-        patch = rows[0]["patch"]
+        latest_rows = sorted((row for row in rows if patch_sort(row["patch"]) == newest), key=lambda row: row["subject"])
+        patch = latest_rows[0]["patch"]
+        history = sorted({row["patch"] for row in rows}, key=patch_sort)
         session["status"] = "verify"
-        session["evidence"] = rows[:12]
+        session["evidence"] = latest_rows[:12]
         lines = [
             f"你没有指定版本，而最新收录版本 {self.r.latest} 里没有{query['subject']}的这条改动。",
             f"最近一次改动是 {patch}（历史版本）：",
         ]
-        lines += ["- " + self._render(row, with_patch=False) for row in rows[:4]]
-        lines.append("来源：" + rows[0]["source_title"] + "｜" + rows[0]["source_url"])
+        lines += ["- " + self._render(row, with_patch=False) for row in latest_rows[:4]]
+        if len(history) > 1:
+            lines.append(f"{query['subject']}在收录范围内的改动版本：{'、'.join(history)}（可指定其中一个再问）。")
+        lines.append("来源：" + latest_rows[0]["source_title"] + "｜" + latest_rows[0]["source_url"])
         lines.append("公告只记录改动，因此这只是最近一次调整，不等于当前实际数值。")
         self.add(session, "assistant", "\n".join(lines), kind="recent_change", facts=rows[:12])
-        session["trace"].append({"tool": "版本回退", "detail": f"最新版没有记录，回退到 {patch} 的最近改动"})
+        session["trace"].append(
+            {"tool": "版本回退", "detail": f"最新版没有记录，回退到 {patch} 的最近改动（共 {len(history)} 个版本有记录）"}
+        )
         return session
 
     def _answer_subject(self, session: dict, text: str, query: dict, where: dict) -> dict:
         hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
         structured = [row for row in hits if row.get("field_key") != "narrative"]
+        notes = [row for row in hits if row.get("field_key") == "narrative"]
+        if not structured and notes and not query["field_keys"]:
+            # The announcement mentions the subject in prose only: say so instead of
+            # presenting the note as if it were a recorded change.
+            return self._narrative_only(session, query, notes)
         hits = self._prefer_mode(structured or hits, query.get("mode"))
         if not hits:
-            if query.get("defaulted") and query["subject"] and (query["field_keys"] or query.get("ability")):
+            if query.get("defaulted") and query["subject"]:
+                # No version given and the latest patch has nothing: show the last change
+                # instead of claiming there is no record at all.
                 return self._recent_change(session, query)
             return self._no_result(session, query)
         if query["field_keys"]:
@@ -807,6 +872,22 @@ class PatchEngine:
             f"{row['field']}：{row['new_value']}"
         )
         return f"{head} {change}" + (f"（{row['patch']}）" if with_patch else "")
+
+    def _narrative_only(self, session: dict, query: dict, notes: list[dict]) -> dict:
+        """Only prose exists for this subject and patch — no numeric change to render."""
+        head = query["subject"] + (f" {query['ability']}" if query.get("ability") else "")
+        session["status"] = "abstained"
+        session["evidence"] = notes[:6]
+        lines = [
+            self._note(query),
+            f"公告里没有{head}的数值改动条目，只有说明文字：",
+        ]
+        lines += ["- " + note["new_value"][:220] for note in notes[:2]]
+        lines.append("说明文字不构成改动记录，所以这里不给数值。")
+        lines.append("来源：" + notes[0]["source_title"] + "｜" + notes[0]["source_url"])
+        self.add(session, "assistant", "\n".join(lines), kind="abstention")
+        session["trace"].append({"tool": "证据核对", "detail": "只有说明文字，没有数值改动条目"})
+        return session
 
     def _field_not_found(self, session: dict, query: dict, hits: list[dict]) -> dict:
         """The user named a stat that this patch simply does not touch."""

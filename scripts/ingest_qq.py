@@ -139,6 +139,13 @@ def lines_of(fragment: str) -> list[str]:
     return [clean(line) for line in html_lib.unescape(text).split("\n")]
 
 
+def tidy_name(value: str) -> str:
+    """Headings sometimes carry a leading bullet slash ("/ 不朽之路") or trailing noise."""
+    value = re.sub(r"^[\s/、,，·・\-—–|]+", "", value or "")
+    value = re.sub(r"[\s/、,，·・\-—–|]+$", "", value)
+    return value.strip()
+
+
 def is_bold_subject(line: str) -> bool:
     inner = line.strip(BOLD).strip()
     if not (line.startswith(BOLD) and line.endswith(BOLD)):
@@ -188,11 +195,15 @@ def parse_article(patch: str, document: str, aliases: dict[str, dict]) -> tuple[
                     continue
                 if section in ("英雄", "装备"):
                     subject_title, name = split_subject(heading)
-                    subject = name
+                    subject_title, subject = tidy_name(subject_title), tidy_name(name)
                     subject_type = "champion" if section == "英雄" else "item"
                 else:
-                    subject = heading
-                    subject_type = "mode" if mode != "rift" else "system"
+                    subject = tidy_name(heading)
+                    kind = (aliases.get(subject) or {}).get("kind")
+                    if kind in ("champion", "item"):
+                        subject_type = kind
+                    else:
+                        subject_type = "mode" if mode != "rift" else "system"
                     subject_title = ""
                 ability, ability_name = "", ""
             continue
@@ -209,9 +220,10 @@ def parse_article(patch: str, document: str, aliases: dict[str, dict]) -> tuple[
                 ability, ability_name = "", ""
                 continue
             if is_bold_subject(line):
-                subject = line.replace(BOLD, "").strip()
+                subject = tidy_name(line.replace(BOLD, ""))
                 subject_title = ""
-                subject_type = "mode" if mode != "rift" else "system"
+                kind = (aliases.get(subject) or {}).get("kind")
+                subject_type = kind if kind in ("champion", "item") else ("mode" if mode != "rift" else "system")
                 ability, ability_name = "", ""
                 continue
             line = line.replace(BOLD, "").strip()
@@ -296,7 +308,10 @@ def parse_article(patch: str, document: str, aliases: dict[str, dict]) -> tuple[
                 stats["skipped"] += 1
 
     stats["unknown_labels"] = dict(sorted(unknown_labels.items(), key=lambda item: -item[1])[:12])
+    abilities = json.loads((PATCH_DATA / "abilities.json").read_text(encoding="utf-8")) if (PATCH_DATA / "abilities.json").exists() else {}
     for row in chunks:
+        if row.get("ability") and not row.get("ability_name"):
+            row["ability_name"] = (abilities.get(row["subject"]) or {}).get(row["ability"], "")
         for key in ("subject", "subject_title", "ability", "ability_name", "field", "old_value", "new_value", "text"):
             if isinstance(row.get(key), str):
                 row[key] = row[key].replace(BOLD, "").strip()
@@ -468,6 +483,14 @@ def main() -> int:
     for row in all_chunks:
         if row["type"] in ("champion", "item") and row.get("subject_en") and row["subject"] != row.get("subject_title"):
             learned.setdefault(row["subject_en"], row["subject"])
+    subjects = {"champion": [], "item": []}
+    for row in all_chunks:
+        kind = row["type"]
+        if kind in subjects and row["subject"] not in subjects[kind]:
+            subjects[kind].append(row["subject"])
+    (PATCH_DATA / "learned_subjects.json").write_text(
+        json.dumps(subjects, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
     (PATCH_DATA / "learned_names.json").write_text(
         json.dumps(dict(sorted(learned.items())), ensure_ascii=False, indent=1), encoding="utf-8"
     )

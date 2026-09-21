@@ -189,6 +189,36 @@ class VersionContextTests(unittest.TestCase):
                                   ("船长", "普朗克"), ("鸟皇", "阿兹尔"), ("熊", "沃利贝尔")):
             self.assertIn(nickname, aliases.get(subject, {}).get("aliases", []), f"{nickname} → {subject}")
 
+    def test_shipped_alias_table_contains_item_nicknames(self):
+        """Items are asked by nickname far more often than by official name."""
+        aliases = json.loads((ROOT / "data" / "patch" / "aliases.json").read_text(encoding="utf-8"))
+        for nickname, subject in (("电刀", "斯塔缇克电刃"), ("无尽", "无尽之刃"), ("帽子", "灭世者的死亡之帽"),
+                                  ("冰杖", "瑞莱的冰晶节杖"), ("反甲", "荆棘之甲"), ("黑切", "黑色切割者"),
+                                  ("破败", "破败王者之刃"), ("羊刀", "鬼索的狂暴之刃")):
+            self.assertIn(nickname, aliases.get(subject, {}).get("aliases", []), f"{nickname} → {subject}")
+
+    def test_ability_name_resolves_to_a_letter(self):
+        """Players ask by skill name far more often than by letter."""
+        query = self.engine.parse("亚索的斩钢闪改了吗")
+        self.assertEqual(query["subject"], "亚索")
+        self.assertEqual(query["ability"], "Q")
+        self.assertEqual(query.get("ability_from_name"), "斩钢闪")
+
+    def test_passive_name_resolves_to_passive(self):
+        query = self.engine.parse("亚索的浪客之道改了吗")
+        self.assertEqual(query["ability"], "被动")
+
+    def test_shipped_alias_table_covers_renamed_and_codenamed_items(self):
+        aliases = json.loads((ROOT / "data" / "patch" / "aliases.json").read_text(encoding="utf-8"))
+        for subject in ("卢登的配枪", "C44", "不朽之路"):
+            self.assertIn(subject, aliases, f"{subject} 应从语料补入别名表")
+            self.assertEqual(aliases[subject]["kind"], "item")
+
+    def test_unresolved_name_hint_mentions_items(self):
+        session = ask(self.engine, "26.17 电刀的攻速")
+        self.assertEqual(session["status"], "clarifying")
+        self.assertIn("没认出", answer_text(session))
+
     def test_earlier_subject_wins_over_a_shorter_item_inside_an_ability_name(self):
         """'瑞兹 R 被动过载涌动伤害' must resolve to 瑞兹, not to the item 过载."""
         engine = self.engine

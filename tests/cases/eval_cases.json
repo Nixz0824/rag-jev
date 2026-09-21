@@ -77,6 +77,22 @@
   {"id": "g03", "question": "26.9 到 26.12 赵信一共被改了几次", "kind": "aggregate",
    "expect": {"subject": "赵信", "patches": ["26.9", "26.11", "26.12"], "mentions": "其它模式"}},
   {"id": "g04", "question": "沃利贝尔历次被削弱的记录", "kind": "aggregate",
-   "expect": {"subject": "沃利贝尔", "mentions": "削弱"}}
+   "expect": {"subject": "沃利贝尔", "mentions": "削弱"}},
+  {"id": "i01", "question": "26.2 电刀改了什么", "kind": "pinned",
+   "target": {"patch": "26.2", "subject": "斯塔缇克电刃", "field_contains": "攻击力"}},
+  {"id": "i02", "question": "26.1 无尽多少钱了", "kind": "pinned",
+   "target": {"patch": "26.1", "subject": "无尽之刃", "field_contains": "费用"}},
+  {"id": "i03", "question": "25.10 帽子改了吗", "kind": "pinned",
+   "target": {"patch": "25.10", "subject": "灭世者的死亡之帽", "field_contains": "费用"}},
+  {"id": "i04", "question": "26.13 帝国指令法术强度", "kind": "pinned",
+   "target": {"patch": "26.13", "subject": "帝国指令", "field_contains": "法术强度"}},
+  {"id": "i05", "question": "26.15 锐雯的放逐之锋怎么改了", "kind": "pinned",
+   "target": {"patch": "26.15", "subject": "锐雯", "ability": "R", "field_contains": "额外攻击力"}},
+  {"id": "i06", "question": "26.2 C44 改了什么", "kind": "pinned",
+   "target": {"patch": "26.2", "subject": "C44", "field_contains": "攻击力"}},
+  {"id": "i07", "question": "25.10 卢登的配枪多少钱", "kind": "pinned",
+   "target": {"patch": "25.10", "subject": "卢登的配枪", "field_contains": "费用"}},
+  {"id": "i08", "question": "26.17 亚索的浪客之道改了吗", "kind": "pinned",
+   "target": {"patch": "26.17", "subject": "亚索", "ability": "被动", "field_contains": "暴击"}}
  ]
 }

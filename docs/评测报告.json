@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-21T13:51:43",
+ "generated_at": "2026-09-21T16:28:58",
  "case_file": [
   "eval_cases.json",
   "trap_cases.json"
@@ -40,7 +40,7 @@
    "26.18"
   ]
  },
- "cases": 76,
+ "cases": 84,
  "arms": {
   "bm25": {
    "single": {
@@ -54,10 +54,10 @@
     "version_asked": 28
    },
    "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
+    "total": 23,
+    "hit@1": 21,
+    "hit@5": 23,
+    "value_ok": 23,
     "jev_pick_ok": 0,
     "jev_picks": 0
    },
@@ -542,6 +542,62 @@
      "kind": "aggregate",
      "status": "verify",
      "aggregate_ok": true
+    },
+    {
+     "id": "i01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "i02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
     },
     {
      "id": "t01",
@@ -665,10 +721,10 @@
     "version_asked": 28
    },
    "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
+    "total": 23,
+    "hit@1": 22,
+    "hit@5": 23,
+    "value_ok": 23,
     "jev_pick_ok": 0,
     "jev_picks": 0
    },
@@ -1153,6 +1209,62 @@
      "kind": "aggregate",
      "status": "verify",
      "aggregate_ok": true
+    },
+    {
+     "id": "i01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
     },
     {
      "id": "t01",
@@ -1276,10 +1388,10 @@
     "version_asked": 28
    },
    "pinned": {
-    "total": 15,
-    "hit@1": 14,
-    "hit@5": 15,
-    "value_ok": 15,
+    "total": 23,
+    "hit@1": 21,
+    "hit@5": 23,
+    "value_ok": 23,
     "jev_pick_ok": 0,
     "jev_picks": 0
    },
@@ -1766,6 +1878,62 @@
      "aggregate_ok": true
     },
     {
+     "id": "i01",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "i02",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i03",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i04",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i05",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i06",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i07",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i08",
+     "kind": "pinned",
+     "status": "verify",
+     "rank": 1,
+     "value_ok": true
+    },
+    {
      "id": "t01",
      "kind": "trap",
      "status": "verify",
@@ -1887,12 +2055,12 @@
     "version_asked": 28
    },
    "pinned": {
-    "total": 15,
-    "hit@1": 15,
-    "hit@5": 15,
-    "value_ok": 15,
-    "jev_pick_ok": 11,
-    "jev_picks": 11
+    "total": 23,
+    "hit@1": 22,
+    "hit@5": 23,
+    "value_ok": 23,
+    "jev_pick_ok": 14,
+    "jev_picks": 14
    },
    "overview": {
     "total": 4,
@@ -1916,24 +2084,24 @@
     "ok": 4
    },
    "selfcheck": {
-    "total": 47,
-    "pass": 47
+    "total": 55,
+    "pass": 55
    },
    "jev": {
-    "calls": 32,
+    "calls": 37,
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.002762,
-    "latency_total": 29680,
-    "latency_calls": 32
+    "cost_usd": 0.0031240000000000005,
+    "latency_total": 33524,
+    "latency_calls": 37
    },
    "details": [
     {
      "id": "s01",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.72,
+     "self_check_min": 0.75,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1953,7 +2121,7 @@
      "id": "s03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.7,
+     "self_check_min": 0.67,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1963,7 +2131,7 @@
      "id": "s04",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.89,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1973,7 +2141,7 @@
      "id": "s05",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.83,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -1983,7 +2151,7 @@
      "id": "s06",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.93,
      "rank": 2,
      "version_asked": true,
      "version_ok": true,
@@ -1993,7 +2161,7 @@
      "id": "s07",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2003,7 +2171,7 @@
      "id": "s08",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.93,
+     "self_check_min": 0.94,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2013,7 +2181,7 @@
      "id": "s09",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.92,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2023,7 +2191,7 @@
      "id": "s10",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2033,7 +2201,7 @@
      "id": "s11",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.86,
+     "self_check_min": 0.81,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2053,7 +2221,7 @@
      "id": "s13",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.85,
+     "self_check_min": 0.87,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2063,7 +2231,7 @@
      "id": "s14",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.88,
+     "self_check_min": 0.9,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2073,7 +2241,7 @@
      "id": "s15",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.82,
+     "self_check_min": 0.79,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2083,7 +2251,7 @@
      "id": "s16",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.73,
+     "self_check_min": 0.79,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2103,7 +2271,7 @@
      "id": "s18",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.88,
+     "self_check_min": 0.82,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2113,7 +2281,7 @@
      "id": "s19",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2133,7 +2301,7 @@
      "id": "s21",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.91,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2143,7 +2311,7 @@
      "id": "s22",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.96,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2153,7 +2321,7 @@
      "id": "s23",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.91,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2163,7 +2331,7 @@
      "id": "s24",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.9,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2182,7 +2350,7 @@
      "id": "s26",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.96,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2192,7 +2360,7 @@
      "id": "s27",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.88,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2202,7 +2370,7 @@
      "id": "s28",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.96,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -2278,7 +2446,7 @@
      "id": "h01",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.86,
+     "self_check_min": 0.89,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2287,7 +2455,7 @@
      "id": "h02",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.93,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2305,7 +2473,7 @@
      "id": "h04",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.86,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2322,7 +2490,7 @@
      "id": "h06",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.93,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2331,7 +2499,7 @@
      "id": "h07",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.91,
+     "self_check_min": 0.9,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2349,7 +2517,7 @@
      "id": "h09",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.89,
+     "self_check_min": 0.93,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2358,7 +2526,7 @@
      "id": "h10",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.91,
      "rank": 1,
      "value_ok": true
     },
@@ -2374,7 +2542,7 @@
      "id": "h12",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.76,
+     "self_check_min": 0.79,
      "rank": 1,
      "value_ok": true
     },
@@ -2382,7 +2550,7 @@
      "id": "h13",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.83,
+     "self_check_min": 0.87,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2391,7 +2559,7 @@
      "id": "h14",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.94,
+     "self_check_min": 0.93,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2400,7 +2568,7 @@
      "id": "h15",
      "kind": "pinned",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.89,
      "rank": 1,
      "value_ok": true,
      "jev_pick": "target"
@@ -2430,10 +2598,77 @@
      "aggregate_ok": true
     },
     {
+     "id": "i01",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 2,
+     "value_ok": true
+    },
+    {
+     "id": "i02",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "i03",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.81,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i04",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.77,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "i05",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "value_ok": true,
+     "jev_pick": "target"
+    },
+    {
+     "id": "i06",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i07",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.82,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
+     "id": "i08",
+     "kind": "pinned",
+     "status": "verify",
+     "self_check_min": 0.76,
+     "rank": 1,
+     "value_ok": true
+    },
+    {
      "id": "t01",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.58,
+     "self_check_min": 0.63,
      "trap_ok": true
     },
     {
@@ -2521,7 +2756,7 @@
      "id": "t15",
      "kind": "trap",
      "status": "verify",
-     "self_check_min": 0.62,
+     "self_check_min": 0.63,
      "trap_ok": true
     },
     {

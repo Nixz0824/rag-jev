@@ -40,7 +40,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.76
+   "gap": 0.77
   },
   {
    "id": "b04",
@@ -51,7 +51,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.82
+   "gap": 0.85
   },
   {
    "id": "b06",
@@ -95,7 +95,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.92
+   "gap": 0.93
   },
   {
    "id": "b14",
@@ -106,7 +106,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": false,
-   "gap": 0.01
+   "gap": 0.05
   },
   {
    "id": "b16",
@@ -139,7 +139,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.87
+   "gap": 0.88
   },
   {
    "id": "c01",
@@ -150,7 +150,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.69
+   "gap": 0.65
   },
   {
    "id": "c02",
@@ -161,7 +161,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.83
+   "gap": 0.84
   },
   {
    "id": "c04",
@@ -172,7 +172,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.91
+   "gap": 0.93
   },
   {
    "id": "c07",
@@ -183,7 +183,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.93
+   "gap": 0.94
   },
   {
    "id": "c08",
@@ -194,7 +194,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.72
+   "gap": 0.74
   },
   {
    "id": "c09",
@@ -205,7 +205,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.81
+   "gap": 0.82
   },
   {
    "id": "c11",
@@ -227,7 +227,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.91
+   "gap": 0.92
   },
   {
    "id": "c15",
@@ -238,7 +238,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.9
+   "gap": 0.89
   },
   {
    "id": "c17",
@@ -271,7 +271,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.91
+   "gap": 0.92
   },
   {
    "id": "c22",
@@ -282,7 +282,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.85
+   "gap": 0.83
   },
   {
    "id": "s02",
@@ -293,7 +293,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.81
+   "gap": 0.82
   },
   {
    "id": "s05",
@@ -304,7 +304,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.81
+   "gap": 0.85
   },
   {
    "id": "s06",
@@ -315,7 +315,7 @@
    "bm25_ok": false,
    "jev_ok": false,
    "decisive": true,
-   "gap": 0.23
+   "gap": 0.26
   },
   {
    "id": "s07",
@@ -326,7 +326,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.72
+   "gap": 0.76
   },
   {
    "id": "s08",
@@ -337,7 +337,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.91
+   "gap": 0.89
   },
   {
    "id": "s09",
@@ -348,7 +348,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.88
+   "gap": 0.89
   },
   {
    "id": "s10",
@@ -359,7 +359,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.65
+   "gap": 0.68
   },
   {
    "id": "s11",
@@ -370,7 +370,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.92
+   "gap": 0.93
   },
   {
    "id": "s12",
@@ -381,7 +381,7 @@
    "bm25_ok": false,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.43
+   "gap": 0.38
   },
   {
    "id": "s13",
@@ -403,7 +403,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.89
+   "gap": 0.86
   },
   {
    "id": "s15",
@@ -414,7 +414,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.78
+   "gap": 0.77
   },
   {
    "id": "s16",
@@ -425,7 +425,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.78
+   "gap": 0.77
   },
   {
    "id": "s17",
@@ -436,7 +436,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.94
+   "gap": 0.93
   },
   {
    "id": "s18",
@@ -458,7 +458,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.89
+   "gap": 0.9
   },
   {
    "id": "s20",
@@ -469,7 +469,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.81
+   "gap": 0.82
   },
   {
    "id": "s21",
@@ -480,7 +480,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.77
+   "gap": 0.8
   },
   {
    "id": "s22",
@@ -491,7 +491,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.89
+   "gap": 0.88
   },
   {
    "id": "s23",
@@ -502,7 +502,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.82
+   "gap": 0.81
   },
   {
    "id": "s24",
@@ -546,7 +546,7 @@
    "bm25_ok": true,
    "jev_ok": true,
    "decisive": true,
-   "gap": 0.23
+   "gap": 0.24
   }
  ]
 }

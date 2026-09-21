@@ -1,14 +1,14 @@
 {
- "generated_at": "2026-09-21T14:16:59",
+ "generated_at": "2026-09-21T16:03:10",
  "totals": {
   "patches": 30,
   "chunks": 4995,
   "structured": 2212,
   "narrative": 2783,
   "unknown": 198,
-  "limited": 410,
-  "champions": 156,
-  "items": 58,
+  "limited": 706,
+  "champions": 170,
+  "items": 85,
   "abilities": 1008
  },
  "recent": {
@@ -18,8 +18,8 @@
   "structured": 503,
   "narrative": 673,
   "unknown": 46,
-  "limited": 111,
-  "champions": 86,
+  "limited": 131,
+  "champions": 96,
   "items": 29,
   "abilities": 265
  },

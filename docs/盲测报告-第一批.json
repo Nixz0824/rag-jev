@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-21T16:30:46",
+ "generated_at": "2026-09-21T16:30:18",
  "case_file": [
-  "blind_cases_2.json"
+  "blind_cases.json"
  ],
  "use_case_version": true,
  "corpus": {
@@ -39,7 +39,7 @@
    "26.18"
   ]
  },
- "cases": 40,
+ "cases": 38,
  "arms": {
   "hybrid": {
    "single": {
@@ -48,9 +48,9 @@
     "hit@5": 20,
     "value_ok": 20,
     "value_total": 20,
-    "version_ok": 14,
-    "gt_missing": 2,
-    "version_asked": 14
+    "version_ok": 12,
+    "gt_missing": 0,
+    "version_asked": 12
    },
    "pinned": {
     "total": 0,
@@ -61,25 +61,25 @@
     "jev_picks": 0
    },
    "overview": {
-    "total": 6,
-    "ok": 6,
+    "total": 8,
+    "ok": 8,
     "subject_miss": 0
    },
    "absent": {
-    "total": 3,
-    "refused": 3
+    "total": 5,
+    "refused": 5
    },
    "out_of_scope": {
-    "total": 3,
-    "refused": 3
+    "total": 5,
+    "refused": 5
    },
    "trap": {
     "total": 0,
     "ok": 0
    },
    "aggregate": {
-    "total": 6,
-    "ok": 6
+    "total": 0,
+    "ok": 0
    },
    "selfcheck": {
     "total": 0,
@@ -96,16 +96,7 @@
    },
    "details": [
     {
-     "id": "c01",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c02",
+     "id": "b01",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -113,13 +104,7 @@
      "value_ok": true
     },
     {
-     "id": "c03",
-     "kind": "single",
-     "status": "abstained",
-     "ground_truth": "missing_in_corpus"
-    },
-    {
-     "id": "c04",
+     "id": "b02",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -128,7 +113,7 @@
      "value_ok": true
     },
     {
-     "id": "c05",
+     "id": "b03",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -137,25 +122,7 @@
      "value_ok": true
     },
     {
-     "id": "c06",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c07",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c08",
+     "id": "b04",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -163,7 +130,7 @@
      "value_ok": true
     },
     {
-     "id": "c09",
+     "id": "b05",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -172,25 +139,7 @@
      "value_ok": true
     },
     {
-     "id": "c10",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c11",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c12",
+     "id": "b06",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -198,7 +147,7 @@
      "value_ok": true
     },
     {
-     "id": "c13",
+     "id": "b07",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -207,16 +156,7 @@
      "value_ok": true
     },
     {
-     "id": "c14",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c15",
+     "id": "b08",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -224,7 +164,7 @@
      "value_ok": true
     },
     {
-     "id": "c16",
+     "id": "b09",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -233,25 +173,7 @@
      "value_ok": true
     },
     {
-     "id": "c17",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c18",
-     "kind": "single",
-     "status": "verify",
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c19",
+     "id": "b10",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -259,13 +181,16 @@
      "value_ok": true
     },
     {
-     "id": "c20",
+     "id": "b11",
      "kind": "single",
-     "status": "abstained",
-     "ground_truth": "missing_in_corpus"
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
     },
     {
-     "id": "c21",
+     "id": "b12",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -273,7 +198,69 @@
      "value_ok": true
     },
     {
-     "id": "c22",
+     "id": "b13",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b14",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b15",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b16",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "field_key_note": "语料字段键为 cost",
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b17",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b18",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b19",
+     "kind": "single",
+     "status": "verify",
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b20",
      "kind": "single",
      "status": "verify",
      "rank": 1,
@@ -318,40 +305,16 @@
      "overview_ok": true
     },
     {
-     "id": "g01",
-     "kind": "aggregate",
+     "id": "o07",
+     "kind": "overview",
      "status": "verify",
-     "aggregate_ok": true
+     "overview_ok": true
     },
     {
-     "id": "g02",
-     "kind": "aggregate",
+     "id": "o08",
+     "kind": "overview",
      "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g03",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g04",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g05",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g06",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
+     "overview_ok": true
     },
     {
      "id": "a01",
@@ -372,6 +335,18 @@
      "refused": true
     },
     {
+     "id": "a04",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a05",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
      "id": "x01",
      "kind": "out_of_scope",
      "status": "abstained",
@@ -385,6 +360,18 @@
     },
     {
      "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x05",
      "kind": "out_of_scope",
      "status": "abstained",
      "refused": true
@@ -398,9 +385,9 @@
     "hit@5": 20,
     "value_ok": 20,
     "value_total": 20,
-    "version_ok": 14,
-    "gt_missing": 2,
-    "version_asked": 14
+    "version_ok": 12,
+    "gt_missing": 0,
+    "version_asked": 12
    },
    "pinned": {
     "total": 0,
@@ -411,25 +398,25 @@
     "jev_picks": 0
    },
    "overview": {
-    "total": 6,
-    "ok": 6,
+    "total": 8,
+    "ok": 8,
     "subject_miss": 0
    },
    "absent": {
-    "total": 3,
-    "refused": 3
+    "total": 5,
+    "refused": 5
    },
    "out_of_scope": {
-    "total": 3,
-    "refused": 3
+    "total": 5,
+    "refused": 5
    },
    "trap": {
     "total": 0,
     "ok": 0
    },
    "aggregate": {
-    "total": 6,
-    "ok": 6
+    "total": 0,
+    "ok": 0
    },
    "selfcheck": {
     "total": 20,
@@ -440,78 +427,42 @@
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.000727,
-    "latency_total": 7425,
+    "cost_usd": 0.000838,
+    "latency_total": 7130,
     "latency_calls": 8
    },
    "details": [
     {
-     "id": "c01",
+     "id": "b01",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c02",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.96,
+     "self_check_min": 0.92,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
     },
     {
-     "id": "c03",
-     "kind": "single",
-     "status": "abstained",
-     "ground_truth": "missing_in_corpus"
-    },
-    {
-     "id": "c04",
+     "id": "b02",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.88,
+     "self_check_min": 0.85,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "c05",
+     "id": "b03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "c06",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.91,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c07",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.84,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c08",
+     "id": "b04",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.9,
@@ -520,85 +471,26 @@
      "value_ok": true
     },
     {
-     "id": "c09",
+     "id": "b05",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.87,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
      "value_ok": true
     },
     {
-     "id": "c10",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.85,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c11",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.93,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c12",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.92,
-     "rank": 1,
-     "version_asked": false,
-     "value_ok": true
-    },
-    {
-     "id": "c13",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.88,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c14",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.85,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c15",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.92,
-     "rank": 1,
-     "version_asked": false,
-     "value_ok": true
-    },
-    {
-     "id": "c16",
+     "id": "b06",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.91,
      "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
+     "version_asked": false,
      "value_ok": true
     },
     {
-     "id": "c17",
+     "id": "b07",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.89,
@@ -608,32 +500,45 @@
      "value_ok": true
     },
     {
-     "id": "c18",
+     "id": "b08",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.89,
-     "rank": 1,
-     "version_asked": true,
-     "version_ok": true,
-     "value_ok": true
-    },
-    {
-     "id": "c19",
-     "kind": "single",
-     "status": "verify",
-     "self_check_min": 0.81,
+     "self_check_min": 0.95,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
     },
     {
-     "id": "c20",
+     "id": "b09",
      "kind": "single",
-     "status": "abstained",
-     "ground_truth": "missing_in_corpus"
+     "status": "verify",
+     "self_check_min": 0.82,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
     },
     {
-     "id": "c21",
+     "id": "b10",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b11",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.87,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b12",
      "kind": "single",
      "status": "verify",
      "self_check_min": 0.88,
@@ -642,10 +547,79 @@
      "value_ok": true
     },
     {
-     "id": "c22",
+     "id": "b13",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.85,
+     "self_check_min": 0.68,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b14",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b15",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.83,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b16",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "field_key_note": "语料字段键为 cost",
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b17",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.75,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b18",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b19",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b20",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.91,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -688,40 +662,16 @@
      "overview_ok": true
     },
     {
-     "id": "g01",
-     "kind": "aggregate",
+     "id": "o07",
+     "kind": "overview",
      "status": "verify",
-     "aggregate_ok": true
+     "overview_ok": true
     },
     {
-     "id": "g02",
-     "kind": "aggregate",
+     "id": "o08",
+     "kind": "overview",
      "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g03",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g04",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g05",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
-    },
-    {
-     "id": "g06",
-     "kind": "aggregate",
-     "status": "verify",
-     "aggregate_ok": true
+     "overview_ok": true
     },
     {
      "id": "a01",
@@ -742,6 +692,18 @@
      "refused": true
     },
     {
+     "id": "a04",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a05",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
      "id": "x01",
      "kind": "out_of_scope",
      "status": "abstained",
@@ -755,6 +717,18 @@
     },
     {
      "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x05",
      "kind": "out_of_scope",
      "status": "abstained",
      "refused": true
