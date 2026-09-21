@@ -4,9 +4,9 @@ Players ask by skill name far more often than by letter ("亚索的斩钢闪改�
 parser needs a name -> Q/W/E/R map. Data Dragon's championFull carries the official
 Chinese names, so this stays self-contained.
 
-Optionally cross-checks against another LoL term dictionary (Korean/Chinese/English
-LoL glossary) when it is present locally: the comparison is printed as validation, and
-terms-dict is never required for the build.
+Optionally cross-checks the generated names against another LoL term dictionary: point
+RAGJEV_TERMS at a JSON file whose "terms" list carries category/chinese fields. The
+comparison is printed as validation; the file is never required for the build.
 
 Usage:
     python scripts/build_abilities.py                 # fetch/cached Data Dragon
@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -30,6 +31,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/128.0 Safari/537.36"
+# Optional external dictionary for a cross-check, e.g. another project's Data Dragon export.
 CROSS_CHECK_TERMS = os.environ.get("RAGJEV_TERMS", "")
 SLOTS = ("Q", "W", "E", "R")
 
@@ -100,13 +102,13 @@ def main() -> int:
     total = sum(len(names) for names in abilities.values())
     print(f"Data Dragon {version}：英雄 {len(abilities)} 个、技能名 {total} 条 → {PATCH_DATA / 'abilities.json'}")
 
-    if CROSS_CHECK_TERMS.exists():
-        terms = json.loads(CROSS_CHECK_TERMS.read_text(encoding="utf-8")).get("terms", [])
+    if CROSS_CHECK_TERMS and Path(CROSS_CHECK_TERMS).exists():
+        terms = json.loads(Path(CROSS_CHECK_TERMS).read_text(encoding="utf-8")).get("terms", [])
         theirs = {term["chinese"] for term in terms if term.get("category") == "championAbility" and term.get("chinese")}
         ours = {name for names in abilities.values() for name in names.values()}
         shared = theirs & ours
         print(
-            f"交叉核对（外部词典）：技能名 {len(theirs)} 条，与本字典重合 {len(shared)} 条"
+            f"交叉核对（外部词典 {Path(CROSS_CHECK_TERMS).name}）：技能名 {len(theirs)} 条，与本字典重合 {len(shared)} 条"
             f"（{len(shared) / max(len(theirs), 1):.0%}）；本字典独有 {len(ours - theirs)} 条"
         )
         if theirs - ours:
