@@ -179,13 +179,13 @@ select, input[type="text"] {
 @media (max-width: 900px) { .jev-grid { grid-template-columns: 1fr; } }
 .jev-block h4 { margin: 0 0 10px; font: 11px/1 var(--mono); letter-spacing: 0.16em; color: var(--ink-faint); text-transform: uppercase; }
 .bars { display: flex; flex-direction: column; gap: 8px; }
-.bar { display: grid; grid-template-columns: minmax(0, 1fr) 62px; gap: 10px; align-items: center; font-size: 12.5px; }
-.bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-dim); }
-.bar-track { grid-column: 1; grid-row: 2; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; }
-.bar-fill { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 0.9s cubic-bezier(0.2,0.8,0.2,1); }
-.bar.winner .bar-label { color: #fff; }
-.bar.winner .bar-fill { background: var(--ok); }
-.bar-score { grid-column: 2; grid-row: 1 / span 2; font: 600 12px/1 var(--mono); color: var(--ink-dim); text-align: right; align-self: center; }
+.bars .bar { display: grid; grid-template-columns: minmax(0, 1fr) 62px; gap: 10px; align-items: center; font-size: 12.5px; }
+.bars .bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-dim); }
+.bars .bar-track { grid-column: 1; grid-row: 2; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.bars .bar-fill { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 0.9s cubic-bezier(0.2,0.8,0.2,1); }
+.bars .bar.winner .bar-label { color: #fff; }
+.bars .bar.winner .bar-fill { background: var(--ok); }
+.bars .bar-score { grid-column: 2; grid-row: 1 / span 2; font: 600 12px/1 var(--mono); color: var(--ink-dim); text-align: right; align-self: center; }
 .jev-verdict { margin: 10px 0 0; font-size: 12.5px; color: var(--ink-dim); }
 .gauge { position: relative; width: 92px; height: 92px; display: grid; place-items: center; }
 .gauge-ring {
@@ -229,7 +229,7 @@ select, input[type="text"] {
 .chart-body .row-label { font: 12px var(--mono); fill: var(--ink-dim); }
 .chart-body .row-value { font: 700 12px var(--mono); fill: var(--ink); }
 .chart-body .bar-bg { fill: rgba(255,255,255,0.06); }
-.chart-body .bar-fill { fill: var(--accent); transition: width 1s cubic-bezier(0.2,0.8,0.2,1); }
+.chart-body .bar-fill { fill: var(--accent); height: 12px; transition: width 1s cubic-bezier(0.2,0.8,0.2,1); }
 .chart-body .bar-fill.plain { fill: rgba(255,255,255,0.28); }
 .chart-body .dot { fill: var(--ok); }
 .chart-body .dot.bad { fill: var(--hot); }

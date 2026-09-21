@@ -208,11 +208,23 @@ async function loadMeta() {
     }
     $("patch-hint").textContent = `收录 ${state.patches[0]}—${meta.latest}`;
     const ticker = $("ticker");
-    const words = [...state.patches, "JEV 重排", "回答自检", "盲测 38 题", "数值只来自公告", "本地推理"];
+    const words = [...state.patches, "JEV 重排", "回答自检", "盲测 78 题", "数值只来自公告", "本地推理"];
     ticker.innerHTML = words.concat(words).map((word) => `<span>${esc(word)}</span>`).join("");
     $("examples").innerHTML = (meta.examples || [])
       .map((text) => `<button type="button" data-q="${esc(text)}">${esc(text)}</button>`)
       .join("");
+    // Shareable links: /?q=<问题> asks it on load, /?view=<区块> jumps to a section.
+    const params = new URLSearchParams(location.search);
+    const shared = params.get("q");
+    if (shared && !state.busy) {
+      $("input").value = shared;
+      ask(shared);
+    }
+    const view = params.get("view");
+    if (view) {
+      const target = document.getElementById(view);
+      if (target) setTimeout(() => target.scrollIntoView({ behavior: reduced ? "auto" : "smooth" }), shared ? 2500 : 300);
+    }
   } catch (error) {
     $("patch-hint").textContent = "元数据不可用：" + error.message;
   }
@@ -386,7 +398,8 @@ function gradients(node) {
 }
 
 /* 盲测成绩：横向条形 */
-function chartBlind(box, runs) {
+function chartBlind(box, payload) {
+  const runs = payload.runs || [];
   const blind = runs.find((run) => run.name === "盲测报告-合并") || {};
   const arms = blind.arms || {};
   const arm = arms["hybrid+jev"] || arms["hybrid"] || {};
@@ -575,7 +588,13 @@ function renderCharts(payload) {
   };
   document.querySelectorAll("[data-chart]").forEach((box) => {
     const renderer = boxes[box.dataset.chart];
-    if (renderer) renderer(box, payload);
+    if (!renderer) return;
+    // One broken renderer must not blank the charts after it.
+    try {
+      renderer(box, payload);
+    } catch (error) {
+      box.innerHTML = `<p class="ghost">图表渲染失败：${esc(error.message)}</p>`;
+    }
   });
   animateCharts();
   observeReveals();
@@ -604,8 +623,8 @@ async function loadEvaluation() {
   const jevArm = (run) => (run?.arms || {})["hybrid+jev"] || {};
   const arms = (run) => run?.arms || {};
 
-  const blindCost = jevArm(same).jev;
-  if (blindCost?.calls) $("stat-cost").textContent = "$" + (blindCost.cost_usd / blindCost.calls).toFixed(6);
+  const cost = jevArm(same).jev;
+  if (cost?.calls) $("stat-cost").textContent = "$" + (cost.cost_usd / cost.calls).toFixed(6);
 
   const rows = [];
   const pushArm = (run, name, arm, scope) => {

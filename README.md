@@ -24,6 +24,26 @@
 
 ---
 
+## 界面
+
+本地单页工作台（`web/`），左侧竖排索引，问答 / 结构 / Jev / 数据 / 对比五段。
+
+**问答**：回答里的数字直接来自公告条目，右边同步显示 Jev 的候选打分、是否采用 Jev 顺序、自检支持度与本次费用。
+
+![问答](docs/screenshots/ask.png)
+
+**Jev 到底加成了什么**：三个实验的图表（自检注入点图、排序能力对照、生产链路记账）。
+
+![Jev](docs/screenshots/jev.png)
+
+**评测与语料**：盲测成绩、扩容前后、逐版本语料结构；表格与「Jev 净贡献」清单都读 `docs/*.json`。
+
+![数据](docs/screenshots/data.png)
+
+支持分享链接：`/?q=26.17 薇恩 W 真实伤害是多少` 打开即提问，`/?view=jev` 直接跳到某个区块。
+
+---
+
 ## 一、语料规模
 
 `python scripts/corpus_stats.py` 生成，完整表格见 [docs/语料统计.md](docs/语料统计.md)。
@@ -207,6 +227,7 @@ python scripts/evaluate_patch.py              # 四口径 A/B（需模型在跑�
 python scripts/calibrate.py --report          # 门槛测量（结论：不采用）
 python scripts/ingest_en.py --offline         # 与英文公告对照核验
 python scripts/review_feedback.py             # 复核页面反馈，产出 docs/反馈复核.md
+python tools/screenshot.py                    # 用 CDP 截界面图（需 Edge + 服务在跑）
 # 盲测（先按 docs/盲测集提示词.md 与 提示词-第二批.md 出题）：
 python scripts/evaluate_patch.py --cases tests\cases\blind_cases.json --out docs\盲测报告-第一批.md
 python scripts/evaluate_patch.py --cases tests\cases\blind_cases_2.json --out docs\盲测报告-第二批.md
