@@ -618,6 +618,11 @@ class PatchEngine:
                 "cost_usd": jev_meta["cost_usd"],
                 "model": jev_meta["model"],
                 "scores": jev_meta["scores"],
+                # kept so the UI and the evaluation can show retrieval order vs Jev order
+                "retrieval_top": hits[0]["id"] if hits else None,
+                "after_top": ordered[0]["id"] if ordered else None,
+                "decisive": jev_meta.get("decisive", True),
+                "gap": jev_meta.get("gap", 0.0),
             }
             session["trace"].append(
                 {

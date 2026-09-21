@@ -314,7 +314,33 @@ def evaluation() -> dict:
             )
         except (OSError, json.JSONDecodeError):
             pass
-    return {"runs": runs}
+
+    extras = {}
+    for key, filename in (
+        ("jev_effect", "Jev效果.json"),
+        ("jev_ranker", "Jev效果-排序对照.json"),
+        ("jev_selfcheck", "Jev自检.json"),
+    ):
+        path = DOCS / filename
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if key == "jev_selfcheck":
+            extras[key] = {
+                "cases": payload.get("cases", 0),
+                "detected": payload.get("detected", 0),
+                "false_alarms": payload.get("false_alarms", 0),
+                "threshold": payload.get("threshold", 0.5),
+                "control_mean": (payload.get("control") or {}).get("mean", 0),
+                "mutation_mean": (payload.get("mutation") or {}).get("mean", 0),
+                "cost_usd": payload.get("cost_usd", 0),
+            }
+        else:
+            extras[key] = payload.get("stats", {})
+    return {"runs": runs, **extras}
 
 
 def patch_compare(path: str) -> dict:

@@ -1,0 +1,769 @@
+{
+ "generated_at": "2026-09-21T14:02:15",
+ "stats": {
+  "total": 83,
+  "candidates_lt2": 39,
+  "kept": 82,
+  "kept_ok": 80,
+  "kept_bad": 2,
+  "reordered": 1,
+  "reordered_ok": 1,
+  "reordered_bad": 0,
+  "reordered_both_bad": 0,
+  "no_target": 2
+ },
+ "rows": [
+  {
+   "id": "b01",
+   "question": "ez 的 Q AP 加成现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p05e35435d805bc",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b02",
+   "question": "26.9 希瓦娜 W 冷却现在几秒",
+   "action": "保留（同序）",
+   "gap": 0.92,
+   "retrieval_top": "p8372e38ec8e2fc",
+   "after_top": "p8372e38ec8e2fc",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b03",
+   "question": "26.10 艾尼维亚基础护甲改成多少了",
+   "action": "保留（同序）",
+   "gap": 0.76,
+   "retrieval_top": "p53ff05f0aa60a9",
+   "after_top": "p53ff05f0aa60a9",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b04",
+   "question": "李青 W 的护盾现在多少",
+   "action": "保留（同序）",
+   "gap": 0.79,
+   "retrieval_top": "p0a1c7ea74f03b9",
+   "after_top": "p0a1c7ea74f03b9",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b05",
+   "question": "26.11 布兰德基础护甲变多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p6219d46861bf61",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b06",
+   "question": "卡萨丁 Q 冷却现在几秒",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p7888c94670d205",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b07",
+   "question": "26.12 亚托克斯 Q 甜蜜点伤害改成多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p29d57abd74f203",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b08",
+   "question": "奥莉安娜基础生命值现在多少",
+   "action": "保留（同序）",
+   "gap": 0.91,
+   "retrieval_top": "p5ddc67d6f0ed2c",
+   "after_top": "p5ddc67d6f0ed2c",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b09",
+   "question": "26.13 Kai'Sa W 冷却现在几秒",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p1541a934107f68",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b10",
+   "question": "赛娜被动暴击伤害惩罚现在是多少",
+   "action": "保留（同序）",
+   "gap": 0.92,
+   "retrieval_top": "pd4696cc0a33dbb",
+   "after_top": "pd4696cc0a33dbb",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b11",
+   "question": "26.14 盖伦 R 的真实伤害现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p6e45776dfc09ef",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b12",
+   "question": "娜美 E 每次伤害改成多少了",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p8526b3dab4aa79",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b13",
+   "question": "26.15 牛头移速现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p36cb09e2df605f",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b14",
+   "question": "26.15 锐雯 R 额外攻击力加成现在多少",
+   "action": "保留（分差不足）",
+   "gap": 0.05,
+   "retrieval_top": "p979c4b8d4bfe72",
+   "after_top": "p979c4b8d4bfe72",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b15",
+   "question": "26.16 阿兹尔 Q 伤害现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p9b2e8aeec7a4a2",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b16",
+   "question": "26.16 卡蜜尔基础法力值变多少",
+   "action": "保留（同序）",
+   "gap": 0.91,
+   "retrieval_top": "pb9c9d0040d5fdf",
+   "after_top": "pb9c9d0040d5fdf",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b17",
+   "question": "Yasuo 被动暴击伤害惩罚现在是多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p42252b007baecd",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b18",
+   "question": "26.17 Vayne W 的真实伤害现在几%",
+   "action": "保留（同序）",
+   "gap": 0.85,
+   "retrieval_top": "p49c4a12662a929",
+   "after_top": "p49c4a12662a929",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "b19",
+   "question": "萨勒芬妮 E 冷却现在几秒",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p7110ee7eece7e0",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "b20",
+   "question": "26.18 Kassadin Q AP ratio 现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pde7db96d083a06",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c01",
+   "question": "15.13 船长 Q 蓝耗改成多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pe6d136e5cb5260",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c02",
+   "question": "鸟皇基础生命值现在多少",
+   "action": "保留（同序）",
+   "gap": 0.84,
+   "retrieval_top": "p2e758cc5254633",
+   "after_top": "p2e758cc5254633",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c04",
+   "question": "15.17 格温成长攻速现在是多少",
+   "action": "保留（同序）",
+   "gap": 0.93,
+   "retrieval_top": "p590d1d46db2c5d",
+   "after_top": "p590d1d46db2c5d",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c05",
+   "question": "15.18 熊被动每100法强的攻速收益现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p361a9fe260802d",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c06",
+   "question": "15.19 女警基础攻击力改成多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pce52fe985765dc",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c07",
+   "question": "15.20 艾尼维亚 Q 冷却时间现在是多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p975f99304aa2dc",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c08",
+   "question": "Volibear E AP ratio 现在多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pbde840c9135479",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c09",
+   "question": "15.20 狼人后期成长攻击力改成多少",
+   "action": "保留（同序）",
+   "gap": 0.86,
+   "retrieval_top": "p408cbebf0c881d",
+   "after_top": "p408cbebf0c881d",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c10",
+   "question": "15.21 ez 的成长攻击力改成多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p5cc5f7e6c87cfb",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c11",
+   "question": "15.22 熊的基础护甲现在多少",
+   "action": "保留（同序）",
+   "gap": 0.94,
+   "retrieval_top": "p12c8b763be32fa",
+   "after_top": "p12c8b763be32fa",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c12",
+   "question": "斯卡纳 Q 对目标最大生命值的伤害现在多少",
+   "action": "保留（同序）",
+   "gap": 0.9,
+   "retrieval_top": "p05dea0d0dba0fa",
+   "after_top": "p05dea0d0dba0fa",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c13",
+   "question": "15.24 维克托 Q 护盾值改成什么",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p3ab414c70089ee",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c14",
+   "question": "25.10 赵信成长护甲变多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pefba7bcafc13b6",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c15",
+   "question": "瑞兹 R 被动过载涌动伤害现在怎么改的",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p06020357fddaae",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c16",
+   "question": "25.15 牛头基础护甲削到多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pc501c14529547a",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c17",
+   "question": "26.1 凯特琳 R 的 crit scaling 现在怎么写",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p948ab7d150d1d8",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c18",
+   "question": "26.2 石头人 E 伤害新数值是多少",
+   "action": "保留（同序）",
+   "gap": 0.89,
+   "retrieval_top": "p9feb64b263a69c",
+   "after_top": "p9feb64b263a69c",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "c19",
+   "question": "Volibear Q 额外物理伤害的新数值是多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p75ff32d6f224eb",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c21",
+   "question": "男枪基础攻击力现在是多少",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p674796c108ab0a",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "c22",
+   "question": "26.8 卢锡安 E cooldown 改成多少",
+   "action": "保留（同序）",
+   "gap": 0.85,
+   "retrieval_top": "p2c2b0e1cc6aa9c",
+   "after_top": "p2c2b0e1cc6aa9c",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s01",
+   "question": "26.17 亚索改了什么",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p42252b007baecd",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s02",
+   "question": "26.17 薇恩 W 真实伤害改成多少",
+   "action": "保留（同序）",
+   "gap": 0.53,
+   "retrieval_top": "p49c4a12662a929",
+   "after_top": "p49c4a12662a929",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s03",
+   "question": "16.17 岚切怎么调整的",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p48274e2d8cc693",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s04",
+   "question": "26.17 锤石主动伤害怎么改的",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p74f437b0879af2",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s05",
+   "question": "26.17 奥瑞利安·索尔 Q 每秒法力消耗",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p986c242e14a13e",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s06",
+   "question": "26.17 乐芙兰攻击速度怎么改的",
+   "action": "保留（同序）",
+   "gap": 0.22,
+   "retrieval_top": "p421b15ad2c0b41",
+   "after_top": "p421b15ad2c0b41",
+   "ok": false,
+   "retrieval_ok": false
+  },
+  {
+   "id": "s07",
+   "question": "26.18 卡西奥佩娅 Q 伤害",
+   "action": "保留（同序）",
+   "gap": 0.58,
+   "retrieval_top": "p7c8627c6093f93",
+   "after_top": "p7c8627c6093f93",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s08",
+   "question": "26.18 艾克 Q 蓝耗改了吗",
+   "action": "保留（同序）",
+   "gap": 0.91,
+   "retrieval_top": "pfbb3c4354de5e3",
+   "after_top": "pfbb3c4354de5e3",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s09",
+   "question": "26.16 卡蜜尔被动护盾改成多少",
+   "action": "保留（同序）",
+   "gap": 0.84,
+   "retrieval_top": "pf1f70c0dfbde25",
+   "after_top": "pf1f70c0dfbde25",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s10",
+   "question": "26.16 波比的攻击力",
+   "action": "保留（同序）",
+   "gap": 0.6,
+   "retrieval_top": "pcd0da6f90e919a",
+   "after_top": "pcd0da6f90e919a",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s11",
+   "question": "26.15 莫德凯撒 E 冷却时间",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p11c969f73844c0",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s12",
+   "question": "26.15 洛克基础生命值",
+   "action": "保留（同序）",
+   "gap": 0.43,
+   "retrieval_top": "p1493365fd5ddb9",
+   "after_top": "p1493365fd5ddb9",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s13",
+   "question": "26.14 库奇成长攻击力",
+   "action": "保留（同序）",
+   "gap": 0.81,
+   "retrieval_top": "p108ba9825b3d3d",
+   "after_top": "p108ba9825b3d3d",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s14",
+   "question": "26.14 原生质护带的费用",
+   "action": "保留（同序）",
+   "gap": 0.87,
+   "retrieval_top": "p4cdc6ab51a2d31",
+   "after_top": "p4cdc6ab51a2d31",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s15",
+   "question": "26.13 德莱文 E 冷却时间改了吗",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pb2d45a4297926b",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s16",
+   "question": "26.13 帝国指令法术强度",
+   "action": "保留（同序）",
+   "gap": 0.76,
+   "retrieval_top": "p6f6ca8470ad8f1",
+   "after_top": "p6f6ca8470ad8f1",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s17",
+   "question": "26.12 奥莉安娜 基础生命值",
+   "action": "保留（同序）",
+   "gap": 0.92,
+   "retrieval_top": "p5ddc67d6f0ed2c",
+   "after_top": "p5ddc67d6f0ed2c",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s18",
+   "question": "26.12 格温 E 攻速",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pda677d66db0e01",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s19",
+   "question": "26.11 卡萨丁 Q 冷却时间",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p7888c94670d205",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s20",
+   "question": "26.11 提莫成长护甲",
+   "action": "保留（同序）",
+   "gap": 0.84,
+   "retrieval_top": "p144f8e5c4bf30d",
+   "after_top": "p144f8e5c4bf30d",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s21",
+   "question": "26.10 希瓦娜每级生命值",
+   "action": "保留（同序）",
+   "gap": 0.77,
+   "retrieval_top": "p9dd42dec53dd48",
+   "after_top": "p9dd42dec53dd48",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s22",
+   "question": "26.10 孙悟空 W 分身时长",
+   "action": "保留（同序）",
+   "gap": 0.85,
+   "retrieval_top": "p59fc9783e4ecad",
+   "after_top": "p59fc9783e4ecad",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s23",
+   "question": "26.9 伊泽瑞尔 Q 法强收益率",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p05e35435d805bc",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s24",
+   "question": "26.9 电震涡流剑的费用",
+   "action": "保留（同序）",
+   "gap": 0.91,
+   "retrieval_top": "pd531f52e4f3eec",
+   "after_top": "pd531f52e4f3eec",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s25",
+   "question": "26.17 压缩的 Q 怎么变",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p9a83d4259d14f4",
+   "after_top": null,
+   "ok": false
+  },
+  {
+   "id": "s26",
+   "question": "26.17 魔腾的护甲",
+   "action": "保留（同序）",
+   "gap": 0.87,
+   "retrieval_top": "p828e589988e3e9",
+   "after_top": "p828e589988e3e9",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "s27",
+   "question": "26.17 艾瑞莉娅 Q 伤害",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p010c9452f54999",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "s28",
+   "question": "26.13 赛娜被动灵魂掉落几率",
+   "action": "保留（分差不足）",
+   "gap": 0.1,
+   "retrieval_top": "p93b77d049846c2",
+   "after_top": "p93b77d049846c2",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h01",
+   "question": "26.18 卡西奥佩娅 Q 伤害改成多少",
+   "action": "保留（同序）",
+   "gap": 0.78,
+   "retrieval_top": "p7c8627c6093f93",
+   "after_top": "p7c8627c6093f93",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h02",
+   "question": "26.17 薇恩 W 真实伤害是多少",
+   "action": "保留（同序）",
+   "gap": 0.58,
+   "retrieval_top": "p49c4a12662a929",
+   "after_top": "p49c4a12662a929",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h03",
+   "question": "26.15 卑尔维斯攻击速度",
+   "action": "保留（同序）",
+   "gap": 0.27,
+   "retrieval_top": "p0820fe3ed85c92",
+   "after_top": "p0820fe3ed85c92",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h04",
+   "question": "26.9 泽丽被动处决阈值",
+   "action": "保留（同序）",
+   "gap": 0.9,
+   "retrieval_top": "pbf55eec5722c66",
+   "after_top": "pbf55eec5722c66",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h05",
+   "question": "26.12 韦鲁斯被动击杀英雄时给多少攻速",
+   "action": "改序",
+   "gap": 0.26,
+   "retrieval_top": "p188d232328692e",
+   "after_top": "pdc9f2b5e20e111",
+   "ok": true,
+   "retrieval_ok": false
+  },
+  {
+   "id": "h06",
+   "question": "26.11 黑默丁格的防御塔攻击距离",
+   "action": "保留（同序）",
+   "gap": 0.81,
+   "retrieval_top": "pc4266d84502964",
+   "after_top": "pc4266d84502964",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h07",
+   "question": "26.10 李青 W 护盾值",
+   "action": "保留（同序）",
+   "gap": 0.9,
+   "retrieval_top": "p0a1c7ea74f03b9",
+   "after_top": "p0a1c7ea74f03b9",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h08",
+   "question": "26.10 孙悟空分身伤害",
+   "action": "保留（同序）",
+   "gap": 0.9,
+   "retrieval_top": "p16f88e71ab9452",
+   "after_top": "p16f88e71ab9452",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h09",
+   "question": "26.13 赛娜被动暴击伤害",
+   "action": "保留（同序）",
+   "gap": 0.8,
+   "retrieval_top": "pd4696cc0a33dbb",
+   "after_top": "pd4696cc0a33dbb",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h10",
+   "question": "26.17 艾瑞莉娅 Q 伤害",
+   "action": "候选不足，未调用",
+   "retrieval_top": "p010c9452f54999",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "h11",
+   "question": "26.12 格温 E 攻速",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pda677d66db0e01",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "h12",
+   "question": "26.15 莫德凯撒 R 窃取属性",
+   "action": "候选不足，未调用",
+   "retrieval_top": "pee7b16ad1b9132",
+   "after_top": null,
+   "ok": true
+  },
+  {
+   "id": "h13",
+   "question": "26.14 原生质护带多少钱",
+   "action": "保留（同序）",
+   "gap": 0.8,
+   "retrieval_top": "p4cdc6ab51a2d31",
+   "after_top": "p4cdc6ab51a2d31",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h14",
+   "question": "26.16 卡蜜尔被动护盾",
+   "action": "保留（同序）",
+   "gap": 0.73,
+   "retrieval_top": "pf1f70c0dfbde25",
+   "after_top": "pf1f70c0dfbde25",
+   "ok": true,
+   "retrieval_ok": true
+  },
+  {
+   "id": "h15",
+   "question": "26.13 帝国指令法强",
+   "action": "保留（同序）",
+   "gap": 0.82,
+   "retrieval_top": "p6f6ca8470ad8f1",
+   "after_top": "p6f6ca8470ad8f1",
+   "ok": true,
+   "retrieval_ok": true
+  }
+ ]
+}

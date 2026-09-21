@@ -283,6 +283,12 @@ function renderJev(session) {
     $("jev-verdict").innerHTML = pick.decisive
       ? `分差 ${(pick.gap ?? 0).toFixed(2)} → 采用 Jev 顺序，首选 <b>${esc((byId[pick.choice_id] || {}).field || "该条")}</b>`
       : `分差 ${(pick.gap ?? 0).toFixed(2)} 低于 0.15 → 保留检索顺序（两条候选无法区分）`;
+    if (pick.retrieval_top && pick.after_top) {
+      const label = (id) => esc((byId[id] || {}).field || id);
+      const same = pick.retrieval_top === pick.after_top;
+      $("jev-verdict").innerHTML +=
+        `<br>检索第 1：${label(pick.retrieval_top)} ${same ? "=" : "→"} Jev 第 1：${label(pick.after_top)}`;
+    }
     $("jev-note").textContent = `${pick.model || "jev"} · ${pick.latency_ms}ms`;
   }
 
@@ -444,14 +450,17 @@ async function loadEvaluation() {
     const jev = jevArm(same).pinned;
     return base && jev ? `${base["hit@1"]}/${base.total} → ${jev["hit@1"]}/${jev.total}` : "—";
   };
+  const effect = payload.jev_effect || {};
+  const ranker = payload.jev_ranker || {};
+  const check = payload.jev_selfcheck || {};
   $("judgement").innerHTML = `
     <h3>Jev 的净贡献（含负面结论）</h3>
     <ul>
-      <li class="plus"><i>＋</i><span><b>定点命中@1 ${esc(compare("hybrid"))}</b>：问题用词与字段标签不一致时，Jev 从 5 条候选里把正确行捞回来。</span></li>
-      <li class="plus"><i>＋</i><span><b>盲测数值 ${esc(pct(jevArm(blindCtx).single?.value_ok, jevArm(blindCtx).single?.value_total))}</b>、命中@1 ${esc(pct(jevArm(blindCtx).single?.["hit@1"], jevArm(blindCtx).single?.total))}：加上置信闸门后不劣化，分差 &lt; 0.15 时不动检索顺序。</span></li>
-      <li class="plus"><i>＋</i><span><b>回答自检 ${esc(pct(jevArm(blindCtx).selfcheck?.pass, jevArm(blindCtx).selfcheck?.total))}</b>（同源 ${esc(pct(jevArm(same).selfcheck?.pass, jevArm(same).selfcheck?.total))}）：逐条核对回答与证据，支持度不足会显式提示——这一步没有替代品。</span></li>
-      <li class="plus"><i>＋</i><span><b>成本 $${cost?.calls ? (cost.cost_usd / cost.calls).toFixed(6) : "0.0001"}/次</b>、约 ${cost?.mean_latency_ms || 1200}ms：相对本地检索可忽略。</span></li>
-      <li class="minus"><i>－</i><span><b>三种排序在同源案例上打平</b>：元数据过滤后候选常只有 1–6 条，BM25/向量/混合没有差别；Jev 的价值集中在候选难以区分的地方。</span></li>
+      <li class="plus"><i>＋</i><span><b>回答自检：注入错误数字检出 ${check.detected ?? "—"}/${check.cases ?? "—"}，正确回答误报 ${check.false_alarms ?? "—"}/${check.cases ?? "—"}</b>——把回答里的数字改掉 1，支持度从 ${(check.control_mean ?? 0).toFixed(2)} 掉到 ${(check.mutation_mean ?? 0).toFixed(2)}。这一步没有替代品。</span></li>
+      <li class="plus"><i>＋</i><span><b>排序能力（去掉字段预过滤，同一批候选）：BM25 ${ranker.bm25_ok ?? "—"}/${ranker.total ?? "—"} → Jev ${ranker.jev_ok ?? "—"}/${ranker.total ?? "—"}</b>，Jev 独对 ${ranker.jev_only ?? "—"} 条、BM25 独对 ${ranker.bm25_only ?? "—"} 条。</span></li>
+      <li class="plus"><i>＋</i><span><b>生产链路里 Jev 改序 ${effect.reordered ?? "—"}/${effect.total ?? "—"}</b>（改对 ${effect.reordered_ok ?? "—"}、改错 ${effect.reordered_bad ?? "—"}），保留顺序 ${effect.kept ?? "—"} 条；另有 ${effect.candidates_lt2 ?? "—"} 条过滤后候选不足 2 条，它没有介入余地。</span></li>
+      <li class="plus"><i>＋</i><span><b>成本 $${cost?.calls ? (cost.cost_usd / cost.calls).toFixed(6) : "0.0001"}/次</b>、约 ${cost?.mean_latency_ms || 1200}ms；无 key 时自动降级并写进轨迹。</span></li>
+      <li class="minus"><i>－</i><span><b>三种排序在同源案例上打平</b>：元数据过滤后候选常只剩 1–6 条，BM25/向量/混合没有差别；Jev 的价值集中在候选难以区分或问法与标签不一致的地方。</span></li>
       <li class="minus"><i>－</i><span><b>解析层没有用 Jev</b>：字段与意图识别是确定性正则，48 条查询理解盲测全过且零延迟——不该用模型的地方不用。</span></li>
     </ul>`;
   observeReveals();
