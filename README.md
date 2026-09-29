@@ -56,15 +56,22 @@ Answer Verification    证据判读：渲染出的声称有没有被证据支持
 
 ## 界面
 
-本地单页工作台（`web/`），左侧竖排索引，问答 / 结构 / Jev / 数据 / 对比五段。
+本地单页工作台（`web/`），左侧竖排索引，开场 / 问答 / 结构 / 架构 / Jev / 数据 / 对比七段。
 
 **问答**：回答里的数字直接来自公告条目；右边同步显示**本次查询执行图**
 （每个阶段真的走到了哪一步、哪些阶段被跳过、为什么）、证据列表与 Jev 决策面板。
 
-**结构**：静态架构图，按数据层 / 查询理解 / 检索 / 决策 / 回答安全五层说明整条链路，
-Jev 节点统一用琥珀金标记，让「Jev 不是生成答案的模型」一眼可见。
-
 ![问答](docs/screenshots/ask.png)
+
+**架构**：静态架构图，按数据层 / 查询理解 / 检索 / 决策 / 回答安全五层说明整条链路，
+每个节点都对着代码里的文件与函数；琥珀金节点就是 Jev 会介入的位置，
+一眼能看出它出现在「查什么」和「选哪条」上，而从不出现在「写什么数字」上。
+
+![架构](docs/screenshots/arch.png)
+
+**六段流水线**：从公告抓取到模板渲染，Jev 按需出现在四个位置。
+
+![流水线](docs/screenshots/flow.png)
 
 **Jev 到底加成了什么**：四个实验的图表（自检注入点图、排序能力对照、生产链路记账）。
 
@@ -312,10 +319,12 @@ python scripts/ingest_en.py --offline         # 与英文公告对照核验
 python scripts/review_feedback.py             # 复核页面反馈，产出 docs/反馈复核.md
 python tools/screenshot.py                    # 用 CDP 截界面图（需 Edge + 服务在跑）
 # 盲测（先按 docs/盲测集提示词.md 与 提示词-第二批.md 出题）：
-python scripts/evaluate_patch.py --cases tests\cases\blind_cases.json --out docs\盲测报告-第一批.md
-python scripts/evaluate_patch.py --cases tests\cases\blind_cases_2.json --out docs\盲测报告-第二批.md
+# 注意：盲测报告必须带 --use-case-version —— 案例里很多问题不写版本，
+# 该开关模拟「用户在页面上选好了版本」，不加会与已发布的报告数字不可比。
+python scripts/evaluate_patch.py --use-case-version --cases tests\cases\blind_cases.json --out docs\盲测报告-第一批.md
+python scripts/evaluate_patch.py --use-case-version --cases tests\cases\blind_cases_2.json --out docs\盲测报告-第二批.md
 # 两批合并（78 题）：
-python scripts/evaluate_patch.py --cases "tests\cases\blind_cases.json,tests\cases\blind_cases_2.json" --out docs\盲测报告-合并.md
+python scripts/evaluate_patch.py --use-case-version --cases "tests\cases\blind_cases.json,tests\cases\blind_cases_2.json" --out docs\盲测报告-合并.md
 # 有 key 时用真实模型跑路由评测（默认无 key 会回放案例里记录的分布）：
 python scripts/evaluate_routing.py --live
 ```

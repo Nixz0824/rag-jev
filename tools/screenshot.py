@@ -32,6 +32,7 @@ SHOTS = (
     {"name": "jev", "query": "?q=26.17 薇恩 W 真实伤害是多少", "section": "jev", "wait_answer": True},
     {"name": "data", "query": "?view=data", "section": "data", "wait_answer": False},
     {"name": "flow", "query": "?view=flow", "section": "flow", "wait_answer": False},
+    {"name": "arch", "query": "?view=arch", "section": "arch", "wait_answer": False},
     {"name": "compare", "query": "?view=compare", "section": "compare", "wait_answer": False},
 )
 

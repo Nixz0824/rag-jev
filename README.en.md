@@ -8,7 +8,34 @@ A local RAG question-answering system over the Chinese League of Legends patch n
 ![python](https://img.shields.io/badge/python-3.12%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-Every number in an answer is copied from a structured extraction of the official announcement — **no generative model writes values**. Jev only makes verifiable decisions such as "which of these candidates is the one being asked about".
+Every number in an answer is copied from a structured extraction of the official announcement — **no generative model writes values**.
+
+> **Deterministic where possible. Semantic decisions where necessary.**
+
+That is not a slogan; it is pipeline behaviour that tests and evaluations can check. For a question like
+`26.17 薇恩 W 真实伤害是多少`, the patch, the subject, the ability and the field are all fixed by regexes
+and the alias table, so the **number of semantic calls is zero**; only a phrasing the rules did not
+understand ("that ability's damage") brings a model in — and for every step a model takes, the page shows
+what it cost and whether its answer was used.
+
+---
+
+## Jev's four positions in the RAG lifecycle
+
+```text
+Query Understanding    rule parsing → semantic fallback (only slots the rules did not resolve are asked about)
+        ↓
+Retrieval Planning     hierarchical routing: which part of the knowledge space to search (fork into 2 branches when unsure)
+        ↓
+Candidate Selection    candidate rerank: which of the already-retrieved candidates to pick
+        ↓
+Answer Verification    evidence judging: whether the rendered claim is supported by evidence
+```
+
+The four roles correspond to `routing.SemanticRouter._semantic_fallback`,
+`routing.SemanticRouter._hierarchical_route`, `jev.rerank` and `jev.judge_many`;
+each role leaves one of four states in the session — `called` / `bypassed` / `fallback` / `failed` —
+and **"skipped" is also a result that has to state its reason**, not a blank.
 
 ---
 
@@ -17,24 +44,38 @@ Every number in an answer is copied from a structured extraction of the official
 | Dimension | Typical RAG demo | This project |
 |---|---|---|
 | Where numbers come from | The model writes them | Template rendering, values come from announcement chunks only (`_render`) |
+| Where the model sits | The whole pipeline goes to an LLM | **Only where a judgement is needed**: every stage outside the four roles is deterministic code |
 | Version handling | Pure similarity search | **Metadata filtering before ranking**; three numbering schemes (`26.17` / `16.17` / `15.13`) normalised automatically |
-| Evaluation | None, or a few self-authored questions | **78 independent blind questions** (the authoring model was forbidden from reading the corpus, 30 patches covered) + 48 parsing blind cases + 18 trap cases; same-source and blind results reported separately, corpus gaps accounted for separately |
-| Negative results | Not mentioned | Three ranking arms tie after filtering; measured gate thresholds were **not** adopted; Jev once pushed a correct answer to rank 2 (a confidence gate now prevents that) — all kept in the reports |
-| Where models are used | Everything goes to an LLM | Parsing is deterministic regex (48/48 on a blind set, zero latency); Jev only reranks and self-checks, at **$0.0001 per call** |
-| Refusals | Prompt-based hope | Keyword blocklist + coverage boundaries + "most recent change" fallback + cross-server boundary; blind refusals **16/16** |
-| Engineering | A notebook | 98 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
+| Is the model wasted | Called for every question | A fully-determined question costs **0 calls** (pinned by a test); **0.86** semantic calls per question on average |
+| What happens when it is unsure | Pick one and narrow down | When the top and the runner-up are close, **keep two search branches** and one extra unfiltered conservative path |
+| Can it be switched off / compared | No | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`, so a controlled comparison can be run |
+| Evaluation | None, or a few self-authored questions | **78 independent blind questions** (the authoring model was forbidden from reading the corpus) + 48 parsing blind cases + 18 trap cases + 8 routing cases |
+| Negative results | Not mentioned | Three ranking arms tie after filtering; measured gate thresholds were **not** adopted; reranking has very little room; the routing benefit has too small a sample — all kept in the reports |
+| Engineering | A notebook | 174 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
 
 ---
 
 ## Interface
 
-A local single-page workbench (`web/`) with a vertical section index: Ask / Pipeline / Jev / Data / Compare.
+A local single-page workbench (`web/`) with a vertical index on the left: Intro / Ask / Structure / Architecture / Jev / Data / Compare.
 
-**Ask** — numbers come straight from announcement entries; the right panel shows Jev's per-candidate scores, whether Jev's order was adopted, the self-check support score and the cost of this answer.
+**Ask** — numbers come straight from announcement entries; the right panel shows the **execution graph for this
+query** (which stage actually ran, which stages were skipped and why), the evidence list and the Jev decision panel.
 
 ![Ask](docs/screenshots/ask.png)
 
-**What Jev actually contributes** — three experiments as charts (self-check injection dot plot, ranking comparison, production-path accounting).
+**Architecture** — a static diagram that walks the whole pipeline in five layers (data / query understanding /
+retrieval / decision / answer safety). Every node names the file and function it corresponds to, and every Jev node
+is marked in amber gold, so "Jev decides *what to look for* and *which row to pick*, and never writes an answer
+number" is visible rather than merely claimed.
+
+![Architecture](docs/screenshots/arch.png)
+
+**Six-stage pipeline** — from announcement fetching to template rendering, with Jev appearing in four of the roles.
+
+![Pipeline](docs/screenshots/flow.png)
+
+**What Jev actually contributes** — four experiments as charts (self-check injection dot plot, ranking comparison, production-path accounting).
 
 ![Jev](docs/screenshots/jev.png)
 
@@ -60,13 +101,40 @@ Generated by `python scripts/corpus_stats.py`; the full table is in [docs/语料
 | Items (unique) | 29 | **85** | ×2.93 |
 | Changes with ability attribution | 265 | **1008** | ×3.80 |
 
-Parsing quality: 44.3% of chunks are structured changes, 91.0% of them map to a canonical field key (the rest keep their raw label and are simply not reachable by field filters), and 1008/2212 structured changes carry a Q/W/E/R/passive attribution.
+Parsing quality: 44.3% of chunks are structured changes, and the field normalisation rate is 91.0%
+(rows that do not normalise keep their raw label and are simply not reachable by field filters).
+
+The taxonomy is not copied from another project; it is built from the real distribution of this corpus:
+`type` is champion 2233 / system 1363 / mode 968 / item 431; `ability` is empty for 3987 rows —
+**the vast majority of change rows belong to no ability at all**, which makes "ability unknown" the slot
+most worth completing semantically; `damage` accounts for 33% of structured rows in `field_key`,
+so the field level is built as two tiers ("family → concrete key") to keep one big class from
+swamping the rest.
 
 ---
 
-## 2. Evaluation (three scopes, accounted separately)
+## 2. Evaluation (four scopes, accounted separately)
 
-Everything is produced by `scripts/evaluate_patch.py` / `evaluate_parse.py`; the page and the reports only read `docs/*.json`.
+Everything is produced by `scripts/evaluate_*.py`; the page and the reports only read `docs/*.json`.
+
+### Hierarchical routing, 8 cases (`scripts/evaluate_routing.py`)
+
+The same cases are run in three modes: `off` (0.13.0 behaviour) / `shadow` (routes as usual but does not
+affect retrieval) / `active` (branches really take part in retrieval). `shadow` and `active` make the same
+number of calls, so any difference between them can only come from *using* the routing.
+
+| Scope | hit@1 | hit@5 | Slots correct | Semantic calls | Forked cases |
+|---|---|---|---|---|---|
+| off | 5/8 | 8/8 | — (never asked) | 0 | 0 |
+| shadow | 5/8 | 8/8 | 7/8 | 8 | 2 |
+| **active** | **8/8** | 8/8 | 7/8 | 8 | 2 |
+
+- Improved **3** cases, hurt **0**; what it changed is exactly the two forked cases and one single-branch case.
+- **A fully-determined question costs 0 calls in 4/8 cases**; **0.86** semantic calls per question on average;
+  a fork is triggered in only 2/8 cases.
+- How to read this: without a `TYPESAFE_API_KEY` the script replays the distribution recorded in the case file,
+  so it measures **pipeline behaviour**, not the accuracy of a real model. The report
+  [docs/Jev分层路由.md](docs/Jev分层路由.md) states what was measured and what was not proven.
 
 ### Blind set, 78 questions (authored by Codex from the official announcements, forbidden from reading the corpus)
 
@@ -82,7 +150,7 @@ Two batches cover different patch ranges: 38 questions over 26.9—26.18, and 40
 | Refusals (no record / out of scope) | **16/16** |
 | Jev answer self-check (support ≥ 0.5) | **40/40** |
 
-The second batch surfaced three systematic defects (all fixed, see "Problems the blind set found" below) and **two corpus gaps**, accounted separately:
+**Two corpus gaps** are accounted for separately (they are not counted as system errors):
 
 - Gwen base armor in 15.16: the CN announcement does not contain this change (the English one does) — a genuine difference between the two announcements;
 - Shyvana's large update in 26.6: rework sections describe a new kit in prose rather than `old ⇒ new`, so structured parsing deliberately skips them.
@@ -106,13 +174,25 @@ The second batch surfaced three systematic defects (all fixed, see "Problems the
 
 ---
 
-## 3. What Jev actually contributes (three reproducible experiments)
+## 3. What Jev actually contributes (four reproducible experiments)
 
-This is not "we plugged in a model so it got better". Each of Jev's three jobs is measured on its own — including the place where it **does not** help.
+This is not "we plugged in a model so it got better". Each of Jev's jobs is measured on its own — including the places where it **does not** help.
 
-### Experiment 1 · Ranking ability: same candidates, no field pre-filter
+### Experiment 1 · **Before** retrieval: does hierarchical routing help?
 
-In production, metadata filtering squeezes the candidate set down to 1–6 rows, which leaves Jev almost nothing to do. So this control gives both orderings the *same* candidate set — every change row of that subject in that patch (≥2 rows required, 49 cases) — and compares top-1 accuracy.
+See "Hierarchical routing, 8 cases" above. The verdict has two sides:
+
+- **What it buys**: on questions where the ability or the field is not spelled out, forking brings the correct
+  row back to rank 1 (off 5/8 → active 8/8).
+- **What it does not**: most questions do not need it at all — 4/8 cases make zero calls and a fork happens in
+  only 2/8. Too few cases can trigger routing, so `3/7` can only show that the **mechanism works**;
+  it cannot be extrapolated into a benefit of some size.
+
+### Experiment 2 · Ordering ability: same candidates, no field pre-filter
+
+In production, metadata filtering first squeezes the candidates down to 1–6 rows, which leaves Jev almost
+nothing to choose between. So this control is run on purpose: the candidate set is "every change row of that
+subject in that patch" (≥2 rows required, 49 cases), and both orderings pick a top-1 from the *same* candidates.
 
 | Ordering | Top-1 correct |
 |---|---|
@@ -121,18 +201,18 @@ In production, metadata filtering squeezes the candidate set down to 1–6 rows,
 
 Jev is uniquely right on 1 case, BM25 on 0. Command: `python scripts/evaluate_jev.py --ranker`
 
-### Experiment 2 · Answer self-check: inject a wrong number and see if it fires
+### Experiment 3 · Answer self-check: inject a wrong number and see if it fires
 
-A correct answer is sent to the self-check unchanged (control), then the **last number in the rendered line is changed by one** (injected). Both go through the same `jev.judge_many` used in production:
+A correct answer is sent to the self-check unchanged (control), then the **last number in the rendered line is changed by one** (injected):
 
 | Group | Support (mean) | Flagged as unsupported |
 |---|---|---|
 | Control (correct answers) | **0.96** | 0/24 (no false alarms) |
 | Injected (wrong number) | **0.04** | **24/24 (all detected)** |
 
-Both calls together cost $0.00045. Command: `python scripts/evaluate_selfcheck.py`
+The two calls together cost $0.00045. Command: `python scripts/evaluate_selfcheck.py`
 
-### Experiment 3 · Production path, case by case: how often did Jev actually change something?
+### Experiment 4 · Production path, case by case: how many rows did Jev actually change?
 
 91 judgeable cases (both blind batches + same-source pinned cases):
 
@@ -146,9 +226,17 @@ Command: `python scripts/evaluate_jev.py` — report: [docs/Jev效果.md](docs/J
 
 ### Conclusion
 
-- **Where it pays off**: when candidates are ambiguous or the wording does not match the field label, Jev recovers the correct row; and the self-check is the only component that can judge whether "these numbers are supported by this evidence" (24/24 detected, 0 false alarms).
-- **Where it does not**: metadata filtering already makes retrieval easy, so reranking has little room (1 of 91 cases); the parsing layer does not need it at all.
-- **Cost**: $0.0001 per call, ~1.2 s; without an API key the system degrades to plain retrieval ordering and records that in the trace.
+- **What it buys**: it recovers the correct row when candidates are ambiguous or the wording does not match the
+  field label; the answer self-check is the only component that can judge whether "these numbers are supported
+  by this evidence" (24/24 detected, 0 false alarms); hierarchical routing puts the correct row back at rank 1
+  on ambiguous phrasings.
+- **What it does not**: metadata filtering already makes retrieval easy, so reranking has very little room
+  (1 of 91 cases); the parsing layer does not need a model at all; hierarchical routing only fires on a few
+  ambiguous phrasings.
+- **Cost**: about $0.0001 per rerank call; hierarchical routing makes 0.86 calls per question and 0 for a
+  fully-determined question.
+- **Degradation**: without a key every model stage is skipped automatically and marked in the trace and the
+  phase ledger, and the pipeline keeps working.
 
 ## Problems the blind set found (all fixed)
 
@@ -158,7 +246,7 @@ Command: `python scripts/evaluate_jev.py` — report: [docs/Jev效果.md](docs/J
 | 2 | A hyphen inside a range was read as a minus sign: `30-60%` parsed as `[30, -60]` | Same question | Lookbehind in the number regex |
 | 3 | Ability attribution was lost when the ability sat inside the field name (`R 被动过载涌动伤害`) | Blind question about Ryze's R | Extract Q/W/E/R from the field-name prefix during ingestion |
 | 4 | A short alias outranked the subject: "瑞兹 R 被动过载涌动伤害" resolved to the *item* 过载 | Same question | Alias matching now prefers longest, then earliest position, then champions over items |
-| 5 | Missing player nicknames (船长/鸟皇/熊/猴子/诺手 …) | Blind questions "船长 Q 蓝耗", "鸟皇基础生命值" | Nickname table grown to 100+ champion nicknames and 74 item rules (including English shorthands such as IE/BT/QSS/PD) |
+| 5 | Missing player nicknames (船长/鸟皇/熊/猴子/诺手/铁男/冰女 …) | Blind questions "船长 Q 蓝耗", "鸟皇基础生命值" | Nickname table grown to 100+ champion nicknames and 74 item rules (including English shorthands such as IE/BT/QSS/PD) |
 
 ---
 
@@ -186,10 +274,22 @@ Stop with `python launch.py --stop`, or run `停止服务.cmd`.
 ### Jev (optional)
 
 ```powershell
-$env:TYPESAFE_API_KEY = "sk-..."   # or write it into runtime/jev-key.txt
+$env:TYPESAFE_API_KEY = "sk-..."        # or write it into runtime/jev-key.txt
+$env:RAGJEV_ROUTING_MODE = "active"     # off / shadow / active, active by default
 ```
 
-Without a key everything still works; reranking and self-checks are simply skipped (`/api/health` reports `jev.enabled=false`).
+Without a key the system still works: deterministic parsing, metadata filtering, hybrid retrieval and template
+rendering are all available, while semantic fallback / hierarchical routing / rerank / self-check are skipped —
+**and every skip is written into the trace and the phase ledger**
+(`/api/health` shows `jev.enabled=false` and the current `routing_mode`).
+
+### Three routing modes
+
+| Mode | Behaviour | Use |
+|---|---|---|
+| `off` | Deterministic parsing only, no model is called for understanding | Reproduces the 0.13.0 baseline |
+| `shadow` | Semantics are decided and recorded as usual, but **do not affect retrieval** | Compare against active: same call count, so the difference only comes from *using* the routing |
+| `active` | Branches really take part in retrieval and merging | Production default |
 
 ---
 
@@ -198,16 +298,17 @@ Without a key everything still works; reranking and self-checks are simply skipp
 | Question | Behaviour |
 |---|---|
 | `26.17 亚索改了什么` | Every structured change for that champion in that patch |
-| `16.17 岚切怎么调整的` | Data Dragon version numbers are mapped onto announcement numbers automatically |
+| `16.17 岚切怎么调整的` | Data Dragon version numbers are mapped onto announcement numbers (26.17) automatically |
 | `15.13 希瓦娜 W 冷却` | Both 2025 numbering schemes (15.x and 25.x) resolve to the right patch |
-| `26.17 薇恩 W 真实伤害是多少` | Field filtering first, then Jev picks the best-matching row |
+| `26.17 薇恩 W 真实伤害是多少` | Field rules + aliases + explicit ability, **0 semantic calls** |
+| `卡西奥佩娅那个技能伤害之前改过吗` | The ability is not spelled out: one semantic decision, and when the top and runner-up are close it **opens two branches** for retrieval |
 | `26.17 有哪些英雄被削弱` | Change list for that patch (Summoner's Rift by default) |
-| `赛娜从 26.13 到 26.18 一共改了几次` | **Cross-patch aggregation**: per-patch timeline, direction counts, most-adjusted fields, plus how many rows other modes were skipped |
+| `赛娜从 26.13 到 26.18 一共改了几次` | **Cross-patch aggregation**: per-patch timeline, direction counts, most-adjusted fields |
 | `沃利贝尔历次被削弱的记录` | No version range given → aggregates over all covered patches, narrowable by direction |
 | `娜美 E 每次伤害改成多少了` | No version given and the latest patch has nothing → falls back to the **most recent change** and labels it as a historical patch |
 | `26.15 锐雯的放逐之锋怎么改了` | **Ask by ability name** (865 ability names mapped to Q/W/E/R/passive) |
 | `电刀现在多少钱` / `IE 多少钱` | **Item nicknames and English shorthands** (电刀 = Statikk Shiv, IE = Infinity Edge) |
-| `卢登的配枪改了什么` / `C44 改了什么` | **Historical names and internal codenames** found in announcements still resolve |
+| `卢登的配枪改了什么` / `C44 改了什么` | **Historical names and internal codenames** found in announcements also resolve |
 | `26.17 亚索为什么被调整` | Appends the design intent from the announcement (narrative corpus) |
 | `26.16 迦娜这版改了什么` | When only prose exists and no numeric entry, it says so instead of presenting prose as a change |
 | `26.6 希瓦娜重做了什么` | Reworks and large updates are prose; the system states that they are not covered |
@@ -218,12 +319,15 @@ Without a key everything still works; reranking and self-checks are simply skipp
 ## Commands
 
 ```powershell
-python -m unittest discover -s tests          # 98 tests, no models or network needed
+python -m unittest discover -s tests          # 174 tests, no models or network needed
 python scripts/ingest_qq.py --offline         # rebuild the corpus from cached announcements
 python scripts/corpus_stats.py                # corpus tables (docs/语料统计.md)
 python scripts/build_aliases.py --offline     # rebuild champion/item aliases
 python scripts/evaluate_parse.py              # query-understanding blind set (no models)
+python scripts/evaluate_routing.py            # off/shadow/active hierarchical routing comparison
 python scripts/evaluate_patch.py              # four-arm A/B (models running; Jev needs a key)
+python scripts/evaluate_jev.py                # Jev case-by-case accounting (--ranker measures ordering)
+python scripts/evaluate_selfcheck.py          # self-check injection detection rate
 python scripts/calibrate.py --report          # gate measurement (conclusion: not adopted)
 python scripts/ingest_en.py --offline         # cross-check against the English announcements
 python scripts/review_feedback.py             # review page feedback → docs/反馈复核.md
@@ -233,6 +337,8 @@ python scripts/evaluate_patch.py --cases tests\cases\blind_cases.json --out docs
 python scripts/evaluate_patch.py --cases tests\cases\blind_cases_2.json --out docs\盲测报告-第二批.md
 # Both batches together (78 questions):
 python scripts/evaluate_patch.py --cases "tests\cases\blind_cases.json,tests\cases\blind_cases_2.json" --out docs\盲测报告-合并.md
+# With a key, run the routing evaluation against the real model (without one it replays the recorded distribution):
+python scripts/evaluate_routing.py --live
 ```
 
 ---
@@ -244,6 +350,8 @@ python scripts/evaluate_patch.py --cases "tests\cases\blind_cases.json,tests\cas
 - Announcements only record changes, so "the most recent adjustment" is **not** "the current live value".
 - CN values can differ from other servers; this project answers for the CN server only and makes no cross-server claims.
 - Parsing can miss rows: `docs/解析覆盖率.md` records how much was parsed per patch and which fields were not normalised.
+- The routing benefit was measured on only a few ambiguous phrasings; the sample is too small to support a percentage
+  claim, and the "what was not proven" section of `docs/Jev分层路由.md` is part of the conclusion.
 
 ## Licence
 
@@ -254,14 +362,17 @@ Sources and licences: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ```
 config.py           single source of truth for ports and paths
-engine.py           BM25 + embeddings + RRF retrieval core and the gate
-patch_engine.py     version parsing, metadata filtering, answer rendering, Jev hooks
+query_plan.py       query plan: each slot's value + source + confidence (who decided it, and how)
+taxonomy.py         taxonomy: intent / mode / entity type / ability / field family (data only)
+routing.py          semantic routing policy: when to ask the model, how to fork, budgets and the conservative path
+engine.py           BM25 + embeddings + RRF retrieval core and thresholds (filterable by field family)
+patch_engine.py     parse → query plan → routing → branch retrieval → render → feedback
 patch_schema.py     field keys, arrow/ability parsing, the one place wording lives
-jev.py              TypeSafe System One client (rerank / classify / self-check)
+jev.py              TypeSafe System One client (choice / noul primitives + phase accounting)
 server.py           local HTTP API and static page
 launch.py           three-process supervisor (Windows Job Object, cleans up on exit)
-scripts/            ingest_qq / build_abilities / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              98 unit tests + hand-written fixtures + blind sets
-web/                single-page workbench (ask / pipeline / Jev / data / compare)
-docs/               evaluation, blind runs, corpus stats, gate calibration, EN cross-check, handoff notes
+scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
+tests/              174 unit tests + hand-written fixtures + blind sets + routing case set
+web/                single-page workbench (ask / architecture / data / version compare) + per-query execution graph
+docs/               evaluation reports, blind runs, routing report, corpus stats, gate calibration, handoff notes
 ```

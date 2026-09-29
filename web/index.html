@@ -140,8 +140,9 @@
 
   <section class="section" id="flow">
     <div class="section-head reveal">
-      <h2>六段流水线，三个位置交给 Jev</h2>
-      <p>数字与句子都不经过生成模型；解析用确定性规则，模型只在需要判断的地方出现。</p>
+      <h2>六段流水线，Jev 按需出现在四个位置</h2>
+      <p>数字与句子都不经过生成模型；解析用确定性规则，模型只在需要判断的地方出现，
+         而且每个位置都会说明自己这次是 CALLED 还是 BYPASSED。</p>
     </div>
     <div class="flow">
       <article class="flow-node reveal"><span class="n">01</span><h3>公告抓取</h3><p>腾讯国服公告频道 → 正文（GBK，箭头是 HTML 实体）。</p><code>scripts/ingest_qq.py</code></article>
@@ -153,8 +154,8 @@
     </div>
     <ul class="notes reveal">
       <li class="note-src">以下数字来自 <code>docs/盲测报告-合并.md</code>、<code>docs/Jev效果.md</code>、<code>docs/Jev分层路由.md</code>，页面启动时读 <code>docs/*.json</code>，不在这里手写。</li>
-      <li><b>候选重排</b>：同源定点命中@1 由 14/15 提升到 <b>15/15</b>——问题用词与字段标签不一致时，Jev 从候选里把正确行捞回来。</li>
-      <li><b>回答自检</b>：每条改动与证据逐条比对，47/47 回答最低支持度 ≥ 0.5；支持度不足会在回答里显式提示。</li>
+      <li><b>候选重排</b>：同源定点命中@1 由 21/23 提升到 <b>22/23</b>——问题用词与字段标签不一致时，Jev 从候选里把正确行捞回来。</li>
+      <li><b>回答自检</b>：每条改动与证据逐条比对，55/55 回答最低支持度 ≥ 0.5；支持度不足会在回答里显式提示。</li>
       <li><b>置信闸门</b>：分差 &lt; 0.15 时不改顺序——两条无法区分的候选同样正确，避免把答案挤到第二位。</li>
       <li><b>分层路由</b>：完全确定的问题 4/8 条零语义调用；触发路由的题目命中@1 由 5/8 到 8/8（改善 3、损害 0）。报告写明样本量小，这证明的是机制有效，不是收益幅度。</li>
     </ul>
@@ -251,7 +252,8 @@
   <section class="section" id="jev">
     <div class="section-head reveal">
       <h2>Jev 到底加成了什么</h2>
-      <p>三个实验，含它没有用的地方。全部数字由 <code>scripts/evaluate_jev.py</code> 与 <code>evaluate_selfcheck.py</code> 跑出。</p>
+      <p>四个实验，含它没有用的地方。全部数字由 <code>scripts/evaluate_routing.py</code>、<code>evaluate_jev.py</code>
+         与 <code>evaluate_selfcheck.py</code> 跑出，本区只读 <code>docs/*.json</code>。</p>
     </div>
 
     <figure class="chart wide reveal">
