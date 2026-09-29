@@ -1,0 +1,137 @@
+{
+  "title": "分层路由评测集",
+  "note": "期望只描述「该走哪条搜索路径」与「模型该不该被调用」，不引用语料数值。expect.value 取自官方公告，用于判定最终答案是否正确。",
+  "cases": [
+    {
+      "id": "r01",
+      "kind": "explicit",
+      "question": "26.17 薇恩 W 真实伤害是多少",
+      "expect": {
+        "routing_calls": 0,
+        "beam_used": false,
+        "slots": {"subject": "薇恩", "ability": "W", "patch": "26.17"},
+        "abilities": [
+          {"value": "W", "probability": 0.9},
+          {"value": "被动", "probability": 0.05},
+          {"value": "Q", "probability": 0.05}
+        ],
+        "rows": {"patch": "26.17", "subject": "薇恩", "ability": "W", "field_key": "damage", "value": "4 / 5.5 / 7 / 8.5 / 10%"}
+      },
+      "why": "版本用正则、对象用别名、技能是显式字母、字段由「真实伤害」规则命中：四个槽位全部封闭，模型不得被调用。这是「不把确定答案改成概率答案」的核心案例。注意该技能下有两条 damage 行（真实伤害 / 最小伤害），字段名是区分它们的关键。"
+    },
+    {
+      "id": "r02",
+      "kind": "explicit",
+      "question": "26.17 格雷福斯 Q 伤害改成多少了",
+      "expect": {
+        "routing_calls": 0,
+        "beam_used": false,
+        "slots": {"subject": "格雷福斯", "ability": "Q", "patch": "26.17"},
+        "abilities": [
+          {"value": "Q", "probability": 0.92},
+          {"value": "E", "probability": 0.05},
+          {"value": "W", "probability": 0.03}
+        ],
+        "rows": {"patch": "26.17", "subject": "格雷福斯", "ability": "Q", "field_key": "damage", "value": "50 / 75 / 100 / 125 / 150"}
+      },
+      "why": "第二条全确定案例：证明「0 次调用」不是某一个问题的偶然。该技能下有两段 damage 行（第一段 / 第二段伤害），字段名是区分它们的关键。"
+    },
+    {
+      "id": "r03",
+      "kind": "fallback",
+      "question": "卡西奥佩娅那个技能伤害之前改过吗",
+      "expect": {
+        "routing_calls": 1,
+        "beam_used": true,
+        "slots": {"subject": "卡西奥佩娅"},
+        "abilities": [
+          {"value": "E", "probability": 0.51},
+          {"value": "被动", "probability": 0.47},
+          {"value": "Q", "probability": 0.01},
+          {"value": "base", "probability": 0.01}
+        ],
+        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+      },
+      "why": "「那个技能」指代不明，但语料里该英雄在最新版有 E 伤害条目。首选 E 0.51 与次选被动 0.47 太接近，因此应采纳 E 并同时检索被动分支；无过滤路径在两者都失败时兜底。"
+    },
+    {
+      "id": "r04",
+      "kind": "single_ask",
+      "question": "卡西奥佩娅的大招改过吗",
+      "expect": {
+        "routing_calls": 1,
+        "beam_used": false,
+        "slots": {"subject": "卡西奥佩娅", "ability": "R", "field": null},
+        "abilities": [
+          {"value": "R", "probability": 0.88},
+          {"value": "E", "probability": 0.07},
+          {"value": "Q", "probability": 0.05}
+        ],
+        "field_keys": ["damage"],
+        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "R"}
+      },
+      "why": "「大招」由确定性规则判为 R，所以技能槽封闭；但字段没写（只说「改过吗」），仍需要一次字段级判断。它测的是「只对真正未知的层级提问」：这里只该问字段，不该问技能，也不该分叉。"
+    },
+    {
+      "id": "r05",
+      "kind": "lowconfidence",
+      "question": "卡西奥佩娅的技能伤害改过吗",
+      "expect": {
+        "routing_calls": 1,
+        "beam_used": true,
+        "slots": {"subject": "卡西奥佩娅"},
+        "abilities": [
+          {"value": "E", "probability": 0.34},
+          {"value": "被动", "probability": 0.33},
+          {"value": "Q", "probability": 0.33}
+        ],
+        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+      },
+      "why": "三个读法几乎并列。此时不该「选一个然后收窄」，而应保留多条分支；这条用来检查低置信时是否真的分叉，以及正确答案有没有因为第一次判断错误而被提前删掉。"
+    },
+    {
+      "id": "r06",
+      "kind": "nokey",
+      "question": "卡西奥佩娅的技能伤害改过吗",
+      "expect": {
+        "routing_calls": 0,
+        "beam_used": false,
+        "slots": {"subject": "卡西奥佩娅"},
+        "abilities": [
+          {"value": "E", "probability": 0.6},
+          {"value": "被动", "probability": 0.3},
+          {"value": "Q", "probability": 0.1}
+        ],
+        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+      },
+      "why": "同一条问题在不提供 TYPESAFE_API_KEY 时：不得调用任何模型，检索照常工作，并且必须把「降级」写进轨迹与阶段账本，不能静默。"
+    },
+    {
+      "id": "r07",
+      "kind": "explicit",
+      "question": "26.17 岚切怎么调整的",
+      "expect": {
+        "routing_calls": 0,
+        "beam_used": false,
+        "slots": {"subject": "岚切", "patch": "26.17"},
+        "abilities": [],
+        "rows": {"patch": "26.17", "subject": "岚切", "field_key": "attack_speed"}
+      },
+      "why": "装备问题的对照组：对象由别名命中、没有技能槽位，问题本身也不含数值意图，因此不应为了「问点什么」而调用模型。"
+    },
+    {
+      "id": "r08",
+      "kind": "crosspatch",
+      "question": "卡蜜尔护盾从 26.14 到 26.16 一共改了几次",
+      "expect": {
+        "routing_calls": 0,
+        "beam_used": false,
+        "slots": {"subject": "卡蜜尔"},
+        "abilities": [],
+        "aggregate": true,
+        "rows": {"patch": "26.16", "subject": "卡蜜尔", "field_key": "shield"}
+      },
+      "why": "跨版本聚合由确定性规则判定（区间 + 历次说法），字段由「护盾」规则命中；聚合路径不应引入语义分支。注意该英雄在 26.17/26.18 没有收录改动，所以区间取 26.14—26.16。"
+    }
+  ]
+}

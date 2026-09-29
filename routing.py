@@ -119,6 +119,11 @@ class RoutingConfig:
 # Default config, importable so the evaluation and the API report the same numbers.
 CONFIG = RoutingConfig()
 
+# Rank-damping constant for fusing branch candidate lists. Matches the constant the
+# retrieval kernel uses for BM25 + dense fusion (``engine.Retriever.search``), so both
+# fusions in this pipeline damp ranks identically.
+RRF_K = 60
+
 # ------------------------------------------------------------------ signal detection
 # Words that indicate *some* stat is being asked about without resolving to a canonical
 # key. When one of these appears and the field slot is still open, the field node is
@@ -417,10 +422,13 @@ class SemanticRouter:
         keys = list(taxonomy.FIELD_FAMILIES.get(family, ()))
         if not keys:
             return
+        # The candidates list is the *family-level* distribution, so a reader can see which
+        # other family was in play even though the committed value is a list of keys.
         plan.set_slot(
             "field_keys", keys, SOURCE_SEMANTIC, STATUS_RESOLVED, confidence=confidence,
             why=f"语义判定字段族 {taxonomy.family_label(family)}，展开为 {len(keys)} 个候选键",
-            candidates=candidates,
+            candidates=[{"value": family, "probability": confidence},
+                        *[item for item in candidates if item.get("value") != family]],
         )
 
     # --------------------------------------------------------- hierarchical routing
@@ -726,17 +734,30 @@ def path_score(nodes: list[dict]) -> float:
 
 
 def merge_candidates(path_results: list[tuple[RoutePath, list[dict]]]) -> list[dict]:
-    """Merge per-branch candidates, keeping the best rank each row achieved.
+    """Fuse per-branch candidate lists into one ranked list.
 
-    A row found by two branches appears once (so counts stay honest) and records which
-    branches produced it, which is what lets the UI draw "Branch A · Branch B → merge".
-    Ordering is deterministic — best branch rank, then branch score, then id — because the
-    evaluation compares runs against each other.
+    Ranking uses weighted reciprocal rank fusion: a row's score is
+    ``Σ_branch score_branch / (RRF_K + rank_in_branch)``, where ``score_branch`` is the
+    route's path score (the geometric mean of its semantic confidences). That weighting is
+    what stops the always-present unconstrained safety path from dominating: it has the most
+    candidates, so on a plain merge it would win almost every tie. A row found at rank 1 by a
+    confident reading therefore outranks a row found at rank 1 only by the safety net.
+
+    ``RRF_K`` matches the constant the retrieval kernel already uses for BM25+dense fusion
+    (see ``engine.Retriever.search``), so both fusions in this pipeline damp ranks the same
+    way. Ties break deterministically — best branch rank, then id — because the evaluation
+    compares runs against each other.
+
+    Each row keeps how many branches found it and which they were, which is what the UI draws
+    as "Branch A · Branch B → merge", and every path records its candidate count.
     """
+    fused: dict[str, float] = {}
     best: dict[str, dict] = {}
     for path, hits in path_results:
         path.candidate_count = len(hits)
+        weight = max(float(path.score), 1e-6)
         for rank, row in enumerate(hits, start=1):
+            fused[row["id"]] = fused.get(row["id"], 0.0) + weight / (RRF_K + rank)
             current = best.get(row["id"])
             if current is None:
                 merged = dict(row)
@@ -749,7 +770,9 @@ def merge_candidates(path_results: list[tuple[RoutePath, list[dict]]]) -> list[d
                 if rank < current["branch_rank"]:
                     current["branch_rank"] = rank
                     current["branch_score"] = path.score
-    return sorted(best.values(), key=lambda row: (row["branch_rank"], -row["branch_score"], row["id"]))
+    for chunk_id, row in best.items():
+        row["fusion"] = round(fused.get(chunk_id, 0.0), 6)
+    return sorted(best.values(), key=lambda row: (-row["fusion"], row["branch_rank"], row["id"]))
 
 
 __all__ = [
