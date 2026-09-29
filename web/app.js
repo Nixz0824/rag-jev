@@ -7,6 +7,7 @@ const state = {
   facts: [],
   sessionCost: 0,
   runs: [],
+  blindRun: "",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -15,6 +16,17 @@ const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => (
   { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]
 ));
+
+/* Run one render step in isolation: a broken step must not blank the cards next to it
+   (the same rule renderCharts applies per chart). */
+function guarded(box, fn) {
+  try {
+    return fn();
+  } catch (error) {
+    box.innerHTML = `<p class="ghost">渲染失败：${esc(error.message)}</p>`;
+    return null;
+  }
+}
 
 async function api(path, options) {
   const response = await fetch(path, options);
@@ -168,13 +180,15 @@ async function loadHealth() {
     const ready = health.ready === true;
     const dot = $("rail-status").querySelector(".dot");
     dot.className = "dot " + (ready ? "ok" : "bad");
+    const mode = health.jev?.routing_mode;
+    const jev = health.jev?.enabled ? "启用" : "未启用";
     $("rail-status-text").textContent = ready
-      ? `${health.chunks} 条语料 · Jev ${health.jev?.enabled ? "启用" : "未启用"}`
+      ? `${health.chunks} 条语料 · Jev ${jev}${mode ? " · 路由 " + mode : ""}`
       : "未就绪";
     if (ready) {
       const chunks = $("stat-chunks");
-      countUp(chunks, health.chunks);
-      $("stat-patches").textContent = health.patches.supported.length;
+      if (typeof health.chunks === "number") countUp(chunks, health.chunks);
+      $("stat-patches").textContent = health.patches?.supported?.length ?? "—";
     }
   } catch {
     $("rail-status").querySelector(".dot").className = "dot bad";
@@ -282,18 +296,65 @@ function renderTrace(session) {
     : '<li class="ghost">没有轨迹</li>';
 }
 
+/* The four roles Jev plays, in lifecycle order (jev.PHASES). Each one prints its booking
+   from jev_phases: CALLED / BYPASSED / FALLBACK / FAILED plus the reason — a step that
+   did nothing must say why, and "bypassed" is a designed outcome, not breakage. */
+const PHASES = ["semantic_fallback", "hierarchical_routing", "rerank", "evidence_judge"];
+
+function phaseRun(session, name) {
+  const entry = (session.jev_phases || {})[name] || {};
+  const status = entry.status || "bypassed";
+  return {
+    label: entry.label || name,
+    status,
+    calls: Number(entry.calls || 0),
+    cost: Number(entry.cost_usd || 0),
+    latency: Number(entry.latency_ms || 0),
+    detail: entry.detail || "",
+    note: STATE_NOTE[status] || status,
+  };
+}
+
+function setPhaseBadge(id, entry, meta = "") {
+  try {
+    const badge = $(id);
+    badge.className = "phase-badge " + stateClass(entry.status);
+    badge.textContent = `${STATE_LABEL[entry.status] || entry.status} · ${entry.note}`;
+    $(id + "-meta").textContent = meta;
+  } catch { /* the badge is decoration; the verdict below still carries the reason */ }
+}
+
+function phaseMetrics(entry) {
+  const parts = [];
+  if (entry.calls) parts.push(entry.calls + " 次调用");
+  if (entry.latency) parts.push(ms(entry.latency));
+  if (entry.cost) parts.push(money(entry.cost));
+  return parts.join(" · ");
+}
+
 function renderJev(session) {
   const bars = $("jev-bars");
   const pick = session.jev;
   const check = session.self_check;
   state.sessionCost = Number(session.cost_usd || 0);
-  $("jev-cost").textContent = "$" + Number(session.cost_usd || 0).toFixed(6);
-  $("session-cost").textContent = "$" + state.sessionCost.toFixed(6);
+  $("session-cost-total").textContent = "$" + state.sessionCost.toFixed(6);
+
+  const fallback = phaseRun(session, "semantic_fallback");
+  const routing = phaseRun(session, "hierarchical_routing");
+  const rerank = phaseRun(session, "rerank");
+  const judge = phaseRun(session, "evidence_judge");
+  const mode = session.routing?.mode || session.query_plan?.routing?.mode || "off";
+
+  setPhaseBadge("jev-phase-fallback", fallback, phaseMetrics(fallback));
+  $("jev-phase-fallback-why").textContent = fallback.detail || fallback.note;
+  setPhaseBadge("jev-phase-routing", routing, phaseMetrics(routing));
+  $("jev-phase-routing-why").textContent = routing.detail || routing.note;
+  setPhaseBadge("jev-phase-rerank", rerank, phaseMetrics(rerank));
+  setPhaseBadge("jev-phase-judge", judge, phaseMetrics(judge));
 
   if (!pick) {
     bars.innerHTML = '<p class="ghost">本次没有重排（候选不足 2 条，或未配置 TYPESAFE_API_KEY）</p>';
     $("jev-verdict").textContent = "";
-    $("jev-note").textContent = "未调用";
   } else {
     const scores = Object.entries(pick.scores || {}).filter(([, value]) => value !== null);
     scores.sort((a, b) => b[1] - a[1]);
@@ -311,15 +372,14 @@ function renderJev(session) {
       bars.querySelectorAll(".bar-fill").forEach((node) => { node.style.width = node.dataset.w + "%"; });
     });
     $("jev-verdict").innerHTML = pick.decisive
-      ? `分差 ${(pick.gap ?? 0).toFixed(2)} → 采用 Jev 顺序，首选 <b>${esc((byId[pick.choice_id] || {}).field || "该条")}</b>`
-      : `分差 ${(pick.gap ?? 0).toFixed(2)} 低于 0.15 → 保留检索顺序（两条候选无法区分）`;
+      ? `分差 ${num(pick.gap)} → 采用 Jev 顺序，首选 <b>${esc((byId[pick.choice_id] || {}).field || "该条")}</b>`
+      : `分差 ${num(pick.gap)} 低于 0.15 → 保留检索顺序（两条候选无法区分）`;
     if (pick.retrieval_top && pick.after_top) {
       const label = (id) => esc((byId[id] || {}).field || id);
       const same = pick.retrieval_top === pick.after_top;
       $("jev-verdict").innerHTML +=
         `<br>检索第 1：${label(pick.retrieval_top)} ${same ? "=" : "→"} Jev 第 1：${label(pick.after_top)}`;
     }
-    $("jev-note").textContent = `${pick.model || "jev"} · ${pick.latency_ms}ms`;
   }
 
   if (check) {
@@ -333,8 +393,41 @@ function renderJev(session) {
   } else {
     $("jev-gauge").style.setProperty("--p", 0);
     $("jev-gauge").querySelector("b").textContent = "—";
-    $("jev-self-note").textContent = "本次没有自检（未配置 key 或没有数值行）";
+    $("jev-self-note").textContent = judge.detail || judge.note;
   }
+
+  $("jev-note").textContent = `${mode} · ${pick ? `${pick.model || "jev"} · ${ms(pick.latency_ms)}` : "未调用"}`;
+  renderPhaseTable(session, mode);
+}
+
+/* Per-phase cost and latency, so "how much more did the layered search cost" is
+   answerable without reading the trace. */
+function renderPhaseTable(session, mode) {
+  const table = $("jev-phase-table");
+  if (!table) return;
+  const rows = PHASES.map((name) => phaseRun(session, name));
+  const total = {
+    calls: rows.reduce((sum, entry) => sum + entry.calls, 0),
+    cost: rows.reduce((sum, entry) => sum + entry.cost, 0),
+    latency: rows.reduce((sum, entry) => sum + entry.latency, 0),
+  };
+  table.querySelector("tbody").innerHTML = rows.map((entry) => `
+    <tr>
+      <td>${esc(entry.label)}</td>
+      <td>${statusBar(entry.status)}</td>
+      <td class="num">${entry.calls ? entry.calls : "—"}</td>
+      <td class="num">${entry.calls ? money(entry.cost) : "—"}</td>
+      <td class="num">${entry.calls ? ms(entry.latency) : "—"}</td>
+    </tr>`).join("") + `
+    <tr class="is-total">
+      <td>合计</td>
+      <td><span class="phase-badge is-bypassed">会话总计</span></td>
+      <td class="num">${total.calls || "—"}</td>
+      <td class="num">${money(session.cost_usd ?? total.cost)}</td>
+      <td class="num">${total.latency ? ms(total.latency) : "—"}</td>
+    </tr>`;
+  $("jev-total-line").innerHTML = `本会话累计 <b>${esc(money(state.sessionCost))}</b>`
+    + ` · 路由模式 ${esc(mode)}`;
 }
 
 async function ask(text) {
@@ -352,6 +445,7 @@ async function ask(text) {
     renderEvidence(session);
     renderTrace(session);
     renderJev(session);
+    renderGraph(session);
     $("answer-card").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
   } catch (error) {
     $("answer-tag").textContent = "出错";
@@ -372,8 +466,435 @@ async function feedback(result) {
   }
 }
 
+/* ------------------------------------------------------------------ execution graph
+   The explanation view for one request: which stage actually ran, how each slot was
+   decided, whether the router forked, and what each Jev phase cost. Every number is
+   derived from the payload of this request; none is written by hand here.
+
+   Bypassed stages are rendered like any other stage: in this project "we did not use
+   the model, and this is why" is a result, not an empty state. */
+
+// The four phase states, in the vocabulary jev.PHASES uses.
+const STATE_LABEL = { called: "CALLED", bypassed: "BYPASSED", fallback: "FALLBACK", failed: "FAILED" };
+const STATE_NOTE = {
+  called: "已调用",
+  bypassed: "本次不需要",
+  fallback: "Jev 不可用，退回确定性流程",
+  failed: "调用失败，已降级",
+};
+
+// Which slots the table shows, and the shapes their values can take.
+const SLOT_ORDER = ["patches", "subject", "ability", "field", "mode", "type", "intent", "direction"];
+const SLOT_LABEL = {
+  patches: "版本",
+  subject: "对象",
+  ability: "技能",
+  field: "字段",
+  mode: "模式",
+  type: "类别",
+  intent: "意图",
+  direction: "方向",
+};
+const SLOT_BADGE = {
+  deterministic: "规则",
+  alias: "别名表",
+  semantic: "Jev 语义",
+  default: "默认值",
+  none: "未定",
+};
+
+function stateClass(status) {
+  return STATE_LABEL[status] ? "is-" + status : "";
+}
+
+const money = (value) => "$" + Number(value || 0).toFixed(6);
+const ms = (value) => (value === null || value === undefined || value === ""
+  ? "—" : Number(value) + "ms");
+
+function num(value, digits = 2) {
+  return value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(digits);
+}
+
+function pct01(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  return Math.max(0, Math.min(1, number));
+}
+
+function statusBar(status, ok = false) {
+  const kind = status === "called" && ok ? "is-called is-ok" : stateClass(status);
+  return `<span class="phase-badge ${kind}">${esc(STATE_LABEL[status] || "—")}</span>`;
+}
+
+/* ---------------------------------------------------------------- stage chain */
+
+function renderStages(session, plan, routing) {
+  const paths = routing?.paths || [];
+  const mode = routing?.mode || plan.routing_mode || "off";
+  const withCandidates = paths.filter((path) => Number(path.candidate_count || 0) > 0);
+  const branchRan = mode === "active" && paths.length >= 2;
+  const slots = plan.slots || {};
+  const patches = (slots.patches?.value || plan.patches || []).join("、");
+  const subject = slots.subject?.value;
+  const ability = slots.ability?.value;
+  const fallback = phaseRun(session, "semantic_fallback");
+  const routingPhase = phaseRun(session, "hierarchical_routing");
+  const rerank = phaseRun(session, "rerank");
+  const judge = phaseRun(session, "evidence_judge");
+  const check = session.self_check;
+
+  const deterministic = [
+    patches ? `版本 ${patches}（${plan.patch_source || "—"}）` : "",
+    subject ? `对象 ${subject}（${slots.subject?.source || "—"}）` : "",
+    ability ? `技能 ${ability}` : "",
+    plan.unresolved_slots?.length ? `未定槽位 ${plan.unresolved_slots.join("、")}` : "没有未定槽位",
+  ].filter(Boolean).join(" · ");
+
+  // The routing stage's own booking, plus what the mode did with it. A failure outranks
+  // both modes — a degradation must never be displayed as a quiet bypass. In shadow mode
+  // the router may well have worked and been ignored, so the reading follows the phase
+  // ledger's *work* (calls/cost/latency) rather than its status alone.
+  let routingStatus = routingPhase.status;
+  let routingDetail = routingPhase.detail || routingPhase.note;
+  if (routingStatus !== "failed" && mode === "off") {
+    routingStatus = "bypassed";
+    routingDetail = routingPhase.detail || "routing=off：完全使用确定性解析";
+  } else if (routingStatus !== "failed" && mode === "shadow") {
+    const worked = Boolean(routingPhase.calls || routingPhase.cost || routingPhase.latency);
+    routingStatus = worked ? "bypassed" : routingPhase.status;
+    routingDetail = `${routingPhase.detail || "语义结果已记录"} · shadow：不影响实际检索`;
+  }
+
+  let mergeStatus = "bypassed";
+  let mergeDetail = "单条路径，没有需要合并的分支";
+  if (branchRan) {
+    const merged = session.routing?.merged_candidates;
+    mergeStatus = "called";
+    mergeDetail = `${withCandidates.length}/${paths.length} 条分支有候选，合并去重后 `
+      + `${merged === null || merged === undefined || merged === "" ? "—" : merged} 条进入重排`;
+  } else if (mode === "shadow") {
+    mergeDetail = "shadow：语义分支只记录，不合并";
+  }
+
+  const rerankDetail = rerank.status === "fallback" && /TYPESAFE_API_KEY/.test(rerank.detail || "")
+    ? "缺少 TYPESAFE_API_KEY，保留检索顺序"
+    : rerank.detail || rerank.note;
+
+  const stages = [
+    { name: "确定性解析", status: "called", detail: deterministic, metrics: "" },
+    { name: "语义补全", status: fallback.status, detail: fallback.detail || fallback.note, metrics: phaseMetrics(fallback) },
+    { name: "分层路由", status: routingStatus, detail: routingDetail, metrics: phaseMetrics(routingPhase) },
+    {
+      name: "分支检索",
+      status: branchRan ? "called" : "bypassed",
+      detail: branchRan
+        ? `${paths.length} 条路径分别检索：`
+          + paths.map((path) => `${path.label} ${path.candidate_count ?? "—"} 条`).join("；")
+        : mode === "off" ? "routing=off：单路径检索" : "单条路径，未分叉",
+      metrics: "",
+    },
+    { name: "合并", status: mergeStatus, detail: mergeDetail, metrics: "" },
+    { name: "Jev 重排", status: rerank.status, detail: rerankDetail, metrics: phaseMetrics(rerank) },
+    {
+      name: "确定性渲染",
+      status: "called",
+      detail: session.evidence?.length
+        ? `模板渲染 ${session.evidence.length} 条候选，数值全部取自公告`
+        : "本次没有可渲染的数值行",
+      metrics: "",
+    },
+    {
+      name: "证据判读",
+      status: judge.status,
+      detail: check
+        ? `自检 ${check.scores?.length ?? 0} 条，最低支持度 ${num(check.min)}`
+        : judge.detail || judge.note,
+      metrics: phaseMetrics(judge),
+    },
+  ];
+
+  return `<ul class="chain">${stages.map((stage) => `
+    <li class="${stateClass(stage.status)}">
+      <span class="st-head">${statusBar(stage.status, stage.status === "called")}
+        <span class="st-name">${esc(stage.name)}</span>
+        ${stage.metrics ? `<span class="st-meta">${esc(stage.metrics)}</span>` : ""}</span>
+      <span class="st-detail">${esc(stage.detail || "—")}</span>
+    </li>`).join("")}</ul>`;
+}
+
+/* ---------------------------------------------------------------- slot provenance */
+
+function candidateBars(candidates, committed) {
+  if (!candidates?.length) return "";
+  const top = Math.max(...candidates.map((item) => Number(item.probability) || 0), 0.01);
+  const rows = candidates.slice(0, 4).map((item) => {
+    const value = String(item.value ?? "—");
+    const width = Math.max(3, Math.round((pct01(item.probability) / top) * 100));
+    const winner = value === String(committed ?? "") ? " winner" : "";
+    return `<span class="cand-row${winner}"><span class="bar-label">${esc(value)}</span>`
+      + `<span class="cand-track"><i class="cand-fill" data-w="${width}"></i></span>`
+      + `<span class="cand-score">${num(item.probability)}</span></span>`;
+  }).join("");
+  return `<span class="cand">${rows}</span>`;
+}
+
+function slotCell(slot) {
+  const value = slot.value;
+  let shown = "—";
+  if (Array.isArray(value) && value.length) shown = value.map((item) => esc(item)).join("、");
+  else if (value !== null && value !== undefined && value !== "") shown = esc(value);
+  const confidence = slot.confidence === null || slot.confidence === undefined
+    ? "" : `<span class="slot-conf">置信度 ${num(slot.confidence)}</span>`;
+  const status = slot.status && slot.status !== "resolved" ? `（${esc(slot.status)}）` : "";
+  const badge = SLOT_BADGE[slot.source] || esc(slot.source || "—");
+  return `<td><span class="slot-value">${shown}</span>${confidence}<br>`
+    + `<span class="phase-badge ${slot.source === "semantic" ? "is-called" : "is-bypassed"}">${esc(badge)}</span>${status}`
+    + `${candidateBars(slot.candidates, value)}</td>`;
+}
+
+function renderSlots(plan) {
+  const slots = plan.slots || {};
+  const rows = SLOT_ORDER.map((key) => {
+    let slot = slots[key];
+    let code = key;
+    if (key === "field") {
+      // The parser decides the family (field) and the concrete keys (field_keys); a
+      // semantic decision can land on either, so both are shown in one row.
+      const keys = slots.field_keys;
+      if (!slot && !keys) return "";
+      code = "field + field_keys";
+      slot = {
+        value: keys?.value?.length ? keys.value : slot?.value,
+        source: keys?.source && keys.source !== "none" ? keys.source : slot?.source,
+        status: keys?.status || slot?.status,
+        confidence: keys?.confidence ?? slot?.confidence,
+        candidates: keys?.candidates?.length ? keys.candidates : slot?.candidates,
+        why: [slot?.why, keys?.why].filter(Boolean).join(" ｜ "),
+      };
+    }
+    if (!slot) return "";
+    return `<tr>
+      <td class="slot-name">${esc(SLOT_LABEL[key] || key)}<code>${esc(code)}</code></td>
+      <td class="slot-why">${esc(slot.why || "—")}</td>
+      ${slotCell(slot)}
+    </tr>`;
+  }).filter(Boolean);
+
+  if (!rows.length) return '<p class="ghost">本次响应没有 query_plan.slots。</p>';
+  return `<table class="slot-table">
+    <thead><tr><th>槽位</th><th>为什么这样定</th><th>值 / 来源</th></tr></thead>
+    <tbody>${rows.join("")}</tbody></table>`;
+}
+
+/* ---------------------------------------------------------------- fork + merge */
+
+function truncate(text, length) {
+  const value = String(text ?? "");
+  return value.length > length ? value.slice(0, length - 1) + "…" : value;
+}
+
+function forkGraphic(routing) {
+  const paths = routing?.paths || [];
+  const mode = routing?.mode || "off";
+  const readings = paths.filter((path) => (path.nodes || []).length);
+  const primary = readings[0];
+  const secondary = readings[1];
+  const bypassed = paths.some((path) => !(path.nodes || []).length);
+  const labels = [
+    { box: primary ? truncate(primary.label, 16) : "单条路径", kind: primary ? "is-jev" : "" },
+    { box: secondary ? truncate(secondary.label, 14) : "未分叉", kind: secondary ? "is-jev" : "" },
+    { box: "合并 →", kind: "" },
+  ];
+
+  const node = svg(196, 106);
+  const defs = add(node, "defs", {});
+  const marker = (id, cls) => {
+    const item = add(defs, "marker", {
+      id, viewBox: "0 0 8 8", refX: 6, refY: 4, markerWidth: 6, markerHeight: 6,
+      orient: "auto-start-reverse",
+    });
+    add(item, "path", { d: "M0 0 L8 4 L0 8 z", class: cls });
+  };
+  marker("arrow", "marker");
+  marker("arrowJev", "marker is-jev");
+  marker("arrowWarn", "marker is-warn");
+
+  labels.forEach((label, index) => {
+    add(node, "rect", {
+      x: 6, y: 28 + index * 26, width: 78, height: 20, rx: 6,
+      class: `fork-node ${label.kind}`,
+    });
+    add(node, "text", { x: 13, y: 42 + index * 26, class: `fork-label ${label.kind}` }, label.box);
+  });
+  add(node, "text", { x: 6, y: 16, class: "fork-note" }, `路由模式 ${mode}`);
+  if (primary) add(node, "path", { d: "M84 38 H92 V41 H100", class: "conn is-jev", "marker-end": "url(#arrowJev)" });
+  if (secondary) add(node, "path", { d: "M84 64 H92 V67 H100", class: "conn is-jev", "marker-end": "url(#arrowJev)" });
+  if (!readings.length) add(node, "path", { d: "M92 38 V67", class: "conn" });
+  add(node, "path", { d: "M92 67 V80 H100", class: "conn", "marker-end": "url(#arrow)" });
+  if (bypassed) {
+    add(node, "path", { d: "M92 90 V98 H100", class: "conn is-bypass", "marker-end": "url(#arrowWarn)" });
+    add(node, "text", { x: 4, y: 93, class: "bypass-label" }, "保守路径");
+  }
+  node.setAttribute("class", "fork-svg");
+  node.setAttribute("aria-hidden", "true");
+  const holder = document.createElement("div");
+  holder.appendChild(node);
+  return holder.innerHTML;
+}
+
+function routeList(routing) {
+  const paths = routing?.paths || [];
+  if (!paths.length) return '<p class="ghost">本次响应没有 routing.paths。</p>';
+  const items = paths.map((path) => {
+    const nodes = path.nodes || [];
+    const safe = !nodes.length;
+    const where = Object.entries(path.where || {})
+      .map(([key, value]) => `${key}=${Array.isArray(value) ? value.join("/") : value}`)
+      .join(" · ");
+    const score = nodes.length && path.score !== null && path.score !== undefined
+      ? `<span class="route-score">score ${num(path.score)}</span>` : "";
+    const count = `<span class="route-count">候选 ${path.candidate_count ?? "—"} 条</span>`;
+    const badge = safe
+      ? '<span class="phase-badge is-bypassed">BYPASSED · 安全网</span>'
+      : statusBar("called", path.contributed === true);
+    return `<li class="route ${safe ? "plain" : "is-jev"}${path.contributed && !safe ? " winner" : ""}">
+      <span class="route-head">
+        <span class="route-label">${esc(path.label || "—")}</span>
+        ${badge}${score}${count}
+        ${path.contributed ? '<span class="route-count">最终采用</span>' : ""}
+      </span>
+      <span class="route-detail">${esc(path.detail || "")}</span>
+      ${where ? `<span class="route-where">${esc(where)}</span>` : ""}
+    </li>`;
+  }).join("");
+
+  const unfiltered = paths.find((path) => !(path.nodes || []).length);
+  let note = (routing?.notes || []).find((line) => /分叉|层级|保守/.test(line)) || "";
+  if (routing?.beam_used) {
+    note = "分叉：首选读法与接近的次选读法各检索一次。合并按分支置信度加权（RRF），"
+      + "所以候选最多的那条不会因为条目多就赢。";
+  } else if (!note) {
+    note = "没有分叉：首选读法明显领先，只走单一路径。";
+  }
+  if (unfiltered) {
+    note += " 无过滤的那条是保守路径：不是另一种猜测，而是保证误判只损失精度、不漏检的兜底。";
+  }
+  return `<ul class="routes">${items}</ul><p class="routes-note">${esc(note)}</p>`;
+}
+
+function mergeBlock(session, routing) {
+  const paths = routing?.paths || [];
+  const mode = routing?.mode || "off";
+  const branches = paths.filter((path) => Number(path.candidate_count || 0) > 0);
+  const influence = session.routing_influence;
+  const winner = session.evidence?.[0] || {};
+  const label = `${winner.ability ? winner.ability + " " : ""}${winner.field || winner.id || "—"}`;
+  const gates = ["重排不改数字：数值句只由 patch_engine._render 生成。"];
+  // 0.15 is the rerank gate (jev.MIN_RERANK_GAP): a module constant, not part of the
+  // routing config the API exposes, so it is quoted as the backend's value rather than
+  // re-derived here.
+  if (session.jev?.choice_id && session.jev?.decisive === false) {
+    gates.push(`分差 ${num(session.jev.gap)} 未达 jev.MIN_RERANK_GAP = 0.15：保留检索顺序（两条候选无法区分）。`);
+  } else if (session.jev?.choice_id) {
+    gates.push(`分差 ${num(session.jev.gap)} 达到 jev.MIN_RERANK_GAP 门槛：采用 Jev 顺序。`);
+  }
+  let headline;
+  if (mode !== "active" || paths.length < 2) {
+    headline = `没有分支可合并：本次走 ${paths.length || 1} 条路径（路由模式 ${mode}）。`;
+  } else {
+    headline = `${branches.length}/${paths.length} 条分支有候选，合并去重后 `
+      + `${session.routing?.merged_candidates ?? "—"} 条进入重排；最终采用 <b>${esc(label)}</b>。`;
+    if (influence?.from_secondary) {
+      headline += ` 首选读法未命中：采用的证据来自次选分支 ${esc((influence.winner_branches || [])[0] || "—")}`
+        + "——分叉就是为了这一题。";
+    } else if (influence?.winner_branches?.length) {
+      headline += ` 该条由 ${esc(influence.winner_branches.join(" + "))} 命中。`;
+    }
+  }
+
+  return `<p class="attribution">${headline}</p>`
+    + `<span class="loop">${gates.map((gate) => `<span class="st-gate">${esc(gate)}</span>`).join("")}</span>`;
+}
+
+function renderNotes(routing) {
+  const notes = routing?.notes || [];
+  if (!notes.length) return '<p class="ghost">本次没有路由说明（routing.notes 为空）。</p>';
+  return `<ul class="notes-list">${notes.map((note) => `<li>${esc(note)}</li>`).join("")}</ul>`;
+}
+
+/* ---------------------------------------------------------------- entry point */
+
+function renderGraph(session) {
+  const box = $("graph-body");
+  const note = $("graph-note");
+  if (!box || !note) return;
+  // ask()'s catch treats any throw as "提问失败", so a broken diagram must never escape:
+  // it reports itself inside its own card, exactly like the per-chart try/catch.
+  try {
+    paintGraph(session, box, note);
+  } catch (error) {
+    note.textContent = "执行图渲染失败";
+    box.innerHTML = `<p class="ghost">执行图渲染失败：${esc(error.message)}（回答、证据与轨迹不受影响）</p>`;
+  }
+}
+
+function paintGraph(session, box, note) {
+  const plan = session.query_plan || {};
+  const routing = session.routing || plan.routing || {};
+  const mode = routing.mode || plan.routing?.mode || "off";
+
+  const head = (text) => `<p class="graph-head">${text}</p>`;
+  const section = (title, body) => `<section class="graph-sec"><h5>${esc(title)}</h5>${body}</section>`;
+  const sheet = [
+    guarded(box, () => renderStages(session, plan, routing)),
+    guarded(box, () => renderSlots(plan)),
+    guarded(box, () => `<div class="fork">${forkGraphic(routing)}<div>${routeList(routing)}</div></div>`),
+    guarded(box, () => mergeBlock(session, routing)),
+    guarded(box, () => renderNotes(routing)),
+  ];
+  if (sheet.some((piece) => piece === null)) return;
+
+  box.innerHTML = [
+    head(`本次真实跑过的步骤（路由模式 ${esc(mode)}）。灰色 BYPASSED 是设计结果——这一步本次不需要，不是故障。`),
+    section("阶段", sheet[0]),
+    section("槽位来源", sheet[1]),
+    section("路由分叉", sheet[2]),
+    section("合并", sheet[3]),
+    section("路由说明（routing.notes）", sheet[4]),
+    '<p class="graph-foot">分类树只写在 taxonomy.py；模型只出现在标 CALLED 的步骤里，且从不生成数值。</p>',
+  ].join("");
+
+  guarded(box, () => {
+    box.querySelectorAll(".cand-fill").forEach((node) => {
+      const width = Number(node.dataset.w || 0);
+      requestAnimationFrame(() => { node.style.width = width + "%"; });
+    });
+  });
+
+  const calls = PHASES.reduce((sum, name) => sum + Number(session.jev_phases?.[name]?.calls || 0), 0);
+  note.textContent = `${mode} · ${calls ? `本次 ${calls} 次 Jev 调用` : "本次未调用 Jev"} · 成本 ${money(session.cost_usd)}`;
+
+  // One-shot entrance for runtime content: .reveal would stay at opacity 0 forever,
+  // because observeReveals only runs at boot and after renderCharts/loadEvaluation.
+  box.classList.remove("is-enter");
+  if (!reduced) {
+    void box.offsetWidth;
+    box.classList.add("is-enter");
+    setTimeout(() => box.classList.remove("is-enter"), 600);
+  }
+}
+
 /* ------------------------------------------------------------------ charts */
 const NS = "http://www.w3.org/2000/svg";
+
+/* The merged blind report is the one quoted in the README, but it only exists after the
+   two batches have been merged. Any 盲测报告 run is a truthful substitute, so the chart
+   degrades to the newest one instead of drawing empty axes. */
+function blindRun(runs = state.runs) {
+  const reports = (runs || []).filter((run) => String(run?.name || "").startsWith("盲测报告"));
+  if (!reports.length) return null;
+  return reports.find((run) => run.name === "盲测报告-合并") || reports[reports.length - 1];
+}
 
 function svg(width, height) {
   const node = document.createElementNS(NS, "svg");
@@ -399,10 +920,14 @@ function gradients(node) {
 
 /* 盲测成绩：横向条形 */
 function chartBlind(box, payload) {
-  const runs = payload.runs || [];
-  const blind = runs.find((run) => run.name === "盲测报告-合并") || {};
+  const blind = blindRun(payload.runs);
+  if (!blind) {
+    box.innerHTML = '<p class="ghost">没有找到盲测报告（docs/盲测报告*.json），无法作图。</p>';
+    return;
+  }
   const arms = blind.arms || {};
-  const arm = arms["hybrid+jev"] || arms["hybrid"] || {};
+  const arm = arms["hybrid+jev"] || arms.hybrid || {};
+  const armName = arms["hybrid+jev"] ? "hybrid+jev" : (arms.hybrid ? "hybrid" : "—");
   const rows = [
     ["单点数值正确", arm.single?.value_ok, arm.single?.value_total],
     ["检索命中@1", arm.single?.["hit@1"], arm.single?.total],
@@ -426,8 +951,12 @@ function chartBlind(box, payload) {
     fill.dataset.width = 320 * ratio;
     add(node, "text", { x: 462, y: y + 10, class: "row-value" }, `${part}/${total}`);
   });
+  add(node, "text", { x: 132, y: height - 1, class: "axis" }, `满分 100% · 全部来自 docs/${blind.name}.json`);
   box.appendChild(node);
-  add(node, "text", { x: 132, y: height - 1, class: "axis" }, "满分 100% · 全部来自 docs/盲测报告-合并.json");
+  const note = document.createElement("p");
+  note.className = "chart-note";
+  note.textContent = `${blind.name} · ${blind.cases ?? "—"} 题 · ${armName} 口径`;
+  box.appendChild(note);
 }
 
 /* 自检注入：点图，两组分布在阈值两侧 */
@@ -625,6 +1154,25 @@ async function loadEvaluation() {
 
   const cost = jevArm(same).jev;
   if (cost?.calls) $("stat-cost").textContent = "$" + (cost.cost_usd / cost.calls).toFixed(6);
+
+  // The hero figure is the same measurement the blind chart draws. The merged report may
+  // not carry a hybrid+jev arm (it is regenerated by the evaluation scripts), so fall back
+  // to the hybrid arm and say so in the label instead of inventing a number.
+  const blind = blindRun(runs);
+  state.blindRun = blind?.name || "";
+  const blindArms = blind?.arms || {};
+  const jevBlind = blindArms["hybrid+jev"];
+  const baseBlind = blindArms.hybrid;
+  const measured = jevBlind || baseBlind;
+  const ok = measured?.single?.value_ok;
+  const total = measured?.single?.value_total;
+  if (typeof ok === "number" && total) {
+    $("stat-blind").textContent = `${ok}/${total}`;
+    $("stat-blind-note").textContent = jevBlind ? "盲测数值正确" : "盲测数值正确（hybrid 口径）";
+  } else {
+    $("stat-blind").textContent = "—";
+    $("stat-blind-note").textContent = "盲测报告不可用";
+  }
 
   const rows = [];
   const pushArm = (run, name, arm, scope) => {
