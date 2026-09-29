@@ -351,9 +351,14 @@ def main() -> int:
         "--repeat", type=int, default=1,
         help="同一批案例重复跑 N 次（live 口径下模型有随机性，单次结果不足以支撑结论）",
     )
+    parser.add_argument(
+        "--cases", default="",
+        help="案例文件路径（默认 tests/cases/routing_cases.json）；可指向盲测生成的路由效果集",
+    )
     args = parser.parse_args()
 
-    payload = json.loads(CASES.read_text(encoding="utf-8"))
+    case_path = Path(args.cases) if args.cases else CASES
+    payload = json.loads(case_path.read_text(encoding="utf-8"))
     raw = payload["cases"]
     if args.limit:
         raw = raw[: args.limit]
@@ -464,6 +469,8 @@ def main() -> int:
         "# Jev 分层路由评测",
         "",
         f"生成时间：{time.strftime('%Y-%m-%d %H:%M')}　案例：{len(raw)} 条"
+        f"　来源：{case_path.name}"
+        f"　模式：{'live' if live else 'fixture'}"
         f"　检索口径：BM25（不依赖本地向量服务，便于复现）",
         "",
         f"> **口径**：{note}",

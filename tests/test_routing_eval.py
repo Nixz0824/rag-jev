@@ -87,6 +87,19 @@ class CaseFileTests(unittest.TestCase):
                 self.assertLessEqual(item["probability"], 1.0, case["id"])
                 self.assertIn(item["value"], routing.taxonomy.ABILITIES, case["id"])
 
+    def test_routing_effect_cases_carry_no_handwritten_distribution(self):
+        """The effect set must not record what the model is supposed to answer.
+
+        Supplying `expect.abilities` makes the fixture arm replay the answer the author
+        wanted, which is how the first version produced a `5/8 → 8/8` result that the real
+        model did not reproduce. Effect cases are therefore only allowed to state the
+        question, the expected target row and the slot expectations.
+        """
+        offenders = [case["id"] for case in self.raw
+                     if case.get("kind") == "routing_effect" and case["expect"].get("abilities")]
+        self.assertEqual(offenders, [],
+                         f"这些案例带了手写分布，会让 fixture 口径自证其说：{offenders}")
+
 
 class ScorableTargetTests(unittest.TestCase):
     """Every case must resolve to a real corpus row, or hit@K measures nothing."""
