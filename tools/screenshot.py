@@ -60,7 +60,8 @@ class Session:
         return result.get("result", {}).get("value")
 
 
-async def capture(port: int, out_dir: Path) -> None:
+async def capture(port: int, out_dir: Path, width: int = 1440, height: int = 1000,
+                  only: tuple[str, ...] = (), suffix: str = "") -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     pages = [target for target in targets(port) if target["type"] == "page"]
     ws_url = pages[0]["webSocketDebuggerUrl"]
@@ -69,8 +70,10 @@ async def capture(port: int, out_dir: Path) -> None:
         session.ws = ws
         await session.send("Page.enable")
         await session.send("Runtime.enable")
-        await session.send("Emulation.setDeviceMetricsOverride", width=1440, height=1000, deviceScaleFactor=1, mobile=False)
-        for shot in SHOTS:
+        await session.send("Emulation.setDeviceMetricsOverride", width=width, height=height,
+                           deviceScaleFactor=1, mobile=False)
+        shots = [shot for shot in SHOTS if not only or shot["name"] in only]
+        for shot in shots:
             url = BASE + "/" + shot["query"]
             await session.send("Page.navigate", url=url)
             await asyncio.sleep(1.5)
@@ -104,32 +107,41 @@ async def capture(port: int, out_dir: Path) -> None:
                 if isinstance(position, int):
                     break
             result = await session.send("Page.captureScreenshot", format="png")
-            path = out_dir / f"{shot['name']}.png"
+            path = out_dir / f"{shot['name']}{suffix}.png"
             path.write_bytes(base64.b64decode(result["data"]))
-            print(f"{shot['name']}.png  {path.stat().st_size // 1024} KB  scrollY={position}", flush=True)
+            print(f"{path.name}  {path.stat().st_size // 1024} KB  scrollY={position}", flush=True)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="通过 CDP 截图")
     parser.add_argument("--port", type=int, default=9222)
     parser.add_argument("--out", default="docs/screenshots")
+    parser.add_argument("--width", type=int, default=1440)
+    parser.add_argument("--height", type=int, default=1000)
+    parser.add_argument("--only", default="", help="只截这些区块，逗号分隔（默认全部）")
+    parser.add_argument("--suffix", default="", help="文件名后缀，便于窄屏版本另存")
+    parser.add_argument(
+        "--motion",
+        action="store_true",
+        help="不强制 prefers-reduced-motion，用于核对入场动画的最终可见状态",
+    )
     args = parser.parse_args()
 
-    process = subprocess.Popen(
-        [
-            EDGE,
-            "--headless=new",
-            "--disable-gpu",
-            "--hide-scrollbars",
-            "--no-first-run",
-            "--force-prefers-reduced-motion",
-            f"--remote-debugging-port={args.port}",
-            f"--user-data-dir={PROFILE}",
-            "about:blank",
-        ],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
+    flags = [
+        EDGE,
+        "--headless=new",
+        "--disable-gpu",
+        "--hide-scrollbars",
+        "--no-first-run",
+        f"--remote-debugging-port={args.port}",
+        f"--user-data-dir={PROFILE}",
+        "about:blank",
+    ]
+    if not args.motion:
+        # Default: capture the reduced-motion path, which is what the README screenshots
+        # have always shown. --motion drops the flag so the animated path can be checked too.
+        flags.insert(4, "--force-prefers-reduced-motion")
+    process = subprocess.Popen(flags, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         for _ in range(40):
             try:
@@ -137,7 +149,9 @@ def main() -> int:
                 break
             except Exception:  # noqa: BLE001
                 time.sleep(0.5)
-        asyncio.run(capture(args.port, Path(args.out)))
+        only = tuple(part.strip() for part in args.only.split(",") if part.strip())
+        asyncio.run(capture(args.port, Path(args.out), width=args.width, height=args.height,
+                            only=only, suffix=args.suffix))
     finally:
         process.terminate()
     return 0

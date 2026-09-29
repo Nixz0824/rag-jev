@@ -26,7 +26,12 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* The rail becomes a fixed bottom bar under 720px; reserve its height so an in-page
+     jump (#ask, #arch, …) does not park a section under the bar. */
+  scroll-padding-bottom: 74px;
+}
 body {
   margin: 0;
   background: var(--bg);
@@ -107,8 +112,13 @@ main, .hero, .rail, .foot, .band { position: relative; z-index: 2; }
 .section-head p { margin: 14px 0 0; max-width: 64ch; color: var(--ink-dim); }
 
 /* ---------------------------------------------------------------- console */
+/* The first track may not go below 320px on a desktop two-column layout, but on a phone
+   that floor is wider than the viewport (390px minus padding), which pushed the whole
+   document into horizontal scroll. Below the single-column breakpoint the floor is dropped
+   and the composer's grid children are allowed to shrink (min-width: 0), so a textarea's
+   intrinsic width cannot force the page wider than the screen either. */
 .console { display: grid; grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr); gap: 22px; align-items: start; }
-@media (max-width: 1080px) { .console { grid-template-columns: 1fr; } }
+@media (max-width: 1080px) { .console { grid-template-columns: minmax(0, 1fr); } }
 
 .console-input, .answer, .jev-panel, .evidence, .trace, .graph, .compare, .table-wrap, .judgement, .flow-node, .notes, .chart, .arch {
   background: var(--panel);
@@ -124,7 +134,10 @@ select, input[type="text"] {
   border-radius: var(--radius-control); padding: 7px 10px; color: var(--ink);
 }
 .hint { font-size: 12px; color: var(--ink-faint); }
-#composer { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+#composer { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; }
+/* Grid items default to min-width:auto, so a textarea's or button's intrinsic width can
+   push the track (and the whole page) wider than the viewport. */
+#composer > * { min-width: 0; }
 #input {
   width: 100%; resize: vertical; min-height: 64px;
   background: var(--panel-2); border: 1px solid var(--line-strong);
@@ -160,7 +173,10 @@ select, input[type="text"] {
 .tag.jev { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .muted, .ghost { color: var(--ink-faint); }
 .ghost { font-size: 13.5px; }
-.answer-body p { margin: 0 0 10px; white-space: pre-wrap; }
+/* Answer lines keep their authored line breaks (pre-wrap), but the corpus also puts bare
+   URLs in here — a source link is one unbreakable token, and at 360px it pushed the whole
+   document into horizontal scroll. overflow-wrap lets it break when it has to. */
+.answer-body p { margin: 0 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .answer-body .answer-line { padding-left: 14px; border-left: 2px solid var(--line-strong); }
 .answer-body .answer-line.buff { border-color: var(--ok); }
 .answer-body .answer-line.nerf { border-color: var(--hot); }
@@ -207,7 +223,12 @@ select, input[type="text"] {
   -webkit-mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
 }
 .gauge b { font: 700 19px/1 var(--mono); }
-.phase-table-wrap { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); overflow-x: auto; }
+/* The table has a 430px floor so its four columns stay readable, and this wrapper scrolls it
+   sideways on a narrow screen. max-width keeps the *wrapper* inside the card: without it the
+   table's intrinsic width propagates up through the flex chain and widens the whole document
+   instead of scrolling locally (7px of page-level overflow at 360px). */
+.phase-table-wrap { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); overflow-x: auto; max-width: 100%; }
+.jev-block, .jev-grid { min-width: 0; }
 table.phase-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 430px; }
 table.phase-table caption {
   caption-side: top; text-align: left; padding-bottom: 10px;
@@ -501,6 +522,7 @@ table.ab td.dim { color: var(--ink-faint); }
   .rail {
     left: 0; right: 0; top: auto; bottom: 0; transform: none; flex-direction: row; gap: 12px;
     align-items: center; padding: 8px 12px; background: rgba(11,12,14,0.94); border-top: 1px solid var(--line);
+    max-width: 100vw; overflow-x: auto;
   }
   .rail ul { flex-direction: row; gap: 14px; overflow-x: auto; }
   .rail-status { margin-left: auto; }
@@ -508,4 +530,8 @@ table.ab td.dim { color: var(--ink-faint); }
   .hero { min-height: 76svh; }
   .console-input { position: static; }
   .foot { padding-bottom: 18vh; }
+  /* The fixed bottom rail sits above the page, so the document needs to end with enough
+     reserved space for the last card to clear it. Padding on main is the one place that
+     applies to every section. */
+  main { padding-bottom: 74px; }
 }
