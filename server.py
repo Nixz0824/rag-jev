@@ -344,6 +344,7 @@ def evaluation() -> dict:
         ("jev_ranker", "Jev效果-排序对照.json"),
         ("jev_selfcheck", "Jev自检.json"),
         ("jev_routing", "Jev分层路由.json"),
+        ("jev_routing_effect", "Jev分层路由-效果集.json"),
     ):
         path = DOCS / filename
         if not path.exists():
@@ -380,6 +381,37 @@ def evaluation() -> dict:
                 "recall_lost": payload.get("recall_lost", 0),
                 "changed": payload.get("changed", []),
                 "config": payload.get("config", {}),
+                "generated_at": payload.get("generated_at", ""),
+            }
+        elif key == "jev_routing_effect":
+            # Same shape, plus the outcome matrix the page quotes: who was solved by which
+            # scope. `only_off` is the number that would argue against routing, so it travels
+            # with the report rather than being derived in the browser.
+            rows = payload.get("rows", {})
+            off_rows, active_rows = rows.get("off", []), rows.get("active", [])
+
+            def solved(rowset):
+                grouped: dict[str, list[bool]] = {}
+                for row in rowset:
+                    grouped.setdefault(row["id"], []).append(bool(row["hit@1"]))
+                return grouped
+
+            off_solved, active_solved = solved(off_rows), solved(active_rows)
+            matrix = {"both_right": 0, "only_active": 0, "only_off": 0, "both_wrong": 0}
+            for case_id, hits in off_solved.items():
+                off_any, active_any = any(hits), any(active_solved.get(case_id, []))
+                key_name = ("both_right" if off_any and active_any else
+                            "only_active" if active_any else
+                            "only_off" if off_any else "both_wrong")
+                matrix[key_name] += 1
+            extras[key] = {
+                "source": payload.get("source", ""),
+                "cases": payload.get("cases", 0),
+                "arms": payload.get("arms", {}),
+                "behaviour": payload.get("behaviour", {}),
+                "improved": payload.get("improved", 0),
+                "hurt": payload.get("hurt", 0),
+                "matrix": matrix,
                 "generated_at": payload.get("generated_at", ""),
             }
         else:

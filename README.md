@@ -51,7 +51,7 @@ Answer Verification    证据判读：渲染出的声称有没有被证据支持
 | 是否夸大自己 | 只报提升 | 先报「没测到提升」，换对题目后测到了 **+3～4/40**，同时报出「只有 off 答对 0 条」与 12 条共同失败 |
 | 评估 | 无，或自己写几条同源问题 | **78 题独立盲测**（出题方禁读语料）+ 48 条解析盲测 + 18 条陷阱题 + 8 条路由案例；全部用真实模型跑过 |
 | 负面结论 | 不写 | 三种排序在过滤后打平、门槛测量后不采用、重排空间很小、路由没有测到收益——都留在报告里 |
-| 工程 | 一个 notebook | 175 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
+| 工程 | 一个 notebook | 176 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
 
 ---
 
@@ -359,7 +359,7 @@ $env:RAGJEV_ROUTING_MODE = "active"     # off / shadow / active，默认 active
 ## 命令
 
 ```powershell
-python -m unittest discover -s tests          # 175 项，不需要模型与网络
+python -m unittest discover -s tests          # 176 项，不需要模型与网络
 python scripts/ingest_qq.py --offline         # 用已缓存公告重建语料
 python scripts/corpus_stats.py                # 语料统计表（docs/语料统计.md）
 python scripts/build_aliases.py --offline     # 重建英雄/装备别名表
@@ -419,7 +419,7 @@ jev.py              TypeSafe System One 客户端（choice / noul 原语 + 阶�
 server.py           本地 HTTP API 与静态页面
 launch.py           三进程监督（Windows Job Object，退出即回收）
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              175 项单元测试 + 手写样例语料 + 盲测集 + 路由案例集
+tests/              176 项单元测试 + 手写样例语料 + 盲测集 + 路由案例集
 web/                单页工作台（问答 / 架构 / 数据 / 版本对比）+ 逐查询执行图
 docs/               评测报告、盲测报告、分层路由报告、语料统计、门槛校准、交接文档
 ```

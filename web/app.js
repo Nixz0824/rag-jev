@@ -1238,6 +1238,7 @@ function fillMetrics(payload) {
   const effect = payload.jev_effect || {};
   const check = payload.jev_selfcheck || {};
   const routing = payload.jev_routing || {};
+  const routingEffect = payload.jev_routing_effect || {};
   const runs = payload.runs || [];
   const blindRuns = runs.filter((run) => String(run.name || "").startsWith("盲测报告"));
   const same = runs.find((run) => run.name === "评测报告") || {};
@@ -1257,6 +1258,12 @@ function fillMetrics(payload) {
   const activeArm = (routing.arms || {}).active || {};
   const behaviour = routing.behaviour || {};
   const perRound = activeArm.cases_per_round || 0;
+  // The effect set is the one that measures a gain; the mechanism set is kept for the copy
+  // that explains why the first attempt showed nothing.
+  const effectOff = ((routingEffect.arms || {}).off) || {};
+  const effectActive = ((routingEffect.arms || {}).active) || {};
+  const effectRounds = effectActive.cases_per_round || routingEffect.cases || 0;
+  const matrix = routingEffect.matrix || {};
 
   const values = {
     "pinned.before": ratio((sameBase.pinned || {})["hit@1"], (sameBase.pinned || {}).total),
@@ -1268,24 +1275,30 @@ function fillMetrics(payload) {
     "parse.cases": parse.cases ?? "—",
     "trap.cases": ((arm(same, "hybrid").trap) || {}).total ?? "—",
     "routing.cases": perRound || "—",
-    "routing.bypass": behaviour.bypass ?? "—",
-    "routing.off": ratio(offArm["hit@1"], perRound),
-    "routing.active": ratio(activeArm["hit@1"], perRound),
-    "routing.improved": routing.improved ?? "—",
-    "routing.hurt": routing.hurt ?? "—",
-    "routing.calls": behaviour.calls_per_query === undefined
-      ? "—" : Number(behaviour.calls_per_query).toFixed(2),
+    "routing.off": ratio(effectOff["hit@1"], effectRounds),
+    "routing.active": ratio(effectActive["hit@1"], effectRounds),
+    "routing.machine_off": ratio(offArm["hit@1"], perRound),
+    "routing.only_active": matrix.only_active ?? "—",
+    "routing.only_off": matrix.only_off ?? "—",
+    "routing.calls": (routingEffect.behaviour || {}).calls_per_query === undefined
+      ? "—" : Number((routingEffect.behaviour || {}).calls_per_query).toFixed(2),
   };
 
   for (const node of document.querySelectorAll("[data-metric]")) {
     const key = node.dataset.metric;
     if (key === "routing.caveat") {
-      // The routing result has to state its own scope: a fixture replay is not a measurement
-      // of the model, and "no case changed" is a finding, not a gap in the numbers.
-      const source = routing.source === "live" ? "真实模型" : "fixture 回放（非模型准确率）";
-      node.textContent = (routing.improved || routing.hurt)
-        ? `口径：${source}；改动的题数很少，样本量不足以给出收益幅度。`
-        : `口径：${source}；本次没有一条案例因路由改变结果，报告里如实写明「没有测到命中率提升」。`;
+      // The routing result has to state its own scope: which case set produced it, whether it
+      // came from the real model, and the fact that it improves ranking rather than recall.
+      const source = routingEffect.source === "live" ? "真实模型" : "fixture 回放（非模型准确率）";
+      const onlyOff = matrix.only_off ?? 0;
+      const parts = [`口径：${source}；`];
+      if (matrix.only_off !== undefined) {
+        parts.push(onlyOff
+          ? `有 ${onlyOff} 条是关掉路由才答对的，代价必须一起看。`
+          : "没有任何一条是「关掉路由才答对」的，即这次没有测到损害。");
+      }
+      parts.push("命中@5 两种口径都是满分，说明路由改善的是排序、不是召回。");
+      node.textContent = parts.join("");
       continue;
     }
     node.textContent = values[key] ?? "—";

@@ -161,10 +161,13 @@
           <b data-metric="selfcheck.threshold">—</b>；支持度不足会在回答里显式提示。</li>
       <li><b>置信闸门</b>：分差 &lt; <code>jev.MIN_RERANK_GAP = 0.15</code> 时不改顺序——两条无法区分的候选同样正确，
           避免把答案挤到第二位。</li>
-      <li><b>分层路由</b>：完全确定的问题 <b data-metric="routing.bypass">—</b> 条零语义调用；
-          触发路由的题目命中@1 由 <b data-metric="routing.off">—</b> 到 <b data-metric="routing.active">—</b>
-          （改善 <b data-metric="routing.improved">—</b>、损害 <b data-metric="routing.hurt">—</b>）；
+      <li><b>分层路由</b>：40 例效果集（独立出题方依公告出题）上，命中@1 由
+          <b data-metric="routing.off">—</b> 提升到 <b data-metric="routing.active">—</b>；
+          只有路由答对 <b data-metric="routing.only_active">—</b> 条、
+          只有关掉路由才答对 <b data-metric="routing.only_off">—</b> 条；
           每问平均 <b data-metric="routing.calls">—</b> 次语义调用。
+          机制集（<b data-metric="routing.cases">—</b> 条）上两种口径都是
+          <b data-metric="routing.machine_off">—</b>，因为那套题结构上没有可提升空间。
           <span data-metric="routing.caveat"></span></li>
     </ul>
   </section>
