@@ -51,7 +51,7 @@ Answer Verification    证据判读：渲染出的声称有没有被证据支持
 | 是否夸大自己 | 只报提升 | 先报「没测到提升」，换对题目后测到了 **+3～4/40**，同时报出「只有 off 答对 0 条」与 12 条共同失败 |
 | 评估 | 无，或自己写几条同源问题 | **78 题独立盲测**（出题方禁读语料）+ 48 条解析盲测 + 18 条陷阱题 + 8 条路由案例；全部用真实模型跑过 |
 | 负面结论 | 不写 | 三种排序在过滤后打平、门槛测量后不采用、重排空间很小、路由没有测到收益——都留在报告里 |
-| 工程 | 一个 notebook | 189 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
+| 工程 | 一个 notebook | 193 项单元测试 + GitHub Actions + 进程 Job Object + 索引指纹 + 公告原文不入库 |
 
 ---
 
@@ -124,14 +124,16 @@ Answer Verification    证据判读：渲染出的声称有没有被证据支持
 
 | 检索口径 | off | shadow | **active** | 只有 active 答对 | 只有 off 答对 | 命中@5 |
 |---|---|---|---|---|---|---|
-| BM25 | 25/40 | 25/40 | **28.3/40** | 4 | 0 | 40/40 |
-| **hybrid（生产默认）** | 26/40 | 26/40 | **30/40** | 4 | 0 | 40/40 |
+| BM25 | 25/40 | 25/40 | **28.3/40** | 4 | 2 | 40/40 |
+| **hybrid（生产默认）** | 26/40 | 26/40 | **29.3/40** | 4 | 2 | 40/40 |
 
-- **两种检索口径下结论同向**：hybrid 下每轮 off 恒为 `26`、active 恒为 `30`（三轮完全一致）；
-  BM25 下 off 恒为 `25`、active 为 `28/28/29`。
-- **结论：路由带来了可测量的提升，且没有损害任何一条对的答案**（两种口径的「只有 off 答对」都是 0）。
-- **但提升幅度有限**：净 **+3～4 条 / 40**（约 +8～10%），影响集中在 5 条案例上。
-  40 条样本，不能外推成通用的百分比收益。
+- **两种检索口径下结论同向**：BM25 off 恒为 `25`、active `28/28/29`；
+  hybrid 下 off 恒为 `26`、active 在 `29` 与 `30` 之间浮动（跨多次运行观察到 29–30）。
+  **单次运行的 active 值不能当作定值引用**，本表取的是重复 3 次的均值。
+- **结论：路由带来了可测量的提升。** 净收益 +3～4 条 / 40；
+  代价方面两种口径都观察到 2–3 条「只有 off 答对」——**损害不是 0，必须一起报**。
+- **提升幅度有限**：净 **+3～4 条 / 40**（约 +8～10%），影响集中在 5 条案例上；
+  40 条样本不能外推成通用百分比收益，运行间波动约 ±0.5 条。
 - **命中@5 两种口径都是 40/40**：正确行**本来就能被检索到**，
   路由改善的是**排序**（把它顶到第 1 位），不是召回。
 - **12 条两种口径都答不对**，归因（`scripts/attribute_routing_errors.py`，重复 3 次取均值）：
@@ -368,7 +370,7 @@ $env:RAGJEV_ROUTING_MODE = "active"     # off / shadow / active，默认 active
 ## 命令
 
 ```powershell
-python -m unittest discover -s tests          # 189 项，不需要模型与网络
+python -m unittest discover -s tests          # 193 项，不需要模型与网络
 python scripts/ingest_qq.py --offline         # 用已缓存公告重建语料
 python scripts/corpus_stats.py                # 语料统计表（docs/语料统计.md）
 python scripts/build_aliases.py --offline     # 重建英雄/装备别名表
@@ -429,7 +431,7 @@ jev.py              TypeSafe System One 客户端（choice / noul 原语 + 阶�
 server.py           本地 HTTP API 与静态页面
 launch.py           三进程监督（Windows Job Object，退出即回收）
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              189 项单元测试 + 手写样例语料 + 盲测集 + 路由案例集
+tests/              193 项单元测试 + 手写样例语料 + 盲测集 + 路由案例集
 web/                单页工作台（问答 / 架构 / 数据 / 版本对比）+ 逐查询执行图
 docs/               评测报告、盲测报告、分层路由报告、语料统计、门槛校准、交接文档
 ```

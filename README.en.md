@@ -51,7 +51,7 @@ and **"skipped" is also a result that has to state its reason**, not a blank.
 | Can it be switched off / compared | No | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`, so a controlled comparison can be run |
 | Evaluation | None, or a few self-authored questions | **78 independent blind questions** (the authoring model was forbidden from reading the corpus) + 48 parsing blind cases + 18 trap cases + 8 routing cases |
 | Negative results | Not mentioned | Three ranking arms tie after filtering; measured gate thresholds were **not** adopted; reranking has very little room; the routing benefit has too small a sample — all kept in the reports |
-| Engineering | A notebook | 189 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
+| Engineering | A notebook | 193 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
 
 ---
 
@@ -431,7 +431,7 @@ jev.py              TypeSafe System One client (choice / noul primitives + phase
 server.py           local HTTP API and static page
 launch.py           three-process supervisor (Windows Job Object, cleans up on exit)
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              189 unit tests + hand-written fixtures + blind sets + routing case set
+tests/              193 unit tests + hand-written fixtures + blind sets + routing case set
 web/                single-page workbench (ask / architecture / data / version compare) + per-query execution graph
 docs/               evaluation reports, blind runs, routing report, corpus stats, gate calibration, handoff notes
 ```

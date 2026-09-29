@@ -1,0 +1,538 @@
+{
+  "retrieval": "hybrid",
+  "tally": {
+    "filter_helps": 1,
+    "filter_hurts": 0,
+    "same": 34,
+    "filter_absent": 5
+  },
+  "rows": [
+    {
+      "id": "e01",
+      "keys": [
+        "attack_speed"
+      ],
+      "ability": "被动",
+      "target_field_key": "attack_speed",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.13 艾瑞莉娅叠满后攻速上限调到多少了"
+    },
+    {
+      "id": "e02",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.13 奈德丽那根标枪飞得够远时，额外伤害上限改成多少"
+    },
+    {
+      "id": "e03",
+      "keys": [
+        "cost"
+      ],
+      "ability": "W",
+      "target_field_key": "cost",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "15.13 瑞兹那个强化后能定住人的单体符文法术，蓝耗改成多少了"
+    },
+    {
+      "id": "e04",
+      "keys": [
+        "damage",
+        "health"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 3,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 3,
+      "question": "15.14 克烈骑着蜥蜴撞过去后，按目标血量算的最高那档伤害是多少"
+    },
+    {
+      "id": "e05",
+      "keys": [
+        "damage"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.14 吉格斯从天上砸下那圈爆炸，正中心的最大伤害改成多少"
+    },
+    {
+      "id": "e06",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.14 佐伊捡到法术碎片后蹦出来的那几发飞弹，合计伤害是多少"
+    },
+    {
+      "id": "e07",
+      "keys": [
+        "damage"
+      ],
+      "ability": "E",
+      "target_field_key": "shield",
+      "rank_with_filter": null,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 3,
+      "question": "15.16 璐璐给队友套上的那层盾，现在能吸收多少伤害"
+    },
+    {
+      "id": "e08",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.16 莫甘娜铺在地上持续烧人的那片区域，最低那档伤害调成多少"
+    },
+    {
+      "id": "e09",
+      "keys": [
+        "cooldown"
+      ],
+      "ability": "Q",
+      "target_field_key": "cooldown",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.16 萨科消失后突然现身那招，冷却改成几秒了"
+    },
+    {
+      "id": "e10",
+      "keys": [
+        "heal"
+      ],
+      "ability": "W",
+      "target_field_key": "heal",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.16 悠米附身队友时，普攻命中附带的治疗现在是多少"
+    },
+    {
+      "id": "e11",
+      "keys": [
+        "slow"
+      ],
+      "ability": "R",
+      "target_field_key": "slow",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.17 格温连着射出几根针时，第一根命中的减速比例改成多少"
+    },
+    {
+      "id": "e12",
+      "keys": [
+        "ability_power"
+      ],
+      "ability": "W",
+      "target_field_key": "ability_power",
+      "rank_with_filter": null,
+      "candidates_with_filter": 0,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少"
+    },
+    {
+      "id": "e13",
+      "keys": [
+        "damage",
+        "health"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.17 克格莫那段按目标最大生命值结算的持续喷吐伤害，比例调到多少"
+    },
+    {
+      "id": "e14",
+      "keys": [
+        "cost"
+      ],
+      "ability": "W",
+      "target_field_key": "cost",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.17 凯隐隔着一段距离横扫出去那招，蓝耗各级改成多少了"
+    },
+    {
+      "id": "e15",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.18 安妮朝前方扇出去的火焰，基础伤害削到多少了"
+    },
+    {
+      "id": "e16",
+      "keys": [
+        "damage",
+        "ability_power",
+        "health"
+      ],
+      "ability": "被动",
+      "target_field_key": "ability_power",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "15.18 阿萝拉每次技能触发的最大生命值伤害，法强加成改成多少了"
+    },
+    {
+      "id": "e17",
+      "keys": [
+        "damage"
+      ],
+      "ability": "E",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 3,
+      "question": "15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了"
+    },
+    {
+      "id": "e18",
+      "keys": [
+        "damage",
+        "ability_power"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了"
+    },
+    {
+      "id": "e19",
+      "keys": [
+        "damage"
+      ],
+      "ability": "E",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.19 金克丝放在地上的夹子炸开时，基础伤害改成多少了"
+    },
+    {
+      "id": "e20",
+      "keys": [
+        "damage"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.19 莉莉娅把人睡着后，叫醒时那下额外伤害改成多少"
+    },
+    {
+      "id": "e21",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "15.19 辛德拉手边聚起的暗黑法球，打中时基础伤害变成多少了"
+    },
+    {
+      "id": "e22",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 3,
+      "question": "15.20 阿兹尔沙兵同时刺中主目标外的人时，额外目标吃到的伤害比例是多少"
+    },
+    {
+      "id": "e23",
+      "keys": [
+        "damage"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 3,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 3,
+      "question": "15.20 菲兹那条小鲨鱼咬中后，伤害调到多少了"
+    },
+    {
+      "id": "e24",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 3,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 3,
+      "question": "15.20 格雷福斯那发爆裂弹折返回来再次撞到人时，伤害改成多少了"
+    },
+    {
+      "id": "e25",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "15.20 孙悟空隐身后留下的分身，打人伤害比例变成多少了"
+    },
+    {
+      "id": "e26",
+      "keys": [
+        "ability_power",
+        "slow"
+      ],
+      "ability": "Q",
+      "target_field_key": "ability_power",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.14 赛娜那束穿过队友的光线让人减速时，法强加成降到多少了"
+    },
+    {
+      "id": "e27",
+      "keys": [
+        "resistances"
+      ],
+      "ability": "R",
+      "target_field_key": "resistances",
+      "rank_with_filter": null,
+      "candidates_with_filter": 0,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "26.14 杰斯切换到近战姿态时拿到的额外双抗，各级改成多少了"
+    },
+    {
+      "id": "e28",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 3,
+      "candidates_with_filter": 3,
+      "rank_without_filter": 3,
+      "candidates_without_filter": 6,
+      "question": "26.15 卑尔维斯四向短冲后直接砍中的基础伤害调成哪几档了"
+    },
+    {
+      "id": "e29",
+      "keys": [
+        "attack_speed"
+      ],
+      "ability": "被动",
+      "target_field_key": "attack_speed",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "26.15 卑尔维斯每叠一层拿到的攻速下限和上限，改成什么了"
+    },
+    {
+      "id": "e30",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.15 茂凯敲地击退后，对野怪的伤害倍率改成哪几档了"
+    },
+    {
+      "id": "e31",
+      "keys": [
+        "slow"
+      ],
+      "ability": "Q",
+      "target_field_key": "slow",
+      "rank_with_filter": null,
+      "candidates_with_filter": 0,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了"
+    },
+    {
+      "id": "e32",
+      "keys": [
+        "resistances"
+      ],
+      "ability": "W",
+      "target_field_key": "resistances",
+      "rank_with_filter": null,
+      "candidates_with_filter": 0,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "26.16 波比身边那个防护力场给的双抗，现在是多少了"
+    },
+    {
+      "id": "e33",
+      "keys": [
+        "damage"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 3,
+      "question": "26.16 凯南开雷阵后整段都命中时，总伤害上限改成多少了"
+    },
+    {
+      "id": "e34",
+      "keys": [
+        "damage",
+        "health"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.17 薇恩那下按目标最大生命值结算的真实伤害，改成多少了"
+    },
+    {
+      "id": "e35",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "26.17 格雷福斯那发弹丸折返回来后二段命中的伤害，改成多少了"
+    },
+    {
+      "id": "e36",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.17 奇亚娜元素短刃直接切中敌人时，基础伤害改成多少了"
+    },
+    {
+      "id": "e37",
+      "keys": [
+        "damage"
+      ],
+      "ability": "W",
+      "target_field_key": "damage",
+      "rank_with_filter": 2,
+      "candidates_with_filter": 2,
+      "rank_without_filter": 2,
+      "candidates_without_filter": 2,
+      "question": "26.17 薇恩那段真实伤害的最低保底值，现在改到多少了"
+    },
+    {
+      "id": "e38",
+      "keys": [
+        "cost"
+      ],
+      "ability": "Q",
+      "target_field_key": "cost",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 2,
+      "question": "26.18 艾克把装置扔出去再收回来的那招，蓝耗各级改成多少了"
+    },
+    {
+      "id": "e39",
+      "keys": [
+        "damage"
+      ],
+      "ability": "R",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "26.18 卡萨丁跃到敌人身边落地时的基础伤害，调成多少了"
+    },
+    {
+      "id": "e40",
+      "keys": [
+        "damage"
+      ],
+      "ability": "Q",
+      "target_field_key": "damage",
+      "rank_with_filter": 1,
+      "candidates_with_filter": 1,
+      "rank_without_filter": 1,
+      "candidates_without_filter": 1,
+      "question": "26.18 诺提勒斯船锚勾中并把人拉过来时，伤害改成多少了"
+    }
+  ]
+}

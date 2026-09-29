@@ -49,7 +49,12 @@ from dataclasses import dataclass
 
 import jev
 import taxonomy
-from patch_schema import MODE_HINTS
+from patch_schema import FIELDS, MODE_HINTS
+
+# key -> the regex the deterministic parser matches against a question. Declared here as a
+# lookup so the router can ask "did the user actually name this field?" without duplicating
+# any pattern: `patch_schema.FIELDS` stays the single source of truth.
+FIELD_PATTERNS = {key: pattern for key, pattern in FIELDS}
 from query_plan import (
     FALLBACK_SLOTS,
     SOURCE_DETERMINISTIC,
@@ -72,6 +77,18 @@ def routing_mode_from_env(default: str = MODE_ACTIVE) -> str:
     """Read ``RAGJEV_ROUTING_MODE``, tolerating case and whitespace."""
     value = (os.environ.get("RAGJEV_ROUTING_MODE") or "").strip().lower()
     return value if value in ROUTING_MODES else default
+
+
+def field_widening_from_env(default: bool = True) -> bool:
+    """Read ``RAGJEV_FIELD_WIDENING`` (``0``/``off`` disables the sibling widening).
+
+    Kept as a switch so the effect of admitting sibling field keys can be measured rather
+    than argued about: the 40-case effect set is run both ways and the numbers decide.
+    """
+    value = (os.environ.get("RAGJEV_FIELD_WIDENING") or "").strip().lower()
+    if not value:
+        return default
+    return value not in ("0", "off", "false", "no")
 
 
 # ------------------------------------------------------------------------ thresholds
@@ -433,6 +450,41 @@ class SemanticRouter:
 
     # --------------------------------------------------------- hierarchical routing
 
+    def widened_field_keys(self, keys: list[str], question: str = "") -> list[str]:
+        """Add sibling field keys that the question's own wording justifies.
+
+        The corpus schema files a row under one key while the announcement's label can say
+        something else: Jax's "额外护甲和魔法抗性" lands under ``armor``, not ``resistances``.
+        Filtering on the exact key therefore *drops* the answer — measured on the 40-case
+        effect set, exact filtering removed the correct row in 5 cases while improving the rank
+        in 1.
+
+        Widening to the whole family is too blunt: the durability family has nine keys, so
+        adding all of them pulls in unrelated rows (health, shield, heal) that crowd out the
+        right one — measured at active 30/40 → 29.3/40 with two newly harmed cases. Instead a
+        sibling is admitted only when the question itself contains that field's label text,
+        which keeps the widening evidence-based: the user said "护甲", so the ``armor`` row is
+        in scope; they never said "生命值", so the health rows are not.
+
+        Exact keys are always kept, so this remains a superset of the old behaviour and cannot
+        lose a row that used to be retrievable.
+        """
+        widened = list(dict.fromkeys(keys))
+        if not field_widening_from_env():
+            return widened
+        text = question or ""
+        for key in keys:
+            family = taxonomy.FIELD_TO_FAMILY.get(key, "")
+            for sibling in taxonomy.FIELD_FAMILIES.get(family, ()):
+                if sibling in widened or sibling not in FIELD_PATTERNS:
+                    continue
+                # The sibling is admitted on the user's own words: `FIELD_PATTERNS` is the same
+                # key -> pattern table the deterministic parser reads, so "护甲" in the question
+                # is what puts the `armor` row back in scope — not schema adjacency.
+                if re.search(FIELD_PATTERNS[sibling], text, re.I):
+                    widened.append(sibling)
+        return widened
+
     def base_where(self, plan: QueryPlan) -> dict:
         """Metadata filter shared by every branch, built once from resolved slots."""
         where: dict = {}
@@ -455,7 +507,7 @@ class SemanticRouter:
                          detail="确定性解析结果，未做语义分叉", score=1.0)
         field_keys = plan.get("field_keys").value
         if field_keys:
-            path.where["field_keys"] = list(field_keys)
+            path.where["field_keys"] = self.widened_field_keys(field_keys, plan.question)
         plan.route_paths = [path]
         plan.routing_confidence = 1.0
         plan.beam_used = False

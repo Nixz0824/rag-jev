@@ -1,0 +1,621 @@
+{
+  "retrieval": "hybrid",
+  "verdicts": {
+    "tie-label": [
+      "e06",
+      "e11",
+      "e14",
+      "e16",
+      "e24",
+      "e28",
+      "e29",
+      "e35",
+      "e37"
+    ],
+    "below": [
+      "e07"
+    ]
+  },
+  "detail": {
+    "e06": {
+      "question": "15.14 佐伊捡到法术碎片后蹦出来的那几发飞弹，合计伤害是多少",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p7c89cf84c144d9",
+        "ability": "W",
+        "field_key": "damage",
+        "value": "60 / 90 / 120 / 150 / 180"
+      },
+      "chosen": {
+        "ability": "Q",
+        "field_key": "damage",
+        "field": "伤害",
+        "new_value": "2 - 50 (基于等级) (+ 50 / 80 / 110 / 140 / 170) (+ 60% 法术强度)"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "伤害",
+          "new_value": "2 - 50 (基于等级) (+ 50 / 80 / 110 / 140 / 170) (+ 60% 法术强度)",
+          "is_target": false
+        },
+        {
+          "ability": "W",
+          "field_key": "damage",
+          "field": "伤害总和",
+          "new_value": "60 / 90 / 120 / 150 / 180 (+ 45%法术强度)",
+          "is_target": true
+        },
+        {
+          "ability": "",
+          "field_key": "damage",
+          "field": "造成伤害",
+          "new_value": "115%",
+          "is_target": false
+        },
+        {
+          "ability": "W",
+          "field_key": "damage",
+          "field": "每颗飞弹伤害",
+          "new_value": "15 / 25 / 35 / 45 / 55 (+ 10%法术强度)",
+          "is_target": false
+        },
+        {
+          "ability": "W",
+          "field_key": "damage",
+          "field": "伤害总和",
+          "new_value": "45 / 75 / 105 / 135 / 165 (+ 30%法术强度)",
+          "is_target": false
+        }
+      ],
+      "beam": true,
+      "branches": [
+        "ability=被动",
+        "ability=W",
+        "unfiltered"
+      ]
+    },
+    "e07": {
+      "question": "15.16 璐璐给队友套上的那层盾，现在能吸收多少伤害",
+      "verdict": "below",
+      "target": {
+        "id": "pe3b89919f0d457",
+        "ability": "E",
+        "field_key": "shield",
+        "value": "70 / 110 / 150 / 190 / 230"
+      },
+      "chosen": {
+        "ability": "E",
+        "field_key": "damage",
+        "field": "基础伤害",
+        "new_value": "70 / 110 / 150 / 190 / 230"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "E",
+          "field_key": "damage",
+          "field": "基础伤害",
+          "new_value": "70 / 110 / 150 / 190 / 230",
+          "is_target": false
+        },
+        {
+          "ability": "E",
+          "field_key": "shield",
+          "field": "护盾值",
+          "new_value": "70 / 110 / 150 / 190 / 230 (+ 50%法术强度)",
+          "is_target": true
+        },
+        {
+          "ability": "E",
+          "field_key": "cooldown",
+          "field": "冷却时间",
+          "new_value": "10 / 9.5 / 9 / 8.5 / 8秒",
+          "is_target": false
+        }
+      ],
+      "beam": true,
+      "branches": [
+        "ability=W",
+        "ability=E",
+        "unfiltered"
+      ]
+    },
+    "e11": {
+      "question": "15.17 格温连着射出几根针时，第一根命中的减速比例改成多少",
+      "verdict": "tie-label",
+      "target": {
+        "id": "pe1278ec8d852d8",
+        "ability": "R",
+        "field_key": "slow",
+        "value": "30 / 45 / 60%"
+      },
+      "chosen": {
+        "ability": "R",
+        "field_key": "slow",
+        "field": "后续减速",
+        "new_value": "15 / 20 / 25%"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "R",
+          "field_key": "slow",
+          "field": "后续减速",
+          "new_value": "15 / 20 / 25%",
+          "is_target": false
+        },
+        {
+          "ability": "R",
+          "field_key": "slow",
+          "field": "初始减速",
+          "new_value": "30 / 45 / 60%",
+          "is_target": true
+        },
+        {
+          "ability": "",
+          "field_key": "armor",
+          "field": "护甲",
+          "new_value": "33",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "成长攻击速度",
+          "new_value": "2.5%",
+          "is_target": false
+        }
+      ],
+      "beam": true,
+      "branches": [
+        "ability=R",
+        "ability=Q",
+        "unfiltered"
+      ]
+    },
+    "e14": {
+      "question": "15.17 凯隐隔着一段距离横扫出去那招，蓝耗各级改成多少了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p6ba159fb71b257",
+        "ability": "W",
+        "field_key": "cost",
+        "value": "40 / 45 / 50 / 55 / 60"
+      },
+      "chosen": {
+        "ability": "Q",
+        "field_key": "cost",
+        "field": "法力消耗",
+        "new_value": "40"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "Q",
+          "field_key": "cost",
+          "field": "法力消耗",
+          "new_value": "40",
+          "is_target": false
+        },
+        {
+          "ability": "W",
+          "field_key": "cost",
+          "field": "法力消耗",
+          "new_value": "40 / 45 / 50 / 55 / 60",
+          "is_target": true
+        }
+      ],
+      "beam": false,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ]
+    },
+    "e16": {
+      "question": "15.18 阿萝拉每次技能触发的最大生命值伤害，法强加成改成多少了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p52d49b2bc4cf20",
+        "ability": "被动",
+        "field_key": "ability_power",
+        "value": "每100法术强度2.7%"
+      },
+      "chosen": {
+        "ability": "被动",
+        "field_key": "damage",
+        "field": "基础百分比最大生命值伤害",
+        "new_value": "1%"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "被动",
+          "field_key": "damage",
+          "field": "基础百分比最大生命值伤害",
+          "new_value": "1%",
+          "is_target": false
+        },
+        {
+          "ability": "被动",
+          "field_key": "damage",
+          "field": "百分比最大生命值伤害法术强度收益率",
+          "new_value": "每100法术强度2.7%",
+          "is_target": true
+        }
+      ],
+      "beam": true,
+      "branches": [
+        "ability=被动",
+        "ability=E",
+        "unfiltered"
+      ]
+    },
+    "e24": {
+      "question": "15.20 格雷福斯那发爆裂弹折返回来再次撞到人时，伤害改成多少了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p7746a81cc81683",
+        "ability": "Q",
+        "field_key": "damage",
+        "value": "80 / 125 / 170 / 215 / 260"
+      },
+      "chosen": {
+        "ability": "Q",
+        "field_key": "damage",
+        "field": "第一段伤害",
+        "new_value": "50 / 75 / 100 / 125 /150 (+ 65%额外攻击力)"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "第一段伤害",
+          "new_value": "50 / 75 / 100 / 125 /150 (+ 65%额外攻击力)",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "第二段伤害",
+          "new_value": "80 / 125 / 170 / 215 / 260 (+ 55 / 70 / 85 / 100 / 115%额外攻击力)",
+          "is_target": true
+        },
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "组合伤害",
+          "new_value": "130 / 200 / 270 / 340 / 410 (+ 120 / 135 / 150 / 165 / 180 %额外攻击力)",
+          "is_target": false
+        }
+      ],
+      "beam": false,
+      "branches": [
+        "ability=R",
+        "unfiltered"
+      ]
+    },
+    "e28": {
+      "question": "26.15 卑尔维斯四向短冲后直接砍中的基础伤害调成哪几档了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p8b0c69a7019e8b",
+        "ability": "Q",
+        "field_key": "damage",
+        "value": "12 / 14 / 16 / 18 / 20"
+      },
+      "chosen": {
+        "ability": "Q",
+        "field_key": "damage",
+        "field": "小兵伤害修正率",
+        "new_value": "已移除"
+      },
+      "target_rank_in_evidence": 3,
+      "evidence": [
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "小兵伤害修正率",
+          "new_value": "已移除",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "野怪伤害修正率",
+          "new_value": "70",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "伤害",
+          "new_value": "12 / 14 / 16 / 18 / 20 (+105%攻击力)",
+          "is_target": true
+        },
+        {
+          "ability": "",
+          "field_key": "attack_damage",
+          "field": "基础攻击力修正",
+          "new_value": "100%",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_damage",
+          "field": "攻击力",
+          "new_value": "55",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "攻击速度",
+          "new_value": "0.67",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "health",
+          "field": "生命值",
+          "new_value": "580",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "armor",
+          "field": "护甲",
+          "new_value": "28",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "cast_time",
+          "field": "攻击施放时间",
+          "new_value": "0.22",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "ability_haste",
+          "field": "攻击速度至技能急速的转化率",
+          "new_value": "0.2",
+          "is_target": false
+        },
+        {
+          "ability": "被动",
+          "field_key": "attack_speed",
+          "field": "每层攻击速度",
+          "new_value": "最小0.1%/最大2%",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "攻击速度收益率",
+          "new_value": "0.67",
+          "is_target": false
+        }
+      ],
+      "beam": false,
+      "branches": [
+        "unfiltered"
+      ]
+    },
+    "e29": {
+      "question": "26.15 卑尔维斯每叠一层拿到的攻速下限和上限，改成什么了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p83e099207a3043",
+        "ability": "被动",
+        "field_key": "attack_speed",
+        "value": "最小0.1%/最大2%"
+      },
+      "chosen": {
+        "ability": "",
+        "field_key": "attack_speed",
+        "field": "攻击速度",
+        "new_value": "0.67"
+      },
+      "target_rank_in_evidence": 4,
+      "evidence": [
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "攻击速度",
+          "new_value": "0.67",
+          "is_target": false
+        },
+        {
+          "ability": "被动",
+          "field_key": "attack_speed",
+          "field": "在施放技能后的攻击速度",
+          "new_value": "持续3秒的20%",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "攻击速度收益率",
+          "new_value": "0.67",
+          "is_target": false
+        },
+        {
+          "ability": "被动",
+          "field_key": "attack_speed",
+          "field": "每层攻击速度",
+          "new_value": "最小0.1%/最大2%",
+          "is_target": true
+        },
+        {
+          "ability": "",
+          "field_key": "attack_damage",
+          "field": "攻击力",
+          "new_value": "55",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "ability_haste",
+          "field": "攻击速度至技能急速的转化率",
+          "new_value": "0.2",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "cast_time",
+          "field": "攻击施放时间",
+          "new_value": "0.22",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "armor",
+          "field": "护甲",
+          "new_value": "28",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_damage",
+          "field": "基础攻击力修正",
+          "new_value": "100%",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "health",
+          "field": "生命值",
+          "new_value": "580",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "armor",
+          "field": "成长护甲",
+          "new_value": "5",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "health",
+          "field": "成长生命值",
+          "new_value": "110",
+          "is_target": false
+        }
+      ],
+      "beam": false,
+      "branches": [
+        "unfiltered"
+      ]
+    },
+    "e35": {
+      "question": "26.17 格雷福斯那发弹丸折返回来后二段命中的伤害，改成多少了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p34f67bb3b05967",
+        "ability": "Q",
+        "field_key": "damage",
+        "value": "80 / 125 / 170 / 215 / 260"
+      },
+      "chosen": {
+        "ability": "Q",
+        "field_key": "damage",
+        "field": "第一段伤害",
+        "new_value": "50 / 75 / 100 / 125 / 150 (+55%额外攻击力)"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "第一段伤害",
+          "new_value": "50 / 75 / 100 / 125 / 150 (+55%额外攻击力)",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "damage",
+          "field": "返程伤害",
+          "new_value": "80 / 125 / 170 / 215 / 260 (+45 / 60 / 75 / 90 / 105%额外攻击力)",
+          "is_target": true
+        }
+      ],
+      "beam": false,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ]
+    },
+    "e37": {
+      "question": "26.17 薇恩那段真实伤害的最低保底值，现在改到多少了",
+      "verdict": "tie-label",
+      "target": {
+        "id": "p5939c0f9d80732",
+        "ability": "W",
+        "field_key": "damage",
+        "value": "40 / 55 / 70 / 85 / 100"
+      },
+      "chosen": {
+        "ability": "W",
+        "field_key": "damage",
+        "field": "真实伤害",
+        "new_value": "4 / 5.5 / 7 / 8.5 / 10%目标最大生命值"
+      },
+      "target_rank_in_evidence": 2,
+      "evidence": [
+        {
+          "ability": "W",
+          "field_key": "damage",
+          "field": "真实伤害",
+          "new_value": "4 / 5.5 / 7 / 8.5 / 10%目标最大生命值",
+          "is_target": false
+        },
+        {
+          "ability": "W",
+          "field_key": "damage",
+          "field": "最小伤害",
+          "new_value": "40 / 55 / 70 / 85 / 100",
+          "is_target": true
+        },
+        {
+          "ability": "",
+          "field_key": "health",
+          "field": "生命值",
+          "new_value": "580 + 98/等级",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "health_regen",
+          "field": "生命回复",
+          "new_value": "4 + 0.5/等级",
+          "is_target": false
+        },
+        {
+          "ability": "",
+          "field_key": "attack_speed",
+          "field": "攻击速度收益率",
+          "new_value": "0.67 + 2.8%/等级",
+          "is_target": false
+        },
+        {
+          "ability": "Q",
+          "field_key": "cost",
+          "field": "法力消耗",
+          "new_value": "46 / 42 / 38 / 34 / 30",
+          "is_target": false
+        }
+      ],
+      "beam": true,
+      "branches": [
+        "ability=W",
+        "ability=被动",
+        "unfiltered"
+      ]
+    }
+  }
+}

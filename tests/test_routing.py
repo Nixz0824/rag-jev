@@ -250,6 +250,60 @@ class FallbackTests(RetrieverMixin, unittest.TestCase):
         self.assertEqual(session["jev_phases"]["semantic_fallback"]["status"], "bypassed")
 
 
+class FieldWideningTests(unittest.TestCase):
+    """A field filter must not drop the answer because the schema filed it elsewhere.
+
+    Announcement labels are finer than the corpus keys: Jax's "额外护甲和魔法抗性" is stored
+    under ``armor``, and 艾瑞莉娅's "法强加成" lives on a ``damage`` row. Measured on the
+    40-case effect set, exact field filtering removed the correct row in 5 cases.
+
+    Widening to a whole family was measured too and rejected: the durability family has nine
+    keys, and admitting all of them pulled in unrelated rows (active 30/40 → 29.3/40 with two
+    newly harmed cases). A sibling is therefore admitted only when the question itself contains
+    that field's own pattern — the user's words are the evidence, not schema adjacency.
+    """
+
+    def router(self):
+        return routing.SemanticRouter.__new__(routing.SemanticRouter)
+
+    def test_declared_keys_are_always_kept(self):
+        router = self.router()
+        self.assertEqual(router.widened_field_keys(["damage"], "随便问"), ["damage"])
+        self.assertEqual(router.widened_field_keys(["slow", "cost"], ""), ["slow", "cost"])
+
+    def test_a_sibling_is_added_only_when_the_question_names_it(self):
+        router = self.router()
+        # "法强" is the ability_power pattern, so that key is admitted alongside damage.
+        self.assertEqual(
+            router.widened_field_keys(["damage"], "艾瑞莉娅蓄满后法强加成调到多少"),
+            ["damage", "ability_power"],
+        )
+        # The same declared key with no such wording stays exact.
+        self.assertEqual(router.widened_field_keys(["damage"], "第一段伤害改成多少"), ["damage"])
+
+    def test_widening_is_a_superset_so_it_cannot_lose_a_row(self):
+        router = self.router()
+        for keys in (["damage"], ["resistances"], ["slow"], ["cost", "health"]):
+            widened = router.widened_field_keys(keys, "26.17 亚索护甲法强攻速冷却都改了吗")
+            for key in keys:
+                self.assertIn(key, widened)
+
+    def test_the_switch_disables_widening(self):
+        original = os.environ.get("RAGJEV_FIELD_WIDENING")
+        os.environ["RAGJEV_FIELD_WIDENING"] = "0"
+        try:
+            router = self.router()
+            self.assertEqual(
+                router.widened_field_keys(["damage"], "艾瑞莉娅蓄满后法强加成调到多少"),
+                ["damage"],
+            )
+        finally:
+            if original is None:
+                os.environ.pop("RAGJEV_FIELD_WIDENING", None)
+            else:
+                os.environ["RAGJEV_FIELD_WIDENING"] = original
+
+
 class BeamTests(RetrieverMixin, unittest.TestCase):
     """A close call must widen the search instead of being resolved early."""
 
