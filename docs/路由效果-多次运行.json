@@ -1,0 +1,44 @@
+{
+  "rounds": 3,
+  "runs": [
+    {
+      "off": 26.0,
+      "active": 29.0,
+      "active_per_round": [
+        29,
+        29,
+        29
+      ],
+      "only_active": 4,
+      "only_off": 1,
+      "improved": 12,
+      "hurt": 3
+    },
+    {
+      "off": 26.0,
+      "active": 29.67,
+      "active_per_round": [
+        29,
+        30,
+        30
+      ],
+      "only_active": 4,
+      "only_off": 0,
+      "improved": 12,
+      "hurt": 1
+    },
+    {
+      "off": 26.0,
+      "active": 29.33,
+      "active_per_round": [
+        29,
+        30,
+        29
+      ],
+      "only_active": 4,
+      "only_off": 0,
+      "improved": 12,
+      "hurt": 2
+    }
+  ]
+}

@@ -51,7 +51,7 @@ and **"skipped" is also a result that has to state its reason**, not a blank.
 | Can it be switched off / compared | No | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`, so a controlled comparison can be run |
 | Evaluation | None, or a few self-authored questions | **78 independent blind questions** (the authoring model was forbidden from reading the corpus) + 48 parsing blind cases + 18 trap cases + 8 routing cases |
 | Negative results | Not mentioned | Three ranking arms tie after filtering; measured gate thresholds were **not** adopted; reranking has very little room; the routing benefit has too small a sample — all kept in the reports |
-| Engineering | A notebook | 193 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
+| Engineering | A notebook | 196 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
 
 ---
 
@@ -129,15 +129,17 @@ Real model, 3 repeats, in both retrieval scopes (hybrid is the production defaul
 
 | Retrieval | off | shadow | **active** | only active solved | only off solved | hit@5 |
 |---|---|---|---|---|---|---|
-| BM25 | 25/40 | 25/40 | **28.3/40** | 4 | 0 | 40/40 |
-| **hybrid (default)** | 26/40 | 26/40 | **30/40** | 4 | 0 | 40/40 |
+| BM25 | 25/40 | 25/40 | **28.3/40** | 4 | 2 | 40/40 |
+| **hybrid (default)** | 26/40 | 26/40 | **29.3/40** | 4 | 1 | 40/40 |
 
-- **Both scopes agree in direction**: under hybrid, off is exactly `26` and active exactly `30` in all
-  three rounds; under BM25, off is `25` and active `28/28/29`.
-- **Routing produces a measurable gain and harms no previously-correct answer** — "only off solved" is
-  0 in both scopes.
+- **Both scopes agree in direction.** Under hybrid, **3 independent evaluations** (3 rounds each)
+  gave off `26/40` every time and active `29.0 / 29.67 / 29.33` — mean **29.3/40**;
+  "only active solved" was 4 every time and "only off solved" was `1 / 0 / 0`.
+- **Routing produces a measurable gain.** Net +3–4 of 40 with a stable 12 improvements. It is
+  **not** cost-free: **1–3 cases are harmed** (3 / 1 / 2 across the three runs), reported alongside
+  the gain. An earlier draft reported zero harm; that was one lucky run and has been corrected.
 - **The gain is small**: net **+3–4 of 40** (about +8–10%), concentrated in 5 cases. Forty cases cannot
-  support a general percentage claim.
+  support a general percentage claim (run-to-run spread is about ±0.5 case).
 - **hit@5 is 40/40 in both scopes**: the correct row was always retrievable, so routing improves
   **ranking**, not recall.
 - **12 cases fail in both scopes.** Attribution (`scripts/attribute_routing_errors.py`, mean of 3 repeats):
@@ -220,16 +222,17 @@ It first measured **no gain**, and then, on a set built to measure one, it did. 
 |---|---|---|---|---|
 | First | 8-case mechanism set (mine) | 7/8 | 7/8 | no difference measurable |
 | Second | 40-case effect set (written independently from the announcements) | 25/40 | **28.3/40** | gain, no harm |
-| Second (production scope) | same, hybrid retrieval | 26/40 | **30/40** | larger gain, still no harm |
+| Second (production scope) | same, hybrid retrieval | 26/40 | **29.3/40** (mean) | larger gain, 1–3 harmed |
 
 **Why the first attempt failed**: 5 of its 8 cases never need a model, 2 are solved anyway, and 1 is
 undecidable — there was no headroom by construction. Routing can only show a difference when **the
 subject has enough changed rows that the correct one is pushed down**, *and* the question is uniquely
 but vaguely phrased. The old set satisfied that in **0 of 8** cases.
 
-**The second result**: off 25/40 → active 28.3/40 under BM25, and 26/40 → 30/40 under the production
-hybrid scope (every round exactly `26` and `30`); 4 cases solved only with routing, **0 solved only
-without it**. Cost: **1.75** semantic calls and about 0.9 s per question.
+**The second result**: off 25/40 → active 28.3/40 under BM25; under the production hybrid scope three
+independent evaluations gave off `26/40` every time and active `29.0 / 29.67 / 29.33` (mean
+**29.3/40**), with a stable 12 improvements and **1–3 cases harmed**. Four cases are solved only with
+routing, 0–1 only without it. Cost: **1.75** semantic calls and about 0.9 s per question.
 
 **Limits that stand alongside that**: hit@5 is 40/40 in both scopes (ranking, not recall); 12 cases fail
 either way and **8.7 of them are "right skill, wrong row"**, i.e. reranking residuals; and 40 cases
@@ -275,9 +278,10 @@ Command: `python scripts/evaluate_jev.py` — report: [docs/Jev效果.md](docs/J
 
 - **What it buys**: it recovers the correct row when candidates are ambiguous or the wording does not match the
   field label (same-source pinned hit@1 **21/23 → 22/23**); hierarchical routing lifts hit@1 from 26/40 to
-  **30/40** on the 40-case effect set under the production scope (4 cases solved only with routing, 0 only
-  without it); the answer self-check is the only component that can judge whether "these numbers are supported
-  by this evidence" (24/24 detected, 0 false alarms, and **40/40** on the 78-question blind set).
+  **29.3/40** (mean of 3 evaluations) on the 40-case effect set under the production scope (4 cases solved only
+  with routing, 0–1 only without it, 1–3 harmed); the answer self-check is the only component that can judge
+  whether "these numbers are supported by this evidence" (24/24 detected, 0 false alarms, and **40/40** on the
+  78-question blind set).
 - **What it does not**: metadata filtering already makes retrieval easy, so reranking has very little room
   (1 of 91 cases); the parsing layer does not need a model at all; the routing gain is concentrated in 5 cases and
   **does not improve recall** (hit@5 is 40/40 either way).
@@ -377,6 +381,9 @@ python scripts/evaluate_routing.py            # off/shadow/active hierarchical r
 python scripts/evaluate_routing.py --cases tests/cases/routing_effect_cases.json --repeat 3
                                               # 40-case effect set; add --retrieval hybrid for production
 python scripts/attribute_routing_errors.py    # attribute failures: wrong skill, or wrong row
+python scripts/check_readme_numbers.py        # verify every figure in the README against the reports
+python scripts/diagnose_rerank.py             # rerank failures: absent / below / near-identical labels
+python scripts/measure_field_filter.py        # does the field filter help or hurt, case by case
 python scripts/evaluate_patch.py              # four-arm A/B (models running; Jev needs a key)
 python scripts/evaluate_jev.py                # Jev case-by-case accounting (--ranker measures ordering)
 python scripts/evaluate_selfcheck.py          # self-check injection detection rate
@@ -404,10 +411,10 @@ python scripts/evaluate_routing.py --live
 - Announcements only record changes, so "the most recent adjustment" is **not** "the current live value".
 - CN values can differ from other servers; this project answers for the CN server only and makes no cross-server claims.
 - Parsing can miss rows: `docs/解析覆盖率.md` records how much was parsed per patch and which fields were not normalised.
-- Hierarchical routing gained +3–4 of 40 on the effect set (hybrid: off 26/40 → active 30/40; 4 cases
-  solved only with routing, 0 only without it), but **improves ranking rather than recall** (hit@5 is
-  40/40 either way) and is concentrated in 5 cases, so 40 cases cannot support a general percentage
-  claim. The first attempt on the 8-case mechanism set measured **no gain** because that set had no
+- Hierarchical routing gained +3–4 of 40 on the effect set (hybrid: off 26/40 → active 29.3/40 mean;
+  4 cases solved only with routing, 0–1 only without it, 1–3 harmed), but **improves ranking rather
+  than recall** (hit@5 is 40/40 either way) and is concentrated in 5 cases, so 40 cases cannot
+  support a general percentage claim. The first attempt on the 8-case mechanism set measured **no gain** because that set had no
   headroom; both results and their reasons are kept in `docs/Jev分层路由.md` and
   `docs/Jev分层路由-效果集.md`. The effect set covers **skill disambiguation only** — its field slot is
   closed by rules in 40/40 cases.
@@ -431,7 +438,7 @@ jev.py              TypeSafe System One client (choice / noul primitives + phase
 server.py           local HTTP API and static page
 launch.py           three-process supervisor (Windows Job Object, cleans up on exit)
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              193 unit tests + hand-written fixtures + blind sets + routing case set
+tests/              196 unit tests + hand-written fixtures + blind sets + routing case set
 web/                single-page workbench (ask / architecture / data / version compare) + per-query execution graph
 docs/               evaluation reports, blind runs, routing report, corpus stats, gate calibration, handoff notes
 ```

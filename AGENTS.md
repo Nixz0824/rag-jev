@@ -26,7 +26,7 @@ Jev 的四个角色按生命周期排列：语义补全 → 分层路由 → 候
 ## 常用命令
 
 ```powershell
-python -m unittest discover -s .\tests      # 193 项，不需要模型和网络
+python -m unittest discover -s .\tests      # 196 项，不需要模型和网络
 python .\scripts\ingest_qq.py --offline     # 用缓存重建语料
 python .\scripts\evaluate_routing.py        # off/shadow/active 分层路由对照
 python .\launch.py --no-open                # 启动三进程
@@ -45,7 +45,7 @@ python .\launch.py --stop                   # 停止
    新增字段必须同时补进某个族，否则 `tests/test_query_plan.py` 会失败。
 6. **路由策略只写在 `routing.py`**：`jev.py` 只放 transport 与 choice/noul 原语，
    不得出现业务规则或分类表。
-7. **新增行为必须带测试**：`tests/` 是唯一验收依据，193 项必须全绿。
+7. **新增行为必须带测试**：`tests/` 是唯一验收依据，196 项必须全绿。
 8. **Jev 降级不能静默**：任何 `jev.*` 调用失败都要写进 `session["trace"]` 与
    `session["jev_phases"]`；「跳过」也是有意义的结果，必须说明原因。
 9. **公告原文不进仓库**：`data/patch/raw/`、`data/patch/knowledge.json` 已被忽略，不要手动加回。

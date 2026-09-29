@@ -170,5 +170,44 @@ class ReportShapeTests(unittest.TestCase):
             self.assertIn(mode, payload["arms"])
 
 
+class UnusableEnvironmentTests(unittest.TestCase):
+    """A broken environment must not be published as a result.
+
+    Two failure modes were hit for real while measuring:
+
+    * the embedding service stopped while the cached index still loaded fine, so every hybrid
+      query raised inside the engine and the whole run scored 0/40 — a silent zero that reads
+      like "routing does nothing";
+    * a run where nothing at all was solved, which is far more likely to be a broken environment
+      than a finding, yet it would have overwritten a good report.
+
+    Guards: probe the retrieval scope with a real query before using it, and refuse to write a
+    report whose every scope scored zero.
+    """
+
+    def test_bm25_needs_no_probe(self):
+        # The guard must not cost anything on the default, self-contained scope.
+        source = (ROOT / "scripts" / "evaluate_routing.py").read_text(encoding="utf-8")
+        self.assertIn('if retrieval_mode != "bm25":', source)
+        self.assertIn("探针", source, "探测必须是一次真实查询，不能只检查索引是否加载")
+
+    def test_a_zero_run_is_refused(self):
+        source = (ROOT / "scripts" / "evaluate_routing.py").read_text(encoding="utf-8")
+        self.assertIn('if off["hit@1"] == 0 and active["hit@1"] == 0:', source)
+        # And it must say what to check, not just fail.
+        self.assertIn("18892", source)
+        self.assertIn("return 2", source)
+
+    def test_the_generated_reports_are_not_zero_runs(self):
+        for name in ("Jev分层路由.json", "Jev分层路由-效果集.json",
+                     "Jev分层路由-效果集-hybrid.json"):
+            path = ROOT / "docs" / name
+            if not path.exists():
+                continue
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            best = max(arm["hit@1"] for arm in payload["arms"].values())
+            self.assertGreater(best, 0, f"{name} 是 0 分运行，不应作为报告保留")
+
+
 if __name__ == "__main__":
     unittest.main()

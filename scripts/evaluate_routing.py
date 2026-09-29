@@ -502,16 +502,21 @@ def main() -> int:
     retriever = patch_engine.PatchRetriever()
     retrieval_mode = args.retrieval
     if retrieval_mode != "bm25":
-        # Hybrid needs the embedding matrix. Without this the retriever raises
-        # "向量索引尚未就绪" on every case and the whole run scores 0/40 — which reads like a
-        # result rather than a broken run, so it must be handled explicitly.
+        # Hybrid needs two things that fail differently: the cached matrix (build()) and a live
+        # embedding service (every query). build() succeeds from cache even with all services
+        # stopped, so it is not sufficient — a real probe query is, because without the service
+        # every case raises inside the engine and the run silently scores 0/40, which reads like
+        # a finding rather than a broken environment. (That is exactly what happened once.)
+        probe_where = {"patches": [retriever.latest]} if retriever.latest else {}
         try:
             retriever.build()
             if getattr(retriever, "matrix", None) is None:
                 raise RuntimeError("索引加载后仍为空")
+            retriever.search("探针", mode=retrieval_mode, k=1, where=probe_where)
         except Exception as error:  # noqa: BLE001
-            print(f"向量索引不可用（{type(error).__name__}: {error}）；本轮回退到 bm25 口径。"
-                  f"生产默认是 hybrid，请确认 18892 向量服务在跑。")
+            print(f"检索口径 {retrieval_mode} 不可用（{type(error).__name__}: {error}）；"
+                  f"本轮回退到 bm25。生产默认是 hybrid，请确认 18891/18892 模型服务在跑"
+                  f"（python launch.py --no-open）。")
             retrieval_mode = "bm25"
     for case in raw:
         spec = case["expect"].get("rows")
@@ -770,6 +775,16 @@ def main() -> int:
             "回放的是案例文件里手写的分布。要评估真实模型，需要 `TYPESAFE_API_KEY` 后重跑；"
             "真实模型答错时，链路行为是否仍然安全，本报告没有验证。",
         ]
+
+    # A run where nothing was solved in any scope is overwhelmingly more likely to be a broken
+    # environment than a real result, and publishing it would overwrite a good report with a
+    # meaningless one. Refuse, and say what to check.
+    if off["hit@1"] == 0 and active["hit@1"] == 0:
+        print("\n所有口径命中@1 均为 0，判定为环境不可用（而不是评测结论），"
+              "已放弃写报告。请检查：\n"
+              "  · 向量服务（18892）在跑 —— 检索口径 hybrid 时每次查询都要用它编码问题；\n"
+              "  · 语料与索引匹配（python scripts/ingest_qq.py --offline 可重建）。")
+        return 2
 
     out_md = Path(args.out) if args.out else DOCS / "Jev分层路由.md"
     out_md.parent.mkdir(parents=True, exist_ok=True)
