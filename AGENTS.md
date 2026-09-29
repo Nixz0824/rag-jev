@@ -20,13 +20,13 @@ Jev 的四个角色按生命周期排列：语义补全 → 分层路由 → 候
 | Python | `python`（3.12.14 + numpy 2.3.5） |
 | 端口 | 18890 应用 / 18891 聊天模型 / 18892 向量模型（只绑 127.0.0.1） |
 | 模型 | `models/`（本机下载，或用 `RAGJEV_MODELS` 指向外部模型目录） |
-| Key | `TYPESAFE_API_KEY`（环境变量或 `runtime/jev-key.txt`），只检查是否存在，不输出值 |
+| Key | `TYPESAFE_API_KEY`（环境变量或 `runtime/jev-key.txt`），只检查是否存在，不输出值。`runtime/jev-key.txt` 放**裸 key** 即可；`.env.local` 用 `TYPESAFE_API_KEY=…` 形态，两种都支持 |
 | 路由模式 | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`（默认 active） |
 
 ## 常用命令
 
 ```powershell
-python -m unittest discover -s .\tests      # 174 项，不需要模型和网络
+python -m unittest discover -s .\tests      # 175 项，不需要模型和网络
 python .\scripts\ingest_qq.py --offline     # 用缓存重建语料
 python .\scripts\evaluate_routing.py        # off/shadow/active 分层路由对照
 python .\launch.py --no-open                # 启动三进程
@@ -45,7 +45,7 @@ python .\launch.py --stop                   # 停止
    新增字段必须同时补进某个族，否则 `tests/test_query_plan.py` 会失败。
 6. **路由策略只写在 `routing.py`**：`jev.py` 只放 transport 与 choice/noul 原语，
    不得出现业务规则或分类表。
-7. **新增行为必须带测试**：`tests/` 是唯一验收依据，174 项必须全绿。
+7. **新增行为必须带测试**：`tests/` 是唯一验收依据，175 项必须全绿。
 8. **Jev 降级不能静默**：任何 `jev.*` 调用失败都要写进 `session["trace"]` 与
    `session["jev_phases"]`；「跳过」也是有意义的结果，必须说明原因。
 9. **公告原文不进仓库**：`data/patch/raw/`、`data/patch/knowledge.json` 已被忽略，不要手动加回。

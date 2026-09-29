@@ -51,7 +51,7 @@ and **"skipped" is also a result that has to state its reason**, not a blank.
 | Can it be switched off / compared | No | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`, so a controlled comparison can be run |
 | Evaluation | None, or a few self-authored questions | **78 independent blind questions** (the authoring model was forbidden from reading the corpus) + 48 parsing blind cases + 18 trap cases + 8 routing cases |
 | Negative results | Not mentioned | Three ranking arms tie after filtering; measured gate thresholds were **not** adopted; reranking has very little room; the routing benefit has too small a sample — all kept in the reports |
-| Engineering | A notebook | 174 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
+| Engineering | A notebook | 175 unit tests + GitHub Actions + Windows Job Object process supervision + index fingerprinting + announcement text never committed |
 
 ---
 
@@ -117,23 +117,28 @@ swamping the rest.
 
 Everything is produced by `scripts/evaluate_*.py`; the page and the reports only read `docs/*.json`.
 
-### Hierarchical routing, 8 cases (`scripts/evaluate_routing.py`)
+### Hierarchical routing, 8 cases (`scripts/evaluate_routing.py`, real model, 3 repeats)
 
 The same cases are run in three modes: `off` (0.13.0 behaviour) / `shadow` (routes as usual but does not
 affect retrieval) / `active` (branches really take part in retrieval). `shadow` and `active` make the same
 number of calls, so any difference between them can only come from *using* the routing.
 
-| Scope | hit@1 | hit@5 | Slots correct | Semantic calls | Forked cases |
-|---|---|---|---|---|---|
-| off | 5/8 | 8/8 | — (never asked) | 0 | 0 |
-| shadow | 5/8 | 8/8 | 7/8 | 8 | 2 |
-| **active** | **8/8** | 8/8 | 7/8 | 8 | 2 |
+| Scope | hit@1 | hit@5 | Semantic calls | Forked cases |
+|---|---|---|---|---|
+| off | 7/8 | 8/8 | 0 | 0 |
+| shadow | 7/8 | 8/8 | 18 over 3 rounds | 9 over 3 rounds |
+| **active** | **7/8** | 8/8 | 18 over 3 rounds | 6 over 3 rounds |
 
-- Improved **3** cases, hurt **0**; what it changed is exactly the two forked cases and one single-branch case.
-- **A fully-determined question costs 0 calls in 4/8 cases**; **0.86** semantic calls per question on average;
-  a fork is triggered in only 2/8 cases.
-- How to read this: without a `TYPESAFE_API_KEY` the script replays the distribution recorded in the case file,
-  so it measures **pipeline behaviour**, not the accuracy of a real model. The report
+- **This release measured no hit-rate gain from hierarchical routing** — off and active are both 7/8,
+  improved 0, hurt 0, consistent across 3 repeats. Forking and merging do happen; they just did not turn
+  into a better top pick on this set.
+- The one case it gets wrong (`r05`) is **undecidable from the corpus**: in 26.18 Cassiopeia's `damage`
+  rows belong to Q / E / R *and* base stats — four rows — so "skill damage" does not identify one of them.
+  Both scopes get it wrong. That is a known limitation, not a regression.
+- **A fully-determined question costs 0 calls in 5/8 cases**; **0.86** semantic calls per question on average.
+- How to read this: the figures above are **live** (the real TypeSafe API). The earlier `off 5/8 → active 8/8`
+  came from a *fixture replay* of hand-written distributions and **did not reproduce with the real model** —
+  it showed the pipeline forks as designed, not that the model picks correctly. The report
   [docs/Jev分层路由.md](docs/Jev分层路由.md) states what was measured and what was not proven.
 
 ### Blind set, 78 questions (authored by Codex from the official announcements, forbidden from reading the corpus)
@@ -180,13 +185,19 @@ This is not "we plugged in a model so it got better". Each of Jev's jobs is meas
 
 ### Experiment 1 · **Before** retrieval: does hierarchical routing help?
 
-See "Hierarchical routing, 8 cases" above. The verdict has two sides:
+See "Hierarchical routing, 8 cases" above. With the real model and 3 repeats:
 
-- **What it buys**: on questions where the ability or the field is not spelled out, forking brings the correct
-  row back to rank 1 (off 5/8 → active 8/8).
-- **What it does not**: most questions do not need it at all — 4/8 cases make zero calls and a fork happens in
-  only 2/8. Too few cases can trigger routing, so `3/7` can only show that the **mechanism works**;
-  it cannot be extrapolated into a benefit of some size.
+- **No gain was measured**: off and active are both **7/8** — improved 0, hurt 0. Forking and merging work;
+  they simply did not make the top pick better on this set.
+- **The script is not broken**: 5 of the 8 cases never need a model (the rules already fix the slots),
+  2 of the remaining 3 are hit by retrieval anyway because only one reading is defensible, and the 8th is
+  undecidable from the corpus.
+- **The cost is real**: 0.86 semantic calls per question and roughly 0.5 s of routing time. On a set of
+  decidable questions, that spend bought no hit-rate.
+
+So this release treats hierarchical routing as: **mechanism works, can be switched off, can be compared —
+but there is no evidence here that it improves accuracy.** Deciding whether it is worth it needs far more
+genuinely ambiguous phrasings (the current set has one, and that one has no answer).
 
 ### Experiment 2 · Ordering ability: same candidates, no field pre-filter
 
@@ -227,14 +238,15 @@ Command: `python scripts/evaluate_jev.py` — report: [docs/Jev效果.md](docs/J
 ### Conclusion
 
 - **What it buys**: it recovers the correct row when candidates are ambiguous or the wording does not match the
-  field label; the answer self-check is the only component that can judge whether "these numbers are supported
-  by this evidence" (24/24 detected, 0 false alarms); hierarchical routing puts the correct row back at rank 1
-  on ambiguous phrasings.
+  field label (same-source pinned hit@1 **21/23 → 22/23**); the answer self-check is the only component that can
+  judge whether "these numbers are supported by this evidence" (24/24 detected, 0 false alarms, and **40/40** on
+  the 78-question blind set).
 - **What it does not**: metadata filtering already makes retrieval easy, so reranking has very little room
-  (1 of 91 cases); the parsing layer does not need a model at all; hierarchical routing only fires on a few
-  ambiguous phrasings.
-- **Cost**: about $0.0001 per rerank call; hierarchical routing makes 0.86 calls per question and 0 for a
-  fully-determined question.
+  (1 of 91 cases); the parsing layer does not need a model at all; **hierarchical routing measured no hit-rate
+  gain** (off 7/8 = active 7/8).
+- **Cost**: about $0.0001 per rerank call; the 78 blind questions cost 16 calls / $0.00225 and the 84 same-source
+  cases 37 calls / $0.00362; hierarchical routing makes 0.86 calls and about 0.5 s per question, 0 for a
+  fully-determined one.
 - **Degradation**: without a key every model stage is skipped automatically and marked in the trace and the
   phase ledger, and the pipeline keeps working.
 
@@ -319,7 +331,7 @@ rendering are all available, while semantic fallback / hierarchical routing / re
 ## Commands
 
 ```powershell
-python -m unittest discover -s tests          # 174 tests, no models or network needed
+python -m unittest discover -s tests          # 175 tests, no models or network needed
 python scripts/ingest_qq.py --offline         # rebuild the corpus from cached announcements
 python scripts/corpus_stats.py                # corpus tables (docs/语料统计.md)
 python scripts/build_aliases.py --offline     # rebuild champion/item aliases
@@ -352,8 +364,10 @@ python scripts/evaluate_routing.py --live
 - Announcements only record changes, so "the most recent adjustment" is **not** "the current live value".
 - CN values can differ from other servers; this project answers for the CN server only and makes no cross-server claims.
 - Parsing can miss rows: `docs/解析覆盖率.md` records how much was parsed per patch and which fields were not normalised.
-- The routing benefit was measured on only a few ambiguous phrasings; the sample is too small to support a percentage
-  claim, and the "what was not proven" section of `docs/Jev分层路由.md` is part of the conclusion.
+- Hierarchical routing was measured with the real model over 3 repeats and **showed no hit-rate gain**
+  (off 7/8 = active 7/8). The one case it fails is undecidable from the corpus text, so the sample cannot
+  support any claim of improvement; the "what was not proven" section of `docs/Jev分层路由.md` is part of the
+  conclusion.
 
 ## Licence
 
@@ -374,7 +388,7 @@ jev.py              TypeSafe System One client (choice / noul primitives + phase
 server.py           local HTTP API and static page
 launch.py           three-process supervisor (Windows Job Object, cleans up on exit)
 scripts/            ingest_qq / build_aliases / corpus_stats / evaluate_* / calibrate / ingest_en / review_feedback
-tests/              174 unit tests + hand-written fixtures + blind sets + routing case set
+tests/              175 unit tests + hand-written fixtures + blind sets + routing case set
 web/                single-page workbench (ask / architecture / data / version compare) + per-query execution graph
 docs/               evaluation reports, blind runs, routing report, corpus stats, gate calibration, handoff notes
 ```
