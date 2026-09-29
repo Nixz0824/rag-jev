@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T16:01:55",
+ "generated_at": "2026-09-23T11:47:40",
  "case_file": [
   "blind_cases.json"
  ],
@@ -67,13 +67,17 @@
    },
    "absent": {
     "total": 5,
-    "refused": 5
+    "refused": 4
    },
    "out_of_scope": {
     "total": 5,
     "refused": 5
    },
    "trap": {
+    "total": 0,
+    "ok": 0
+   },
+   "aggregate": {
     "total": 0,
     "ok": 0
    },
@@ -87,7 +91,7 @@
     "choice_hit": 0,
     "choice_none": 0,
     "cost_usd": 0.0005600000000000001,
-    "latency_total": 5515,
+    "latency_total": 2828,
     "latency_calls": 5
    },
    "details": [
@@ -103,7 +107,7 @@
      "id": "b02",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.82,
+     "self_check_min": 0.85,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -113,7 +117,7 @@
      "id": "b03",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.95,
+     "self_check_min": 0.94,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -131,7 +135,7 @@
      "id": "b05",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.85,
+     "self_check_min": 0.86,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -149,7 +153,7 @@
      "id": "b07",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.85,
+     "self_check_min": 0.88,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -167,7 +171,7 @@
      "id": "b09",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.84,
+     "self_check_min": 0.83,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -185,7 +189,7 @@
      "id": "b11",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.87,
+     "self_check_min": 0.84,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -203,7 +207,7 @@
      "id": "b13",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.73,
+     "self_check_min": 0.67,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -262,7 +266,7 @@
      "id": "b19",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.9,
+     "self_check_min": 0.93,
      "rank": 1,
      "version_asked": false,
      "value_ok": true
@@ -271,7 +275,7 @@
      "id": "b20",
      "kind": "single",
      "status": "verify",
-     "self_check_min": 0.92,
+     "self_check_min": 0.89,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,
@@ -328,8 +332,8 @@
     {
      "id": "a01",
      "kind": "absent",
-     "status": "abstained",
-     "refused": true
+     "status": "verify",
+     "refused": false
     },
     {
      "id": "a02",

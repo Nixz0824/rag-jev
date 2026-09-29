@@ -3,8 +3,8 @@
 Metrics are computed from the engine's own evidence list and rendered answer, so
 the numbers describe the shipped pipeline rather than a side experiment.
 
-The case set is author-written against the same corpus (no held-out split), which
-is why the report says so on every table.
+The report's scope note is derived from the case files: blind cases are authored
+without reading the corpus, while the default regression cases are same-source.
 """
 
 from __future__ import annotations
@@ -305,7 +305,34 @@ def summarise(name: str, arm: dict) -> list[str]:
     return lines
 
 
-def findings(results: dict) -> list[str]:
+def scope_of(paths: list[Path]) -> tuple[str, str]:
+    """Blind sets are authored without reading the corpus; everything else is same-source.
+
+    The report header must follow the case files, not a hardcoded claim — a blind run
+    labelled "非盲测" would contradict the README.
+    """
+    names = [path.name for path in paths]
+    blind = [name for name in names if name.startswith("blind")]
+    traps = [name for name in names if name.startswith("trap")]
+    if blind and len(blind) == len(names):
+        return "blind", (
+            "> **口径**：案例由 Codex 依官方公告出题，出题时**禁止读语料**，与语料不同源；"
+            "不是留出集划分、样本量有限，不能当作真实用户准确率。"
+        )
+    if blind:
+        return "mixed", "> **口径**：本报告混合了不同源盲测案例与同源案例，逐条明细按 kind 区分。"
+    if traps:
+        return "same_with_trap", (
+            "> **口径**：案例分两类——同源案例由作者按当前语料编写，陷阱题由行为规则定义；"
+            "两者都是**非盲测、无留出集**，命中@K 用引擎实际返回的证据列表判定。"
+        )
+    return "same", (
+        "> **口径**：案例由作者按当前语料编写，与语料同源，**非盲测、无留出集**；"
+        "命中@K 用引擎实际返回的证据列表判定，数值正确性用渲染出的回答文本判定。"
+    )
+
+
+def findings(results: dict, scope: str) -> list[str]:
     """Derive the headline statements from the numbers instead of asserting them."""
     lines = []
     baseline = results.get("hybrid") or results.get("bm25")
@@ -338,10 +365,14 @@ def findings(results: dict) -> list[str]:
                 f"- Jev 成本：{jev_arm['jev']['calls']} 次调用合计 ${jev_arm['jev']['cost_usd']:.5f}（均 ${mean:.6f}），"
                 "相对本地检索可忽略；失败时会退回 BM25+向量排序并在轨迹里标注。"
             )
-    lines.append(
-        "- 限制：案例同源、样本量小、差异由个别案例驱动，不能当作真实用户准确率；"
-        "要外推需要独立盲测集。"
-    )
+    limits = {
+        "blind": "- 限制：案例虽由独立出题产生，但版本与对象仍由我们挑选；样本量小、差异由个别案例驱动，"
+        "不能当作真实用户准确率，也没有留出集划分。",
+        "mixed": "- 限制：本报告混合了不同源盲测与同源案例，比例不均衡，不能单独外推。",
+        "same_with_trap": "- 限制：同源案例与陷阱题都不构成留出集；陷阱题检验的是行为规则，不是回答准确率。",
+        "same": "- 限制：案例同源、样本量小、差异由个别案例驱动，不能当作真实用户准确率；要外推需要独立盲测集。",
+    }
+    lines.append(limits.get(scope, limits["same"]))
     return lines
 
 
@@ -366,6 +397,17 @@ def main() -> int:
     for path in paths:
         payload = json.loads(path.read_text(encoding="utf-8"))
         cases += payload.get("cases") or []
+    if not args.use_case_version:
+        # Warn loudly rather than silently producing a report that cannot be compared with
+        # the published one: most blind questions omit the version and rely on the UI
+        # selector, so without this flag they are answered from the latest patch instead.
+        versionless = sum(1 for case in cases if not ASKED_VERSION_RE.search(case["question"]))
+        if versionless:
+            print(
+                f"提示：{versionless}/{len(cases)} 条案例没写版本。没有 --use-case-version 时，"
+                "这些题会按「最新收录版本」回答，与已发布的盲测报告数字不可比。"
+                "要对比历史基线，请加上 --use-case-version。"
+            )
     if args.limit:
         cases = cases[: args.limit]
     print(f"案例文件：{', '.join(path.name for path in paths)}")
@@ -387,19 +429,25 @@ def main() -> int:
         results[name] = run_arm(engine, cases, retriever, use_case_version=args.use_case_version)
         print(f"{name} 完成，用时 {time.perf_counter() - started:.1f}s")
 
+    scope, note = scope_of(paths)
+    labels = {
+        "blind": "盲测集",
+        "mixed": "混合案例",
+        "same_with_trap": "同源案例与陷阱题",
+        "same": "同源案例",
+    }
     lines = [
-        "# LoL 版本公告问答 · 离线评测",
+        f"# LoL 版本公告问答 · 离线评测（{labels.get(scope, scope)}）",
         "",
         f"生成时间：{time.strftime('%Y-%m-%d %H:%M')}　语料：{len(retriever.chunks)} 条（{retriever.supported[0]}—{retriever.latest}）"
-        f"　案例：{len(cases)} 条",
+        f"　案例：{len(cases)} 条　来源文件：{', '.join(path.name for path in paths)}",
         "",
-        "> **口径**：案例由作者按当前语料编写，与语料同源，**非盲测、无留出集**；"
-        "命中@K 用引擎实际返回的证据列表判定，数值正确性用渲染出的回答文本判定。",
+        note,
         "",
         "## 关键结论",
         "",
     ]
-    lines += findings(results)
+    lines += findings(results, scope)
     lines.append("")
     for name, arm in results.items():
         lines += summarise(name, arm)
