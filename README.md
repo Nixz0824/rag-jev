@@ -318,6 +318,8 @@ python scripts/calibrate.py --report          # 门槛测量（结论：不采�
 python scripts/ingest_en.py --offline         # 与英文公告对照核验
 python scripts/review_feedback.py             # 复核页面反馈，产出 docs/反馈复核.md
 python tools/screenshot.py                    # 用 CDP 截界面图（需 Edge + 服务在跑）
+python tools/check_viewport.py                # 窄屏：整页横向溢出 / 底栏遮挡 / 页面报错
+python tools/check_viewport.py --width 390    # 指定视口宽度，逐档回归
 # 盲测（先按 docs/盲测集提示词.md 与 提示词-第二批.md 出题）：
 # 注意：盲测报告必须带 --use-case-version —— 案例里很多问题不写版本，
 # 该开关模拟「用户在页面上选好了版本」，不加会与已发布的报告数字不可比。

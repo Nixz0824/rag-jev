@@ -332,6 +332,8 @@ python scripts/calibrate.py --report          # gate measurement (conclusion: no
 python scripts/ingest_en.py --offline         # cross-check against the English announcements
 python scripts/review_feedback.py             # review page feedback → docs/反馈复核.md
 python tools/screenshot.py                    # capture UI screenshots via CDP (Edge + running server)
+python tools/check_viewport.py                # narrow screens: page overflow / bottom-bar occlusion / JS errors
+python tools/check_viewport.py --width 390    # pin a viewport width and sweep the breakpoints
 # Blind sets (author new questions with docs/盲测集提示词.md and 提示词-第二批.md):
 python scripts/evaluate_patch.py --cases tests\cases\blind_cases.json --out docs\盲测报告-第一批.md
 python scripts/evaluate_patch.py --cases tests\cases\blind_cases_2.json --out docs\盲测报告-第二批.md
