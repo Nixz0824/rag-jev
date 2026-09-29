@@ -145,11 +145,26 @@ class Retriever:
     # ------------------------------------------------------------------ filtering
 
     def _candidate_indices(self, where: dict | None) -> list[int]:
+        """Metadata filter, applied *before* any ranking.
+
+        ``field_keys`` is a set filter (row's key must be in the set) instead of an
+        equality filter, because the semantic router narrows to a field *family* — many
+        keys at once. The literal ability ``"base"`` means "no ability filter", so a
+        question that names no skill is not forced onto rows whose ability is empty.
+        """
         where = where or {}
         patches = set(where.get("patches") or [])
+        ability = where.get("ability")
+        if ability == "base":
+            ability = None
+        field_keys = set(where.get("field_keys") or [])
         result = []
         for index, row in enumerate(self.chunks):
             if patches and row.get("patch") not in patches:
+                continue
+            if ability and row.get("ability") != ability:
+                continue
+            if field_keys and row.get("field_key") not in field_keys:
                 continue
             if any(where.get(key) and row.get(key) != where[key] for key in self.FILTER_KEYS if key != "patches"):
                 continue

@@ -18,7 +18,24 @@ from pathlib import Path
 from config import PATCH_DATA, RUNTIME
 from engine import BLOCKED, GREETING, Retriever, redact
 import jev
+import routing
 from patch_schema import FIELD_LABELS, FIELDS, detect_mode
+from query_plan import (
+    PATCH_EXPLICIT,
+    PATCH_OUTSIDE,
+    PATCH_PREVIOUS,
+    PATCH_SYSTEM_DEFAULT,
+    PATCH_UI_DEFAULT,
+    SOURCE_ALIAS,
+    SOURCE_DEFAULT,
+    SOURCE_DETERMINISTIC,
+    SOURCE_NONE,
+    SOURCE_SEMANTIC,
+    STATUS_AMBIGUOUS,
+    STATUS_RESOLVED,
+    STATUS_UNRESOLVED,
+    QueryPlan,
+)
 
 LOG = logging.getLogger("ragjev.patch")
 
@@ -140,8 +157,16 @@ class PatchRetriever(Retriever):
         without the position tie-break, a short item name inside an ability name
         ("被动过载涌动伤害") could outrank the champion the question is about.
         """
+        return self.match_subject(text)[:2]
+
+    def match_subject(self, text: str) -> tuple[str | None, str | None, str]:
+        """``resolve_subject`` plus the alias that matched, for the query plan's provenance.
+
+        The returned reason is what the UI shows next to ``subject`` ("别名命中 压缩"), so a
+        reader can tell an alias resolution from a lexical guess without reading the code.
+        """
         value = normalise(text)
-        best: tuple[tuple[int, int, int], str, str] | None = None
+        best: tuple[tuple[int, int, int], str, str, str] | None = None
         for alias, subject, kind in self.aliases:
             if not alias or alias not in value:
                 continue
@@ -151,8 +176,41 @@ class PatchRetriever(Retriever):
                 continue
             rank = (len(alias), -value.find(alias), 1 if kind == "champion" else 0)
             if best is None or rank > best[0]:
-                best = (rank, subject, kind)
-        return (best[1], best[2]) if best else (None, None)
+                best = (rank, subject, kind, alias)
+        if not best:
+            return None, None, ""
+        return best[1], best[2], f"别名命中「{best[3]}」"
+
+    def subject_shortlist(self, text: str, limit: int = 3) -> list[tuple[str, str]]:
+        """Lexically plausible subjects for a text the alias table could not resolve.
+
+        This is the *only* route by which a semantic model may choose an entity, and it is
+        deliberately narrow (see ``routing.SemanticRouter._resolve_subject``): candidates
+        come from fuzzy matching and from corpus names contained in the question, so the
+        model is asked "which of these three did you mean", never "guess among 170 names".
+        Only subjects the corpus can actually answer about are offered.
+        """
+        answerable = {row["subject"] for row in self.chunks if row.get("field_key") != "narrative"}
+        if not answerable:
+            return []
+        value = normalise(text)
+        scored: dict[str, tuple[float, str]] = {}
+        for alias, subject, _ in self.aliases:
+            if subject not in answerable or not alias:
+                continue
+            # Ratio-based fuzzy match on the alias the user actually typed, plus a
+            # containment test for a bare name with a suffix ("薇恩的技能").
+            ratio = difflib.SequenceMatcher(None, value, alias).ratio()
+            contained = alias in value or (len(value) >= 2 and value in alias)
+            if not contained and ratio < 0.6:
+                continue
+            score = 0.75 + ratio * 0.25 if contained else ratio
+            current = scored.get(subject)
+            reason = "问题里直接出现" if contained else f"词形相近（{ratio:.2f}）"
+            if current is None or score > current[0]:
+                scored[subject] = (score, reason)
+        ranked = sorted(scored.items(), key=lambda item: (-item[1][0], item[0]))
+        return [(subject, reason) for subject, (_, reason) in ranked[:limit]]
 
 
 def compare_versions(rows_a: list[dict], rows_b: list[dict]) -> list[dict]:
@@ -209,12 +267,19 @@ def compare_versions(rows_a: list[dict], rows_b: list[dict]) -> list[dict]:
 class PatchEngine:
     """Parse a version-aware question, filter, retrieve (optionally via Jev), render."""
 
-    def __init__(self, retriever: PatchRetriever, use_jev: bool = True, retrieval_mode: str = "hybrid", self_check: bool = False):
+    def __init__(self, retriever: PatchRetriever, use_jev: bool = True, retrieval_mode: str = "hybrid",
+                 self_check: bool = False, routing_mode: str | None = None,
+                 routing_config: routing.RoutingConfig | None = None):
         self.r = retriever
         self.use_jev = use_jev and jev.available()
         self.retrieval_mode = retrieval_mode
         # One extra Jev call per answer: does the rendered line match its evidence?
         self.self_check = self_check and self.use_jev
+        # How Jev may take part in *query understanding*: off (0.13.0 behaviour), shadow
+        # (measure only) or active (routed retrieval). Independent of use_jev so the
+        # baseline stays reproducible without a key.
+        self.routing_mode = routing_mode or routing.routing_mode_from_env()
+        self.routing_config = routing_config or routing.CONFIG
         self.feedback_file = RUNTIME / "feedback.jsonl"
 
     # ------------------------------------------------------------------ sessions
@@ -229,6 +294,12 @@ class PatchEngine:
             "messages": [],
             "evidence": [],
             "query": None,
+            "query_plan": None,
+            "routing": None,
+            "jev": None,
+            "self_check": None,
+            # Per-phase Jev accounting, so "how much did routing cost" is answerable.
+            "jev_phases": jev.empty_phases(),
             "attempts": [],
             "feedback": [],
             "trace": [],
@@ -253,67 +324,223 @@ class PatchEngine:
         return None
 
     def parse(self, text: str) -> dict:
-        patches = []
+        """Backwards-compatible plain-dict view of the plan (see :meth:`plan`).
+
+        Kept because every existing call site, test and evaluation reads a plain dict of
+        slot values. ``plan()`` is the richer object; this projects it down without a
+        second implementation of the parsing rules.
+        """
+        return self._query_view(self.plan(text))
+
+    @staticmethod
+    def _query_view(plan: QueryPlan) -> dict:
+        """Project a plan onto the flat dict the renderers and feedback records use."""
+        return {
+            "patches": list(plan.patches),
+            "outside": list(plan.outside),
+            # "上个版本" is an explicit request, not a default: only a question that named
+            # no version at all counts as defaulted (which is what lets the UI selector
+            # apply, and what triggers the "most recent change instead" fallback).
+            "defaulted": plan.patch_source == PATCH_SYSTEM_DEFAULT,
+            "subject": plan.value("subject"),
+            "type": plan.value("type"),
+            "ability": plan.value("ability"),
+            "ability_from_name": plan.ability_from_name,
+            "direction": plan.value("direction"),
+            "field_keys": list(plan.get("field_keys").value or []),
+            "mode": plan.value("mode"),
+            "why": plan.why,
+            "span": list(plan.span) if plan.span else None,
+            "aggregate": plan.aggregate,
+            "overview": plan.overview,
+            "intent": plan.value("intent"),
+        }
+
+    def plan(self, text: str) -> QueryPlan:
+        """Parse deterministically, recording *how* each slot was decided.
+
+        This is the only place the deterministic rules run. Nothing here calls a model:
+        every slot it can close is closed with ``source="deterministic"`` or
+        ``"alias"``, and those slots are then off-limits to the semantic router. What it
+        leaves open — plus the reason it stayed open — is the router's entire input.
+        """
+        plan = QueryPlan(question=text)
+
+        # ---------------------------------------------------------------- patches
+        patches: list[str] = []
         for match in PATCH_RE.finditer(text):
             canonical = self.canonical_patch(f"{match.group(1)}.{match.group(2)}")
-            raw = f"{int(match.group(1))}.{int(match.group(2))}"
-            patches.append(canonical or raw)
+            patches.append(canonical or f"{int(match.group(1))}.{int(match.group(2))}")
         patches = list(dict.fromkeys(patches))
-        subject, kind = self.r.resolve_subject(text)
-        ability_match = ABILITY_RE.search(text)
-        if ability_match:
-            ability = ability_match.group(1).upper()
-        elif ULTIMATE_RE.search(text):
-            ability = "R"
-        elif PASSIVE_RE.search(text):
-            ability = "被动"
+        if patches:
+            plan.patch_source = PATCH_EXPLICIT
+            note = "正则命中显式版本"
+        elif re.search("上个版本|上一版本", text) and len(self.r.supported) > 1:
+            patches = [self.r.supported[-2]]
+            plan.patch_source = PATCH_PREVIOUS
+            note = "「上个版本」→ 上一收录版本"
         else:
-            ability = None
-        ability_from_name = ""
-        if ability is None and subject:
-            # "亚索的斩钢闪改了吗" — players name skills far more often than letters.
-            names = self.r.abilities.get(subject) or {}
-            for slot, name in sorted(names.items(), key=lambda item: -len(item[1])):
-                if name and name in text:
-                    ability, ability_from_name = slot, name
-                    break
+            patches = [self.r.latest]
+            plan.patch_source = PATCH_SYSTEM_DEFAULT
+            note = "未写版本，按最新收录版本"
+        plan.patches = patches
+        plan.outside = [value for value in patches if value not in self.r.supported]
+        plan.set_slot("patches", list(patches),
+                      SOURCE_DETERMINISTIC if plan.patch_source == PATCH_EXPLICIT else SOURCE_DEFAULT,
+                      STATUS_RESOLVED if patches else STATUS_UNRESOLVED,
+                      why=note)
+
+        # ---------------------------------------------------------------- subject
+        subject, kind, alias_reason = self.r.match_subject(text)
+        if subject:
+            plan.set_slot("subject", subject, SOURCE_ALIAS, STATUS_RESOLVED, why=alias_reason)
+        else:
+            plan.set_slot("subject", None, SOURCE_NONE, STATUS_UNRESOLVED, why="别名表未命中")
+
+        # ---------------------------------------------------------------- ability
+        ability, ability_from_name, ability_why = self._parse_ability(text, subject)
+        if not ability and subject:
+            ability, ability_from_name, ability_why = self._parse_ability_from_name(text, subject)
+        if ability:
+            # An explicit letter / 大招 / 被动 / skill name is a *closed* slot: the router
+            # must not re-ask it, which is the "don't turn a certain answer into a probable
+            # one" rule stated as code.
+            plan.set_slot("ability", ability, SOURCE_DETERMINISTIC, STATUS_RESOLVED, why=ability_why)
+            plan.ability_from_name = ability_from_name
+        elif subject and self._ambiguous_ability(text, subject):
+            plan.set_slot("ability", None, SOURCE_NONE, STATUS_AMBIGUOUS,
+                          why="提到技能相关说法但没有唯一技能，交由语义判断")
+        else:
+            plan.set_slot("ability", None, SOURCE_NONE, STATUS_UNRESOLVED, why="问题没有指明技能")
+
+        # ------------------------------------------------------------ type / mode
         direction = next(
             (key for key, words in DIRECTION_WORDS.items() if any(word in text for word in words)), None
         )
         requested_type = "item" if re.search(r"装备|物品", text) else ("champion" if re.search(r"英雄", text) else kind)
+        if requested_type:
+            plan.set_slot("type", requested_type,
+                          SOURCE_DETERMINISTIC if re.search(r"装备|物品|英雄", text) else SOURCE_ALIAS,
+                          STATUS_RESOLVED,
+                          why="问题里写了对象类别" if re.search(r"装备|物品|英雄", text) else "由别名表推断类别")
+        else:
+            plan.set_slot("type", None, SOURCE_NONE, STATUS_UNRESOLVED, why="问题没有指明对象类别")
+
+        mode = detect_mode(text)
+        if mode:
+            plan.set_slot("mode", mode, SOURCE_DETERMINISTIC, STATUS_RESOLVED, why="模式关键词命中")
+        else:
+            plan.set_slot("mode", None, SOURCE_NONE, STATUS_UNRESOLVED, why="问题没有指定模式")
+
+        # ---------------------------------------------------------------- field
         keys = field_keys(text)
-        defaulted = False
-        if not patches:
-            defaulted = not re.search("当前版本|最新版本|最新版|这个版本|这版本|上个版本|上一版本", text)
-            if re.search("上个版本|上一版本", text) and len(self.r.supported) > 1:
-                patches = [self.r.supported[-2]]
-            else:
-                patches = [self.r.latest]
+        if keys:
+            plan.set_slot("field_keys", keys, SOURCE_DETERMINISTIC, STATUS_RESOLVED,
+                          why="字段规则命中：" + "、".join(FIELD_LABELS.get(key, key) for key in keys))
+            plan.set_slot("field", keys[0], SOURCE_DETERMINISTIC, STATUS_RESOLVED,
+                          why=f"字段规则命中「{FIELD_LABELS.get(keys[0], keys[0])}」")
+        elif routing.has_field_signal(text):
+            plan.set_slot("field_keys", [], SOURCE_NONE, STATUS_AMBIGUOUS,
+                          why="问题提到某个数值但规则没有唯一字段，交由语义判断")
+            plan.set_slot("field", None, SOURCE_NONE, STATUS_AMBIGUOUS,
+                          why="有数值意图但没有命中的字段规则")
+        else:
+            plan.set_slot("field_keys", [], SOURCE_NONE, STATUS_UNRESOLVED, why="问题没有指明字段")
+            plan.set_slot("field", None, SOURCE_NONE, STATUS_UNRESOLVED, why="问题没有指明字段")
+
+        plan.set_slot("direction", direction,
+                      SOURCE_DETERMINISTIC if direction else SOURCE_NONE,
+                      STATUS_RESOLVED if direction else STATUS_UNRESOLVED,
+                      why="方向词命中" if direction else "没有方向说法")
+
+        # --------------------------------------------------- span / aggregate / intent
         supported = [value for value in patches if value in self.r.supported]
         span = None
         if len(supported) >= 2 and (RANGE_INTENT.search(text) or ACROSS_INTENT.search(text)):
             start, end = sorted(supported, key=patch_sort)[0], sorted(supported, key=patch_sort)[-1]
             span = [value for value in self.r.supported if patch_sort(start) <= patch_sort(value) <= patch_sort(end)]
-        aggregate = bool(subject) and (bool(ACROSS_INTENT.search(text)) or (span is not None and bool(RANGE_INTENT.search(text))))
+        aggregate = bool(subject) and (
+            bool(ACROSS_INTENT.search(text)) or (span is not None and bool(RANGE_INTENT.search(text)))
+        )
         if aggregate:
             span = span or list(self.r.supported)
-            patches = span
-        return {
-            "patches": patches,
-            "outside": [value for value in patches if value not in self.r.supported],
-            "defaulted": defaulted,
-            "subject": subject,
-            "type": requested_type,
-            "ability": ability,
-            "ability_from_name": ability_from_name,
-            "direction": direction,
-            "field_keys": keys,
-            "mode": detect_mode(text),
-            "why": bool(WHY_INTENT.search(text)),
-            "span": span,
-            "aggregate": aggregate,
-            "overview": bool(AGGREGATE_INTENT.search(text)) or self._bare_aggregate(text),
-        }
+            plan.patches = span
+            plan.set_slot("patches", list(span), SOURCE_DETERMINISTIC, STATUS_RESOLVED,
+                          why=f"跨版本聚合：{span[0]}—{span[-1]}")
+        plan.span = span
+        plan.aggregate = aggregate
+        plan.overview = bool(AGGREGATE_INTENT.search(text)) or self._bare_aggregate(text)
+        plan.why = bool(WHY_INTENT.search(text))
+
+        intent, intent_why = self._parse_intent(plan, text)
+        plan.set_slot("intent", intent,
+                      SOURCE_DETERMINISTIC if intent else SOURCE_NONE,
+                      STATUS_RESOLVED if intent else STATUS_AMBIGUOUS,
+                      why=intent_why or "没有命中意图规则，交由语义判断")
+        plan.refresh_unresolved()
+        return plan
+
+    @staticmethod
+    def _parse_ability(text: str, subject: str | None) -> tuple[str | None, str, str]:
+        """Deterministic ability resolution: explicit letter → 大招 → 被动.
+
+        Skill *names* are handled separately (see ``_parse_ability_from_name``) because
+        they need the resolved subject before they can be looked up.
+        """
+        match = ABILITY_RE.search(text)
+        if match:
+            return match.group(1).upper(), "", f"显式技能字母 {match.group(1).upper()}"
+        if ULTIMATE_RE.search(text):
+            return "R", "", "「大招」规则"
+        if PASSIVE_RE.search(text):
+            return "被动", "", "「被动」规则"
+        return None, "", ""
+
+    def _parse_ability_from_name(self, text: str, subject: str) -> tuple[str | None, str, str]:
+        """Match a skill *name* ("斩钢闪") to its slot; players name skills often."""
+        names = self.r.abilities.get(subject) or {}
+        for slot, name in sorted(names.items(), key=lambda item: -len(item[1])):
+            if name and name in text:
+                return slot, name, f"技能名命中「{name}」"
+        return None, "", ""
+
+    def _ambiguous_ability(self, text: str, subject: str) -> bool:
+        """Skill-related wording that does not resolve to one slot.
+
+        Answers "is there a real ability question here" so the router only spends a model
+        call when the text actually gestures at a skill (a truncated skill name, or the word
+        「技能」) rather than on every question that happens to lack a letter.
+        """
+        names = self.r.abilities.get(subject) or {}
+        for name in names.values():
+            if not name:
+                continue
+            for size in (len(name) - 1, len(name) - 2):
+                if size >= 2 and name[:size] in text:
+                    return True
+        return bool(re.search(r"技能|招|连招|combo", text, re.I))
+
+    @staticmethod
+    def _parse_intent(plan: QueryPlan, text: str) -> tuple[str | None, str]:
+        """Intent, but only when a deterministic rule actually settles it.
+
+        Leaving it ``None`` is the honest answer for "26.17 亚索改了什么"-shaped questions
+        where overview-ness is decided by downstream code, not by a keyword: the router is
+        then allowed to ask, and the deterministic branches keep working if it declines.
+        """
+        if plan.aggregate:
+            return "cross_patch_history", "区间/历次说法命中"
+        if plan.why:
+            return "explanation", "「为什么/原因」命中"
+        if plan.value("direction") and not plan.overview:
+            return "direction_claim", "方向词命中且非列表问法"
+        if plan.overview:
+            return "patch_overview" if not plan.value("subject") else "subject_overview", "列表问法命中"
+        if plan.value("subject") and re.search(r"改了什么|改了啥|改动|变动|怎么样|如何", text):
+            return "subject_overview", "「改了什么」说法命中"
+        if plan.value("subject"):
+            return "single_fact", "有对象且没有总览说法，按单点数值理解"
+        return None, ""
 
     @staticmethod
     def _bare_aggregate(text: str) -> bool:
@@ -354,22 +581,26 @@ class PatchEngine:
             self.add(session, "assistant", "这条请求超出我的范围：我只回答版本公告内容，不输出凭据。", kind="abstention")
             return session
 
-        query = self.parse(text)
-        if selected_patch and selected_patch in self.r.supported and query["defaulted"]:
+        plan = self.plan(text)
+        if selected_patch and selected_patch in self.r.supported and plan.patch_source == PATCH_SYSTEM_DEFAULT:
             # The UI version selector only applies when the question itself did not
             # name a version; an explicit version in the text always wins.
-            query.update(patches=[selected_patch], defaulted=False)
+            plan.patches = [selected_patch]
+            plan.patch_source = PATCH_UI_DEFAULT
+            plan.set_slot("patches", [selected_patch], SOURCE_DEFAULT, STATUS_RESOLVED,
+                          why="页面版本选择器（问题本身没写版本）")
+        plan.outside = [value for value in plan.patches if value not in self.r.supported]
         session["question"] = text
-        session["query"] = query
-        session["trace"].append({"tool": "版本解析", "detail": ", ".join(query["patches"]) or "无"})
+        session["trace"].append({"tool": "版本解析", "detail": ", ".join(plan.patches) or "无"})
 
-        if query["outside"]:
+        if plan.outside:
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
-                f"没有收录版本 {', '.join(query['outside'])} 的更新公告。当前覆盖 "
+                f"没有收录版本 {', '.join(plan.outside)} 的更新公告。当前覆盖 "
                 f"{self.r.supported[0]}—{self.r.supported[-1]}（共 {len(self.r.supported)} 个版本），"
                 f"最新版本是 {self.r.latest}。",
                 kind="abstention",
@@ -379,6 +610,7 @@ class PatchEngine:
         if UNSUPPORTED_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
@@ -390,6 +622,7 @@ class PatchEngine:
         if REWORK_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
@@ -402,6 +635,7 @@ class PatchEngine:
         if OTHER_SERVER_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
@@ -414,6 +648,7 @@ class PatchEngine:
         if OFF_TOPIC_INTENT.search(text):
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
@@ -423,9 +658,10 @@ class PatchEngine:
             )
             return session
 
-        if POSITION_INTENT.search(text) and not query["subject"]:
+        if POSITION_INTENT.search(text) and not plan.value("subject"):
             session["status"] = "abstained"
             session["evidence"] = []
+            session["query_plan"] = plan.to_json()
             self.add(
                 session,
                 "assistant",
@@ -435,27 +671,116 @@ class PatchEngine:
             )
             return session
 
+        # ---------------------------------------------------- semantic understanding
+        # Everything above is deterministic scope handling. Only now, with the question
+        # known to be in scope, may a model take part — and only for slots the parser
+        # left open (see routing.SemanticRouter).
+        plan = self._route(session, plan)
+
         # A resolved subject already identifies the object; filtering by type as well would
         # hide rows the announcement filed under another section (arena items, for example).
-        where = {key: query[key] for key in ("subject", "ability") if query.get(key)}
-        if not query["subject"] and query.get("type"):
-            where["type"] = query["type"]
-        where["patches"] = query["patches"]
-        if query.get("mode"):
-            where["mode"] = query["mode"]
-        if not query["subject"] and query.get("direction"):
+        subject = plan.value("subject")
+        ability = plan.value("ability")
+        mode = plan.value("mode")
+        direction = plan.value("direction")
+        where = {key: value for key, value in (("subject", subject), ("ability", ability)) if value}
+        if not subject and plan.value("type"):
+            where["type"] = plan.value("type")
+        where["patches"] = plan.patches
+        if mode:
+            where["mode"] = mode
+        if not subject and direction:
             # A direction word in a listing question is a filter; in a subject
             # question it is a claim to check, so both directions must be visible.
-            where["direction"] = query["direction"]
-        if query.get("aggregate"):
+            where["direction"] = direction
+
+        session["query_plan"] = plan.to_json()
+        query = self._query_view(plan)
+        session["query"] = query
+
+        if plan.aggregate:
             return self._answer_aggregate(session, query)
-        if query["subject"] and not query["overview"]:
-            return self._answer_subject(session, text, query, where)
-        if query["subject"] and query["overview"] and OVERVIEW_INTENT.search(text):
-            return self._answer_subject(session, text, query, where)
-        if not query["subject"] and not query["overview"]:
+        if subject and not plan.overview:
+            return self._answer_subject(session, text, query, where, plan=plan)
+        if subject and plan.overview and OVERVIEW_INTENT.search(text):
+            return self._answer_subject(session, text, query, where, plan=plan)
+        if not subject and not plan.overview:
             return self._clarify(session, text, query, where)
         return self._answer_overview(session, text, query, where)
+
+    # ------------------------------------------------------------------- routing
+
+    def _route(self, session: dict, plan: QueryPlan) -> QueryPlan:
+        """Run the semantic router for this plan and record its outcome in the session.
+
+        ``shadow`` mode deliberately computes everything and then throws the retrieval
+        effect away: the plan it returns is the deterministic one, while
+        ``session["routing"]`` keeps what the router *would* have done. That is what makes
+        an off/shadow/active comparison honest — shadow costs the same calls as active, so
+        any quality difference is attributable to using the routing, not to running it.
+        """
+        if self.routing_mode == routing.MODE_OFF and not self.use_jev:
+            # Even with a model configured away, the router runs in its "off" form so the
+            # reason is recorded: a phase that did nothing must still say why.
+            routing.SemanticRouter(self.r, config=self.routing_config, mode=routing.MODE_OFF).plan(plan)
+            session["routing"] = self._routing_payload(plan, called=False)
+            for note in plan.routing_notes:
+                session["trace"].append({"tool": "语义路由", "detail": note})
+            return plan
+        router = routing.SemanticRouter(
+            self.r, config=self.routing_config, mode=self.routing_mode,
+        )
+        baseline = {name: plan.get(name).value for name in ("ability", "field", "field_keys", "intent")}
+        shadow_mode = self.routing_mode == routing.MODE_SHADOW
+        try:
+            routed = router.plan(plan, self.r.subject_shortlist(plan.question))
+        except Exception as error:  # noqa: BLE001 - routing must never break an answer
+            LOG.warning("semantic routing failed: %s", error)
+            session["trace"].append({"tool": "语义路由", "detail": f"异常，已退回确定性流程：{error}"})
+            session["routing"] = self._routing_payload(plan, called=False)
+            return plan
+        self._merge_phases(session, router.phases)
+        session["cost_usd"] = round(session.get("cost_usd", 0.0) + router.cost_usd, 6)
+        if router.beam_notes:
+            routed.routing_notes.extend(router.beam_notes)
+
+        if shadow_mode:
+            for name, value in baseline.items():
+                if routed.get(name).value != value:
+                    routed.get(name).value = value
+                    routed.get(name).source = SOURCE_DETERMINISTIC if value is not None else SOURCE_NONE
+                    routed.get(name).why = "shadow 模式：记录但未采纳"
+            routed.routing_notes.append("shadow：语义结果已记录，未影响实际检索")
+            session["routing"] = self._routing_payload(routed, called=router.calls > 0)
+            for note in routed.routing_notes:
+                session["trace"].append({"tool": "语义路由（shadow）", "detail": note})
+            return routed
+
+        session["routing"] = self._routing_payload(routed, called=router.calls > 0)
+        for note in routed.routing_notes:
+            session["trace"].append({"tool": "语义路由", "detail": note})
+        return routed
+
+    def _routing_payload(self, plan: QueryPlan, called: bool) -> dict:
+        payload = plan.to_json()["routing"]
+        payload["called"] = bool(called)
+        payload["config"] = self.routing_config.as_json()
+        return payload
+
+    @staticmethod
+    def _merge_phases(session: dict, phases: dict) -> None:
+        """Fold a router's phase ledger into the session's, keeping the worse status."""
+        ledger = session.setdefault("jev_phases", jev.empty_phases())
+        order = {jev.PHASE_BYPASSED: 0, jev.PHASE_CALLED: 1, jev.PHASE_FALLBACK: 2, jev.PHASE_FAILED: 3}
+        for phase, entry in (phases or {}).items():
+            current = ledger.setdefault(phase, dict(entry))
+            current["calls"] = current.get("calls", 0) + entry.get("calls", 0)
+            current["cost_usd"] = round(current.get("cost_usd", 0.0) + entry.get("cost_usd", 0.0), 6)
+            current["latency_ms"] = current.get("latency_ms", 0) + entry.get("latency_ms", 0)
+            if entry.get("detail"):
+                current["detail"] = entry["detail"]
+            if order.get(entry.get("status"), 0) > order.get(current.get("status"), 0):
+                current["status"] = entry.get("status")
 
     def _clarify(self, session: dict, text: str, query: dict, where: dict) -> dict:
         token = self._unresolved_token(text)
@@ -647,8 +972,48 @@ class PatchEngine:
         )
         return session
 
-    def _answer_subject(self, session: dict, text: str, query: dict, where: dict) -> dict:
-        hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
+    def _branch_search(self, session: dict, text: str, where: dict, plan: QueryPlan | None) -> list[dict]:
+        """Retrieve over the routed paths and merge, or do one plain search.
+
+        With routing off (or no paths) this is exactly the 0.13.0 call. With routing on it
+        runs each branch, merges by best branch rank, and records per-branch candidate
+        counts on the plan so the UI can draw the fork and what each side produced.
+        """
+        paths = list(plan.route_paths) if plan else []
+        active = [path for path in paths if path.source != SOURCE_DETERMINISTIC or not where.get("field_keys")]
+        if self.routing_mode != routing.MODE_ACTIVE or len(paths) < 2:
+            hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
+            if paths:
+                paths[0].candidate_count = len(hits)
+                paths[0].contributed = bool(hits)
+            return hits
+
+        results: list[tuple[routing.RoutePath, list[dict]]] = []
+        for path in active:
+            branch_where = {**path.where}
+            hits = self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=branch_where)
+            results.append((path, hits))
+        if not results:
+            return self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
+        merged = routing.merge_candidates(results)
+        # The branch candidate counts and contributed flags only exist now, so both payloads
+        # have to be re-serialised after retrieval rather than at plan time.
+        if plan is not None:
+            session["routing"] = self._routing_payload(plan, called=True)
+            session["query_plan"] = plan.to_json()
+        session["trace"].append(
+            {
+                "tool": "分支检索",
+                "detail": "；".join(
+                    f"{path.label}→{len(hits)} 条" for path, hits in results
+                ) + f"；合并去重后 {len(merged)} 条",
+            }
+        )
+        return merged
+
+    def _answer_subject(self, session: dict, text: str, query: dict, where: dict,
+                        plan: QueryPlan | None = None) -> dict:
+        hits = self._branch_search(session, text, where, plan)
         structured = [row for row in hits if row.get("field_key") != "narrative"]
         notes = [row for row in hits if row.get("field_key") == "narrative"]
         if not structured and notes and not query["field_keys"]:
@@ -667,14 +1032,41 @@ class PatchEngine:
             # visible so Jev can still pick a row whose label is worded differently.
             preferred = [row for row in hits if row.get("field_key") in query["field_keys"]]
             if not preferred:
-                if query.get("defaulted") and query["subject"]:
+                # A *semantically* inferred field is a hint, not a filter: if the reading was
+                # wrong the conservative branch already retrieved everything, so abstaining
+                # here would turn a recoverable guess into a refusal. Only a field the
+                # deterministic rules read out of the question may abstain (0.13.0 behaviour).
+                inferred = bool(plan and plan.get("field_keys").source == SOURCE_SEMANTIC)
+                if inferred:
+                    session["trace"].append(
+                        {"tool": "字段核对", "detail": "语义推断的字段在本版本没有记录，保留全部候选继续判断"}
+                    )
+                elif query.get("defaulted") and query["subject"]:
                     # The asked stat exists, just not in the latest patch.
                     return self._recent_change(session, query)
-                return self._field_not_found(session, query, hits)
+                else:
+                    return self._field_not_found(session, query, hits)
             others = [row for row in hits if row.get("field_key") not in query["field_keys"]]
             hits = preferred + others
         ordered, jev_meta = self._rerank(text, hits)
         session["evidence"] = ordered[:12]
+        # Which branch the winner came from: the measurement of whether routing helped.
+        if ordered and plan is not None and plan.beam_used:
+            winner = ordered[0]
+            branches = winner.get("branches") or []
+            session["routing_influence"] = {
+                "beam_used": True,
+                "winner_branches": branches,
+                "from_secondary": bool(branches) and branches[0] != (plan.route_paths[0].label if plan.route_paths else ""),
+            }
+            if plan.route_paths:
+                primary_label = plan.route_paths[0].label
+                for path in plan.route_paths:
+                    path.contributed = path.label in branches
+                if branches and branches[0] != primary_label:
+                    session["trace"].append(
+                        {"tool": "分支合并", "detail": f"最终采用的证据来自次选分支 {branches[0]}，首选分支未命中"}
+                    )
         if jev_meta:
             session["cost_usd"] += jev_meta["cost_usd"]
             session["jev"] = {
@@ -688,7 +1080,11 @@ class PatchEngine:
                 "after_top": ordered[0]["id"] if ordered else None,
                 "decisive": jev_meta.get("decisive", True),
                 "gap": jev_meta.get("gap", 0.0),
+                "candidates": len(hits),
             }
+            jev.book(session.setdefault("jev_phases", jev.empty_phases()), "rerank", jev.PHASE_CALLED,
+                     jev_meta["cost_usd"], jev_meta["latency_ms"],
+                     f"{len(hits)} 条候选，首选 {jev_meta['choice_id'] or '无'}", calls=1)
             session["trace"].append(
                 {
                     "tool": "Jev 重排",
@@ -699,7 +1095,17 @@ class PatchEngine:
             )
         elif self.use_jev:
             detail = "候选不足 2 条，未调用" if len(hits) < 2 else "调用失败，保留 BM25+向量排序"
+            jev.book(session.setdefault("jev_phases", jev.empty_phases()), "rerank",
+                     jev.PHASE_BYPASSED if len(hits) < 2 else jev.PHASE_FALLBACK, detail=detail)
             session["trace"].append({"tool": "Jev 重排", "detail": detail})
+        elif len(hits) < 2:
+            jev.book(session.setdefault("jev_phases", jev.empty_phases()), "rerank",
+                     jev.PHASE_BYPASSED, detail="候选不足 2 条，无可重排")
+        else:
+            # No key (or Jev disabled) with a real candidate set: that is a degradation, and
+            # it must be reported as one even though routing (which is independent) ran fine.
+            jev.book(session.setdefault("jev_phases", jev.empty_phases()), "rerank",
+                     jev.PHASE_FALLBACK, detail="没有 TYPESAFE_API_KEY，未做重排")
         top = ordered[0]
         if query["direction"]:
             claimed = query["direction"]
@@ -817,10 +1223,14 @@ class PatchEngine:
 
     def _self_check_lines(self, session: dict, pairs: list[tuple[str, str]]) -> str:
         """Judge rendered lines against their evidence; return a caution line or ''."""
+        ledger = session.setdefault("jev_phases", jev.empty_phases())
         if not self.self_check or not pairs:
+            jev.book(ledger, "evidence_judge", jev.PHASE_BYPASSED,
+                     detail="未开启自检或没有数值行" if not self.self_check else "没有可比对的数值行")
             return ""
         result = jev.judge_many(pairs)
         if not result:
+            jev.book(ledger, "evidence_judge", jev.PHASE_FALLBACK, detail="调用失败，跳过自检")
             session["trace"].append({"tool": "回答自检", "detail": "不可用，跳过"})
             return ""
         session["cost_usd"] += result["cost_usd"]
@@ -831,6 +1241,8 @@ class PatchEngine:
             "scores": result["scores"],
             "weak": weak,
         }
+        jev.book(ledger, "evidence_judge", jev.PHASE_CALLED, result["cost_usd"], result["latency_ms"],
+                 f"{len(result['scores'])} 条断言，最低支持度 {result['min']:.2f}", calls=1)
         session["trace"].append(
             {
                 "tool": "回答自检",
