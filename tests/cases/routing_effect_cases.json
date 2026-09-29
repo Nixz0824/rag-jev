@@ -1,0 +1,646 @@
+{
+  "title": "分层路由效果盲测集",
+  "note": "仅依据腾讯国服单版本平衡性公告摘取改后数值，并用中文描述线索唯一定位对象、技能和数值类别；题面不出现技能代号或官方技能名。",
+  "cases": [
+    {
+      "id": "e01",
+      "kind": "routing_effect",
+      "question": "15.13 艾瑞莉娅叠满后攻速上限调到多少了",
+      "expect": {
+        "subject": "艾瑞莉娅",
+        "rows": {
+          "patch": "15.13",
+          "subject": "艾瑞莉娅",
+          "ability": "被动",
+          "field_key": "attack_speed",
+          "value": "40-100% (基于等级)"
+        }
+      },
+      "why": "该版本艾瑞莉娅还改了每层攻速，「叠满后的攻速上限」唯一指向最大攻速一行。"
+    },
+    {
+      "id": "e02",
+      "kind": "routing_effect",
+      "question": "15.13 奈德丽那根标枪飞得够远时，额外伤害上限改成多少",
+      "expect": {
+        "subject": "奈德丽",
+        "rows": {
+          "patch": "15.13",
+          "subject": "奈德丽",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "0 - 225%"
+        }
+      },
+      "why": "该版本奈德丽另有飞行距离阈值一行，「飞得够远时的额外伤害上限」唯一指向伤害提升一行。"
+    },
+    {
+      "id": "e03",
+      "kind": "routing_effect",
+      "question": "15.13 瑞兹那个强化后能定住人的单体符文法术，蓝耗改成多少了",
+      "expect": {
+        "subject": "瑞兹",
+        "rows": {
+          "patch": "15.13",
+          "subject": "瑞兹",
+          "ability": "W",
+          "field_key": "cost",
+          "value": "50 / 60 / 70 / 80 / 90"
+        }
+      },
+      "why": "该版本瑞兹这个单体法术同时改了伤害和法力消耗，题面只问强化定身后的蓝耗，唯一落在消耗一行。"
+    },
+    {
+      "id": "e04",
+      "kind": "routing_effect",
+      "question": "15.14 克烈骑着蜥蜴撞过去后，按目标血量算的最高那档伤害是多少",
+      "expect": {
+        "subject": "克烈",
+        "rows": {
+          "patch": "15.14",
+          "subject": "克烈",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "12 / 18 / 24%"
+        }
+      },
+      "why": "克烈该版被动和多项技能都改了数值，「撞过去后按目标血量算的最高一档」唯一对应冲锋的最大伤害。"
+    },
+    {
+      "id": "e05",
+      "kind": "routing_effect",
+      "question": "15.14 吉格斯从天上砸下那圈爆炸，正中心的最大伤害改成多少",
+      "expect": {
+        "subject": "吉格斯",
+        "rows": {
+          "patch": "15.14",
+          "subject": "吉格斯",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "300 / 500 / 700"
+        }
+      },
+      "why": "吉格斯该版Q、E和R都有伤害调整，「从天而降的范围爆炸正中心」唯一定位到R的最大中心伤害。"
+    },
+    {
+      "id": "e06",
+      "kind": "routing_effect",
+      "question": "15.14 佐伊捡到法术碎片后蹦出来的那几发飞弹，合计伤害是多少",
+      "expect": {
+        "subject": "佐伊",
+        "rows": {
+          "patch": "15.14",
+          "subject": "佐伊",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "60 / 90 / 120 / 150 / 180"
+        }
+      },
+      "why": "佐伊该版Q和W都改了伤害，「捡取法术碎片后伴生的多发飞弹合计值」只对应W总伤害。"
+    },
+    {
+      "id": "e07",
+      "kind": "routing_effect",
+      "question": "15.16 璐璐给队友套上的那层盾，现在能吸收多少伤害",
+      "expect": {
+        "subject": "璐璐",
+        "rows": {
+          "patch": "15.16",
+          "subject": "璐璐",
+          "ability": "E",
+          "field_key": "shield",
+          "value": "70 / 110 / 150 / 190 / 230"
+        }
+      },
+      "why": "璐璐该版这个技能同时改了冷却、伤害和护盾值，「给队友套上的吸收量」唯一对应护盾一行。"
+    },
+    {
+      "id": "e08",
+      "kind": "routing_effect",
+      "question": "15.16 莫甘娜铺在地上持续烧人的那片区域，最低那档伤害调成多少",
+      "expect": {
+        "subject": "莫甘娜",
+        "rows": {
+          "patch": "15.16",
+          "subject": "莫甘娜",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "70 / 140 / 210 / 280 / 350"
+        }
+      },
+      "why": "莫甘娜该版同一个持续伤害区域列了最低和最高两行，「最低那档」明确指向最小伤害。"
+    },
+    {
+      "id": "e09",
+      "kind": "routing_effect",
+      "question": "15.16 萨科消失后突然现身那招，冷却改成几秒了",
+      "expect": {
+        "subject": "萨科",
+        "rows": {
+          "patch": "15.16",
+          "subject": "萨科",
+          "ability": "Q",
+          "field_key": "cooldown",
+          "value": "13 / 12.5 / 12 / 11.5 / 11"
+        }
+      },
+      "why": "萨科该版突袭技能还改了额外攻击收益，「消失后现身的等待时间」唯一指向冷却一行。"
+    },
+    {
+      "id": "e10",
+      "kind": "routing_effect",
+      "question": "15.16 悠米附身队友时，普攻命中附带的治疗现在是多少",
+      "expect": {
+        "subject": "悠米",
+        "rows": {
+          "patch": "15.16",
+          "subject": "悠米",
+          "ability": "W",
+          "field_key": "heal",
+          "value": "3 / 4 / 5 / 6 / 7"
+        }
+      },
+      "why": "悠米该版附身技能同时调整了治疗和护盾强度、普攻附带治疗，「普攻命中带来的回复」只对应后一行。"
+    },
+    {
+      "id": "e11",
+      "kind": "routing_effect",
+      "question": "15.17 格温连着射出几根针时，第一根命中的减速比例改成多少",
+      "expect": {
+        "subject": "格温",
+        "rows": {
+          "patch": "15.17",
+          "subject": "格温",
+          "ability": "R",
+          "field_key": "slow",
+          "value": "30 / 45 / 60%"
+        }
+      },
+      "why": "格温该版分别调整了第一根针和后续针的减速，「第一根命中」唯一指向初始减速一行。"
+    },
+    {
+      "id": "e12",
+      "kind": "routing_effect",
+      "question": "15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少",
+      "expect": {
+        "subject": "艾瑞莉娅",
+        "rows": {
+          "patch": "15.17",
+          "subject": "艾瑞莉娅",
+          "ability": "W",
+          "field_key": "ability_power",
+          "value": "+ 150%法术强度"
+        }
+      },
+      "why": "艾瑞莉娅该版蓄力斩击有最低和最高伤害两行，「蓄满后的法强加成」唯一对应最高伤害收益率。"
+    },
+    {
+      "id": "e13",
+      "kind": "routing_effect",
+      "question": "15.17 克格莫那段按目标最大生命值结算的持续喷吐伤害，比例调到多少",
+      "expect": {
+        "subject": "克格莫",
+        "rows": {
+          "patch": "15.17",
+          "subject": "克格莫",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "3 / 3.75 / 4.5 / 5.25 / 6%"
+        }
+      },
+      "why": "克格莫该版Q、W和R都调整了伤害，「按目标最大生命值结算的持续喷吐」唯一指向W附带伤害。"
+    },
+    {
+      "id": "e14",
+      "kind": "routing_effect",
+      "question": "15.17 凯隐隔着一段距离横扫出去那招，蓝耗各级改成多少了",
+      "expect": {
+        "subject": "凯隐",
+        "rows": {
+          "patch": "15.17",
+          "subject": "凯隐",
+          "ability": "W",
+          "field_key": "cost",
+          "value": "40 / 45 / 50 / 55 / 60"
+        }
+      },
+      "why": "凯隐该版突进和远程横扫都改了蓝耗，「隔着距离横扫出去」唯一锁定远程那招的消耗行。"
+    },
+    {
+      "id": "e15",
+      "kind": "routing_effect",
+      "question": "15.18 安妮朝前方扇出去的火焰，基础伤害削到多少了",
+      "expect": {
+        "subject": "安妮",
+        "rows": {
+          "patch": "15.18",
+          "subject": "安妮",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "70 / 110 / 150 / 190 / 230"
+        }
+      },
+      "why": "安妮该版另有一行终极技能法穿调整，「朝前方扇形喷出的火焰基础伤害」唯一指向W伤害。"
+    },
+    {
+      "id": "e16",
+      "kind": "routing_effect",
+      "question": "15.18 阿萝拉每次技能触发的最大生命值伤害，法强加成改成多少了",
+      "expect": {
+        "subject": "阿萝拉",
+        "rows": {
+          "patch": "15.18",
+          "subject": "阿萝拉",
+          "ability": "被动",
+          "field_key": "ability_power",
+          "value": "每100法术强度2.7%"
+        }
+      },
+      "why": "阿萝拉该版被动同时改了基础百分比伤害和法强收益率，「每次技能触发的最大生命值伤害法强加成」唯一指向收益率一行。"
+    },
+    {
+      "id": "e17",
+      "kind": "routing_effect",
+      "question": "15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了",
+      "expect": {
+        "subject": "塔莉垭",
+        "rows": {
+          "patch": "15.18",
+          "subject": "塔莉垭",
+          "ability": "E",
+          "field_key": "damage",
+          "value": "25 / 40 / 55 / 70 / 85"
+        }
+      },
+      "why": "塔莉垭该版Q和E都改了伤害，「撒下石片后被踩中引爆」唯一指向E的爆炸基础伤害。"
+    },
+    {
+      "id": "e18",
+      "kind": "routing_effect",
+      "question": "15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了",
+      "expect": {
+        "subject": "布兰德",
+        "rows": {
+          "patch": "15.19",
+          "subject": "布兰德",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "75 / 120 / 165 / 210 / 255"
+        }
+      },
+      "why": "布兰德该版被动、W和R都有伤害调整，「从地面炸开的范围火焰」唯一对应W伤害。"
+    },
+    {
+      "id": "e19",
+      "kind": "routing_effect",
+      "question": "15.19 金克丝放在地上的夹子炸开时，基础伤害改成多少了",
+      "expect": {
+        "subject": "金克丝",
+        "rows": {
+          "patch": "15.19",
+          "subject": "金克丝",
+          "ability": "E",
+          "field_key": "damage",
+          "value": "90 / 140 / 190 / 240 / 290"
+        }
+      },
+      "why": "金克丝该版还调整了Q射程，「地面夹子炸开」明确指向E的基础伤害。"
+    },
+    {
+      "id": "e20",
+      "kind": "routing_effect",
+      "question": "15.19 莉莉娅把人睡着后，叫醒时那下额外伤害改成多少",
+      "expect": {
+        "subject": "莉莉娅",
+        "rows": {
+          "patch": "15.19",
+          "subject": "莉莉娅",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "150 / 200 / 250"
+        }
+      },
+      "why": "莉莉娅该版同时调整了睡眠后的额外伤害和冷却，「唤醒时追加的伤害」唯一指向伤害一行。"
+    },
+    {
+      "id": "e21",
+      "kind": "routing_effect",
+      "question": "15.19 辛德拉手边聚起的暗黑法球，打中时基础伤害变成多少了",
+      "expect": {
+        "subject": "辛德拉",
+        "rows": {
+          "patch": "15.19",
+          "subject": "辛德拉",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "80 / 115 / 150 / 185 / 220"
+        }
+      },
+      "why": "辛德拉该版还改了基础生命、护甲和另一招冷却，「手边聚起的法球命中伤害」唯一指向Q伤害。"
+    },
+    {
+      "id": "e22",
+      "kind": "routing_effect",
+      "question": "15.20 阿兹尔沙兵同时刺中主目标外的人时，额外目标吃到的伤害比例是多少",
+      "expect": {
+        "subject": "阿兹尔",
+        "rows": {
+          "patch": "15.20",
+          "subject": "阿兹尔",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "8级前20%，随后每级+8%(18级时100%)"
+        }
+      },
+      "why": "阿兹尔该版W还改了法强收益和充能时间，「主目标以外的沙兵命中伤害比例」唯一指向额外目标伤害行。"
+    },
+    {
+      "id": "e23",
+      "kind": "routing_effect",
+      "question": "15.20 菲兹那条小鲨鱼咬中后，伤害调到多少了",
+      "expect": {
+        "subject": "菲兹",
+        "rows": {
+          "patch": "15.20",
+          "subject": "菲兹",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "180 / 300 / 420"
+        }
+      },
+      "why": "菲兹该版三种大小的鲨鱼伤害都调整了，「小鲨鱼」明确区分出小体型那一行。"
+    },
+    {
+      "id": "e24",
+      "kind": "routing_effect",
+      "question": "15.20 格雷福斯那发爆裂弹折返回来再次撞到人时，伤害改成多少了",
+      "expect": {
+        "subject": "格雷福斯",
+        "rows": {
+          "patch": "15.20",
+          "subject": "格雷福斯",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "80 / 125 / 170 / 215 / 260"
+        }
+      },
+      "why": "格雷福斯该版同一招有第一段、折返段和组合伤害三行，「折返回来再次命中」唯一指向第二段。"
+    },
+    {
+      "id": "e25",
+      "kind": "routing_effect",
+      "question": "15.20 孙悟空隐身后留下的分身，打人伤害比例变成多少了",
+      "expect": {
+        "subject": "孙悟空",
+        "rows": {
+          "patch": "15.20",
+          "subject": "孙悟空",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "30 / 35 / 40 / 45 / 50%"
+        }
+      },
+      "why": "孙悟空该版Q、W和E都有伤害相关调整，「留下的分身造成的伤害比例」唯一对应W分身伤害。"
+    },
+    {
+      "id": "e26",
+      "kind": "routing_effect",
+      "question": "26.14 赛娜那束穿过队友的光线让人减速时，法强加成降到多少了",
+      "expect": {
+        "subject": "赛娜",
+        "rows": {
+          "patch": "26.14",
+          "subject": "赛娜",
+          "ability": "Q",
+          "field_key": "ability_power",
+          "value": "7%每100法术强度"
+        }
+      },
+      "why": "赛娜该版同一招还改了治疗的法强收益，「光线造成减速时的法强加成」只对应减速收益率。"
+    },
+    {
+      "id": "e27",
+      "kind": "routing_effect",
+      "question": "26.14 杰斯切换到近战姿态时拿到的额外双抗，各级改成多少了",
+      "expect": {
+        "subject": "杰斯",
+        "rows": {
+          "patch": "26.14",
+          "subject": "杰斯",
+          "ability": "R",
+          "field_key": "resistances",
+          "value": "5 / 12 / 19 / 26"
+        }
+      },
+      "why": "杰斯该版还改了被动移速，「切换到近战姿态时获得的额外护甲和魔抗」唯一指向双抗一行。"
+    },
+    {
+      "id": "e28",
+      "kind": "routing_effect",
+      "question": "26.15 卑尔维斯四向短冲后直接砍中的基础伤害调成哪几档了",
+      "expect": {
+        "subject": "卑尔维斯",
+        "rows": {
+          "patch": "26.15",
+          "subject": "卑尔维斯",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "12 / 14 / 16 / 18 / 20"
+        }
+      },
+      "why": "卑尔维斯该版有多条基础属性、被动和短冲调整，「短冲后直接命中的基础伤害」唯一指向Q伤害行。"
+    },
+    {
+      "id": "e29",
+      "kind": "routing_effect",
+      "question": "26.15 卑尔维斯每叠一层拿到的攻速下限和上限，改成什么了",
+      "expect": {
+        "subject": "卑尔维斯",
+        "rows": {
+          "patch": "26.15",
+          "subject": "卑尔维斯",
+          "ability": "被动",
+          "field_key": "attack_speed",
+          "value": "最小0.1%/最大2%"
+        }
+      },
+      "why": "卑尔维斯该版被动还改了施放后的攻速时长，「每层叠加的攻速上下限」唯一对应每层攻速一行。"
+    },
+    {
+      "id": "e30",
+      "kind": "routing_effect",
+      "question": "26.15 茂凯敲地击退后，对野怪的伤害倍率改成哪几档了",
+      "expect": {
+        "subject": "茂凯",
+        "rows": {
+          "patch": "26.15",
+          "subject": "茂凯",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "150 / 160 / 170 / 180 / 190"
+        }
+      },
+      "why": "茂凯该版同一招还改了法强收益，「敲地击退对野怪的伤害倍率」明确指向野怪伤害修正行。"
+    },
+    {
+      "id": "e31",
+      "kind": "routing_effect",
+      "question": "26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了",
+      "expect": {
+        "subject": "波比",
+        "rows": {
+          "patch": "26.16",
+          "subject": "波比",
+          "ability": "Q",
+          "field_key": "slow",
+          "value": "20 / 23 / 26 / 29 / 32%"
+        }
+      },
+      "why": "波比该版同一招还改了伤害和野怪上限，「落地砸锤后的减速幅度」唯一指向减速一行。"
+    },
+    {
+      "id": "e32",
+      "kind": "routing_effect",
+      "question": "26.16 波比身边那个防护力场给的双抗，现在是多少了",
+      "expect": {
+        "subject": "波比",
+        "rows": {
+          "patch": "26.16",
+          "subject": "波比",
+          "ability": "W",
+          "field_key": "resistances",
+          "value": "16%，在低于40%最大生命值时翻倍"
+        }
+      },
+      "why": "波比该版Q和W都有改动，「身边防护力场提供的护甲和魔抗」唯一指向W的双抗数值。"
+    },
+    {
+      "id": "e33",
+      "kind": "routing_effect",
+      "question": "26.16 凯南开雷阵后整段都命中时，总伤害上限改成多少了",
+      "expect": {
+        "subject": "凯南",
+        "rows": {
+          "patch": "26.16",
+          "subject": "凯南",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "300 / 600 / 900"
+        }
+      },
+      "why": "凯南该版雷阵列了单次伤害和最大总伤害两行，「整段命中的总上限」唯一对应最大伤害。"
+    },
+    {
+      "id": "e34",
+      "kind": "routing_effect",
+      "question": "26.17 薇恩那下按目标最大生命值结算的真实伤害，改成多少了",
+      "expect": {
+        "subject": "薇恩",
+        "rows": {
+          "patch": "26.17",
+          "subject": "薇恩",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "4 / 5.5 / 7 / 8.5 / 10%"
+        }
+      },
+      "why": "薇恩该版同一招还有最低伤害一行，「按目标最大生命值结算的真实伤害」唯一指向百分比伤害。"
+    },
+    {
+      "id": "e35",
+      "kind": "routing_effect",
+      "question": "26.17 格雷福斯那发弹丸折返回来后二段命中的伤害，改成多少了",
+      "expect": {
+        "subject": "格雷福斯",
+        "rows": {
+          "patch": "26.17",
+          "subject": "格雷福斯",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "80 / 125 / 170 / 215 / 260"
+        }
+      },
+      "why": "格雷福斯该版同一招区分第一段和返程伤害，「弹丸折返后的二段命中」唯一指向返程行。"
+    },
+    {
+      "id": "e36",
+      "kind": "routing_effect",
+      "question": "26.17 奇亚娜元素短刃直接切中敌人时，基础伤害改成多少了",
+      "expect": {
+        "subject": "奇亚娜",
+        "rows": {
+          "patch": "26.17",
+          "subject": "奇亚娜",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "80 / 110 / 140 / 170 / 200"
+        }
+      },
+      "why": "奇亚娜该版同一招还改了对野怪的伤害修正，「直接切中敌人的基础伤害」排除了野怪倍率行。"
+    },
+    {
+      "id": "e37",
+      "kind": "routing_effect",
+      "question": "26.17 薇恩那段真实伤害的最低保底值，现在改到多少了",
+      "expect": {
+        "subject": "薇恩",
+        "rows": {
+          "patch": "26.17",
+          "subject": "薇恩",
+          "ability": "W",
+          "field_key": "damage",
+          "value": "40 / 55 / 70 / 85 / 100"
+        }
+      },
+      "why": "薇恩该版同时调整了百分比真实伤害和最低伤害，「最低保底值」唯一对应固定伤害下限。"
+    },
+    {
+      "id": "e38",
+      "kind": "routing_effect",
+      "question": "26.18 艾克把装置扔出去再收回来的那招，蓝耗各级改成多少了",
+      "expect": {
+        "subject": "艾克",
+        "rows": {
+          "patch": "26.18",
+          "subject": "艾克",
+          "ability": "Q",
+          "field_key": "cost",
+          "value": "40 / 50 / 60 / 70 / 80"
+        }
+      },
+      "why": "艾克该版同一招还改了返程伤害的法强收益，「装置往返技能的蓝耗」唯一指向法力消耗一行。"
+    },
+    {
+      "id": "e39",
+      "kind": "routing_effect",
+      "question": "26.18 卡萨丁跃到敌人身边落地时的基础伤害，调成多少了",
+      "expect": {
+        "subject": "卡萨丁",
+        "rows": {
+          "patch": "26.18",
+          "subject": "卡萨丁",
+          "ability": "R",
+          "field_key": "damage",
+          "value": "80 / 95 / 110"
+        }
+      },
+      "why": "卡萨丁该版Q改了法强收益而位移落地伤害属于另一招，「跃到敌人身边落地」唯一指向R基础伤害。"
+    },
+    {
+      "id": "e40",
+      "kind": "routing_effect",
+      "question": "26.18 诺提勒斯船锚勾中并把人拉过来时，伤害改成多少了",
+      "expect": {
+        "subject": "诺提勒斯",
+        "rows": {
+          "patch": "26.18",
+          "subject": "诺提勒斯",
+          "ability": "Q",
+          "field_key": "damage",
+          "value": "85 / 125 / 165 / 205 / 245"
+        }
+      },
+      "why": "诺提勒斯该版还改了基础攻击力，「船锚勾中并把人拉过来的伤害」唯一对应Q伤害行。"
+    }
+  ]
+}

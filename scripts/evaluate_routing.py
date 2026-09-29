@@ -115,18 +115,38 @@ def install_fixture(cases: dict[str, dict]) -> FixtureModel:
 
 # ---------------------------------------------------------------------------- scoring
 def resolve_row(retriever, spec: dict) -> str | None:
-    """The corpus row a case expects, as an id (or None when it is absent)."""
+    """The corpus row a case expects, as an id (or None when it is absent).
+
+    ``ability`` is matched strictly — it is what routing is being tested on, and the case
+    sets it explicitly. ``field_key`` is treated as a *hint*: the announcement's own labels
+    are finer than the corpus schema, so "法强加成" can live on a row the schema files under
+    ``damage``, and one value fragment can appear on two rows of the same ability (Poppy's
+    Q lists both a monster-cap health value and a slow in one line). Requiring an exact
+    ``field_key`` match in that situation would resolve the case to the wrong row and
+    understate routing. The value fragment is the discriminating evidence.
+    """
     where = {"patches": [spec["patch"]], "subject": spec["subject"]}
-    if spec.get("ability"):
-        where["ability"] = spec["ability"]
     rows = [row for row in retriever.all(where) if row.get("field_key") != "narrative"]
-    if spec.get("field_key"):
-        rows = [row for row in rows if row.get("field_key") == spec["field_key"]]
+    if spec.get("ability"):
+        rows = [row for row in rows if (row.get("ability") or "base") == spec["ability"]]
     if not rows:
         return None
-    if spec.get("value"):
-        rows = [row for row in rows if spec["value"] in (row.get("new_value") or "")]
-    return rows[0]["id"] if rows else None
+    value = spec.get("value")
+    if value:
+        by_value = [row for row in rows if value in (row.get("new_value") or "")]
+        if by_value:
+            # Prefer the declared field_key when the fragment matches several rows of one
+            # ability; otherwise take the first match, which is deterministic by row order.
+            if spec.get("field_key"):
+                exact = [row for row in by_value if row.get("field_key") == spec["field_key"]]
+                if exact:
+                    return exact[0]["id"]
+            return by_value[0]["id"]
+    if spec.get("field_key"):
+        keys = [row for row in rows if row.get("field_key") == spec["field_key"]]
+        if keys:
+            return keys[0]["id"]
+    return rows[0]["id"]
 
 
 def slot_accuracy(case: dict, session: dict) -> dict:
@@ -285,10 +305,41 @@ def _fmt(value) -> str:
     return str(int(number)) if number == int(number) else f"{number:.1f}"
 
 
+def outcome_matrix(rows_off: list[dict], rows_active: list[dict]) -> dict[str, int]:
+    """Per-case outcome across rounds: who solved it, and who never did.
+
+    This is the honest headline. 'Both wrong' bounds how much routing could ever contribute
+    (it cannot move those), and 'only off' is the number that would argue *against* routing.
+    """
+
+    def group(rows: list[dict]) -> dict[str, list[bool]]:
+        grouped: dict[str, list[bool]] = {}
+        for row in rows:
+            grouped.setdefault(row["id"], []).append(bool(row["hit@1"]))
+        return grouped
+
+    off, active = group(rows_off), group(rows_active)
+    result = {"both_right": 0, "only_active": 0, "only_off": 0, "both_wrong": 0}
+    for case_id in off:
+        off_any, active_any = any(off[case_id]), any(active.get(case_id, []))
+        if off_any and active_any:
+            result["both_right"] += 1
+        elif active_any:
+            result["only_active"] += 1
+        elif off_any:
+            result["only_off"] += 1
+        else:
+            result["both_wrong"] += 1
+    return result
+
+
 def comparison(off: dict, shadow: dict, active: dict, repeat: int = 1,
                spread: dict[str, list[int]] | None = None,
                unstable: dict[str, dict[str, list[bool]]] | None = None,
-               by_question: dict[str, dict] | None = None) -> list[str]:
+               by_question: dict[str, dict] | None = None,
+               changed: list[dict] | None = None,
+               flapping: dict[str, dict[str, list[bool]]] | None = None,
+               matrix: dict[str, int] | None = None) -> list[str]:
     """The off/shadow/active table, including the columns that admit 'no difference'."""
     lines = [
         "| 口径 | 命中@1 | 命中@5 | 槽位正确 | 路由调用次数 | 路由成本 | 路由耗时 | 分叉题数 | 平均总耗时 |",
@@ -337,6 +388,84 @@ def comparison(off: dict, shadow: dict, active: dict, repeat: int = 1,
                 )
         else:
             lines += ["", "本次没有跨轮次翻转的案例：所有案例在每一轮的命中情况都相同。"]
+    if flapping:
+        # Report flapping in *either* scope: a baseline that flips on its own makes a
+        # single-round comparison meaningless and must not be read as a routing effect.
+        lines += [
+            "",
+            "**逐轮不稳定的案例**（含 off 侧的波动；重复次数越多越容易暴露）：",
+            "",
+            "| 案例 | off 各轮 | active 各轮 | 说明 |",
+            "|---|---|---|---|",
+        ]
+        for case_id, entry in sorted(flapping.items()):
+            off_marks = "".join("对" if hit else "错" for hit in entry["off"]) or "—"
+            active_marks = "".join("对" if hit else "错" for hit in entry["active"]) or "—"
+            note = []
+            if len(set(entry["off"])) > 1:
+                note.append("off 侧自身不稳定")
+            if len(set(entry["active"])) > 1:
+                note.append("active 侧自身不稳定")
+            lines.append(f"| {case_id} | {off_marks} | {active_marks} | {'；'.join(note)} |")
+        lines += [
+            "",
+            "自身不稳定的案例，其 off/active 差异不能单独算作路由的功劳或责任，"
+            "必须结合逐轮数据一起看。",
+        ]
+    if changed:
+        # Entry counts inflate with --repeat (one case changed in 3 rounds reads as 3), so the
+        # case count is reported first: that is the number a reader will compare against the
+        # total. The per-case table below shows direction and consistency.
+        per_case: dict[str, dict] = {}
+        for item in changed:
+            entry = per_case.setdefault(item["id"], {"off": 0, "active": 0, "n": 0,
+                                                     "question": item["question"]})
+            entry["n"] += 1
+            entry["off"] += int(bool(item["off_hit@1"]))
+            entry["active"] += int(bool(item["active_hit@1"]))
+        helped = [cid for cid, e in per_case.items() if e["active"] > e["off"]]
+        hurt = [cid for cid, e in per_case.items() if e["active"] < e["off"]]
+        lines += [
+            "",
+            f"**改变结果的案例数：{len(per_case)} 条**"
+            f"（净改善 {len(helped)} 条、净损害 {len(hurt)} 条；"
+            f"按轮次累计的条目数为 {len(changed)}，重复 {repeat} 次时会被放大 {repeat} 倍）。",
+            "",
+            "| 案例 | 问题 | off 命中轮次 | active 命中轮次 | 方向 |",
+            "|---|---|---|---|---|",
+        ]
+        for case_id, entry in sorted(per_case.items(),
+                                     key=lambda kv: kv[1]["active"] - kv[1]["off"]):
+            direction = ("改善" if entry["active"] > entry["off"]
+                         else "损害" if entry["active"] < entry["off"] else "互有")
+            lines.append(f"| {case_id} | {entry['question']} | {entry['off']}/{entry['n']} | "
+                         f"{entry['active']}/{entry['n']} | {direction} |")
+        lines += [
+            "",
+            "（逐轮累计的条目数会被重复次数放大，"
+            f"本表按案例统计，共 {len(per_case)} 条案例发生过改变。）",
+            "",
+            "哪些题两种口径都答不对、以及原因归属，跑 "
+            "`python scripts/attribute_routing_errors.py --cases <案例文件>`。",
+        ]
+    if matrix:
+        total = sum(matrix.values()) or 1
+        lines += [
+            "",
+            "## 两种口径的解题分布",
+            "",
+            "| 情况 | 条数 | 占比 |",
+            "|---|---|---|",
+            f"| 两种口径都答对 | {matrix['both_right']} | {matrix['both_right'] / total:.0%} |",
+            f"| **只有 active 答对（路由的贡献）** | **{matrix['only_active']}** | "
+            f"{matrix['only_active'] / total:.0%} |",
+            f"| **只有 off 答对（路由的损害）** | **{matrix['only_off']}** | "
+            f"{matrix['only_off'] / total:.0%} |",
+            f"| 两种口径都答不对 | {matrix['both_wrong']} | {matrix['both_wrong'] / total:.0%} |",
+            "",
+            "这张表比命中率更直白：路由的价值是第三行，代价是第四行。",
+            "两行都不为零时，结论必须同时给出两个数字，不能只报净提升。",
+        ]
     return lines
 
 
@@ -369,6 +498,12 @@ def main() -> int:
     for case in raw:
         spec = case["expect"].get("rows")
         case["_target"] = resolve_row(retriever, spec) if spec else None
+    unresolvable = [case["id"] for case in raw if not case.get("_target")]
+    if unresolvable:
+        # A case with no resolvable target can never be a hit, so it silently pads every
+        # denominator and understates whatever is being measured. Say so instead.
+        print(f"警告：{len(unresolvable)} 条案例的目标行无法从语料解析，"
+              f"它们在任何口径下都只能判为「错」：{unresolvable}")
 
     has_key = jev.available()
     live = bool(args.live) or (has_key and not args.fixture)
@@ -425,6 +560,9 @@ def main() -> int:
     }
     # Which cases are unstable across rounds: a case that flips is the only kind of evidence
     # for (or against) routing mattering, so it must be named rather than averaged away.
+    # Both scopes are checked — a row only lands in `changed` when routing and the baseline
+    # happen to disagree that round, so a baseline that flips on its own would otherwise be
+    # reported as a routing effect.
     unstable: dict[str, dict[str, list[bool]]] = {}
     for mode in modes:
         by_id: dict[str, list[bool]] = {}
@@ -432,6 +570,13 @@ def main() -> int:
             by_id.setdefault(row["id"], []).append(bool(row["hit@1"]))
         unstable[mode] = {case_id: hits for case_id, hits in by_id.items()
                           if len(set(hits)) > 1}
+    flapping = {case_id: {"off": unstable.get("off", {}).get(case_id, []),
+                          "active": unstable.get("active", {}).get(case_id, [])}
+                for case_id in set(unstable.get("off", {})) | set(unstable.get("active", {}))}
+    # Computed from the full row set, not from `changed`: a case that fails in both scopes
+    # never appears in `changed` at all, yet it is exactly what bounds the ceiling.
+    matrix = (outcome_matrix(results["off"], results["active"])
+              if "off" in results and "active" in results else None)
 
     changed = []
     if "off" in results and "active" in results:
@@ -482,7 +627,8 @@ def main() -> int:
         "",
     ]
     lines += comparison(off, shadow, active, repeat=repeat, spread=spread,
-                        unstable=unstable, by_question=by_question)
+                        unstable=unstable, by_question=by_question, changed=changed,
+                        flapping=flapping, matrix=matrix)
     lines += [
         "",
         f"- `shadow` 与 `active` 的调用统计相同（各 {shadow['calls']} 条案例记录到调用）：shadow 照常做语义判断，"
