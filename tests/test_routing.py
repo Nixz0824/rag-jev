@@ -11,6 +11,7 @@ zero model calls" guarantee is enforced rather than merely documented.
 """
 
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
@@ -102,6 +103,21 @@ class RetrieverMixin:
         self.addCleanup(lambda: (setattr(jev, "classify_many", originals[0]),
                                  setattr(jev, "shortlist", originals[1]),
                                  setattr(jev, "available", originals[2])))
+
+    def no_key(self):
+        """Force the real no-credential path regardless of how the machine is set up.
+
+        A developer machine may legitimately have a key installed (``runtime/jev-key.txt``
+        or ``TYPESAFE_API_KEY``), and these tests must still exercise the degraded path
+        rather than silently measuring a live run. Neither the env var nor the key file may
+        be touched on disk, so both are hidden from ``load_api_key`` for the duration.
+        """
+        originals = (os.environ.pop("TYPESAFE_API_KEY", None), jev.RUNTIME)
+        self.addCleanup(lambda: (
+            os.environ.__setitem__("TYPESAFE_API_KEY", originals[0]) if originals[0] else None,
+            setattr(jev, "RUNTIME", originals[1]),
+        ))
+        jev.RUNTIME = Path(os.devnull).parent / "_ragjev_no_such_runtime_"
 
 
 class ClosureTests(RetrieverMixin, unittest.TestCase):
@@ -203,6 +219,7 @@ class FallbackTests(RetrieverMixin, unittest.TestCase):
         # Deliberately not stubbing: this is the real no-key path. The name is one the
         # alias table does not know, so the ability slot stays open and the router has to
         # report that it could not ask.
+        self.no_key()
         engine = patch_engine.PatchEngine(self.retriever, use_jev=True, retrieval_mode="bm25",
                                           routing_mode=routing.MODE_ACTIVE)
         session = engine.chat(engine.new("s"), "薇恩的技能伤害改过吗")
@@ -215,6 +232,7 @@ class FallbackTests(RetrieverMixin, unittest.TestCase):
     def test_no_key_with_real_candidates_books_rerank_as_a_degradation(self):
         # A fallback is only honest when there was work to do: rerank needs ≥2 candidates,
         # so a single-candidate answer is "bypassed", not a degraded rerank.
+        self.no_key()
         engine = patch_engine.PatchEngine(self.retriever, use_jev=True, retrieval_mode="bm25",
                                           routing_mode=routing.MODE_ACTIVE)
         session = engine.chat(engine.new("s"), "26.18 卡西奥佩娅改了什么")
@@ -223,6 +241,7 @@ class FallbackTests(RetrieverMixin, unittest.TestCase):
         self.assertIn("TYPESAFE_API_KEY", session["jev_phases"]["rerank"]["detail"])
 
     def test_a_question_needing_nothing_stays_bypassed_without_a_key(self):
+        self.no_key()
         engine = patch_engine.PatchEngine(self.retriever, use_jev=True, retrieval_mode="bm25",
                                           routing_mode=routing.MODE_ACTIVE)
         session = engine.chat(engine.new("s"), "26.17 薇恩 W 真实伤害是多少")

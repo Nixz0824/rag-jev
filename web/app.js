@@ -1221,8 +1221,75 @@ async function loadEvaluation() {
       <li class="minus"><i>－</i><span><b>三种排序在同源案例上打平</b>：元数据过滤后候选常只剩 1–6 条，BM25/向量/混合没有差别；Jev 的价值集中在候选难以区分或问法与标签不一致的地方。</span></li>
       <li class="minus"><i>－</i><span><b>解析层没有用 Jev</b>：字段与意图识别是确定性正则，48 条查询理解盲测全过且零延迟——不该用模型的地方不用。</span></li>
     </ul>`;
+  fillMetrics(payload);
   renderCharts(payload);
   observeReveals();
+}
+
+/** Fill every `<b data-metric="…">` in the static copy from the reports.
+ *
+ *  The numbers in the page's prose used to be typed by hand, so every evaluation run left the
+ *  page quoting the previous version's results — they had already drifted once (the flow
+ *  section still said 14/15 and 47/47 after those numbers moved on). Resolving them through
+ *  `/api/evaluation` makes that impossible: a missing report renders "—" instead of a stale
+ *  value, and a fixture-based routing run says so in the copy.
+ */
+function fillMetrics(payload) {
+  const effect = payload.jev_effect || {};
+  const check = payload.jev_selfcheck || {};
+  const routing = payload.jev_routing || {};
+  const runs = payload.runs || [];
+  const blindRuns = runs.filter((run) => String(run.name || "").startsWith("盲测报告"));
+  const same = runs.find((run) => run.name === "评测报告") || {};
+  const blind = blindRuns.find((run) => run.name === "盲测报告-合并")
+    || blindRuns[blindRuns.length - 1] || {};
+  const parse = runs.find((run) => run.name === "查询理解") || {};
+  const arm = (run, name) => ((run.arms || {})[name]) || {};
+  // Counts arrive as whole numbers for a single run and as means when the evaluation was
+  // repeated, so a mean prints with one decimal and a count prints bare.
+  const count = (value) => (Number.isInteger(value) ? String(value) : Number(value).toFixed(1));
+  const ratio = (part, whole) => (whole ? `${count(part ?? 0)}/${count(whole)}` : "—");
+  // Prefer the Jev arm when it exists so the copy describes the shipped pipeline.
+  const sameJev = arm(same, "hybrid+jev");
+  const sameArm = sameJev.pinned ? sameJev : arm(same, "hybrid");
+  const sameBase = arm(same, "hybrid");
+  const offArm = (routing.arms || {}).off || {};
+  const activeArm = (routing.arms || {}).active || {};
+  const behaviour = routing.behaviour || {};
+  const perRound = activeArm.cases_per_round || 0;
+
+  const values = {
+    "pinned.before": ratio((sameBase.pinned || {})["hit@1"], (sameBase.pinned || {}).total),
+    "pinned.after": ratio((sameArm.pinned || {})["hit@1"], (sameArm.pinned || {}).total),
+    "selfcheck.pass": ratio((sameArm.selfcheck || {}).pass, (sameArm.selfcheck || {}).total),
+    "selfcheck.threshold": check.threshold ?? "—",
+    "rerank.total": effect.total ?? "—",
+    "blind.cases": blind.cases ?? "—",
+    "parse.cases": parse.cases ?? "—",
+    "trap.cases": ((arm(same, "hybrid").trap) || {}).total ?? "—",
+    "routing.cases": perRound || "—",
+    "routing.bypass": behaviour.bypass ?? "—",
+    "routing.off": ratio(offArm["hit@1"], perRound),
+    "routing.active": ratio(activeArm["hit@1"], perRound),
+    "routing.improved": routing.improved ?? "—",
+    "routing.hurt": routing.hurt ?? "—",
+    "routing.calls": behaviour.calls_per_query === undefined
+      ? "—" : Number(behaviour.calls_per_query).toFixed(2),
+  };
+
+  for (const node of document.querySelectorAll("[data-metric]")) {
+    const key = node.dataset.metric;
+    if (key === "routing.caveat") {
+      // The routing result has to state its own scope: a fixture replay is not a measurement
+      // of the model, and "no case changed" is a finding, not a gap in the numbers.
+      const source = routing.source === "live" ? "真实模型" : "fixture 回放（非模型准确率）";
+      node.textContent = (routing.improved || routing.hurt)
+        ? `口径：${source}；改动的题数很少，样本量不足以给出收益幅度。`
+        : `口径：${source}；本次没有一条案例因路由改变结果，报告里如实写明「没有测到命中率提升」。`;
+      continue;
+    }
+    node.textContent = values[key] ?? "—";
+  }
 }
 
 /* ------------------------------------------------------------------ compare */

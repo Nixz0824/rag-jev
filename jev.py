@@ -103,18 +103,39 @@ def phase_totals(phases: dict) -> dict:
     }
 
 
+def _key_from_file(path) -> str:
+    """Read a key from either shape the repo documents.
+
+    ``runtime/jev-key.txt`` is documented as holding the key *itself* (that is what
+    ``AGENTS.md`` says: ``TYPESAFE_API_KEY``（环境变量或 ``runtime/jev-key.txt``）), while
+    ``.env.local`` holds a ``TYPESAFE_API_KEY=…`` / ``export TYPESAFE_API_KEY=…`` line.
+    Only the second shape used to be accepted, so a bare key file silently produced
+    "no key" — the pipeline degraded with no error, which is exactly the kind of quiet
+    failure the project tries to avoid.
+    """
+    try:
+        lines = [line.strip() for line in path.read_text(encoding="utf-8").splitlines()]
+    except OSError:
+        return ""
+    for line in lines:
+        if not line or line.startswith("#"):
+            continue
+        name, separator, value = line.removeprefix("export ").partition("=")
+        if separator and name.strip() == "TYPESAFE_API_KEY":
+            return value.strip().strip("'\"")
+    # Bare-value form: a single non-comment line that is not an assignment.
+    values = [line for line in lines if line and not line.startswith("#") and "=" not in line]
+    return values[0].strip().strip("'\"") if len(values) == 1 else ""
+
+
 def load_api_key() -> str:
     key = os.environ.get("TYPESAFE_API_KEY", "").strip()
     if key:
         return key
     for path in (RUNTIME / "jev-key.txt", ROOT / ".env.local"):
-        try:
-            for line in path.read_text(encoding="utf-8").splitlines():
-                match = line.strip().removeprefix("export ").split("=", 1)
-                if len(match) == 2 and match[0].strip() == "TYPESAFE_API_KEY":
-                    return match[1].strip().strip("'\"")
-        except OSError:
-            continue
+        key = _key_from_file(path)
+        if key:
+            return key
     return ""
 
 

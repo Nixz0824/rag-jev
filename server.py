@@ -343,6 +343,7 @@ def evaluation() -> dict:
         ("jev_effect", "Jev效果.json"),
         ("jev_ranker", "Jev效果-排序对照.json"),
         ("jev_selfcheck", "Jev自检.json"),
+        ("jev_routing", "Jev分层路由.json"),
     ):
         path = DOCS / filename
         if not path.exists():
@@ -362,6 +363,24 @@ def evaluation() -> dict:
                 "control_scores": (payload.get("control") or {}).get("scores", []),
                 "mutation_scores": (payload.get("mutation") or {}).get("scores", []),
                 "cost_usd": payload.get("cost_usd", 0),
+            }
+        elif key == "jev_routing":
+            # The routing report is served whole (minus the bulky per-case rows) so the page
+            # can read its numbers instead of hard-coding them; `source` matters because a
+            # fixture run is not a measurement of the model.
+            extras[key] = {
+                "source": payload.get("source", ""),
+                "modes": payload.get("modes", []),
+                "cases": payload.get("cases", 0),
+                "arms": payload.get("arms", {}),
+                "behaviour": payload.get("behaviour", {}),
+                "improved": payload.get("improved", 0),
+                "hurt": payload.get("hurt", 0),
+                "recall_gained": payload.get("recall_gained", 0),
+                "recall_lost": payload.get("recall_lost", 0),
+                "changed": payload.get("changed", []),
+                "config": payload.get("config", {}),
+                "generated_at": payload.get("generated_at", ""),
             }
         else:
             extras[key] = payload.get("stats", {})

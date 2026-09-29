@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-29T13:35:46",
+ "generated_at": "2026-09-29T14:08:11",
  "case_file": [
   "blind_cases.json",
   "blind_cases_2.json"
@@ -91,7 +91,7 @@
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.0,
+    "cost_usd": 0.0006430000000000005,
     "latency_total": 0,
     "latency_calls": 0
    },
@@ -722,7 +722,7 @@
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.0,
+    "cost_usd": 0.0006620000000000004,
     "latency_total": 0,
     "latency_calls": 0
    },
@@ -1353,7 +1353,7 @@
     "choice_picked": 0,
     "choice_hit": 0,
     "choice_none": 0,
-    "cost_usd": 0.0,
+    "cost_usd": 0.0007000000000000003,
     "latency_total": 0,
     "latency_calls": 0
    },
@@ -1820,6 +1820,677 @@
      "id": "c22",
      "kind": "single",
      "status": "verify",
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o05",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o06",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "g01",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g02",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g03",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g04",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g05",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "g06",
+     "kind": "aggregate",
+     "status": "verify",
+     "aggregate_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    }
+   ]
+  },
+  "hybrid+jev": {
+   "single": {
+    "total": 40,
+    "hit@1": 40,
+    "hit@5": 40,
+    "value_ok": 40,
+    "value_total": 40,
+    "version_ok": 26,
+    "gt_missing": 2,
+    "version_asked": 26
+   },
+   "pinned": {
+    "total": 0,
+    "hit@1": 0,
+    "hit@5": 0,
+    "value_ok": 0,
+    "jev_pick_ok": 0,
+    "jev_picks": 0
+   },
+   "overview": {
+    "total": 14,
+    "ok": 14,
+    "subject_miss": 0
+   },
+   "absent": {
+    "total": 8,
+    "refused": 8
+   },
+   "out_of_scope": {
+    "total": 8,
+    "refused": 8
+   },
+   "trap": {
+    "total": 0,
+    "ok": 0
+   },
+   "aggregate": {
+    "total": 6,
+    "ok": 6
+   },
+   "selfcheck": {
+    "total": 40,
+    "pass": 40
+   },
+   "jev": {
+    "calls": 16,
+    "choice_picked": 0,
+    "choice_hit": 0,
+    "choice_none": 0,
+    "cost_usd": 0.002245999999999999,
+    "latency_total": 14248,
+    "latency_calls": 16
+   },
+   "details": [
+    {
+     "id": "b01",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b02",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.83,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b03",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.96,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b04",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b05",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b06",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.85,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b07",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.87,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b08",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b09",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.85,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b10",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b11",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.83,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b12",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b13",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.73,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b14",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b15",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.9,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b16",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "field_key_note": "语料字段键为 cost",
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b17",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.73,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b18",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.93,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "b19",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "b20",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.91,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "o01",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o02",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o03",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o04",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o05",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o06",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o07",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "o08",
+     "kind": "overview",
+     "status": "verify",
+     "overview_ok": true
+    },
+    {
+     "id": "a01",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a02",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a03",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a04",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "a05",
+     "kind": "absent",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x01",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x02",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x03",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x04",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "x05",
+     "kind": "out_of_scope",
+     "status": "abstained",
+     "refused": true
+    },
+    {
+     "id": "c01",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c02",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.95,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c03",
+     "kind": "single",
+     "status": "abstained",
+     "ground_truth": "missing_in_corpus"
+    },
+    {
+     "id": "c04",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c05",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c06",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c07",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.83,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c08",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c09",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c10",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.84,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c11",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c12",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.94,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c13",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.91,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c14",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c15",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c16",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.91,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c17",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.92,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c18",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.88,
+     "rank": 1,
+     "version_asked": true,
+     "version_ok": true,
+     "value_ok": true
+    },
+    {
+     "id": "c19",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.81,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c20",
+     "kind": "single",
+     "status": "abstained",
+     "ground_truth": "missing_in_corpus"
+    },
+    {
+     "id": "c21",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.89,
+     "rank": 1,
+     "version_asked": false,
+     "value_ok": true
+    },
+    {
+     "id": "c22",
+     "kind": "single",
+     "status": "verify",
+     "self_check_min": 0.89,
      "rank": 1,
      "version_asked": true,
      "version_ok": true,

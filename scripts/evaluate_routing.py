@@ -184,7 +184,8 @@ def route_accuracy(case: dict, session: dict) -> dict:
     }
 
 
-def run_case(engine, retriever, case: dict, mode: str, model: FixtureModel | None = None) -> dict:
+def run_case(engine, retriever, case: dict, mode: str, model: FixtureModel | None = None,
+             round_index: int = 0) -> dict:
     """One case in one mode. Never raises: a failure is recorded as a failure."""
     question = case["question"]
     if model is not None:
@@ -206,10 +207,11 @@ def run_case(engine, retriever, case: dict, mode: str, model: FixtureModel | Non
     # Prefer the engine's own ledger; when the fixture answered, the ledger has no real usage
     # numbers, so fall back to the fixture's bookkeeping rather than reporting $0 and 0ms.
     ledger_cost = round(sum(entry.get("cost_usd", 0.0) for entry in ledger.values()), 6)
-    ledger_latency = int(routing_payload.get("latency_ms") or 0)
+    ledger_latency = sum(int(entry.get("latency_ms", 0)) for entry in ledger.values())
     row = {
         "id": case["id"],
         "mode": mode,
+        "round": round_index,
         "question": question,
         "kind": case["kind"],
         "status": status,
@@ -236,6 +238,14 @@ def run_case(engine, retriever, case: dict, mode: str, model: FixtureModel | Non
 
 # -------------------------------------------------------------------------- reporting
 def summarise(rows: list[dict], cases: dict[str, dict]) -> dict:
+    """Aggregate one mode's runs.
+
+    With ``--repeat N`` the same cases appear N times, so the counts are means: reporting a
+    raw total would let a longer run look better simply for having run more often.
+    """
+    rounds = sorted({row.get("round", 0) for row in rows})
+    per_round = len(rounds) or 1
+
     def count(predicate) -> int:
         return sum(1 for row in rows if predicate(row))
 
@@ -245,47 +255,88 @@ def summarise(rows: list[dict], cases: dict[str, dict]) -> dict:
     routing_on = any(row["routing_called"] for row in rows) or (
         rows and rows[0]["mode"] in ("shadow", "active")
     )
+    slots_ok = count(lambda row: row["slots"] and all(row["slots"].values())) if routing_on else 0
+    slots_total = count(lambda row: bool(row["slots"])) if routing_on else 0
     return {
+        "rounds": per_round,
+        "cases_per_round": len(rows) // per_round,
         "cases": len(rows),
-        "hit@1": count(lambda row: row["hit@1"]),
-        "hit@5": count(lambda row: row["hit@5"]),
-        "target_found": count(lambda row: row["target_in_evidence"]),
-        "errors": count(lambda row: row["error"]),
-        "routing_called": count(lambda row: row["routing_called"]),
-        "beam_used": count(lambda row: row["beam_used"]),
-        "slot_ok": count(lambda row: row["slots"] and all(row["slots"].values())) if routing_on else 0,
-        "slot_total": count(lambda row: bool(row["slots"])) if routing_on else 0,
+        "hit@1": count(lambda row: row["hit@1"]) / per_round,
+        "hit@5": count(lambda row: row["hit@5"]) / per_round,
+        "target_found": count(lambda row: row["target_in_evidence"]) / per_round,
+        "errors": count(lambda row: row["error"]) / per_round,
+        "routing_called": count(lambda row: row["routing_called"]) / per_round,
+        "beam_used": count(lambda row: row["beam_used"]) / per_round,
+        "slot_ok": slots_ok / per_round,
+        "slot_total": slots_total / per_round,
         "calls": sum(row["routing_calls"] for row in rows),
-        # Averaged over cases that are *meant* to be routed: the "nokey" case is a
-        # no-credential control and would otherwise dilute the per-question figure.
-        "routable_cases": count(lambda row: row["kind"] != "nokey"),
-        "routable_calls": sum(row["routing_calls"] for row in rows if row["kind"] != "nokey"),
+        "routable_cases": count(lambda row: row["kind"] != "nokey") / per_round,
+        "routable_calls": sum(row["routing_calls"] for row in rows if row["kind"] != "nokey") / per_round,
         "cost_usd": round(sum(row["routing_cost_usd"] for row in rows), 6),
         "routing_latency_ms": sum(row["routing_latency_ms"] for row in rows),
-        "latency_ms": sum(row["latency_ms"] for row in rows),
-        "call_free": count(lambda row: not row["routing_called"]),
+        "latency_ms": sum(row["latency_ms"] for row in rows) / per_round,
+        "call_free": count(lambda row: not row["routing_called"]) / per_round,
     }
 
 
-def comparison(off: dict, shadow: dict, active: dict) -> list[str]:
+def _fmt(value) -> str:
+    """Whole numbers print bare; means (from --repeat) print with one decimal."""
+    number = float(value)
+    return str(int(number)) if number == int(number) else f"{number:.1f}"
+
+
+def comparison(off: dict, shadow: dict, active: dict, repeat: int = 1,
+               spread: dict[str, list[int]] | None = None,
+               unstable: dict[str, dict[str, list[bool]]] | None = None,
+               by_question: dict[str, dict] | None = None) -> list[str]:
     """The off/shadow/active table, including the columns that admit 'no difference'."""
     lines = [
         "| 口径 | 命中@1 | 命中@5 | 槽位正确 | 路由调用次数 | 路由成本 | 路由耗时 | 分叉题数 | 平均总耗时 |",
         "|---|---|---|---|---|---|---|---|---|",
     ]
     for name, arm in (("off", off), ("shadow", shadow), ("active", active)):
-        cases = max(arm["cases"], 1)
-        slots = f"{arm['slot_ok']}/{arm['slot_total']}" if arm["slot_total"] else "—（未提问）"
+        cases = max(arm["cases_per_round"], 1)
+        slots = (f"{_fmt(arm['slot_ok'])}/{_fmt(arm['slot_total'])}"
+                 if arm["slot_total"] else "—（未提问）")
         lines.append(
-            f"| {name} | {arm['hit@1']}/{arm['cases']} | {arm['hit@5']}/{arm['cases']} | "
+            f"| {name} | {_fmt(arm['hit@1'])}/{arm['cases_per_round']} | "
+            f"{_fmt(arm['hit@5'])}/{arm['cases_per_round']} | "
             f"{slots} | {arm['calls']} | ${arm['cost_usd']:.6f} | "
-            f"{arm['routing_latency_ms']}ms | {arm['beam_used']} | {arm['latency_ms'] // cases}ms |"
+            f"{arm['routing_latency_ms']}ms | {_fmt(arm['beam_used'])}/{arm['cases_per_round']} | "
+            f"{arm['latency_ms'] / cases:.0f}ms |"
         )
     lines += [
         "",
         "「槽位正确」只统计**路由器真的提问过**的案例：`routing=off` 不提问，"
         "低置信槽位既不算答对也不算答错，因此该列显示「未提问」，而不是把「没问」记成「答错」。",
     ]
+    if repeat > 1:
+        lines += [
+            "",
+            f"**重复 {repeat} 次**（模型有随机性，单次结果不足以支撑结论）。每轮命中@1：",
+            "",
+            "| 口径 | 每轮命中@1 | 均值 |",
+            "|---|---|---|",
+        ]
+        for mode in ("off", "shadow", "active"):
+            if mode not in spread:
+                continue
+            counts = spread[mode]
+            mean = sum(counts) / len(counts)
+            lines.append(f"| {mode} | {'、'.join(str(c) for c in counts)} | {mean:.1f}/{off['cases_per_round']} |")
+        if unstable.get("active"):
+            lines += ["", "**跨轮次翻转的案例**（唯一能说明路由是否起作用的证据）："]
+            for case_id, hits in sorted(unstable["active"].items()):
+                question = by_question.get(case_id, {}).get("question", case_id)
+                off_hits = unstable.get("off", {}).get(case_id, [])
+                lines.append(
+                    f"- `{case_id}`「{question}」：active 命中 {sum(hits)}/{len(hits)} 轮"
+                    + (f"，off 命中 {sum(off_hits)}/{len(off_hits)} 轮" if off_hits else "（off 每轮都命中）")
+                    + "。这是**语料本身无法判定**的问法，模型每轮给出的读法不同，"
+                      "所以两种口径的结果都会随轮次变化。"
+                )
+        else:
+            lines += ["", "本次没有跨轮次翻转的案例：所有案例在每一轮的命中情况都相同。"]
     return lines
 
 
@@ -296,6 +347,10 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--live", action="store_true", help="强制使用真实 TypeSafe API（需要 key）")
     parser.add_argument("--fixture", action="store_true", help="强制使用案例里记录的分布")
+    parser.add_argument(
+        "--repeat", type=int, default=1,
+        help="同一批案例重复跑 N 次（live 口径下模型有随机性，单次结果不足以支撑结论）",
+    )
     args = parser.parse_args()
 
     payload = json.loads(CASES.read_text(encoding="utf-8"))
@@ -316,36 +371,76 @@ def main() -> int:
     if not live:
         model = install_fixture(row_index)
         note = ("fixture：未提供 TYPESAFE_API_KEY，脚本回放案例文件里记录的分布。"
-                "这测量的是**链路行为**，不是真实模型的准确率。")
+                "这测量的是**链路行为**，不是真实模型的准确率 —— "
+                "命中率一列尤其不能当成绩看：回放的分布是出题时手写的，"
+                "等于让模型按我们预设的答案作答。要判断效果必须用 `--live`。")
     else:
         note = "live：调用真实 TypeSafe API，槽位判断按案例期望评分。"
 
     modes = [mode.strip() for mode in args.modes.split(",") if mode.strip() in MODES]
-    results: dict[str, list[dict]] = {}
+    repeat = max(args.repeat, 1)
+    collected: dict[str, list[dict]] = {mode: [] for mode in modes}
     executed_total: dict[str, int] = {}
-    for mode in modes:
-        engine = patch_engine.PatchEngine(
-            retriever, use_jev=False, self_check=False, retrieval_mode="bm25", routing_mode=mode
-        )
-        before = model.calls if model else 0
-        rows = [run_case(engine, retriever, case, mode, model) for case in raw]
-        results[mode] = rows
-        executed_total[mode] = (model.calls - before) if model else sum(row["routing_calls"] for row in rows)
-        print(f"[{mode}] " + "  ".join(
-            f"{row['id']}={'对' if row['hit@1'] else '错'}{'|分叉' if row['beam_used'] else ''}" for row in rows
-        ))
-        print(f"       实际发起语义调用 {executed_total[mode]} 次")
+    per_repeat: list[dict[str, dict[str, int]]] = []
+    for round_index in range(repeat):
+        round_scores: dict[str, dict[str, int]] = {}
+        for mode in modes:
+            engine = patch_engine.PatchEngine(
+                retriever, use_jev=False, self_check=False, retrieval_mode="bm25", routing_mode=mode
+            )
+            before = model.calls if model else 0
+            rows = [run_case(engine, retriever, case, mode, model, round_index) for case in raw]
+            collected[mode] += rows
+            executed = (model.calls - before) if model else sum(row["routing_calls"] for row in rows)
+            executed_total[mode] = executed_total.get(mode, 0) + executed
+            round_scores[mode] = {
+                "hit@1": sum(1 for row in rows if row["hit@1"]),
+                "cases": len(rows),
+                "beam": sum(1 for row in rows if row["beam_used"]),
+            }
+            if repeat == 1 or mode in ("off", "active"):
+                print(f"[repeat {round_index + 1}/{repeat}][{mode}] " + "  ".join(
+                    f"{row['id']}={'对' if row['hit@1'] else '错'}{'|分叉' if row['beam_used'] else ''}"
+                    for row in rows
+                ))
+                print(f"       实际发起语义调用 {executed} 次")
+        per_repeat.append(round_scores)
 
+    # With repeats each mode's row list holds N rounds of the same cases; the arms then
+    # report the mean, and `spread` reports the per-round hit counts so run-to-run variance
+    # is visible instead of being hidden behind one number.
+    results: dict[str, list[dict]] = collected
     arms = {mode: summarise(rows, by_question) for mode, rows in results.items()}
     off = arms.get("off") or arms[modes[0]]
     active = arms.get("active") or arms[modes[-1]]
     shadow = arms.get("shadow") or active
+    spread = {
+        mode: [round_scores[mode]["hit@1"] for round_scores in per_repeat]
+        for mode in modes
+    }
+    # Which cases are unstable across rounds: a case that flips is the only kind of evidence
+    # for (or against) routing mattering, so it must be named rather than averaged away.
+    unstable: dict[str, dict[str, list[bool]]] = {}
+    for mode in modes:
+        by_id: dict[str, list[bool]] = {}
+        for row in results[mode]:
+            by_id.setdefault(row["id"], []).append(bool(row["hit@1"]))
+        unstable[mode] = {case_id: hits for case_id, hits in by_id.items()
+                          if len(set(hits)) > 1}
 
     changed = []
     if "off" in results and "active" in results:
-        for baseline, routed in zip(results["off"], results["active"]):
+        # Pair rows by (round, case) rather than by position, so repeats compare like with
+        # like instead of zipping round 1 of one mode against round 2 of the other.
+        indexed = {
+            mode: {(row.get("round", 0), row["id"]): row for row in results[mode]}
+            for mode in ("off", "active")
+        }
+        for key in sorted(set(indexed["off"]) & set(indexed["active"])):
+            baseline, routed = indexed["off"][key], indexed["active"][key]
             if baseline["hit@1"] != routed["hit@1"] or baseline["target_in_evidence"] != routed["target_in_evidence"]:
                 changed.append({
+                    "round": key[0],
                     "id": baseline["id"], "question": baseline["question"],
                     "off_hit@1": baseline["hit@1"], "active_hit@1": routed["hit@1"],
                     "off_found": baseline["target_in_evidence"], "active_found": routed["target_in_evidence"],
@@ -379,16 +474,19 @@ def main() -> int:
         "## 三口径对照",
         "",
     ]
-    lines += comparison(off, shadow, active)
+    lines += comparison(off, shadow, active, repeat=repeat, spread=spread,
+                        unstable=unstable, by_question=by_question)
     lines += [
         "",
         f"- `shadow` 与 `active` 的调用统计相同（各 {shadow['calls']} 条案例记录到调用）：shadow 照常做语义判断，"
         "只是不把结果用于检索。因此两者的差异只能来自「是否使用路由」，而不是「是否运行路由」。",
         f"- 本次运行实际发起的语义调用：**{executed} 次**（下表按案例累计为 {active['calls']} 次）。"
-        "两者不等是设计使然：r06 是「无 key」对照案例，它在 active 口径下按「有 key」记录，"
-        "所以计入下表统计但没有真实发起调用。",
+        + ("两者相等：本次每个案例都真实发起了调用。"
+           if executed == active["calls"] else
+           "两者不等是设计使然：r06 是「无 key」对照案例，它在 active 口径下按「有 key」记录，"
+           "所以计入下表统计但没有真实发起调用。"),
         f"- 每问平均语义调用 **{calls_per_query:.2f}** 次（只按需要判断的问题计，"
-        f"分母 {active['routable_cases']} 条，不含上述无 key 对照案例）。",
+        f"分母 {active['routable_cases']} 条）。",
         "- 检索口径为 BM25，与生产默认的 hybrid 会有细微差异；这里比较的是路由带来的增量，"
         "不是绝对命中率。",
         "",
@@ -459,15 +557,33 @@ def main() -> int:
         "",
         f"- 完全明确的问题确实 0 次语义调用（{bypass}/{total} 条），"
         "说明「只对未确定槽位提问」不是口号而是链路行为。",
-        f"- 在能触发路由的题目上，路由把命中@1 从 {off['hit@1']}/{off['cases']} 提到 "
-        f"{active['hit@1']}/{active['cases']}：改善 {improved} 条、损害 {hurt} 条，"
-        f"召回扩大 {recall_gained} 条、丢失 {recall_lost} 条。分叉与合并确实发生了，"
-        "并且分叉题目的候选集合确实包含更多行。",
+    ]
+    if improved or hurt or recall_gained or recall_lost:
+        lines += [
+            f"- 在能触发路由的题目上，命中@1 由 {off['hit@1']}/{off['cases']} 变为 "
+            f"{active['hit@1']}/{active['cases']}：改善 {improved} 条、损害 {hurt} 条，"
+            f"召回扩大 {recall_gained} 条、丢失 {recall_lost} 条。",
+        ]
+    else:
+        lines += [
+            f"- **在本次案例集上，路由没有改变任何一条的结果**（off 与 active 都是 "
+            f"{off['hit@1']}/{off['cases']}，改善 0、损害 0）。"
+            "这不是脚本故障：8 条里有 5 条根本不需要模型（规则已定），"
+            "剩下 3 条里 2 条的唯一合理解读本来就能被检索命中，"
+            "第 8 条（多技能都可能带 damage 行）在语料上无法判定，",
+            "  两种口径都答不对。也就是说：**没有测到分层路由带来的命中率提升**。",
+        ]
+    lines += [
+        "  分叉与合并确实发生了（见下表明细），并且分叉题目的候选集合确实包含更多行 —— "
+        "机制在运行，只是在这些题目上没有转化为更好的首选。",
         "- `shadow` 与 `off` 结果完全一致，说明 shadow 只观察不干预。",
         "- 无 key 时链路完整可用，降级会写进轨迹与阶段账本。",
         "",
         "**没有证明**",
         "",
+        "- **没有证明分层路由提高命中率。** 本次 live 口径下改善 0 条；"
+        "此前用案例文件里手写分布跑出的 `5/8 → 8/8` 是 **fixture 口径**的结果，"
+        "换成真实模型后没有复现 —— 那组数字只能说明链路能按预期分支，不能说明模型会选对。",
         "- **样本量小**：能触发路由的只有 "
         f"{total - bypass} 条，`{improved}/{total - bypass}` 这种比例不能外推成"
         "「路由把准确率提高了 37%」。它证明的是**机制有效**，不是**收益幅度**。",
@@ -514,9 +630,12 @@ def main() -> int:
         encoding="utf-8",
     )
     print(f"\n报告：{out_md}")
-    print(f"off 命中@1 {off['hit@1']}/{off['cases']}｜active 命中@1 {active['hit@1']}/{active['cases']}"
-          f"｜改变 {len(changed)} 条（改善 {improved} / 损害 {hurt}）")
-    print(f"语义调用 {active['calls']} 次（{calls_per_query:.2f}/问）｜跳过 {bypass}/{total}｜分叉 {branched}/{total}")
+    print(f"off 命中@1 {_fmt(off['hit@1'])}/{off['cases_per_round']}"
+          f"｜active 命中@1 {_fmt(active['hit@1'])}/{active['cases_per_round']}"
+          f"｜改变 {len(changed)} 条（改善 {improved} / 损害 {hurt}）"
+          + (f"｜重复 {repeat} 次" if repeat > 1 else ""))
+    print(f"语义调用 {active['calls']} 次（{calls_per_query:.2f}/问）"
+          f"｜跳过 {_fmt(bypass)}/{total}｜分叉 {_fmt(branched)}/{total}")
     return 0
 
 

@@ -1,6 +1,6 @@
 {
   "title": "分层路由评测集",
-  "note": "期望只描述「该走哪条搜索路径」与「模型该不该被调用」，不引用语料数值。expect.value 取自官方公告，用于判定最终答案是否正确。",
+  "note": "期望只描述「该走哪条搜索路径」与「模型该不该被调用」，不引用语料数值。expect.rows 取自官方公告，用于判定最终答案是否正确。案例分两类：explicit（规则已确定，模型不得被调用）与 decidable（问法只留一个技能待定，模型应能定出来）；卡西奥佩娅那条是「多技能都可能有 damage 行」的不可判定情形，如实记录它答不对。",
   "cases": [
     {
       "id": "r01",
@@ -17,7 +17,7 @@
         ],
         "rows": {"patch": "26.17", "subject": "薇恩", "ability": "W", "field_key": "damage", "value": "4 / 5.5 / 7 / 8.5 / 10%"}
       },
-      "why": "版本用正则、对象用别名、技能是显式字母、字段由「真实伤害」规则命中：四个槽位全部封闭，模型不得被调用。这是「不把确定答案改成概率答案」的核心案例。注意该技能下有两条 damage 行（真实伤害 / 最小伤害），字段名是区分它们的关键。"
+      "why": "版本用正则、对象用别名、技能是显式字母、字段由「真实伤害」规则命中：四个槽位全部封闭，模型不得被调用。这是「不把确定答案改成概率答案」的核心案例。该技能下有两条 damage 行（真实伤害 / 最小伤害），字段名是区分它们的关键。"
     },
     {
       "id": "r02",
@@ -34,25 +34,24 @@
         ],
         "rows": {"patch": "26.17", "subject": "格雷福斯", "ability": "Q", "field_key": "damage", "value": "50 / 75 / 100 / 125 / 150"}
       },
-      "why": "第二条全确定案例：证明「0 次调用」不是某一个问题的偶然。该技能下有两段 damage 行（第一段 / 第二段伤害），字段名是区分它们的关键。"
+      "why": "第二条全确定案例：证明「0 次调用」不是某一个问题的偶然。该技能下有两段 damage 行（第一段 / 第二段伤害），字段名负责区分。"
     },
     {
       "id": "r03",
       "kind": "fallback",
-      "question": "卡西奥佩娅那个技能伤害之前改过吗",
+      "question": "泽丽那个技能伤害改过吗",
       "expect": {
         "routing_calls": 1,
-        "beam_used": true,
-        "slots": {"subject": "卡西奥佩娅"},
+        "beam_used": false,
+        "slots": {"subject": "泽丽"},
         "abilities": [
-          {"value": "E", "probability": 0.51},
-          {"value": "被动", "probability": 0.47},
-          {"value": "Q", "probability": 0.01},
-          {"value": "base", "probability": 0.01}
+          {"value": "W", "probability": 0.62},
+          {"value": "Q", "probability": 0.18},
+          {"value": "E", "probability": 0.12}
         ],
-        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+        "rows": {"patch": "26.18", "subject": "泽丽", "ability": "W", "field_key": "damage"}
       },
-      "why": "「那个技能」指代不明，但语料里该英雄在最新版有 E 伤害条目。首选 E 0.51 与次选被动 0.47 太接近，因此应采纳 E 并同时检索被动分支；无过滤路径在两者都失败时兜底。"
+      "why": "「那个技能」不点明，但该英雄在最新版的 damage 行只有 W 拥有 —— 也就是这条问法在语料上是**可判定**的：唯一的技能读法就是正确答案。用来测「模型补全后检索是否收窄到正确技能」。"
     },
     {
       "id": "r04",
@@ -74,37 +73,38 @@
     },
     {
       "id": "r05",
-      "kind": "lowconfidence",
+      "kind": "ambiguity",
       "question": "卡西奥佩娅的技能伤害改过吗",
       "expect": {
         "routing_calls": 1,
         "beam_used": true,
         "slots": {"subject": "卡西奥佩娅"},
         "abilities": [
-          {"value": "E", "probability": 0.34},
-          {"value": "被动", "probability": 0.33},
-          {"value": "Q", "probability": 0.33}
+          {"value": "Q", "probability": 0.38},
+          {"value": "R", "probability": 0.23},
+          {"value": "E", "probability": 0.22},
+          {"value": "base", "probability": 0.08}
         ],
-        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "Q"}
       },
-      "why": "三个读法几乎并列。此时不该「选一个然后收窄」，而应保留多条分支；这条用来检查低置信时是否真的分叉，以及正确答案有没有因为第一次判断错误而被提前删掉。"
+      "why": "**如实记录路由答不对的情形**：该英雄在 26.18 的 damage 行同时属于 Q / E / R 与基础属性（4 条），「技能伤害」这句话在语料上**无法判定**到底问哪一个。这条案例不期望模型猜对，而是检查低置信时是否分叉、以及分叉后是否真的检索了多条读法。它在 off / active 两种口径下都不命中，属于已知限制而非回归。"
     },
     {
       "id": "r06",
       "kind": "nokey",
-      "question": "卡西奥佩娅的技能伤害改过吗",
+      "question": "诺提勒斯 Q 伤害改过吗",
       "expect": {
         "routing_calls": 0,
         "beam_used": false,
-        "slots": {"subject": "卡西奥佩娅"},
+        "slots": {"subject": "诺提勒斯", "ability": "Q"},
         "abilities": [
-          {"value": "E", "probability": 0.6},
-          {"value": "被动", "probability": 0.3},
-          {"value": "Q", "probability": 0.1}
+          {"value": "Q", "probability": 0.9},
+          {"value": "E", "probability": 0.06},
+          {"value": "W", "probability": 0.04}
         ],
-        "rows": {"patch": "26.18", "subject": "卡西奥佩娅", "field_key": "damage", "ability": "E"}
+        "rows": {"patch": "26.18", "subject": "诺提勒斯", "ability": "Q", "field_key": "damage"}
       },
-      "why": "同一条问题在不提供 TYPESAFE_API_KEY 时：不得调用任何模型，检索照常工作，并且必须把「降级」写进轨迹与阶段账本，不能静默。"
+      "why": "无 key 对照：技能由显式字母确定，所以不调用模型；字段没写但该问法在有 key 时只需一次字段判断。不提供 TYPESAFE_API_KEY 时检索照常工作，且必须把降级写进轨迹与阶段账本，不能静默。"
     },
     {
       "id": "r07",

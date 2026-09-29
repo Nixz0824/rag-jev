@@ -44,15 +44,24 @@ class CaseFileTests(unittest.TestCase):
     def test_case_ids_are_unique(self):
         self.assertEqual(len(self.ids), len(set(self.ids)))
 
-    def test_the_four_required_query_shapes_are_present(self):
+    def test_the_required_query_shapes_are_present(self):
+        # `ambiguity` is the case that is undecidable from the corpus text; it is kept on
+        # purpose so the report records a failure rather than only successes.
         kinds = {case["kind"] for case in self.raw}
-        for kind in ("explicit", "fallback", "lowconfidence", "nokey"):
+        for kind in ("explicit", "fallback", "ambiguity", "single_ask", "nokey"):
             self.assertIn(kind, kinds, f"缺少 {kind} 类案例")
 
     def test_beam_cases_expect_a_fork(self):
         for case in self.raw:
-            if case["kind"] in ("fallback", "lowconfidence"):
+            if case["kind"] in ("ambiguity",):
                 self.assertTrue(case["expect"]["beam_used"], f"{case['id']} 应当期望分叉")
+
+    def test_decidable_fallback_cases_do_not_fork(self):
+        # A question whose only defensible reading is one ability should be committed to,
+        # not forked: forking there would mean the confidence bar is never satisfied.
+        for case in self.raw:
+            if case["kind"] == "fallback":
+                self.assertFalse(case["expect"]["beam_used"], case["id"])
 
     def test_single_ask_cases_expect_one_call_without_a_fork(self):
         # A case where one level is deterministic and one is not: the point is that only the

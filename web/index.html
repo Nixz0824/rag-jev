@@ -153,11 +153,19 @@
       <article class="flow-node reveal"><span class="n">06</span><h3>模板渲染</h3><p>数值句只在 <code>_render</code> 生成，模型不写数字。</p><code>patch_engine._render</code></article>
     </div>
     <ul class="notes reveal">
-      <li class="note-src">以下数字来自 <code>docs/盲测报告-合并.md</code>、<code>docs/Jev效果.md</code>、<code>docs/Jev分层路由.md</code>，页面启动时读 <code>docs/*.json</code>，不在这里手写。</li>
-      <li><b>候选重排</b>：同源定点命中@1 由 21/23 提升到 <b>22/23</b>——问题用词与字段标签不一致时，Jev 从候选里把正确行捞回来。</li>
-      <li><b>回答自检</b>：每条改动与证据逐条比对，55/55 回答最低支持度 ≥ 0.5；支持度不足会在回答里显式提示。</li>
-      <li><b>置信闸门</b>：分差 &lt; 0.15 时不改顺序——两条无法区分的候选同样正确，避免把答案挤到第二位。</li>
-      <li><b>分层路由</b>：完全确定的问题 4/8 条零语义调用；触发路由的题目命中@1 由 5/8 到 8/8（改善 3、损害 0）。报告写明样本量小，这证明的是机制有效，不是收益幅度。</li>
+      <li class="note-src">以下数字由页面启动时从 <code>docs/*.json</code> 读取并回填（<code>/api/evaluation</code>），
+          不在这里手写；报告原文见 <code>docs/盲测报告-合并.md</code>、<code>docs/Jev效果.md</code>、<code>docs/Jev自检.md</code>、<code>docs/Jev分层路由.md</code>。</li>
+      <li><b>候选重排</b>：同源定点命中@1 由 <b data-metric="pinned.before">—</b> 提升到
+          <b data-metric="pinned.after">—</b>——问题用词与字段标签不一致时，Jev 从候选里把正确行捞回来。</li>
+      <li><b>回答自检</b>：每条改动与证据逐条比对，<b data-metric="selfcheck.pass">—</b> 回答最低支持度 ≥
+          <b data-metric="selfcheck.threshold">—</b>；支持度不足会在回答里显式提示。</li>
+      <li><b>置信闸门</b>：分差 &lt; <code>jev.MIN_RERANK_GAP = 0.15</code> 时不改顺序——两条无法区分的候选同样正确，
+          避免把答案挤到第二位。</li>
+      <li><b>分层路由</b>：完全确定的问题 <b data-metric="routing.bypass">—</b> 条零语义调用；
+          触发路由的题目命中@1 由 <b data-metric="routing.off">—</b> 到 <b data-metric="routing.active">—</b>
+          （改善 <b data-metric="routing.improved">—</b>、损害 <b data-metric="routing.hurt">—</b>）；
+          每问平均 <b data-metric="routing.calls">—</b> 次语义调用。
+          <span data-metric="routing.caveat"></span></li>
     </ul>
   </section>
 
@@ -267,7 +275,7 @@
         <div class="chart-body" data-chart="ranker"></div>
       </figure>
       <figure class="chart reveal">
-        <figcaption><b>生产链路：Jev 改了几条</b><span>91 条可判定案例逐条记账</span></figcaption>
+        <figcaption><b>生产链路：Jev 改了几条</b><span><b data-metric="rerank.total">—</b> 条可判定案例逐条记账</span></figcaption>
         <div class="chart-body" data-chart="effect"></div>
       </figure>
     </div>
@@ -280,7 +288,7 @@
     </div>
 
     <figure class="chart wide reveal">
-      <figcaption><b>盲测 78 题</b><span>Codex 出题，出题时禁止读语料；两批覆盖 15.13—26.18</span></figcaption>
+      <figcaption><b>盲测 <b data-metric="blind.cases">—</b> 题</b><span>Codex 出题，出题时禁止读语料；两批覆盖 15.13—26.18</span></figcaption>
       <div class="chart-body" data-chart="blind"></div>
     </figure>
 
@@ -305,8 +313,9 @@
     <div class="judgement reveal" id="judgement"></div>
 
     <p class="footnote reveal">
-      同源案例由作者按语料编写（非盲测）；盲测 78 题由 Codex 依官方公告出题、出题时禁止读语料；
-      查询理解 48 条与陷阱 18 条只描述行为规则；分层路由 8 条案例测的是链路行为、不是模型准确率。
+      同源案例由作者按语料编写（非盲测）；盲测 <b data-metric="blind.cases">—</b> 题由 Codex 依官方公告出题、出题时禁止读语料；
+      查询理解 <b data-metric="parse.cases">—</b> 条与陷阱 <b data-metric="trap.cases">—</b> 条只描述行为规则；
+      分层路由 <b data-metric="routing.cases">—</b> 条案例测的是链路行为、不是模型准确率。
       负面结论也保留在报告里。
     </p>
   </section>
