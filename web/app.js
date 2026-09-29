@@ -1042,6 +1042,76 @@ function chartEffect(box, payload) {
   box.appendChild(node);
 }
 
+/* 分层路由：before/after 对照 + 谁解出来的分布 */
+function chartRouting(box, payload) {
+  const report = payload.jev_routing_effect || {};
+  const cases = report.cases || 0;
+  if (!cases) {
+    box.innerHTML = '<p class="ghost">路由效果集报告不可用（运行 scripts/evaluate_routing.py --cases tests/cases/routing_effect_cases.json）</p>';
+    return;
+  }
+  const arms = report.arms || {};
+  const off = arms.off || {};
+  const active = arms.active || {};
+  const matrix = report.matrix || {};
+  const perRound = active.cases_per_round || cases;
+  const width = 520;
+  const height = 226;
+  const node = svg(width, height);
+  const track = width - 150;
+  const scale = (value) => Math.max(track * (Number(value || 0) / perRound), 2);
+
+  // Two bars on one axis so "before" and "after" are read against the same scale.
+  const bar = (y, label, value, cls) => {
+    add(node, "text", { x: 0, y: y + 15, class: "row-label" }, label);
+    add(node, "rect", { x: 130, y, width: track, height: 20, rx: 5, class: "bar-bg" });
+    const fill = add(node, "rect", { x: 130, y, width: 0, height: 20, rx: 5, class: cls });
+    fill.dataset.width = scale(value);
+    fill.style.width = "0px";
+    add(node, "text", { x: 138 + scale(value), y: y + 15, class: "row-value" },
+        `${num(value, 1)}/${perRound}`);
+  };
+  add(node, "text", { x: 0, y: 12, class: "axis" }, "命中@1（越高越好，同一把尺）");
+  bar(22, "关掉路由（off）", off["hit@1"], "bar-fill plain");
+  bar(50, "启用路由（active）", active["hit@1"], "bar-fill");
+
+  // The outcome split is what makes the cost visible: "only routing solved it" is the
+  // argument for routing and "only off solved it" is the argument against, so both are shown
+  // even when one of them is zero. Labels go on full-width rows to keep them legible at the
+  // narrow column width instead of crowding a side legend.
+  const total = Object.values(matrix).reduce((sum, value) => sum + value, 0) || 1;
+  add(node, "text", { x: 0, y: 96, class: "axis" }, `谁解出来的（共 ${total} 条案例）`);
+  const segments = [
+    ["两种都答对", matrix.both_right || 0, "#3f4a5a"],
+    ["只有路由答对", matrix.only_active || 0, "var(--accent)"],
+    ["只有关掉才答对", matrix.only_off || 0, "var(--hot)"],
+    ["两种都答不对", matrix.both_wrong || 0, "#2c3340"],
+  ];
+  let cursor = 0;
+  segments.forEach(([, value, colour]) => {
+    const segmentWidth = (width * value) / total;
+    if (segmentWidth > 0) {
+      add(node, "rect", { x: cursor, y: 106, width: segmentWidth, height: 18,
+                          fill: colour, "fill-opacity": 0.85 });
+    }
+    cursor += segmentWidth;
+  });
+  segments.forEach(([label, value], index) => {
+    const x = (index % 2) * (width / 2 - 8);
+    const y = 146 + Math.floor(index / 2) * 18;
+    add(node, "rect", { x, y: y - 8, width: 9, height: 9,
+                        fill: segments[index][2], "fill-opacity": 0.85 });
+    add(node, "text", { x: x + 14, y, class: "axis" }, `${label} ${value}`);
+  });
+  // Two facts that must travel with the chart, or the bars overstate what was measured.
+  const scope = report.retrieval === "hybrid" ? "生产 hybrid 口径" : "BM25 口径";
+  add(node, "text", { x: 0, y: 196, class: "axis" },
+      `命中@5 两个口径都是 ${num(active["hit@5"], 0)}/${perRound}：改善的是排序，不是召回`);
+  add(node, "text", { x: 0, y: 212, class: "axis" },
+      `每问 ${num((report.behaviour || {}).calls_per_query, 2)} 次语义调用（${scope}）`);
+  box.appendChild(node);
+}
+
 /* 语料规模：逐版本堆叠柱 */
 function chartCorpus(box, payload) {
   const rows = (payload.corpus_stats || {}).per_patch || [];
@@ -1112,6 +1182,7 @@ function renderCharts(payload) {
     selfcheck: chartSelfcheck,
     ranker: chartRanker,
     effect: chartEffect,
+    routing: chartRouting,
     corpus: chartCorpus,
     scale: chartScale,
   };

@@ -344,7 +344,11 @@ def evaluation() -> dict:
         ("jev_ranker", "Jev效果-排序对照.json"),
         ("jev_selfcheck", "Jev自检.json"),
         ("jev_routing", "Jev分层路由.json"),
-        ("jev_routing_effect", "Jev分层路由-效果集.json"),
+        # Preferred first: production runs hybrid, and the hybrid effect report is the one that
+        # matches production. The BM25 report stays as the fallback so the page still works when
+        # only the reproducible scope has been run.
+        ("jev_routing_effect", "Jev分层路由-效果集-hybrid.json"),
+        ("_jev_routing_effect_fallback", "Jev分层路由-效果集.json"),
     ):
         path = DOCS / filename
         if not path.exists():
@@ -406,6 +410,8 @@ def evaluation() -> dict:
                 matrix[key_name] += 1
             extras[key] = {
                 "source": payload.get("source", ""),
+                "retrieval": "hybrid" if "hybrid" in filename else "bm25",
+                "report": filename,
                 "cases": payload.get("cases", 0),
                 "arms": payload.get("arms", {}),
                 "behaviour": payload.get("behaviour", {}),
@@ -416,6 +422,11 @@ def evaluation() -> dict:
             }
         else:
             extras[key] = payload.get("stats", {})
+    # The hybrid report is served as the primary key; when only the reproducible BM25 run
+    # exists, promote it so the page still shows a routing result instead of "—".
+    if "jev_routing_effect" not in extras and "_jev_routing_effect_fallback" in extras:
+        extras["jev_routing_effect"] = extras.pop("_jev_routing_effect_fallback")
+    extras.pop("_jev_routing_effect_fallback", None)
     return {"runs": runs, **extras}
 
 
