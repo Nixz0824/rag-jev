@@ -1,0 +1,201 @@
+{
+  "generated_at": "2026-09-29T18:23:08",
+  "analysed": 12,
+  "selection": "取自 Jev分层路由-效果集.json：两种口径都答不对的案例",
+  "rounds": 3,
+  "per_round": [
+    {
+      "技能对、行选错": 9,
+      "技能认错": 2,
+      "无有效信号": 1
+    },
+    {
+      "技能对、行选错": 8,
+      "技能认错": 3,
+      "无有效信号": 1
+    },
+    {
+      "技能对、行选错": 9,
+      "技能认错": 2,
+      "无有效信号": 1
+    }
+  ],
+  "means": {
+    "技能对、行选错": 8.67,
+    "技能认错": 2.33,
+    "无有效信号": 1.0
+  },
+  "buckets": {
+    "技能对、行选错": [
+      "e02",
+      "e06",
+      "e07",
+      "e11",
+      "e16",
+      "e33",
+      "e35",
+      "e36",
+      "e37"
+    ],
+    "技能认错": [
+      "e14",
+      "e24"
+    ],
+    "无有效信号": [
+      "e29"
+    ]
+  },
+  "right_skill_wrong_row": 8.666666666666666,
+  "wrong_skill": 2.3333333333333335,
+  "no_signal": 1.0,
+  "detail": {
+    "e02": {
+      "expected_ability": "Q",
+      "chosen_ability": "Q",
+      "confidence": 0.83,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "Q",
+      "top_field_key": "damage"
+    },
+    "e06": {
+      "expected_ability": "W",
+      "chosen_ability": "被动",
+      "confidence": 0.55,
+      "branches": [
+        "ability=被动",
+        "ability=W",
+        "unfiltered"
+      ],
+      "beam": true,
+      "top_ability": "Q",
+      "top_field_key": "damage"
+    },
+    "e07": {
+      "expected_ability": "E",
+      "chosen_ability": null,
+      "confidence": 0.33,
+      "branches": [
+        "ability=W",
+        "ability=E",
+        "unfiltered"
+      ],
+      "beam": true,
+      "top_ability": "E",
+      "top_field_key": "damage"
+    },
+    "e11": {
+      "expected_ability": "R",
+      "chosen_ability": null,
+      "confidence": 0.23,
+      "branches": [
+        "ability=R",
+        "ability=Q",
+        "unfiltered"
+      ],
+      "beam": true,
+      "top_ability": "R",
+      "top_field_key": "slow"
+    },
+    "e14": {
+      "expected_ability": "W",
+      "chosen_ability": "Q",
+      "confidence": 0.89,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "Q",
+      "top_field_key": "cost"
+    },
+    "e16": {
+      "expected_ability": "被动",
+      "chosen_ability": null,
+      "confidence": 0.12,
+      "branches": [
+        "ability=被动",
+        "ability=E",
+        "unfiltered"
+      ],
+      "beam": true,
+      "top_ability": "被动",
+      "top_field_key": "damage"
+    },
+    "e24": {
+      "expected_ability": "Q",
+      "chosen_ability": "R",
+      "confidence": 0.64,
+      "branches": [
+        "ability=R",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "Q",
+      "top_field_key": "damage"
+    },
+    "e29": {
+      "expected_ability": "被动",
+      "chosen_ability": null,
+      "confidence": null,
+      "branches": [
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "被动",
+      "top_field_key": "attack_speed"
+    },
+    "e33": {
+      "expected_ability": "R",
+      "chosen_ability": "R",
+      "confidence": 0.61,
+      "branches": [
+        "ability=R",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "R",
+      "top_field_key": "damage"
+    },
+    "e35": {
+      "expected_ability": "Q",
+      "chosen_ability": "Q",
+      "confidence": 0.72,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "Q",
+      "top_field_key": "damage"
+    },
+    "e36": {
+      "expected_ability": "Q",
+      "chosen_ability": "Q",
+      "confidence": 0.74,
+      "branches": [
+        "ability=Q",
+        "unfiltered"
+      ],
+      "beam": false,
+      "top_ability": "Q",
+      "top_field_key": "damage"
+    },
+    "e37": {
+      "expected_ability": "W",
+      "chosen_ability": "W",
+      "confidence": 0.44,
+      "branches": [
+        "ability=W",
+        "ability=被动",
+        "unfiltered"
+      ],
+      "beam": true,
+      "top_ability": "W",
+      "top_field_key": "damage"
+    }
+  }
+}

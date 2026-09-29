@@ -484,6 +484,11 @@ def main() -> int:
         "--cases", default="",
         help="案例文件路径（默认 tests/cases/routing_cases.json）；可指向盲测生成的路由效果集",
     )
+    parser.add_argument(
+        "--retrieval", default="bm25", choices=["bm25", "hybrid"],
+        help="检索口径。默认 bm25：不依赖本地向量服务，便于复现；"
+             "hybrid 与生产一致，但需要 18892 向量模型在跑",
+    )
     args = parser.parse_args()
 
     case_path = Path(args.cases) if args.cases else CASES
@@ -495,6 +500,19 @@ def main() -> int:
     row_index = {case["id"]: case for case in raw}
 
     retriever = patch_engine.PatchRetriever()
+    retrieval_mode = args.retrieval
+    if retrieval_mode != "bm25":
+        # Hybrid needs the embedding matrix. Without this the retriever raises
+        # "向量索引尚未就绪" on every case and the whole run scores 0/40 — which reads like a
+        # result rather than a broken run, so it must be handled explicitly.
+        try:
+            retriever.build()
+            if getattr(retriever, "matrix", None) is None:
+                raise RuntimeError("索引加载后仍为空")
+        except Exception as error:  # noqa: BLE001
+            print(f"向量索引不可用（{type(error).__name__}: {error}）；本轮回退到 bm25 口径。"
+                  f"生产默认是 hybrid，请确认 18892 向量服务在跑。")
+            retrieval_mode = "bm25"
     for case in raw:
         spec = case["expect"].get("rows")
         case["_target"] = resolve_row(retriever, spec) if spec else None
@@ -526,7 +544,7 @@ def main() -> int:
         round_scores: dict[str, dict[str, int]] = {}
         for mode in modes:
             engine = patch_engine.PatchEngine(
-                retriever, use_jev=False, self_check=False, retrieval_mode="bm25", routing_mode=mode
+                retriever, use_jev=False, self_check=False, retrieval_mode=retrieval_mode, routing_mode=mode
             )
             before = model.calls if model else 0
             rows = [run_case(engine, retriever, case, mode, model, round_index) for case in raw]
@@ -616,6 +634,7 @@ def main() -> int:
         f"生成时间：{time.strftime('%Y-%m-%d %H:%M')}　案例：{len(raw)} 条"
         f"　来源：{case_path.name}"
         f"　模式：{'live' if live else 'fixture'}"
+        f"　检索：{args.retrieval}"
         f"　检索口径：BM25（不依赖本地向量服务，便于复现）",
         "",
         f"> **口径**：{note}",

@@ -1,6 +1,6 @@
 # Jev 分层路由评测
 
-生成时间：2026-09-29 18:28　案例：40 条　来源：routing_effect_cases.json　模式：live　检索口径：BM25（不依赖本地向量服务，便于复现）
+生成时间：2026-09-29 18:37　案例：40 条　来源：routing_effect_cases.json　模式：live　检索：hybrid　检索口径：BM25（不依赖本地向量服务，便于复现）
 
 > **口径**：live：调用真实 TypeSafe API，槽位判断按案例期望评分。
 > 命中判据是「引擎实际返回的证据列表里第 1 / 前 5 条是否为该案例的期望行」，期望行由 `expect.rows` 从语料里解析，数值取自官方公告。
@@ -10,9 +10,9 @@
 
 | 口径 | 命中@1 | 命中@5 | 槽位正确 | 路由调用次数 | 路由成本 | 路由耗时 | 分叉题数 | 平均总耗时 |
 |---|---|---|---|---|---|---|---|---|
-| off | 25/40 | 40/40 | —（未提问） | 0 | $0.000000 | 0ms | 0/40 | 0ms |
-| shadow | 25/40 | 40/40 | —（未提问） | 210 | $0.002591 | 99247ms | 22.3/40 | 842ms |
-| active | 28.3/40 | 40/40 | —（未提问） | 210 | $0.002533 | 94895ms | 21/40 | 805ms |
+| off | 26/40 | 40/40 | —（未提问） | 0 | $0.000000 | 0ms | 0/40 | 31ms |
+| shadow | 26/40 | 40/40 | —（未提问） | 210 | $0.002512 | 103925ms | 22/40 | 1430ms |
+| active | 30/40 | 40/40 | —（未提问） | 210 | $0.002551 | 106193ms | 22/40 | 899ms |
 
 「槽位正确」只统计**路由器真的提问过**的案例：`routing=off` 不提问，低置信槽位既不算答对也不算答错，因此该列显示「未提问」，而不是把「没问」记成「答错」。
 
@@ -20,32 +20,22 @@
 
 | 口径 | 每轮命中@1 | 均值 |
 |---|---|---|
-| off | 25、25、25 | 25.0/40 |
-| shadow | 25、25、25 | 25.0/40 |
-| active | 28、28、29 | 28.3/40 |
+| off | 26、26、26 | 26.0/40 |
+| shadow | 26、26、26 | 26.0/40 |
+| active | 30、30、30 | 30.0/40 |
 
-**跨轮次翻转的案例**（唯一能说明路由是否起作用的证据）：
-- `e27`「e27」：active 命中 1/3 轮（off 每轮都命中）。这是**语料本身无法判定**的问法，模型每轮给出的读法不同，所以两种口径的结果都会随轮次变化。
+本次没有跨轮次翻转的案例：所有案例在每一轮的命中情况都相同。
 
-**逐轮不稳定的案例**（含 off 侧的波动；重复次数越多越容易暴露）：
-
-| 案例 | off 各轮 | active 各轮 | 说明 |
-|---|---|---|---|
-| e27 | — | 错错对 | active 侧自身不稳定 |
-
-自身不稳定的案例，其 off/active 差异不能单独算作路由的功劳或责任，必须结合逐轮数据一起看。
-
-**改变结果的案例数：5 条**（净改善 4 条、净损害 1 条；按轮次累计的条目数为 14，重复 3 次时会被放大 3 倍）。
+**改变结果的案例数：4 条**（净改善 4 条、净损害 0 条；按轮次累计的条目数为 12，重复 3 次时会被放大 3 倍）。
 
 | 案例 | 问题 | off 命中轮次 | active 命中轮次 | 方向 |
 |---|---|---|---|---|
-| e27 | 26.14 杰斯切换到近战姿态时拿到的额外双抗，各级改成多少了 | 2/2 | 0/2 | 损害 |
 | e12 | 15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少 | 0/3 | 3/3 | 改善 |
-| e17 | 15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了 | 0/3 | 3/3 | 改善 |
 | e18 | 15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了 | 0/3 | 3/3 | 改善 |
+| e31 | 26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了 | 0/3 | 3/3 | 改善 |
 | e32 | 26.16 波比身边那个防护力场给的双抗，现在是多少了 | 0/3 | 3/3 | 改善 |
 
-（逐轮累计的条目数会被重复次数放大，本表按案例统计，共 5 条案例发生过改变。）
+（逐轮累计的条目数会被重复次数放大，本表按案例统计，共 4 条案例发生过改变。）
 
 哪些题两种口径都答不对、以及原因归属，跑 `python scripts/attribute_routing_errors.py --cases <案例文件>`。
 
@@ -53,10 +43,10 @@
 
 | 情况 | 条数 | 占比 |
 |---|---|---|
-| 两种口径都答对 | 25 | 62% |
+| 两种口径都答对 | 26 | 65% |
 | **只有 active 答对（路由的贡献）** | **4** | 10% |
 | **只有 off 答对（路由的损害）** | **0** | 0% |
-| 两种口径都答不对 | 11 | 28% |
+| 两种口径都答不对 | 10 | 25% |
 
 这张表比命中率更直白：路由的价值是第三行，代价是第四行。
 两行都不为零时，结论必须同时给出两个数字，不能只报净提升。
@@ -71,31 +61,29 @@
 | 情况 | 条数 | 占比 |
 |---|---|---|
 | 完全跳过语义决策（0 次调用） | 15 | 12% |
-| 使用单条语义分支 | 42 | 35% |
-| 触发分叉（beam ≥ 2） | 63 | 52% |
+| 使用单条语义分支 | 39 | 32% |
+| 触发分叉（beam ≥ 2） | 66 | 55% |
 
-平均每问语义调用 **1.75** 次，路由成本 **$0.000021**/问，路由耗时 **791ms**/问。
+平均每问语义调用 **1.75** 次，路由成本 **$0.000021**/问，路由耗时 **885ms**/问。
 
 ## 路由改变了结果的题（off vs active）
 
 | 案例 | 问题 | off 命中@1 | active 命中@1 | off 找到 | active 找到 | 分叉 |
 |---|---|---|---|---|---|---|
 | e12 | 15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少 | 错 | 对 | 是 | 是 | 是 |
-| e17 | 15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了 | 错 | 对 | 是 | 是 | 否 |
 | e18 | 15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了 | 错 | 对 | 是 | 是 | 是 |
-| e27 | 26.14 杰斯切换到近战姿态时拿到的额外双抗，各级改成多少了 | 对 | 错 | 是 | 是 | 是 |
+| e31 | 26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了 | 错 | 对 | 是 | 是 | 是 |
 | e32 | 26.16 波比身边那个防护力场给的双抗，现在是多少了 | 错 | 对 | 是 | 是 | 是 |
 | e12 | 15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少 | 错 | 对 | 是 | 是 | 是 |
-| e17 | 15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了 | 错 | 对 | 是 | 是 | 否 |
 | e18 | 15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了 | 错 | 对 | 是 | 是 | 是 |
-| e27 | 26.14 杰斯切换到近战姿态时拿到的额外双抗，各级改成多少了 | 对 | 错 | 是 | 是 | 是 |
+| e31 | 26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了 | 错 | 对 | 是 | 是 | 是 |
 | e32 | 26.16 波比身边那个防护力场给的双抗，现在是多少了 | 错 | 对 | 是 | 是 | 是 |
 | e12 | 15.17 艾瑞莉娅那个蓄力格挡的斩击蓄满后，法强加成调到多少 | 错 | 对 | 是 | 是 | 是 |
-| e17 | 15.18 岩雀撒下石片再被踩中引爆时，基础伤害降成多少了 | 错 | 对 | 是 | 是 | 否 |
-| e18 | 15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了 | 错 | 对 | 是 | 是 | 否 |
+| e18 | 15.19 布兰德从地面炸开的那片火焰，伤害法强加成改到多少了 | 错 | 对 | 是 | 是 | 是 |
+| e31 | 26.16 波比落地砸锤后，敌人的减速幅度各级调成多少了 | 错 | 对 | 是 | 是 | 是 |
 | e32 | 26.16 波比身边那个防护力场给的双抗，现在是多少了 | 错 | 对 | 是 | 是 | 是 |
 
-- 路由**改善**命中@1：12 条；路由**损害**命中@1：2 条。
+- 路由**改善**命中@1：12 条；路由**损害**命中@1：0 条。
 - 路由**扩大召回**（原本找不到、现在找到）：0 条；路由**丢失召回**：0 条。
 
 ## 逐条明细
@@ -118,7 +106,7 @@
 | e14 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e15 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e16 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e17 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e17 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e18 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e19 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e20 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
@@ -129,15 +117,15 @@
 | e25 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e26 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e27 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e28 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e28 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e29 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e30 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e31 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
+| e31 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
 | e32 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e33 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e33 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e34 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e35 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e36 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e36 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e37 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e38 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e39 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
@@ -158,7 +146,7 @@
 | e14 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e15 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e16 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e17 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e17 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e18 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e19 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e20 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
@@ -169,15 +157,15 @@
 | e25 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e26 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e27 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e28 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e28 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e29 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e30 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e31 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
+| e31 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
 | e32 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e33 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e33 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e34 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e35 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e36 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e36 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e37 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e38 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e39 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
@@ -198,7 +186,7 @@
 | e14 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e15 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e16 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e17 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e17 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e18 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e19 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e20 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
@@ -209,256 +197,256 @@
 | e25 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e26 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e27 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e28 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e28 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e29 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e30 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e31 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
+| e31 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
 | e32 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | abstained | routing=off：完全使用确定性解析，不调用语义决策 |
-| e33 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e33 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e34 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e35 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e36 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
+| e36 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e37 | routing_effect | off | 错 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e38 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e39 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
 | e40 | routing_effect | off | 对 | 对 | 0 | 否 | 1 | — | verify | routing=off：完全使用确定性解析，不调用语义决策 |
-| e01 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e02 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e03 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e04 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e05 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.46 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.48 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.34 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e08 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.51 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e10 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e13 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e14 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e17 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e18 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.45） / 分层路由：判断 1 个层级、1 次调用、800ms / 分叉未触发：首选明显领先，只走 |
-| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e21 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.35） / 分层路由：判断 1 个层级、1 次调用、671ms / 分叉触发（beam=2）：存在 |
-| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.24 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
-| e24 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e25 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e26 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
-| e28 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e29 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e30 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e33 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e35 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e36 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e37 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e38 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e39 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e01 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e02 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e03 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e04 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e05 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.50 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.35） / 分层路由：判断 1 个层级、1 次调用、655ms / 分叉触发（beam=2）：存在 |
-| e08 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e10 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.20 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e13 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e14 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.20 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e17 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e18 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.39 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e21 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.22 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e24 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e25 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e26 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e28 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e29 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e30 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.45 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.32 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
-| e33 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.46 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e35 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e36 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e37 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.51 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e38 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e39 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
 | e01 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e02 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e03 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e04 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e05 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.48 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.32 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.32 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
 | e08 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e10 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.25 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e10 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.22 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
 | e13 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
 | e14 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.51 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.21 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e17 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e18 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.34 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e17 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e18 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
 | e21 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：Q（0.35） / 分层路由：判断 1 个层级、1 次调用、776ms / 分叉触发（beam=2）：存在 |
-| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.22 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e24 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e25 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e26 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
+| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.23 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e28 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e29 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e30 | routing_effect | shadow | 对 | 对 | 2 | 否 | 1 | — | verify | 语义补全调用失败，退回确定性流程，未决槽位保持未决 / 层级 ability 未得到可用答复，保持未决 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow： |
+| e31 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.39 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.30 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e33 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e35 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e36 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e37 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.47 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e38 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e39 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.45 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e01 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e02 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e03 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e04 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e05 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.47 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.31 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e08 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e10 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.59 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e13 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e14 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.50 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e17 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e18 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e21 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.33 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.27 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
 | e24 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e25 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
 | e26 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.23 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e28 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.14 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e28 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
 | e29 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
-| e30 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.31 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e33 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e30 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e31 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.48 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.26 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e33 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
 | e35 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e36 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e36 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e37 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
 | e38 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
 | e39 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
-| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e01 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e02 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e03 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e04 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e05 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e06 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e07 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.35） / 分层路由：判断 1 个层级、1 次调用、828ms / 分叉触发（beam=2）：存在 |
+| e08 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e09 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.51 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e10 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e11 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.27 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e12 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e13 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e14 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e15 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e16 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.16 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e17 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e18 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：被动（0.37） / 分层路由：判断 1 个层级、1 次调用、775ms / 分叉触发（beam=2）：存 |
+| e21 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e22 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e23 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.23 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e24 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e25 | routing_effect | shadow | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e26 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.20 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e27 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e28 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e29 | routing_effect | shadow | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 / shadow：语义结果已记录，未影响实际检索 |
+| e30 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e31 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.35） / 分层路由：判断 1 个层级、1 次调用、785ms / 分叉触发（beam=2）：存在 |
+| e33 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e34 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e35 | routing_effect | shadow | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e36 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e37 | routing_effect | shadow | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e38 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e39 | routing_effect | shadow | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 / sh |
+| e40 | routing_effect | shadow | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
 | e01 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e02 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e03 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e04 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e07 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e08 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e09 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.47 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.20 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e12 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e13 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e14 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e15 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.47 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e17 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e18 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.39 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e21 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.23 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e24 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e25 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e27 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.13 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e28 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e29 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e30 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.30 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e33 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e35 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e36 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e38 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e39 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e40 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.45 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e01 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e02 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e03 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e04 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.59 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.50 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
 | e07 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.32 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
 | e08 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e09 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.28 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e12 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e13 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e14 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e15 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.50 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.11 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e17 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e18 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e19 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.42） / 分层路由：判断 1 个层级、1 次调用、837ms / 分叉未触发：首选明显领先，只走 |
-| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e21 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e24 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e25 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e27 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.22 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e28 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e29 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e30 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.28 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e33 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e35 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e36 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e38 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e39 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e40 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.33 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e01 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e02 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e03 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e04 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e07 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e08 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e09 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.23 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e12 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e13 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e14 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e15 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.50 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e17 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e18 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e19 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.34 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e21 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.21 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e24 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e25 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e27 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.16 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e28 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e29 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e30 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.58 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.44 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e33 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e35 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e36 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e38 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e39 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e40 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e01 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e02 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e03 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e04 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.55 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.44 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e07 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.31 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e08 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e09 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.57 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.53 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.24 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
 | e12 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
 | e13 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
 | e14 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e15 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
-| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.21 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
 | e17 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e18 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.39） / 分层路由：判断 1 个层级、1 次调用、812ms / 分叉未触发：首选明显领先，只走 |
-| e19 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.41 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
-| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e18 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.32 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
 | e21 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
-| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.25 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：Q（0.35） / 分层路由：判断 1 个层级、1 次调用、884ms / 分叉触发（beam=2）：存在 |
+| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
 | e24 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e25 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.19 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、6 |
-| e27 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.15 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
-| e28 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.17 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e27 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.16 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e28 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
 | e29 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
-| e30 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.59 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
-| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.44 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
-| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.27 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
-| e33 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.51 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e30 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.45 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.28 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e33 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.38 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
 | e35 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e36 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
-| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.42 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e36 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e38 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e39 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e40 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.45 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e01 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e02 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e03 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e04 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e05 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e06 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.49 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e07 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability：W（0.35） / 分层路由：判断 1 个层级、1 次调用、787ms / 分叉触发（beam=2）：存在 |
+| e08 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e09 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.54 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e10 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.52 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e11 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e12 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e13 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e14 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e15 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.48 未达单独采信门槛 0.60，另开一条 W 分支 / 分层路由未新增调用：语义补全已确定 |
+| e16 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 被动 置信度 0.16 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、 |
+| e17 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e18 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.40 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e19 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e20 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.36 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e21 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e22 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.35 未达单独采信门槛 0.60，另开一条 Q 分支 / 分层路由未新增调用：语义补全已确定 |
+| e23 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 Q 置信度 0.22 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e24 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e25 | routing_effect | active | 对 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e26 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.18 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、8 |
+| e27 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 R 置信度 0.20 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e28 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e29 | routing_effect | active | 错 | 对 | 0 | 否 | 1 | — | verify | 语义补全未触发：待判槽位已由确定性规则确定 / 分层路由未触发：所有层级都由确定性规则确定，无需分叉 |
+| e30 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e31 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.39 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
+| e32 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | abstained | 语义补全：无采纳（1 个待定槽位，1 次调用） / 层级 ability 首选 W 置信度 0.29 偏低，保留为分叉而不是唯一路径 / 分层路由：判断 1 个层级、1 次调用、7 |
+| e33 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.56 未达单独采信门槛 0.60，另开一条 E 分支 / 分层路由未新增调用：语义补全已确定 |
+| e34 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.37 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
+| e35 | routing_effect | active | 错 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e36 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
+| e37 | routing_effect | active | 错 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.48 未达单独采信门槛 0.60，另开一条 被动 分支 / 分层路由未新增调用：语义补全已确 |
 | e38 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e39 | routing_effect | active | 对 | 对 | 2 | 否 | 2 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / 分层路由未新增调用：语义补全已确定全部层级，整理为 1 条检索读法 / 分叉未触发：首选明显领先，只走单一路径 |
 | e40 | routing_effect | active | 对 | 对 | 2 | 是 | 3 | — | verify | 语义补全：ability（1 个待定槽位，1 次调用） / ability 置信度 0.43 未达单独采信门槛 0.60，另开一条 R 分支 / 分层路由未新增调用：语义补全已确定 |
@@ -468,7 +456,7 @@
 **测到了**
 
 - 完全明确的问题确实 0 次语义调用（15/120 条），说明「只对未确定槽位提问」不是口号而是链路行为。
-- 在能触发路由的题目上，命中@1 由 25.0/120 变为 28.333333333333332/120：改善 12 条、损害 2 条，召回扩大 0 条、丢失 0 条。
+- 在能触发路由的题目上，命中@1 由 26.0/120 变为 30.0/120：改善 12 条、损害 0 条，召回扩大 0 条、丢失 0 条。
   分叉与合并确实发生了（见下表明细），并且分叉题目的候选集合确实包含更多行 —— 机制在运行，只是在这些题目上没有转化为更好的首选。
 - `shadow` 与 `off` 结果完全一致，说明 shadow 只观察不干预。
 - 无 key 时链路完整可用，降级会写进轨迹与阶段账本。

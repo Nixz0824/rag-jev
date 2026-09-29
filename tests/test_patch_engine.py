@@ -41,6 +41,58 @@ def answer_text(session: dict) -> str:
     return "\n".join(message["text"] for message in session["messages"] if message["role"] == "assistant")
 
 
+class RemarkRowTests(unittest.TestCase):
+    """A row whose new value is an announcement note is not a change.
+
+    15.13 奈德丽 writes `伤害增幅所需距离：525 → 未改动` under the same skill as the row that
+    actually moved. Treating the note as a change made it the top-ranked answer to
+    "那根标枪飞得够远时额外伤害上限改成多少", which is wrong twice over: the value did not
+    change, and it displaced the row that did.
+    """
+
+    def test_remark_detection(self):
+        remark = patch_engine.new_value_is_remark
+        self.assertTrue(remark("未改动"))
+        self.assertTrue(remark(" 未改动 "))
+        self.assertTrue(remark("未调整"))
+        # A real value that merely carries a parenthetical note is still a value.
+        self.assertFalse(remark("150 - 430 (基于等级) (收益率未改动)"))
+        self.assertFalse(remark("3.5"))
+        self.assertFalse(remark("魔法"))
+        self.assertFalse(remark(""))
+
+    def test_render_explains_instead_of_printing_an_arrow(self):
+        row = {"subject": "奈德丽", "ability": "Q", "field": "伤害增幅所需距离",
+               "old_value": "525", "new_value": "未改动", "patch": "15.13",
+               "new_value_is_remark": True}
+        text = PatchEngine._render(row)
+        self.assertIn("数值未变", text)
+        self.assertNotIn("→", text)
+
+    def test_a_normal_row_still_renders_an_arrow(self):
+        row = {"subject": "奈德丽", "ability": "Q", "field": "随飞行距离的伤害提升",
+               "old_value": "0 - 200%", "new_value": "0 - 225%", "patch": "15.13"}
+        self.assertIn("→", PatchEngine._render(row))
+
+    def test_rerank_demotes_remark_rows_but_keeps_them(self):
+        engine = build()
+        hits = [
+            {"id": "note", "text": "奈德丽 伤害增幅所需距离 525 → 未改动",
+             "new_value_is_remark": True},
+            {"id": "real", "text": "奈德丽 随飞行距离的伤害提升 0 - 200% → 0 - 225%"},
+        ]
+        ordered, _ = engine._rerank("那根标枪飞得够远时额外伤害上限改成多少", hits)
+        self.assertEqual([row["id"] for row in ordered], ["real", "note"])
+
+    def test_remark_only_candidates_are_returned_unchanged(self):
+        # Nothing else to offer: the note is still better than an empty evidence list.
+        engine = build()
+        hits = [{"id": "note", "text": "奈德丽 伤害增幅所需距离 525 → 未改动",
+                 "new_value_is_remark": True}]
+        ordered, _ = engine._rerank("问题", hits)
+        self.assertEqual([row["id"] for row in ordered], ["note"])
+
+
 class ParseTests(unittest.TestCase):
     def setUp(self):
         self.engine = build()

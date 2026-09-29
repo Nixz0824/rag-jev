@@ -87,6 +87,24 @@ def field_keys(text: str) -> list[str]:
     return [key for key, pattern in FIELDS if re.search(pattern, text, re.I)]
 
 
+# Announcements sometimes write the "new value" as an editorial note rather than a number,
+# e.g. `伤害增幅所需距离：525 → 未改动` (15.13 奈德丽). The row is real, but the value did not
+# change, so it must not be presented as an adjustment or outrank a row that did change.
+REMARK_NEW_VALUES = {"未改动", "不变", "无改动", "保持不变", "未变", "未调整"}
+
+
+def new_value_is_remark(value: str) -> bool:
+    """True when the new value is a note such as 未改动 rather than a value."""
+    text = (value or "").strip()
+    if not text:
+        return False
+    if text in REMARK_NEW_VALUES:
+        return True
+    # `150 - 430 (基于等级) (收益率未改动)` still carries a real value, so only treat it as a
+    # pure remark when no digits are present at all.
+    return not re.search(r"\d", text) and any(term in text for term in REMARK_NEW_VALUES)
+
+
 class PatchRetriever(Retriever):
     """Retriever pre-configured for the patch-note corpus."""
 
@@ -119,6 +137,21 @@ class PatchRetriever(Retriever):
         except (OSError, json.JSONDecodeError):
             return default
 
+    def _mark_remark_rows(self) -> None:
+        """Flag rows whose new value is an announcement note rather than a value.
+
+        Done once at load so `all()`/`search()` consumers see the same flag: the reranker
+        demotes these rows and the renderer explains them instead of printing
+        "525 → 未改动" as if it were an adjustment.
+        """
+        self.remark_rows = 0
+        for row in self.chunks:
+            if row.get("field_key") == "narrative":
+                continue
+            if new_value_is_remark(row.get("new_value")):
+                row["new_value_is_remark"] = True
+                self.remark_rows += 1
+
     def _build_aliases(self) -> None:
         """Longest-first alias list: official name, title, English name, slang.
 
@@ -126,6 +159,7 @@ class PatchRetriever(Retriever):
         alias file is keyed by both and every spelling is mapped onto the subject
         that actually appears in the corpus (matched through the English name).
         """
+        self._mark_remark_rows()
         canonical: dict[tuple[str, str], str] = {}
         for row in self.chunks:
             if row.get("type") in ("champion", "item") and row.get("subject_en"):
@@ -1259,15 +1293,22 @@ class PatchEngine:
         return ""
 
     def _rerank(self, text: str, hits: list[dict]) -> tuple[list[dict], dict | None]:
-        if not self.use_jev or len(hits) < 2:
+        # Rows whose "new value" is an announcement note (未改动) are never the answer to
+        # "改成多少了": they did not change. They stay in the candidate list — the claim is
+        # part of the patch — but only as the last resort.
+        changes = [row for row in hits if not row.get("new_value_is_remark")]
+        remarks = [row for row in hits if row.get("new_value_is_remark")]
+        if remarks and not changes:
             return hits, None
-        meta = jev.rerank(text, hits[: jev.MAX_CANDIDATES])
+        if not self.use_jev or len(changes) < 2:
+            return changes + remarks, None
+        meta = jev.rerank(text, changes[: jev.MAX_CANDIDATES])
         if not meta:
-            return hits, None
-        by_id = {row["id"]: row for row in hits}
+            return changes + remarks, None
+        by_id = {row["id"]: row for row in changes}
         ordered = [by_id[row["id"]] for row in meta["ordered"] if row["id"] in by_id]
-        ordered += [row for row in hits if row["id"] not in {item["id"] for item in ordered}]
-        return ordered, meta
+        ordered += [row for row in changes if row["id"] not in {item["id"] for item in ordered}]
+        return ordered + remarks, meta
 
     # ------------------------------------------------------------------ rendering
 
@@ -1286,6 +1327,12 @@ class PatchEngine:
         change = f"{row['field']}：{row['old_value']} → {row['new_value']}" if row.get("old_value") else (
             f"{row['field']}：{row['new_value']}"
         )
+        if row.get("new_value_is_remark"):
+            # The announcement wrote something like `525 → 未改动`: the numeric value did NOT
+            # change, and the "new value" is an editorial note. Saying so beats rendering
+            # "525 → 未改动" as though it were an adjustment.
+            change = f"{row['field']}：{row['old_value']}（公告注明{row['new_value']}，数值未变）" \
+                if row.get("old_value") else f"{row['field']}（{row['new_value']}）"
         return f"{head} {change}" + (f"（{row['patch']}）" if with_patch else "")
 
     def _narrative_only(self, session: dict, query: dict, notes: list[dict]) -> dict:
