@@ -8,6 +8,10 @@
 Jev（TypeSafe System One）只做「候选里的相对选择 / 相关性打分 / 声称与证据是否一致」，
 不生成文本。回答里的数字必须来自语料，绝不由模型产生。
 
+架构原则一句话：**能确定的交给代码，只有语义不确定时才交给 Jev。**
+Jev 的四个角色按生命周期排列：语义补全 → 分层路由 → 候选重排 → 证据判读；
+确定性解析已确定的槽位对模型关闭（`QueryPlan.resolved_deterministically`）。
+
 ## 环境（本机固定）
 
 | 项 | 值 |
@@ -17,12 +21,14 @@ Jev（TypeSafe System One）只做「候选里的相对选择 / 相关性打分 
 | 端口 | 18890 应用 / 18891 聊天模型 / 18892 向量模型（只绑 127.0.0.1） |
 | 模型 | `models/`（本机下载，或用 `RAGJEV_MODELS` 指向外部模型目录） |
 | Key | `TYPESAFE_API_KEY`（环境变量或 `runtime/jev-key.txt`），只检查是否存在，不输出值 |
+| 路由模式 | `RAGJEV_ROUTING_MODE` = `off` / `shadow` / `active`（默认 active） |
 
 ## 常用命令
 
 ```powershell
-python -m unittest discover -s .\tests      # 59 项，不需要模型和网络
+python -m unittest discover -s .\tests      # 174 项，不需要模型和网络
 python .\scripts\ingest_qq.py --offline     # 用缓存重建语料
+python .\scripts\evaluate_routing.py        # off/shadow/active 分层路由对照
 python .\launch.py --no-open                # 启动三进程
 python .\launch.py --stop                   # 停止
 ```
@@ -30,12 +36,20 @@ python .\launch.py --stop                   # 停止
 ## 必须遵守
 
 1. **数字只能来自语料**：答案渲染集中在 `patch_engine._render`，不要改成让模型写数值。
-2. **改语料必须重跑 `ingest_qq.py` 并更新 `docs/解析覆盖率.md`**；未识别字段变多要解释原因。
-3. **解析规则只写在 `patch_schema.py`**：字段键、箭头、技能行、句子模板都在那里，解析脚本与引擎共用，禁止各写一套。
-4. **新增行为必须带测试**：`tests/` 是唯一验收依据，59 项必须全绿。
-5. **Jev 降级不能静默**：任何 `jev.*` 调用失败都要写进 `session["trace"]`。
-6. **公告原文不进仓库**：`data/patch/raw/`、`data/patch/knowledge.json` 已被忽略，不要手动加回。
-7. 提交用分层小提交，消息写清「改了什么 + 为什么」，署名 `Nixz0824`。
+2. **确定的不许重问**：`source` 为 `deterministic` / `alias` 的槽位对模型关闭；
+   新增语义调用前先确认该槽位真的未确定，否则会把确定答案降级成概率答案。
+3. **改语料必须重跑 `ingest_qq.py` 并更新 `docs/解析覆盖率.md`**；未识别字段变多要解释原因。
+4. **解析规则只写在 `patch_schema.py`**：字段键、箭头、技能行、句子模板都在那里，
+   解析脚本与引擎共用，禁止各写一套。
+5. **分类树只写在 `taxonomy.py`**：字段族 → 字段键、技能与模式取值都在那里；
+   新增字段必须同时补进某个族，否则 `tests/test_query_plan.py` 会失败。
+6. **路由策略只写在 `routing.py`**：`jev.py` 只放 transport 与 choice/noul 原语，
+   不得出现业务规则或分类表。
+7. **新增行为必须带测试**：`tests/` 是唯一验收依据，174 项必须全绿。
+8. **Jev 降级不能静默**：任何 `jev.*` 调用失败都要写进 `session["trace"]` 与
+   `session["jev_phases"]`；「跳过」也是有意义的结果，必须说明原因。
+9. **公告原文不进仓库**：`data/patch/raw/`、`data/patch/knowledge.json` 已被忽略，不要手动加回。
+10. 提交用分层小提交，消息写清「改了什么 + 为什么」，署名 `Nixz0824`。
 
 ## 已知坑
 

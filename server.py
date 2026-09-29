@@ -20,6 +20,7 @@ from config import APP_PORT, DB_PATH, DOCS, PATCH_DATA, SERVICE, WEB
 from engine import GREETING
 from jev import available as jev_available
 from patch_engine import PatchEngine, PatchRetriever, compare_versions
+import routing
 
 LOG = logging.getLogger("ragjev.server")
 MAX_BODY = 200_000
@@ -97,7 +98,14 @@ def bootstrap() -> None:
         RETRIEVER = PatchRetriever()
         RETRIEVER.build()
         # Answer self-check costs one extra Jev call per answer; RAGJEV_SELF_CHECK=0 disables it.
-        ENGINE = PatchEngine(RETRIEVER, self_check=os.environ.get("RAGJEV_SELF_CHECK", "1") != "0")
+        # Routing mode is read from RAGJEV_ROUTING_MODE (off / shadow / active) so the old
+        # pipeline stays reproducible without touching code.
+        ENGINE = PatchEngine(
+            RETRIEVER,
+            self_check=os.environ.get("RAGJEV_SELF_CHECK", "1") != "0",
+            routing_mode=routing.routing_mode_from_env(),
+        )
+        LOG.info("routing mode: %s", ENGINE.routing_mode)
     except Exception as error:  # noqa: BLE001 - surfaced through /api/health
         ENGINE_ERROR = str(error)
         LOG.exception("bootstrap failed")
@@ -225,6 +233,10 @@ def health() -> dict:
             "enabled": ready and ENGINE.use_jev,
             "key": jev_available(),
             "self_check": ready and ENGINE.self_check,
+            # Routing is independent of the key: off/shadow need no credentials, and the mode
+            # must be visible before a reader wonders why a stage did nothing.
+            "routing_mode": ENGINE.routing_mode if ready else routing.routing_mode_from_env(),
+            "routing": (ENGINE.routing_config if ready else routing.CONFIG).as_json(),
         },
     }
     if ready:
