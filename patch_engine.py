@@ -997,10 +997,13 @@ class PatchEngine:
             return self.r.search(text, mode=self.retrieval_mode, k=len(self.r.chunks), where=where)
         merged = routing.merge_candidates(results)
         # The branch candidate counts and contributed flags only exist now, so both payloads
-        # have to be re-serialised after retrieval rather than at plan time.
+        # have to be re-serialised after retrieval rather than at plan time. The merged count
+        # is reported too: the UI otherwise has to infer it from the trace text.
         if plan is not None:
             session["routing"] = self._routing_payload(plan, called=True)
+            session["routing"]["merged_candidates"] = len(merged)
             session["query_plan"] = plan.to_json()
+            session["query_plan"]["routing"]["merged_candidates"] = len(merged)
         session["trace"].append(
             {
                 "tool": "分支检索",

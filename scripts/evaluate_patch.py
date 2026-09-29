@@ -387,6 +387,11 @@ def main() -> int:
         action="store_true",
         help="未写版本的题按案例 expect.patch 作为界面版本选择传入（模拟用户在下拉框选中该版本）",
     )
+    parser.add_argument(
+        "--allow-partial",
+        action="store_true",
+        help="允许在没有 key、跑不出 Jev 口径时覆盖已有的含 Jev 记录的报告（默认拒绝，避免丢证据）",
+    )
     args = parser.parse_args()
 
     if args.cases:
@@ -430,6 +435,29 @@ def main() -> int:
         print(f"{name} 完成，用时 {time.perf_counter() - started:.1f}s")
 
     scope, note = scope_of(paths)
+
+    # A run without a key cannot produce the Jev arm, so it would overwrite a previously
+    # recorded Jev arm with a weaker report — that is how the README's self-check total once
+    # lost its backing artifact. Warn and require an explicit opt-in before doing that.
+    targets = [Path(args.out) if args.out else DOCS / "评测报告.md"]
+    targets += [target.with_suffix(".json") for target in targets]
+    had_jev = False
+    for target in targets:
+        if target.suffix != ".json" or not target.exists():
+            continue
+        try:
+            previous = json.loads(target.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if any("+jev" in arm for arm in (previous.get("arms") or {})):
+            had_jev = True
+    if had_jev and "hybrid+jev" not in results and not args.allow_partial:
+        raise SystemExit(
+            f"{targets[0]} 里原本有 hybrid+jev 的记录，而本次没有 key、跑不出 Jev 口径。\n"
+            "继续写会用一个更弱的报告覆盖它（README 里的自检数字就会失去依据）。\n"
+            "请二选一：设置 TYPESAFE_API_KEY 后重跑，或加 --allow-partial 明确接受降级覆盖。"
+        )
+
     labels = {
         "blind": "盲测集",
         "mixed": "混合案例",
