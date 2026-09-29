@@ -38,6 +38,8 @@ class EffectCaseFileTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        if not CASES.exists():
+            raise unittest.SkipTest(f"{CASES.name} 不在（案例集由外部出题方生成）")
         cls.payload = json.loads(CASES.read_text(encoding="utf-8"))
         cls.cases = cls.payload["cases"]
 
@@ -74,6 +76,14 @@ class EffectCaseRunnabilityTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        if not CASES.exists():
+            raise unittest.SkipTest(f"{CASES.name} 不在（案例集由外部出题方生成）")
+        # These checks need the real corpus, which is gitignored (it embeds announcement text).
+        # Without this guard a clean checkout — CI, or any fresh clone — fails instead of
+        # skipping, which is how the first push turned a missing fixture into a red build.
+        corpus = ROOT / "data" / "patch" / "knowledge.json"
+        if not corpus.exists():
+            raise unittest.SkipTest("corpus not present (data/patch/knowledge.json is gitignored)")
         cls.payload = json.loads(CASES.read_text(encoding="utf-8"))
         cls.cases = cls.payload["cases"]
         cls.retriever = patch_engine.PatchRetriever()
