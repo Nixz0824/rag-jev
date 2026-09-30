@@ -22,3 +22,7 @@ venv/
 
 # local key files
 runtime/*.txt
+
+# 一次性探查/发布脚本：不进仓库（曾误提交过 __publish_gh.py）
+__*.py
+scripts/__*.py
