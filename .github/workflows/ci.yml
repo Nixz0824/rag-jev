@@ -15,4 +15,26 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --quiet numpy
       - name: Run unit tests (no models, no network)
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -v 2>&1 | tee unittest.log
+      # A green run can be a *weak* run: tests that need the corpus skip when
+      # data/patch/knowledge.json is absent (it is gitignored because it embeds announcement
+      # text), so a missing fixture turns into fewer tests rather than a failure. Assert how
+      # many actually ran, so the suite cannot quietly shrink while staying green.
+      - name: Assert the suite did not silently shrink
+        run: |
+          python - <<'PY'
+          import re, sys, pathlib
+          log = pathlib.Path("unittest.log").read_text(encoding="utf-8", errors="replace")
+          ran = re.search(r"Ran (\d+) tests?", log)
+          skipped = re.search(r"skipped=(\d+)", log) or re.search(r"OK.*?skipped=(\d+)", log)
+          if not ran:
+              sys.exit("找不到 'Ran N tests'，测试可能根本没跑起来")
+          total, skip = int(ran.group(1)), int(skipped.group(1)) if skipped else 0
+          print(f"执行 {total} 项，跳过 {skip} 项")
+          # CI has no corpus, so the corpus-dependent classes skip by design. If that number
+          # grows, a fixture disappeared instead of skipping as intended.
+          if total < 150:
+              sys.exit(f"只执行了 {total} 项（应 ≥150），测试套件可能被静默削弱")
+          if skip > 20:
+              sys.exit(f"跳过 {skip} 项（应 ≤20），可能有夹具缺失")
+          PY
